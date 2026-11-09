@@ -1,0 +1,50 @@
+name: ✨ Solicitud de funcionalidad
+description: Propón una mejora o nueva capacidad.
+title: "[FEAT] "
+labels: ["enhancement"]
+assignees: []
+
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problema o necesidad
+      description: ¿Qué problema resuelve esta propuesta?
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Solución propuesta
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternativas consideradas
+    validations:
+      required: false
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Plataforma
+      multiple: true
+      options:
+        - Web
+        - Escritorio (Tauri/Electron)
+        - Móvil
+        - API / Base de datos
+        - Documentación
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Contexto adicional
+      description: Mockups, referencias o criterios de aceptación.
+    validations:
+      required: false

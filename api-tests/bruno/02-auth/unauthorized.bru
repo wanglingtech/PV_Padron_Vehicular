@@ -1,0 +1,21 @@
+meta {
+  name: Sin credenciales (401)
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/api/users
+  body: none
+  auth: none
+}
+
+headers {
+  Accept: application/json
+}
+
+tests {
+  test("rechaza con 401", function() {
+    expect(res.status).to.equal(401);
+  });
+}

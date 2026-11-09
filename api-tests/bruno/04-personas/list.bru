@@ -1,0 +1,21 @@
+meta {
+  name: Listar personas
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/persons
+  body: none
+  auth: none
+}
+
+headers {
+  Accept: application/json
+}
+
+tests {
+  test("responde 200", function() {
+    expect(res.status).to.equal(200);
+  });
+}

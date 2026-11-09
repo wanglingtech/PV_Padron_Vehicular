@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <script>
+      (function() {
+        try {
+          var originalFetch = typeof window !== 'undefined' && window.fetch ? window.fetch.bind(window) : null;
+          var currentFetch = originalFetch;
+
+          function defineFetch(obj) {
+            if (!obj) return;
+            try {
+              Object.defineProperty(obj, 'fetch', {
+                get: function() {
+                  return currentFetch;
+                },
+                set: function(fn) {
+                  currentFetch = fn;
+                },
+                configurable: true,
+                enumerable: true
+              });
+            } catch (e) {}
+          }
+
+          defineFetch(window);
+          if (typeof globalThis !== 'undefined' && globalThis !== window) {
+            defineFetch(globalThis);
+          }
+          if (typeof self !== 'undefined' && self !== window) {
+            defineFetch(self);
+          }
+
+          var proto = window;
+          while (proto) {
+            try {
+              var desc = Object.getOwnPropertyDescriptor(proto, 'fetch');
+              if (desc && (!desc.set || !desc.writable)) {
+                defineFetch(proto);
+              }
+            } catch (e) {}
+            proto = Object.getPrototypeOf(proto);
+          }
+        } catch (err) {}
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2563eb" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Padrón Vehicular</title>
+    <meta name="description" content="Sistema web para la gestión integral y control documental del padrón vehicular de la asociación de transporte." />
+    <meta property="og:title" content="Padrón Vehicular" />
+    <meta property="og:description" content="Sistema web para la gestión integral y control documental del padrón vehicular de la asociación de transporte." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/frontend/src/main.tsx"></script>
+  </body>
+</html>

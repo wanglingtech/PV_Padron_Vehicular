@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Lint y build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Verificar tipos
+        run: npm run lint
+
+      - name: Build de producción
+        run: npm run build
+        env:
+          NODE_ENV: production
+          # Variables ficticias: el build no se conecta a la base de datos.
+          SQL_HOST: localhost
+          SQL_PORT: "5432"
+          SQL_USER: postgres
+          SQL_PASSWORD: postgres
+          SQL_DB_NAME: padron_vehicular

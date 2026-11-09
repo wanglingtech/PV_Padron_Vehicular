@@ -1,0 +1,74 @@
+name: 🐛 Reporte de bug
+description: Reporta un comportamiento inesperado.
+title: "[BUG] "
+labels: ["bug", "triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias por reportar. No incluyas datos personales reales ni credenciales.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Descripción del problema
+      description: ¿Qué ocurrió y qué esperabas que ocurriera?
+      placeholder: Al crear un vehículo con placa duplicada...
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Pasos para reproducir
+      placeholder: |
+        1. Ir a Padrón
+        2. Clic en "Registrar unidad"
+        3. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Resultado esperado
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Resultado actual
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs o capturas
+      description: Pega logs sin datos sensibles.
+      render: shell
+    validations:
+      required: false
+
+  - type: input
+    id: environment
+    attributes:
+      label: Entorno
+      placeholder: "Windows 11 · Node 24 · PostgreSQL 17 · Chrome 130"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severidad
+      options:
+        - Crítica (bloquea el uso)
+        - Alta (función principal afectada)
+        - Media (workaround disponible)
+        - Baja (cosmética)
+    validations:
+      required: true

@@ -1,0 +1,21 @@
+meta {
+  name: Historial de auditoría
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/audit-logs?limit=20
+  body: none
+  auth: none
+}
+
+headers {
+  Accept: application/json
+}
+
+tests {
+  test("responde 200", function() {
+    expect(res.status).to.equal(200);
+  });
+}

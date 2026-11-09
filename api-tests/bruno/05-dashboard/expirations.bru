@@ -1,0 +1,21 @@
+meta {
+  name: Vencimientos
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/api/expirations
+  body: none
+  auth: none
+}
+
+headers {
+  Accept: application/json
+}
+
+tests {
+  test("responde 200", function() {
+    expect(res.status).to.equal(200);
+  });
+}

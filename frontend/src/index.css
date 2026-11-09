@@ -1,0 +1,298 @@
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+/* Reglas de accesibilidad y contraste mejorado para modo oscuro (WCAG AAA) */
+html.dark {
+  color-scheme: dark;
+  background-color: #0b0f19;
+  color: #f8fafc;
+}
+
+html.dark body {
+  background-color: #0b0f19;
+  color: #f8fafc;
+}
+
+/* En modo oscuro: encabezados y títulos principales en blanco nítido */
+html.dark h1,
+html.dark h2,
+html.dark h3,
+html.dark h4,
+html.dark .text-heading-dark {
+  color: #ffffff;
+}
+
+/* En modo oscuro: SOLO cuando un panel o ficha es exclusivamente blanco (no tiene clase dark:bg-*),
+   los textos y títulos deben ser negros para no perderse contra el fondo blanco */
+html.dark .bg-white:not([class*="dark:bg-"]) {
+  color: #0f172a !important;
+}
+
+html.dark .bg-white:not([class*="dark:bg-"]) h1,
+html.dark .bg-white:not([class*="dark:bg-"]) h2,
+html.dark .bg-white:not([class*="dark:bg-"]) h3,
+html.dark .bg-white:not([class*="dark:bg-"]) h4,
+html.dark .bg-white:not([class*="dark:bg-"]) h5,
+html.dark .bg-white:not([class*="dark:bg-"]) h6 {
+  color: #000000 !important;
+}
+
+html.dark .bg-white:not([class*="dark:bg-"]) .text-slate-900,
+html.dark .bg-white:not([class*="dark:bg-"]) .text-slate-950,
+html.dark .bg-white:not([class*="dark:bg-"]) .text-slate-800,
+html.dark .bg-white:not([class*="dark:bg-"]) .text-slate-700 {
+  color: #000000 !important;
+}
+
+html.dark .bg-white:not([class*="dark:bg-"]) dt {
+  color: #334155 !important;
+}
+
+html.dark .bg-white:not([class*="dark:bg-"]) dd,
+html.dark .bg-white:not([class*="dark:bg-"]) label {
+  color: #000000 !important;
+}
+
+html.dark .bg-white:not([class*="dark:bg-"]) p:not([class*="text-emerald"]):not([class*="text-rose"]):not([class*="text-amber"]):not([class*="text-blue"]):not([class*="text-indigo"]):not([class*="text-purple"]):not([class*="text-white"]) {
+  color: #1e293b !important;
+}
+
+html.dark .bg-white:not([class*="dark:bg-"]) span:not([class*="bg-"]):not([class*="text-emerald"]):not([class*="text-rose"]):not([class*="text-amber"]):not([class*="text-blue"]):not([class*="text-indigo"]):not([class*="text-purple"]):not([class*="text-white"]) {
+  color: #000000 !important;
+}
+
+/* Evitar paneles con fondo gris apagado en modo oscuro: usar fondo oscuro elegante y borde definido */
+html.dark .bg-slate-50:not(button):not(a):not(input):not(select):not(.allow-gray) {
+  background-color: #0b0f19 !important;
+}
+
+html.dark .bg-slate-100:not(button):not(a):not(input):not(select):not(span) {
+  background-color: #0f172a !important;
+}
+
+/* En tablas: estilos para nombres de conductores */
+.table-person-name {
+  font-weight: 700;
+}
+
+/* Enfoque visible accesible de alto contraste para personas con baja visión */
+*:focus-visible {
+  outline: 2px solid #38bdf8 !important;
+  outline-offset: 2px !important;
+}
+
+/* Scrollbars accesibles y contrastados */
+html.dark ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+html.dark ::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 4px;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Selección de texto de alta legibilidad */
+::selection {
+  background-color: #3b82f6;
+  color: #ffffff;
+}
+
+html.dark ::selection {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+
+/* Recharts Tooltips en todas las gráficas (Modo Oscuro) - Texto Blanco Nítido */
+.dark .recharts-default-tooltip,
+html.dark .recharts-default-tooltip,
+.recharts-default-tooltip {
+  background-color: #0f172a !important;
+  border: 1px solid #334155 !important;
+  border-radius: 10px !important;
+  color: #ffffff !important;
+  padding: 8px 12px !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.7) !important;
+}
+
+.dark .recharts-tooltip-label,
+.dark .recharts-default-tooltip .recharts-tooltip-label,
+html.dark .recharts-tooltip-label,
+html.dark .recharts-default-tooltip .recharts-tooltip-label,
+.recharts-tooltip-label {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  font-size: 12px !important;
+  margin-bottom: 4px !important;
+  display: block !important;
+}
+
+.dark .recharts-tooltip-item,
+.dark .recharts-tooltip-item-name,
+.dark .recharts-tooltip-item-value,
+.dark .recharts-tooltip-item-separator,
+.dark .recharts-tooltip-item-list *,
+.dark .recharts-default-tooltip *,
+html.dark .recharts-tooltip-item,
+html.dark .recharts-tooltip-item-name,
+html.dark .recharts-tooltip-item-value,
+html.dark .recharts-tooltip-item-separator,
+html.dark .recharts-tooltip-item-list *,
+html.dark .recharts-default-tooltip * {
+  color: #ffffff !important;
+  font-size: 11px !important;
+}
+
+/* ========================================================================= */
+/* SweetAlert2: Alta legibilidad y contraste en Modo Claro y Modo Oscuro     */
+/* ========================================================================= */
+
+/* Modo Claro por defecto */
+.swal2-popup {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-radius: 1.25rem !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+}
+
+.swal2-title {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+
+.swal2-html-container {
+  color: #475569 !important;
+  line-height: 1.5 !important;
+}
+
+.swal2-cancel {
+  background-color: #f1f5f9 !important;
+  color: #334155 !important;
+  border: 1px solid #cbd5e1 !important;
+}
+
+.swal2-cancel:hover {
+  background-color: #e2e8f0 !important;
+}
+
+/* Modo Oscuro: Fondo azul/pizarra profundo, títulos en blanco nítido y texto contrastado */
+html.dark .swal2-popup {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+  border: 1px solid #334155 !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9) !important;
+}
+
+html.dark .swal2-title {
+  color: #ffffff !important;
+  font-weight: 800 !important;
+}
+
+html.dark .swal2-html-container {
+  color: #cbd5e1 !important;
+}
+
+html.dark .swal2-close {
+  color: #94a3b8 !important;
+}
+
+html.dark .swal2-close:hover {
+  color: #ffffff !important;
+}
+
+html.dark .swal2-cancel {
+  background-color: #1e293b !important;
+  color: #f1f5f9 !important;
+  border: 1px solid #475569 !important;
+}
+
+html.dark .swal2-cancel:hover {
+  background-color: #334155 !important;
+}
+
+html.dark .swal2-icon.swal2-warning {
+  border-color: #f59e0b !important;
+  color: #f59e0b !important;
+}
+
+html.dark .swal2-icon.swal2-error {
+  border-color: #ef4444 !important;
+  color: #ef4444 !important;
+}
+
+html.dark .swal2-icon.swal2-success {
+  border-color: #10b981 !important;
+  color: #10b981 !important;
+}
+
+html.dark .swal2-icon.swal2-info {
+  border-color: #3b82f6 !important;
+  color: #3b82f6 !important;
+}
+
+html.dark .swal2-timer-progress-bar {
+  background-color: #3b82f6 !important;
+}
+
+/* ========================================================================= */
+/* Barra de Paginación de Alto Contraste: Texto Oscuro y Botones Azules      */
+/* ========================================================================= */
+.pagination-bar-contrast {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+  border-top: 1px solid #cbd5e1 !important;
+}
+
+.pagination-bar-contrast span,
+.pagination-bar-contrast p,
+.pagination-bar-contrast div,
+.pagination-bar-contrast strong {
+  color: #0f172a !important;
+}
+
+.pagination-bar-contrast select {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border: 1.5px solid #94a3b8 !important;
+}
+
+.pagination-bar-contrast .pagination-btn-blue {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+
+.pagination-bar-contrast .pagination-btn-blue * {
+  color: #ffffff !important;
+}
+
+.pagination-bar-contrast .pagination-btn-blue:hover:not(:disabled) {
+  background-color: #1d4ed8 !important;
+}
+
+.pagination-bar-contrast .pagination-btn-blue:disabled {
+  background-color: #93c5fd !important;
+  color: #eff6ff !important;
+  opacity: 0.65 !important;
+  cursor: not-allowed !important;
+}
+
+.pagination-bar-contrast .pagination-page-badge {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border: 1.5px solid #94a3b8 !important;
+  font-weight: 800 !important;
+}
+
+
+

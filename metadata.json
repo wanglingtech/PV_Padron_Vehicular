@@ -1,0 +1,6 @@
+{
+  "name": "Padrón Vehicular",
+  "description": "Sistema web para la gestión integral y control documental del padrón vehicular de la asociación de transporte.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,37 @@
+meta {
+  name: Intercambiar padrones
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/api/vehicles/padron/swap
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+  Accept: application/json
+  Authorization: Bearer {{adminToken}}
+  x-user-role: admin
+  x-user-email: {{adminEmail}}
+  x-user-name: {{adminName}}
+}
+
+body:json {
+  {
+    "vehicleAId": 1,
+    "vehicleBId": 2,
+    "reason": "Prueba de intercambio transaccional",
+    "authorizationReference": "ACTA-TEST-001",
+    "authorizedBy": "Administrador de Prueba",
+    "effectiveDate": "2026-01-01"
+  }
+}
+
+tests {
+  test("responde 200, 400 o 404", function() {
+    expect([200, 400, 404]).to.include(res.status);
+  });
+}

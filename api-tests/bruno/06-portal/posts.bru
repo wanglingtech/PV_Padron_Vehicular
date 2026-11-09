@@ -1,0 +1,25 @@
+meta {
+  name: Publicaciones del portal
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/portal/posts
+  body: none
+  auth: none
+}
+
+headers {
+  Accept: application/json
+}
+
+tests {
+  test("responde 200", function() {
+    expect(res.status).to.equal(200);
+  });
+
+  test("devuelve arreglo", function() {
+    expect(res.body).to.be.an("array");
+  });
+}

@@ -1,0 +1,169 @@
+# =============================================================================
+# .gitignore — Sistema de Gestión de Padrón Vehicular
+# -----------------------------------------------------------------------------
+# Objetivo: evitar subir dependencias, artefactos de build, secretos, archivos
+# locales del sistema operativo/editor y datos generados en tiempo de ejecución.
+#
+# Regla de oro: si un archivo contiene credenciales, rutas absolutas de tu
+# máquina, binarios pesados o datos de usuarios reales, NO debe versionarse.
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# 1. Dependencias
+# -----------------------------------------------------------------------------
+node_modules/
+.pnp
+.pnp.js
+.yarn/
+.yarnrc.yml
+.npm/
+
+# -----------------------------------------------------------------------------
+# 2. Artefactos de compilación / caché
+# -----------------------------------------------------------------------------
+dist/
+build/
+out/
+release/
+*.tsbuildinfo
+.vite/
+.cache/
+.eslintcache
+.parcel-cache/
+
+# -----------------------------------------------------------------------------
+# 3. Variables de entorno y secretos  (CRÍTICO)
+# -----------------------------------------------------------------------------
+# Nunca subir .env reales. Solo se versiona el ejemplo sin credenciales.
+.env
+.env.*
+!.env.example
+
+# Certificados, llaves y credenciales de servicios
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+*.jks
+*.keystore
+keystore.properties
+service-account*.json
+firebase-adminsdk*.json
+*-credentials.json
+secrets.json
+
+# Nota: firebase-applet-config.json SÍ se versiona porque es la configuración
+# pública del SDK web de Firebase (la apiKey web no es un secreto; la seguridad
+# real depende de las reglas de Firebase y de las restricciones de dominio).
+# Si en el futuro se usa una cuenta de servicio (Admin SDK), esa NO se sube.
+
+# -----------------------------------------------------------------------------
+# 4. Registros y reportes de pruebas
+# -----------------------------------------------------------------------------
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+blob-report/
+.playwright-mcp/
+.jest-cache/
+.vitest/
+
+# -----------------------------------------------------------------------------
+# 5. Datos locales / almacenamiento en tiempo de ejecución
+# -----------------------------------------------------------------------------
+uploads/
+backups/
+tmp/
+temp/
+.uploads/
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.dump
+*.bak
+
+# Los esquemas y migraciones SQL SÍ se versionan:
+#   database/schema.sql
+#   drizzle/*.sql
+#   drizzle/meta/*
+
+# -----------------------------------------------------------------------------
+# 6. Artefactos de AI Studio
+# -----------------------------------------------------------------------------
+# Contiene caché, medios temporales y artefactos internos del entorno de IA.
+.aistudio/
+
+# -----------------------------------------------------------------------------
+# 7. Editores e IDEs
+# -----------------------------------------------------------------------------
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.example.json
+.idea/
+*.iml
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# -----------------------------------------------------------------------------
+# 8. Sistema operativo
+# -----------------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# -----------------------------------------------------------------------------
+# 9. Plataformas de despliegue
+# -----------------------------------------------------------------------------
+.vercel/
+.netlify/
+.supabase/
+supabase/.branches/
+supabase/.temp/
+.firebase/
+.wrangler/
+
+# -----------------------------------------------------------------------------
+# 10. Escritorio / móvil (Tauri, Electron, Capacitor) — preparado para el roadmap
+# -----------------------------------------------------------------------------
+src-tauri/target/
+src-tauri/gen/
+target/
+*.exe
+*.msi
+*.dmg
+*.AppImage
+*.apk
+*.aab
+*.ipa
+.electron-builder/
+capacitor/android/
+capacitor/ios/
+
+# -----------------------------------------------------------------------------
+# 11. Archivos del sistema / temporales
+# -----------------------------------------------------------------------------
+*.tmp
+*.temp
+*.pid
+*.seed
+*.stackdump
