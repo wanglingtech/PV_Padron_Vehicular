@@ -147,7 +147,7 @@ Leyenda: `[x]` hecho · `[ ]` pendiente · `[~]` en progreso
 | Frontend | **Vercel Hobby** | Vercel Pro |
 | API | **Railway trial / Render free** | Railway Pro |
 | PostgreSQL | **Supabase / Neon free** | Supabase Pro |
-| Auth | **Firebase Auth** | Firebase Blaze |
+| Auth | **Propia** (PostgreSQL + JWT + argon2id) | — |
 | Archivos | Supabase Storage | S3/R2 |
 
 ### Restricciones a tener en cuenta

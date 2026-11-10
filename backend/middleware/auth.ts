@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
 import { eq } from 'drizzle-orm';
-import { adminAuth } from '../lib/firebase-admin.ts';
 import { db } from '../db/index.ts';
 import { systemRoles, users } from '../db/schema.ts';
 import { isPrivilegedRole } from '../../shared/roles.ts';
@@ -41,8 +40,7 @@ const extractSessionToken = (req: AuthRequest): string | null => {
  * Orden de aceptación:
  * 1. Tokens `dev-*` (solo en desarrollo o con AUTH_DEV_MODE=true).
  * 2. JWT propio firmado (Bearer o cookie HttpOnly).
- * 3. Token de Firebase (compatibilidad con el login de Google).
- * 4. Cabeceras de desarrollo (`x-user-role`).
+ * 3. Cabeceras de desarrollo (`x-user-role`).
  *
  * En todos los casos se refresca el rol desde PostgreSQL para que un cambio de
  * permisos o la desactivación de una cuenta surta efecto de inmediato.
@@ -106,7 +104,7 @@ export const requireAuth = async (
         return next();
       }
 
-      // Token válido de un usuario sin fila local (por ejemplo, Firebase).
+      // Token válido de un usuario sin fila local.
       req.user = {
         uid: payload.sub,
         email: payload.email,
@@ -115,45 +113,14 @@ export const requireAuth = async (
       };
       return next();
     } catch {
-      // No era un JWT propio; se intenta con Firebase más abajo.
+      // No era un JWT propio: se rechaza la sesión.
     }
 
-    // 3. Token real de Firebase
-    try {
-      const decodedToken = await adminAuth.verifyIdToken(token);
-      const email = (decodedToken.email || 'usuario@transporte.pe').toLowerCase();
-
-      let role = email.includes('admin') ? 'admin' : 'operator';
-      const [dbUser] = await db
-        .select()
-        .from(users)
-        .where(eq(users.email, email))
-        .limit(1);
-
-      if (dbUser) {
-        if (!dbUser.isActive) {
-          return res.status(401).json({ error: 'La cuenta está desactivada.' });
-        }
-        role = dbUser.role;
-      }
-
-      req.user = {
-        uid: decodedToken.uid,
-        email,
-        name: decodedToken.name || email.split('@')[0],
-        role,
-      };
-      return next();
-    } catch (error) {
-      console.warn(
-        'Token de sesión inválido:',
-        error instanceof Error ? error.message : error
-      );
-      return res.status(401).json({ error: 'Token de sesión inválido o expirado.' });
-    }
+    console.warn('Token de sesión inválido o expirado.');
+    return res.status(401).json({ error: 'Token de sesión inválido o expirado.' });
   }
 
-  // 4. Cabeceras de sesión de desarrollo (solo en local o con AUTH_DEV_MODE=true)
+  // 3. Cabeceras de sesión de desarrollo (solo en local o con AUTH_DEV_MODE=true)
   if (devAuthEnabled && devRole) {
     req.user = {
       uid: `${devRole}-dev-uid`,
@@ -164,7 +131,7 @@ export const requireAuth = async (
     return next();
   }
 
-  // 5. Sin credenciales: nunca asumir administrador por defecto
+  // 4. Sin credenciales: nunca asumir administrador por defecto
   return res.status(401).json({ error: 'No autenticado. Inicia sesión para continuar.' });
 };
 

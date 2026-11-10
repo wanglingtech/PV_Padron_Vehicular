@@ -148,7 +148,6 @@ La matriz completa y el detalle del RBAC están en [`docs/ROLES.md`](docs/ROLES.
 | Tecnología | Uso |
 | :--- | :--- |
 | **PostgreSQL 17** | Base de datos relacional principal. |
-| **Firebase Auth** | Inicio de sesión con Google (opcional). |
 | **Vercel** | Frontend estático / SPA. |
 | **Railway / Supabase / Neon** | API y PostgreSQL gestionado (según presupuesto). |
 
@@ -172,7 +171,6 @@ flowchart LR
 
     subgraph Datos
         G[(PostgreSQL 17)]
-        H[Firebase Auth]
         I[Gemini API]
     end
 
@@ -183,7 +181,6 @@ flowchart LR
     E --> G
     D --> F
     F --> G
-    E -.->|verificación de token| H
     F -.->|procesamiento opcional| I
 ```
 
@@ -228,7 +225,6 @@ padrón-vehicular/
 │   ├── app.ts               # App Express: middlewares, rutas y seed
 │   ├── config/              # Variables de entorno y sesión
 │   ├── db/                  # Esquema, conexión y consultas Drizzle
-│   ├── lib/                 # Firebase Admin
 │   ├── middleware/          # Autenticación y RBAC del servidor
 │   ├── routes/              # Rutas por dominio (auth, etc.)
 │   ├── services/            # Password, tokens y lógica de auth
@@ -241,7 +237,6 @@ padrón-vehicular/
 │       ├── components/      # Componentes reutilizables
 │       ├── context/         # Auth, tema y estado global
 │       ├── hooks/           # Hooks personalizados
-│       ├── lib/             # Firebase del cliente
 │       ├── types/           # Tipos compartidos
 │       ├── utils/           # PDF, alertas y rutas del cliente
 │       └── views/           # Vistas por módulo
@@ -441,8 +436,8 @@ Antes de publicar el repositorio o desplegar con datos reales, revisa [`SECURITY
 - ✅ Autenticación real con argon2id, JWT firmado y cookie `HttpOnly`; los tokens `dev-*` solo existen en desarrollo (`AUTH_DEV_MODE=true` o `NODE_ENV!=production`).
 - ✅ Las contraseñas se guardan cifradas con argon2id; las claves heredadas en texto plano se migran al arrancar.
 - ✅ `helmet`, CORS configurable y rate limit en el login.
-- ⚠️ `firebase-applet-config.json` contiene la configuración pública del SDK web de Firebase. No es un secreto, pero deben configurarse reglas y restricciones de dominio en Firebase.
-- ⚠️ En producción define `JWT_SECRET` (mínimo 32 caracteres), `AUTH_DEV_MODE=false` y `AUTH_COOKIE_SECURE=true`.
+- ✅ La integración con **Firebase se eliminó**: la autenticación es 100 % propia (PostgreSQL + JWT + argon2id) y no queda ninguna clave de terceros en el repositorio.
+- ⚠️ En producción define `JWT_SECRET` (mínimo 32 caracteres), `AUTH_DEV_MODE=false`, `AUTH_COOKIE_SECURE=true` y `SEED_DEMO_DATA=false`.
 
 ---
 

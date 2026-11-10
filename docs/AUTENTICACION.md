@@ -75,13 +75,15 @@ Verifica la contraseña actual antes de guardar el nuevo hash.
 
 1. Tokens `dev-*` (solo si `AUTH_DEV_MODE=true` o `NODE_ENV!=production`).
 2. JWT propio (Bearer o cookie).
-3. Token de Firebase (compatibilidad con Google).
-4. Cabeceras de desarrollo `x-user-role` (solo en modo desarrollo).
+3. Cabeceras de desarrollo `x-user-role` (solo en modo desarrollo).
 
-En los casos 2 y 3 se consulta la fila del usuario para:
+En el caso 2 se consulta la fila del usuario para:
 
 - Rechazar cuentas inactivas (`401`).
 - Usar el rol actual de la base, no el del token.
+
+> La compatibilidad con tokens de Firebase se eliminó: la integración no se usaba y la
+> clave web de Firebase era reportada como secreto filtrado por GitHub.
 
 ---
 

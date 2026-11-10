@@ -23,7 +23,6 @@ flowchart TB
 
     subgraph Datos["Persistencia y servicios"]
         PG[(PostgreSQL 17)]
-        FB[Firebase Auth]
         Gemini[Google Gemini]
     end
 
@@ -32,7 +31,7 @@ flowchart TB
     Express --> Auth --> Routes
     Routes --> Services
     Routes --> PG
-    Auth -.->|verifyIdToken| FB
+    Auth -.->|rol y permisos| PG
     Services -.->|opcional| Gemini
 ```
 
@@ -163,19 +162,21 @@ sequenceDiagram
     participant U as Usuario
     participant SPA as React SPA
     participant API as Express
-    participant FB as Firebase
+    participant PG as PostgreSQL
 
-    U->>SPA: Ingresa credenciales / Google
-    SPA->>SPA: Guarda sesión (localStorage o Firebase)
-    SPA->>API: Request + Authorization Bearer
+    U->>SPA: Ingresa correo y contraseña
+    SPA->>API: POST /api/auth/login
+    API->>PG: Busca usuario y verifica argon2id
+    PG-->>API: fila + hash
+    API-->>SPA: JWT + cookie HttpOnly
+    SPA->>API: Request + cookie / Bearer
     API->>API: requireAuth
     alt Token de desarrollo (AUTH_DEV_MODE)
         API-->>SPA: Acceso concedido (rol dev)
-    else Token Firebase
-        API->>FB: verifyIdToken(token)
-        FB-->>API: uid, email, name
+    else JWT válido
+        API->>PG: Refresca rol desde la base
         API-->>SPA: Acceso concedido
-    else Sin token
+    else Sin token o inválido
         API-->>SPA: 401 No autenticado
     end
     API->>API: requireAdmin (si aplica)
@@ -241,14 +242,12 @@ flowchart LR
     end
     subgraph Datos
         DB[(Supabase / Neon PostgreSQL)]
-        FB[Firebase Auth]
         AI[Gemini API]
     end
 
     Usuario --> FE
     FE -->|HTTPS /api| BE
     BE --> DB
-    BE -.-> FB
     BE -.-> AI
 ```
 

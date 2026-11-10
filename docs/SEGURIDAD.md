@@ -50,21 +50,33 @@ Documento técnico del modelo de seguridad actual, riesgos conocidos y plan de e
 | 7 | Datos sensibles en respuestas (password) | 🟠 Alta | ✅ Corregido: la API nunca devuelve contraseñas. |
 | 8 | Sin cifrado de backups | 🟠 Media | Cifrar y restringir acceso. |
 | 9 | Sin política de contraseñas | 🟡 Media | Mínimo 8 caracteres; falta complejidad y bloqueo por usuario. |
-| 10 | Firebase API key pública | 🟡 Baja | Restricción por dominio y reglas. |
+| 10 | Firebase API key pública | 🟡 Baja | ✅ Eliminado junto con la integración completa. |
 | 11 | Tokens sin revocación inmediata | 🟠 Media | Añadir denylist o refresh tokens. |
 | 12 | Cuentas demo con contraseñas públicas | 🔴 Crítica | ✅ Corregido: `SEED_DEMO_DATA=false` en producción y arranque bloqueado si se detectan. |
+| 13 | API key de Firebase versionada | 🟡 Media | ✅ Eliminado: la integración con Firebase se retiró por completo. |
 
 ---
 
-## 4. Firebase
+## 4. Integraciones con terceros
 
-`firebase-applet-config.json` contiene la configuración **pública** del SDK web:
+### Gemini (server-side)
 
-- `apiKey` de Firebase **no es un secreto**; identifica el proyecto.
-- La seguridad depende de:
-  - Reglas de Firestore/Storage.
-  - Restricciones de API key por dominio y por API.
-  - Dominios autorizados en Authentication.
+La clave de Gemini vive **solo en el servidor** (`GEMINI_API_KEY` en `.env`, ignorado por git).
+Nunca se envía al navegador.
+
+### Firebase (eliminado)
+
+El proyecto ya **no usa Firebase**: la autenticación es propia (JWT + cookie `HttpOnly` +
+argon2) y la base de datos es PostgreSQL. Se eliminaron:
+
+- `firebase-applet-config.json` (configuración del SDK web).
+- `frontend/src/lib/firebase.ts` y `backend/lib/firebase-admin.ts`.
+- La rama de verificación de tokens de Firebase en `backend/middleware/auth.ts`.
+- Las dependencias `firebase` y `firebase-admin`.
+
+> Motivo: la clave web de Firebase es pública por diseño y GitHub la reportaba como
+> *secret filtrado*. Como la integración no se usaba, se eliminó por completo en lugar de
+> restringarla.
 
 **Nunca** subir una cuenta de servicio (`firebase-adminsdk*.json`) ni claves privadas.
 

@@ -18,7 +18,7 @@ Documento de referencia de las tecnologías usadas, sus versiones y el motivo de
 | Driver | pg (node-postgres) | 8.23 |
 | Validación | Zod | 4 |
 | Base de datos | PostgreSQL | 17 |
-| Auth | Firebase Auth | 12 |
+| Auth | JWT propio + cookie `HttpOnly` + argon2id | — |
 | IA | Google Gemini (`@google/genai`) | 2.4 |
 
 ---
@@ -91,7 +91,7 @@ Documento de referencia de las tecnologías usadas, sus versiones y el motivo de
 - **argon2id** para el hash de contraseñas, con migración transparente de claves antiguas.
 - **JWT firmado** (`jsonwebtoken`) entregado en cookie `HttpOnly` (`padron_session`) y como Bearer para API/pruebas.
 - **RBAC** en `backend/middleware/auth.ts`; el rol se refresca desde la base en cada petición.
-- **Firebase Auth** queda como compatibilidad opcional para tokens de Google.
+- **Sin dependencias de identidad de terceros**: la sesión es 100 % propia (PostgreSQL + JWT + argon2id).
 
 > Ver [`AUTENTICACION.md`](AUTENTICACION.md).
 

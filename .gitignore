@@ -53,9 +53,9 @@ firebase-adminsdk*.json
 *-credentials.json
 secrets.json
 
-# Nota: firebase-applet-config.json SÍ se versiona porque es la configuración
-# pública del SDK web de Firebase (la apiKey web no es un secreto; la seguridad
-# real depende de las reglas de Firebase y de las restricciones de dominio).
+# Nota: ya no se usa Firebase. El proyecto no versiona ninguna credencial de
+# Google: la clave de Gemini vive en .env (ignorado) y la autenticación es
+# propia (PostgreSQL + JWT + argon2id).
 # Si en el futuro se usa una cuenta de servicio (Admin SDK), esa NO se sube.
 
 # -----------------------------------------------------------------------------
