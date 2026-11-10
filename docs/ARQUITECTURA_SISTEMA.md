@@ -10,6 +10,12 @@ Permite a la asociación de transportistas y a las autoridades municipales:
 - Gestionar reasignaciones e intercambios transaccionales seguros de números de padrón entre unidades sin alterar los identificadores internos (`vehicle.id`).
 - Permitir a los operarios/conductores capturar fotografías en vivo con su cámara móvil (DNI, Licencia, AFOCAT y moto) y controlar sus fechas de renovación.
 
+### Arquitectura de despliegue actual
+
+El sistema es un **monolito modular**: un único proceso Node (`server.ts` + `backend/app.ts`) sirve la API Express y el frontend compilado por Vite, sobre la misma base PostgreSQL. El código está organizado en `backend/` (servidor), `frontend/src/` (cliente) y `shared/` (catálogo compartido de roles, módulos y fechas).
+
+La decisión de mantener esta arquitectura y los pasos para migrar a repositorios separados (`padron-api`, `padron-web`, `@padron/shared`) están documentados en [`MIGRACION_ARQUITECTURA.md`](MIGRACION_ARQUITECTURA.md).
+
 ---
 
 ## 2. Roles del Sistema y Matriz de Permisos

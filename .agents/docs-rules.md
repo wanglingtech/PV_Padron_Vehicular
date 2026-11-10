@@ -8,6 +8,7 @@
 | Instalación detallada y troubleshooting | `docs/INSTALACION.md` |
 | Stack y decisiones técnicas | `docs/STACK.md` |
 | Reglas de negocio y arquitectura | `docs/ARQUITECTURA_SISTEMA.md` |
+| Migración a arquitectura separada (backend/frontend/shared) | `docs/MIGRACION_ARQUITECTURA.md` |
 | Diagramas | `docs/DIAGRAMAS.md` |
 | Endpoints | `docs/API.md` |
 | Fases y pendientes | `docs/ROADMAP.md` |

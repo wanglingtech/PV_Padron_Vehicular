@@ -322,7 +322,7 @@ npm run dev
 
 Abre **http://localhost:3000**.
 
-> Credenciales demo (solo entorno local): `admin@transporte.pe` / `admin123` y `operador@transporte.pe` / `operador123`. La autenticación actual no valida contraseñas; ver [Seguridad](#-seguridad).
+> Credenciales demo (solo entorno local): `admin@transporte.pe` / `admin123` y `operador@transporte.pe` / `operador123`. El login valida contra PostgreSQL con **argon2id**; ver [Autenticación](docs/AUTENTICACION.md) y [Seguridad](#-seguridad).
 
 ---
 
@@ -461,6 +461,8 @@ El plan por fases (web, escritorio, móvil, offline y SQLite) está en [`docs/RO
 | [`docs/DIAGRAMAS.md`](docs/DIAGRAMAS.md) | Diagramas Mermaid (arquitectura, ER, flujos). |
 | [`docs/API.md`](docs/API.md) | Endpoints de la API REST. |
 | [`docs/ROLES.md`](docs/ROLES.md) | Matriz de roles, módulos y RBAC del servidor. |
+| [`docs/AUTENTICACION.md`](docs/AUTENTICACION.md) | Flujo de sesión, cookies HttpOnly, JWT y cambio de contraseña. |
+| [`docs/MIGRACION_ARQUITECTURA.md`](docs/MIGRACION_ARQUITECTURA.md) | Cuándo y cómo separar backend, frontend y paquete compartido. |
 | [`docs/VERIFICACION.md`](docs/VERIFICACION.md) | Checklist de verificación y smoke test de la Fase 0. |
 | [`docs/ROADMAP.md`](docs/ROADMAP.md) | Fases y pendientes. |
 | [`docs/DESPLIEGUE.md`](docs/DESPLIEGUE.md) | Vercel, Railway, Supabase/Neon. |

@@ -40,6 +40,11 @@ Leyenda: `[x]` hecho · `[ ]` pendiente · `[~]` en progreso
 - [x] Catálogo compartido de roles, módulos y fechas en `shared/`.
 - [ ] Dividir `backend/app.ts` en routers por dominio (`vehicles`, `persons`, `portal`, `backup`).
 
+### Arquitectura de despliegue
+- [x] Decisión registrada: mantener **monolito modular** (`npm run dev`, un proceso, puerto 3000).
+- [x] Guía de migración a repos separados en [`MIGRACION_ARQUITECTURA.md`](MIGRACION_ARQUITECTURA.md).
+- [ ] Migrar a backend/frontend/shared separados solo cuando se cumplan ≥ 2 triggers del documento.
+
 ### Autenticación y autorización
 - [x] Endpoint `POST /api/auth/login` con validación de contraseña.
 - [x] Hash de contraseñas con `argon2id` y migración de claves antiguas.
