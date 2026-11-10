@@ -42,15 +42,25 @@ function AppContent() {
   // Redirigir a módulo permitido si el rol actual no tiene acceso al tab activo
   useEffect(() => {
     if (!hasModuleAccess(currentTab)) {
-      if (hasModuleAccess('portal-inicio')) {
-        setCurrentTab('portal-inicio');
-      } else if (hasModuleAccess('dashboard')) {
-        setCurrentTab('dashboard');
-      } else if (hasModuleAccess('padron')) {
-        setCurrentTab('padron');
-      } else if (hasModuleAccess('operario-portal')) {
-        setCurrentTab('operario-portal');
-      }
+      const fallbackOrder: NavigationTab[] = [
+        'portal-inicio',
+        'dashboard',
+        'padron',
+        'operario-portal',
+        'vencimientos',
+        'personas',
+        'curso-vial',
+        'importar-exportar',
+        'directorio-contacto',
+        'historial',
+        'gestion-portal',
+        'backup-migracion',
+        'usuarios',
+        'configuracion',
+        'nuevo',
+      ];
+      const nextTab = fallbackOrder.find((tab) => hasModuleAccess(tab));
+      if (nextTab) setCurrentTab(nextTab);
     }
   }, [currentTab, hasModuleAccess]);
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { ShieldCheck, UserCheck, Lock, Mail, CarFront, ArrowRight, CheckCircle2 } from 'lucide-react';
-import { useAuth, DEMO_USERS } from '../context/AuthContext.tsx';
+import { ShieldCheck, Lock, Mail, CarFront, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { useAuth, DEMO_USERS, ROLE_DEFINITIONS, DEFAULT_USER_ACCOUNTS } from '../context/AuthContext.tsx';
 import { getStoredCompanyBrand } from '../utils/pdf-export.ts';
 import { Alert } from '../utils/sweetalert.ts';
 
@@ -12,20 +12,18 @@ export const LoginView: React.FC<LoginViewProps> = ({ onSuccessLogin }) => {
   const { login } = useAuth();
   const company = getStoredCompanyBrand();
 
-  const [role, setRole] = useState<'admin' | 'operator'>('admin');
+  const [role, setRole] = useState<string>('admin');
   const [email, setEmail] = useState('admin@transporte.pe');
   const [password, setPassword] = useState('admin123');
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleRoleChange = (newRole: 'admin' | 'operator') => {
+  const roleDef = ROLE_DEFINITIONS.find((r) => r.id === role);
+
+  const handleRoleChange = (newRole: string) => {
     setRole(newRole);
-    if (newRole === 'admin') {
-      setEmail('admin@transporte.pe');
-      setPassword('admin123');
-    } else {
-      setEmail('operador@transporte.pe');
-      setPassword('operador123');
-    }
+    const account = DEFAULT_USER_ACCOUNTS.find((a) => a.role === newRole);
+    setEmail(account?.email || `${newRole}@transporte.pe`);
+    setPassword(account?.password || '123456');
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -37,18 +35,20 @@ export const LoginView: React.FC<LoginViewProps> = ({ onSuccessLogin }) => {
 
     setIsLoading(true);
     setTimeout(() => {
-      const name = role === 'admin' ? 'Carlos Mendoza (Administrador)' : 'Juan Quispe (Operario)';
-      login(email, role, name);
+      const demo = DEMO_USERS[role];
+      login(email, role, demo?.name || `Usuario (${role})`);
       setIsLoading(false);
-      Alert.toast(`Bienvenido al sistema como ${role === 'admin' ? 'Administrador' : 'Operario'}`, 'success');
+      Alert.toast(`Bienvenido al sistema como ${roleDef?.name || role}`, 'success');
       onSuccessLogin?.();
     }, 400);
   };
 
-  const handleQuickDemo = (demoRole: 'admin' | 'operator') => {
+  const handleQuickDemo = (demoRole: string) => {
     const demo = DEMO_USERS[demoRole];
+    if (!demo) return;
     login(demo.email, demoRole, demo.name);
-    Alert.toast(`Acceso rápido activado como ${demoRole === 'admin' ? 'Administrador' : 'Operario'}`, 'success');
+    const name = ROLE_DEFINITIONS.find((r) => r.id === demoRole)?.name || demoRole;
+    Alert.toast(`Acceso rápido activado como ${name}`, 'success');
     onSuccessLogin?.();
   };
 
@@ -74,31 +74,24 @@ export const LoginView: React.FC<LoginViewProps> = ({ onSuccessLogin }) => {
         {/* Tarjeta de Inicio de Sesión */}
         <div className="mt-8 bg-slate-800/90 backdrop-blur-md px-6 py-8 shadow-2xl rounded-2xl sm:px-10 border border-slate-700/80">
           {/* Selector de Rol */}
-          <div className="grid grid-cols-2 gap-2 p-1 bg-slate-900/80 rounded-xl mb-6 border border-slate-700">
-            <button
-              type="button"
-              onClick={() => handleRoleChange('admin')}
-              className={`flex items-center justify-center gap-2 py-2.5 px-3 rounded-lg text-xs font-semibold transition-all ${
-                role === 'admin'
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-slate-400 hover:text-slate-200'
-              }`}
+          <div className="mb-6">
+            <label className="block text-xs font-medium text-slate-300 mb-1.5">
+              Rol de acceso
+            </label>
+            <select
+              value={role}
+              onChange={(e) => handleRoleChange(e.target.value)}
+              className="block w-full rounded-xl border border-slate-600 bg-slate-900/80 px-3 py-2.5 text-sm text-white focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
             >
-              <ShieldCheck size={16} />
-              <span>Administrador</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => handleRoleChange('operator')}
-              className={`flex items-center justify-center gap-2 py-2.5 px-3 rounded-lg text-xs font-semibold transition-all ${
-                role === 'operator'
-                  ? 'bg-amber-600 text-white shadow-sm'
-                  : 'text-slate-400 hover:text-slate-200'
-              }`}
-            >
-              <UserCheck size={16} />
-              <span>Operario / Chofer</span>
-            </button>
+              {ROLE_DEFINITIONS.map((r) => (
+                <option key={r.id} value={r.id}>
+                  {r.name}
+                </option>
+              ))}
+            </select>
+            <p className="mt-1.5 text-[10px] text-slate-500">
+              La sesión demo no valida contraseña; el acceso real llega en la Fase 1.
+            </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -143,30 +136,20 @@ export const LoginView: React.FC<LoginViewProps> = ({ onSuccessLogin }) => {
             {/* Permisos según el rol */}
             <div className="rounded-lg bg-slate-900/50 p-3 text-xs text-slate-400 border border-slate-700/60">
               <p className="font-semibold text-slate-300 mb-1 flex items-center gap-1.5">
-                <CheckCircle2 size={13} className={role === 'admin' ? 'text-blue-400' : 'text-amber-400'} />
-                {role === 'admin' ? 'Acceso Administrativo Total' : 'Portal Operario de Padrón'}
+                <CheckCircle2 size={13} className="text-blue-400" />
+                {roleDef?.name || role}
               </p>
-              {role === 'admin' ? (
-                <p className="text-[11px] leading-relaxed">
-                  Padrón completo, directorio de personas, importación/exportación Excel, reasignación e intercambio transaccional de padrones, auditoría y control de curso vial.
-                </p>
-              ) : (
-                <p className="text-[11px] leading-relaxed">
-                  Registro de su vehículo/moto, captura de fotos en tiempo real (DNI, Licencia, AFOCAT), control de fechas de vencimiento y solicitud de cambio de padrón.
-                </p>
-              )}
+              <p className="text-[11px] leading-relaxed">
+                {roleDef?.description || 'Acceso según la matriz de permisos configurada.'}
+              </p>
             </div>
 
             <button
               type="submit"
               disabled={isLoading}
-              className={`flex w-full items-center justify-center gap-2 rounded-xl py-2.5 px-4 text-sm font-semibold text-white shadow-md transition-all ${
-                role === 'admin'
-                  ? 'bg-blue-600 hover:bg-blue-500 shadow-blue-600/30'
-                  : 'bg-amber-600 hover:bg-amber-500 shadow-amber-600/30'
-              } disabled:opacity-50`}
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 py-2.5 px-4 text-sm font-semibold text-white shadow-md shadow-blue-600/30 transition-all hover:bg-blue-500 disabled:opacity-50"
             >
-              <span>{isLoading ? 'Ingresando...' : `Iniciar Sesión como ${role === 'admin' ? 'Administrador' : 'Operario'}`}</span>
+              <span>{isLoading ? 'Ingresando...' : `Iniciar Sesión como ${roleDef?.name || role}`}</span>
               <ArrowRight size={16} />
             </button>
           </form>
@@ -177,22 +160,17 @@ export const LoginView: React.FC<LoginViewProps> = ({ onSuccessLogin }) => {
               Acceso Directo con Cuentas Demo:
             </p>
             <div className="grid grid-cols-2 gap-2">
-              <button
-                type="button"
-                onClick={() => handleQuickDemo('admin')}
-                className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-slate-700/60 hover:bg-slate-700 text-xs font-medium text-slate-200 border border-slate-600 transition-colors"
-              >
-                <ShieldCheck size={14} className="text-blue-400" />
-                <span>Demo Admin</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => handleQuickDemo('operator')}
-                className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-slate-700/60 hover:bg-slate-700 text-xs font-medium text-slate-200 border border-slate-600 transition-colors"
-              >
-                <UserCheck size={14} className="text-amber-400" />
-                <span>Demo Operario</span>
-              </button>
+              {ROLE_DEFINITIONS.map((r) => (
+                <button
+                  key={r.id}
+                  type="button"
+                  onClick={() => handleQuickDemo(r.id)}
+                  className="flex items-center justify-center gap-1.5 py-2 px-2 rounded-lg bg-slate-700/60 hover:bg-slate-700 text-[11px] font-medium text-slate-200 border border-slate-600 transition-colors"
+                >
+                  <ShieldCheck size={13} className="text-blue-400 shrink-0" />
+                  <span className="truncate">{r.name}</span>
+                </button>
+              ))}
             </div>
           </div>
         </div>

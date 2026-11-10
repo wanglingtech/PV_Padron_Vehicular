@@ -40,6 +40,7 @@ import {
 import {
   useAuth,
   SYSTEM_MODULES_CONFIG,
+  ROLE_DEFINITIONS,
 } from '../context/AuthContext.tsx';
 import {
   RoleDefinition,
@@ -257,7 +258,7 @@ export const UsersView: React.FC = () => {
     }
 
     // Si es un nuevo rol: inicializar permisos según la plantilla seleccionada
-    const initialPerms: Record<SystemModuleId, ModulePermissionMode> = {
+    let initialPerms: Record<SystemModuleId, ModulePermissionMode> = {
       'portal-inicio': 'read',
       dashboard: 'read',
       padron: 'read',
@@ -275,15 +276,10 @@ export const UsersView: React.FC = () => {
       'backup-migracion': 'none',
     };
 
-    if (baseTemplate === 'admin') {
-      SYSTEM_MODULES_CONFIG.forEach((m) => {
-        initialPerms[m.id] = 'write';
-      });
-    } else if (baseTemplate === 'operator') {
-      initialPerms['operario-portal'] = 'write';
-    } else if (baseTemplate === 'tesorero') {
-      initialPerms['importar-exportar'] = 'write';
-      initialPerms['configuracion'] = 'read';
+    // Si la plantilla coincide con un rol institucional, clonamos su matriz.
+    const template = ROLE_DEFINITIONS.find((r) => r.id === baseTemplate);
+    if (template) {
+      initialPerms = { ...template.permissions };
     }
 
     const newRole: RoleDefinition = {
@@ -1409,9 +1405,11 @@ export const UsersView: React.FC = () => {
                     className="mt-1 block w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-xs text-slate-900 dark:text-white focus:border-indigo-500 focus:outline-none"
                   >
                     <option value="read_only">Solo Lectura en Operaciones (Recomendado)</option>
-                    <option value="tesorero">Tesorero / Finanzas (Lectura Flota + Escritura Reportes)</option>
-                    <option value="operator">Operativo (Similar a Operario de Turno)</option>
-                    <option value="admin">Administrativo (Copia de permisos de Administrador)</option>
+                    {ROLE_DEFINITIONS.map((r) => (
+                      <option key={r.id} value={r.id}>
+                        {r.name} (Copia de su matriz de permisos)
+                      </option>
+                    ))}
                   </select>
                 </div>
               )}

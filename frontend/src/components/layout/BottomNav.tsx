@@ -8,6 +8,7 @@ import {
   LayoutDashboard,
 } from 'lucide-react';
 import { NavigationTab } from './Sidebar.tsx';
+import { useAuth } from '../../context/AuthContext.tsx';
 
 interface BottomNavProps {
   currentTab: NavigationTab;
@@ -24,6 +25,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
   urgentAlertsCount = 0,
   isOperator = false,
 }) => {
+  const { hasModuleAccess } = useAuth();
   const navItems = [
     {
       id: 'portal-inicio' as NavigationTab,
@@ -49,7 +51,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
       icon: Camera,
       badge: 0,
     },
-  ];
+  ].filter((item) => hasModuleAccess(item.id));
 
   return (
     <nav

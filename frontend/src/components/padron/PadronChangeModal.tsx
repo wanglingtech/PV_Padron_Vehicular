@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeftRight, CheckCircle2, AlertTriangle, FileText, Calendar, ShieldCheck, X } from 'lucide-react';
 import { api } from '../../api/client.ts';
-import { useAuth } from '../../context/AuthContext.tsx';
+import { useAuth, isPrivilegedRole } from '../../context/AuthContext.tsx';
 import { useToast } from '../common/Toast.tsx';
 import { Vehicle } from '../../types/index.ts';
 
@@ -17,7 +17,7 @@ type Mode = 'FREE_PADRON' | 'SWAP_PADRON' | 'REQUEST';
 export function PadronChangeModal({ vehicle, isOpen, onClose, onSuccess }: PadronChangeModalProps) {
   const { user } = useAuth();
   const { showToast } = useToast();
-  const isAdmin = user?.role === 'admin';
+  const isAdmin = isPrivilegedRole(user?.role);
 
   const [mode, setMode] = useState<Mode>(isAdmin ? 'FREE_PADRON' : 'REQUEST');
   const [loading, setLoading] = useState(false);

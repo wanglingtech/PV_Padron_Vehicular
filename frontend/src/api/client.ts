@@ -37,7 +37,7 @@ class ApiService {
       'x-user-role': this.currentUser.role,
       'x-user-email': this.currentUser.email,
       'x-user-name': this.currentUser.name,
-      'Authorization': this.currentUser.role === 'admin' ? 'Bearer dev-admin-token' : 'Bearer dev-operator-token',
+      'Authorization': `Bearer dev-${this.currentUser.role}-token`,
     };
   }
 

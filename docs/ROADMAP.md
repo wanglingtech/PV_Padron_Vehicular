@@ -18,8 +18,11 @@ Leyenda: `[x]` hecho · `[ ]` pendiente · `[~]` en progreso
 - [x] CI básico (lint + build).
 - [x] Validación de conexión a PostgreSQL al arrancar.
 - [x] Health check con estado real de la base.
-- [ ] `package-lock.json` versionado (npm como gestor oficial).
-- [ ] Licencia definida.
+- [x] Matriz de roles y módulos (`admin`, `developer`, `gerente` con acceso total; el resto con su módulo propio y lecturas relacionadas).
+- [x] RBAC por módulo en el backend (`requireModule`) y protección de roles institucionales.
+- [x] Smoke test de API (`npm run smoke`) y guía de verificación.
+- [x] `package-lock.json` versionado (npm como gestor oficial).
+- [x] Licencia definida como propietaria (`UNLICENSED`) a la espera de la definitiva.
 - [ ] Primer release/tag `v0.1.0`.
 
 **Criterio de salida:** `git clone` + `npm install` + `.env` + `npm run db:push` + `npm run dev` funciona sin pasos ocultos.

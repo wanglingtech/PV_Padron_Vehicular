@@ -3,6 +3,23 @@ import { CurrentUser, RoleDefinition, SystemModuleId, ModulePermissionMode, User
 import { api } from '../api/client.ts';
 import { auth, googleAuthProvider } from '../lib/firebase.ts';
 import { signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
+import {
+  DEFAULT_ROLES,
+  DEFAULT_USER_ACCOUNTS,
+  DEMO_USERS,
+  isPrivilegedRole,
+} from '../config/roles.ts';
+
+// Re-exportamos el catálogo para mantener compatibilidad con las vistas que
+// ya importaban estos símbolos desde AuthContext.
+export {
+  DEFAULT_ROLES,
+  DEFAULT_USER_ACCOUNTS,
+  DEMO_USERS,
+  SYSTEM_MODULES_CONFIG,
+  ROLE_DEFINITIONS,
+  isPrivilegedRole,
+} from '../config/roles.ts';
 
 export type NavigationTab =
   | 'portal-inicio'
@@ -21,243 +38,8 @@ export type NavigationTab =
   | 'gestion-portal'
   | 'backup-migracion';
 
-export const SYSTEM_MODULES_CONFIG: Array<{
-  id: SystemModuleId;
-  name: string;
-  category: string;
-  description: string;
-}> = [
-  {
-    id: 'portal-inicio',
-    name: 'Portal de Inicio y Cartelera',
-    category: 'Portal',
-    description: 'Cartelera digital institucional, carrusel de eventos, comunicados oficiales y agenda',
-  },
-  {
-    id: 'dashboard',
-    name: 'Dashboard Operativo & Flota',
-    category: 'Operaciones',
-    description: 'Métricas clave de flota, resumen de estado operativo y alertas rápidas',
-  },
-  {
-    id: 'padron',
-    name: 'Padrón Vehicular',
-    category: 'Operaciones',
-    description: 'Padrón maestro, búsqueda avanzada, filtros, exportaciones e historial',
-  },
-  {
-    id: 'nuevo',
-    name: 'Registrar Nueva Unidad',
-    category: 'Operaciones',
-    description: 'Alta de vehículos en padrón, registro de placa, motor y documentación inicial',
-  },
-  {
-    id: 'personas',
-    name: 'Directorio de Personas',
-    category: 'Personal',
-    description: 'Padrón de Propietarios y Conductores con DNI, contacto y ficha técnica',
-  },
-  {
-    id: 'curso-vial',
-    name: 'Conductores & Curso Vial',
-    category: 'Personal',
-    description: 'Gestión de curso de educación vial anual, actas presenciales y sincronización',
-  },
-  {
-    id: 'directorio-contacto',
-    name: 'Directorio WhatsApp por Roles',
-    category: 'Personal',
-    description: 'Directorio de contacto telefónico y comunicación directa vía WhatsApp entre conductores, administradores y asociados según rol',
-  },
-  {
-    id: 'vencimientos',
-    name: 'Alertas de Vencimiento',
-    category: 'Control',
-    description: 'Monitoreo de SOAT/AFOCAT, CITV, Licencias y Cursos con semaforización',
-  },
-  {
-    id: 'importar-exportar',
-    name: 'Importar / Exportar Excel',
-    category: 'Control',
-    description: 'Carga masiva diagnóstica de archivos Excel y descarga de base de datos',
-  },
-  {
-    id: 'operario-portal',
-    name: 'Portal del Operario',
-    category: 'Operario',
-    description: 'Ficha individual del operador/conductor, cámara fotográfica y reportes de unidad',
-  },
-  {
-    id: 'historial',
-    name: 'Historial de Auditoría',
-    category: 'Administración',
-    description: 'Bitácora inmutable de modificaciones, canjes de padrón y trazabilidad',
-  },
-  {
-    id: 'usuarios',
-    name: 'Cuentas y Accesos',
-    category: 'Administración',
-    description: 'Creación de cuentas, asignación de roles y configuración de matriz de permisos',
-  },
-  {
-    id: 'configuracion',
-    name: 'Configuración & Empresa',
-    category: 'Administración',
-    description: 'Personalización institucional de membrete, base de datos y parámetros del sistema',
-  },
-  {
-    id: 'gestion-portal',
-    name: 'Gestión de Cartelera & Portal',
-    category: 'Administración',
-    description: 'Configuración de carrusel, multimedia, estados de vigencia, orden y agenda de eventos',
-  },
-  {
-    id: 'backup-migracion',
-    name: 'Backup & Migración Multi-BD',
-    category: 'Administración',
-    description: 'Copias de seguridad completas en JSON y SQL para migración a cualquier base de datos o plataforma',
-  },
-];
-
-export const DEFAULT_ROLES: RoleDefinition[] = [
-  {
-    id: 'admin',
-    name: 'Administrador',
-    description: 'Control y supervisión total de la asociación, configuración y asignación de permisos',
-    badgeColor: 'indigo',
-    isSystem: true,
-    permissions: {
-      'portal-inicio': 'write',
-      dashboard: 'write',
-      padron: 'write',
-      nuevo: 'write',
-      personas: 'write',
-      'curso-vial': 'write',
-      vencimientos: 'write',
-      'importar-exportar': 'write',
-      'operario-portal': 'write',
-      historial: 'write',
-      'directorio-contacto': 'write',
-      usuarios: 'write',
-      configuracion: 'write',
-      'gestion-portal': 'write',
-      'backup-migracion': 'write',
-    },
-  },
-  {
-    id: 'operator',
-    name: 'Operario de Turno',
-    description: 'Acceso operativo para registro en campo, consulta de flota y portal vehicular de su unidad',
-    badgeColor: 'amber',
-    isSystem: true,
-    permissions: {
-      'portal-inicio': 'read',
-      dashboard: 'read',
-      padron: 'read',
-      nuevo: 'none',
-      personas: 'read',
-      'curso-vial': 'read',
-      vencimientos: 'read',
-      'importar-exportar': 'none',
-      'operario-portal': 'write',
-      historial: 'none',
-      'directorio-contacto': 'read',
-      usuarios: 'none',
-      configuracion: 'none',
-      'gestion-portal': 'none',
-      'backup-migracion': 'none',
-    },
-  },
-  {
-    id: 'tesorero',
-    name: 'Tesorero / Finanzas',
-    description: 'Supervisión contable, padrón general, reportes oficiales e importación/exportación',
-    badgeColor: 'emerald',
-    isSystem: false,
-    permissions: {
-      'portal-inicio': 'read',
-      dashboard: 'read',
-      padron: 'read',
-      nuevo: 'none',
-      personas: 'read',
-      'curso-vial': 'read',
-      vencimientos: 'read',
-      'importar-exportar': 'write',
-      'operario-portal': 'none',
-      historial: 'read',
-      'directorio-contacto': 'read',
-      usuarios: 'none',
-      configuracion: 'read',
-      'gestion-portal': 'none',
-      'backup-migracion': 'read',
-    },
-  },
-];
-
-export const DEFAULT_USER_ACCOUNTS: UserAccount[] = [
-  {
-    id: 'usr-admin-01',
-    uid: 'admin-dev-01',
-    name: 'Carlos Mendoza Alarcón',
-    email: 'admin@transporte.pe',
-    role: 'admin',
-    isActive: true,
-    createdAt: '2025-01-10T08:00:00Z',
-    lastLogin: 'Hace 5 minutos',
-  },
-  {
-    id: 'usr-op-01',
-    uid: 'operador-dev-02',
-    name: 'Juan Quispe Flores',
-    email: 'operador@transporte.pe',
-    role: 'operator',
-    assignedPadron: 'PAD-004',
-    isActive: true,
-    createdAt: '2025-02-14T09:30:00Z',
-    lastLogin: 'Hace 2 horas',
-  },
-  {
-    id: 'usr-op-02',
-    uid: 'operador-dev-03',
-    name: 'Manuel Quispe Flores',
-    email: 'manuel.quispe@transporte.pe',
-    role: 'operator',
-    assignedPadron: 'PAD-001',
-    isActive: true,
-    createdAt: '2025-03-01T11:20:00Z',
-    lastLogin: 'Ayer',
-  },
-  {
-    id: 'usr-tesorero-01',
-    uid: 'tesorero-dev-04',
-    name: 'Rosa Alarcón Dávila',
-    email: 'tesoreria@transporte.pe',
-    role: 'tesorero',
-    isActive: true,
-    createdAt: '2025-03-15T10:00:00Z',
-  },
-];
-
-export const DEMO_USERS: Record<string, CurrentUser> = {
-  admin: {
-    uid: 'admin-dev-01',
-    email: 'admin@transporte.pe',
-    name: 'Carlos Mendoza (Administrador)',
-    role: 'admin',
-  },
-  operator: {
-    uid: 'operador-dev-02',
-    email: 'operador@transporte.pe',
-    name: 'Juan Quispe (Operario Padrón 04)',
-    role: 'operator',
-  },
-  tesorero: {
-    uid: 'tesorero-dev-04',
-    email: 'tesoreria@transporte.pe',
-    name: 'Rosa Alarcón Dávila (Tesorera)',
-    role: 'tesorero',
-  },
-};
+// El catálogo de módulos, roles, cuentas demo y helpers vive en
+// frontend/src/config/roles.ts y se re-exporta arriba.
 
 interface AuthContextType {
   currentUser: CurrentUser | null;
@@ -410,13 +192,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     roles.find((r) => r.id === (currentUser?.role || 'operator')) ||
     DEFAULT_ROLES[0];
 
-  const isAdmin = currentUser?.role === 'admin';
+  const isAdmin = isPrivilegedRole(currentUser?.role);
   const isOperator = currentUser?.role === 'operator';
 
   // Verificación de Permisos Dinámica
   const getModulePermission = (moduleId: NavigationTab): ModulePermissionMode => {
     if (!currentUser) return 'none';
-    if (currentUser.role === 'admin') return 'write'; // Administrador siempre tiene escritura total
+    // Admin, programador y gerente tienen acceso total.
+    if (isPrivilegedRole(currentUser.role)) return 'write';
     const roleDef = roles.find((r) => r.id === currentUser.role);
     if (!roleDef) return 'none';
     return roleDef.permissions[moduleId as SystemModuleId] || 'none';
@@ -439,12 +222,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return perm === 'read' || perm === 'write';
   };
 
-  // Cargar roles y usuarios desde la Base de Datos PostgreSQL
+  // Cargar roles y usuarios desde la Base de Datos PostgreSQL.
+  // El catálogo de roles es público; la lista de usuarios solo se consulta
+  // cuando el rol actual tiene permiso de lectura sobre "usuarios" para no
+  // provocar 403 innecesarios en la consola del navegador.
   const refreshRolesAndUsersFromDB = async () => {
     try {
+      const canReadUsers = getModulePermission('usuarios') !== 'none';
       const [dbRoles, dbUsers] = await Promise.all([
         api.getRoles().catch(() => null),
-        api.getUsers().catch(() => null),
+        canReadUsers ? api.getUsers().catch(() => null) : Promise.resolve(null),
       ]);
 
       if (dbRoles && Array.isArray(dbRoles) && dbRoles.length > 0) {
@@ -491,7 +278,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   useEffect(() => {
     refreshRolesAndUsersFromDB();
-  }, []);
+    // Se vuelve a sincronizar al cambiar de rol para cargar las cuentas
+    // cuando el nuevo rol sí tiene acceso al módulo de usuarios.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUser?.role]);
 
   // Operaciones de Roles
   const saveRole = (newRole: RoleDefinition) => {
@@ -530,8 +320,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const deleteRole = (roleId: string): boolean => {
-    // Proteger roles del sistema maestros
-    if (roleId === 'admin' || roleId === 'operator') return false;
+    // Proteger todos los roles institucionales (isSystem), no solo admin/operator.
+    const roleToDelete = roles.find((r) => r.id === roleId);
+    if (!roleToDelete || roleToDelete.isSystem) return false;
     setRoles((prev) => prev.filter((r) => r.id !== roleId));
     // Reasignar usuarios de este rol a 'operator'
     setUserAccounts((prev) =>

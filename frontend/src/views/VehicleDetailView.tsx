@@ -27,7 +27,7 @@ import { api } from '../api/client.ts';
 import { StatusBadge } from '../components/common/StatusBadge.tsx';
 import { ConfirmModal } from '../components/common/ConfirmModal.tsx';
 import { useToast } from '../components/common/Toast.tsx';
-import { useAuth } from '../context/AuthContext.tsx';
+import { useAuth, isPrivilegedRole } from '../context/AuthContext.tsx';
 import { PadronChangeModal } from '../components/padron/PadronChangeModal.tsx';
 import { RetireVehicleModal } from '../components/padron/RetireVehicleModal.tsx';
 import { PersonAvatar } from '../components/common/PersonAvatar.tsx';
@@ -50,7 +50,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
   onDeleted,
 }) => {
   const { user } = useAuth();
-  const isAdmin = user?.role === 'admin';
+  const isAdmin = isPrivilegedRole(user?.role);
   const { showToast } = useToast();
 
   const [vehicle, setVehicle] = useState<Vehicle | null>(null);

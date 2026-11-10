@@ -100,6 +100,20 @@ Además incluye un **portal institucional** (cartelera, comunicados y agenda), u
 | **Cuentas y accesos** | Usuarios, roles y matriz de permisos por módulo. | Escritura |
 | **Configuración & empresa** | Datos institucionales, logo y preferencias visuales. | Lectura / Escritura |
 
+### Distribución por roles
+
+`admin`, `developer` (programador/soporte) y `gerente` acceden a **todos** los módulos. El resto de roles solo ve su módulo propio y las lecturas relacionadas:
+
+| Rol | Módulo propio (escritura) | Lecturas relacionadas |
+| :--- | :--- | :--- |
+| `operator` | Portal del Operario | Inicio, Dashboard, Padrón, Personas, Curso Vial, Vencimientos, Directorio |
+| `tesorero` | Importar / Exportar | Inicio, Dashboard, Padrón, Personas, Curso Vial, Vencimientos, Auditoría, Directorio, Configuración, Backup |
+| `fiscalizador` | Alertas de Vencimiento | Inicio, Dashboard, Padrón, Personas, Curso Vial, Auditoría, Directorio |
+| `secretaria` | Personas, Curso Vial, Directorio, Gestión del Portal | Inicio, Dashboard, Padrón, Vencimientos, Auditoría |
+| `registrador` | Registrar Unidad, Padrón, Personas | Inicio, Dashboard, Curso Vial, Vencimientos, Directorio |
+
+La matriz completa y el detalle del RBAC están en [`docs/ROLES.md`](docs/ROLES.md). El backend valida las escrituras con `requireModule`, no solo el menú del frontend.
+
 ---
 
 ## 🛠 Stack tecnológico
@@ -333,6 +347,7 @@ Copia `.env.example` y completa los valores. **Nunca subas tu `.env` real.**
 | `npm start` | Ejecuta el servidor compilado (`dist/server.cjs`). |
 | `npm run preview` | Previsualiza el build de Vite. |
 | `npm run lint` | Verificación de tipos con TypeScript (`tsc --noEmit`). |
+| `npm run smoke` | Smoke test de API y RBAC (requiere `npm run dev`). |
 | `npm run db:push` | Aplica el esquema de Drizzle a la base de datos. |
 | `npm run db:generate` | Genera una migración SQL desde el esquema. |
 | `npm run db:studio` | Abre Drizzle Studio para explorar la base. |
@@ -428,6 +443,8 @@ El plan por fases (web, escritorio, móvil, offline y SQLite) está en [`docs/RO
 | [`docs/ARQUITECTURA_SISTEMA.md`](docs/ARQUITECTURA_SISTEMA.md) | Reglas de negocio y arquitectura. |
 | [`docs/DIAGRAMAS.md`](docs/DIAGRAMAS.md) | Diagramas Mermaid (arquitectura, ER, flujos). |
 | [`docs/API.md`](docs/API.md) | Endpoints de la API REST. |
+| [`docs/ROLES.md`](docs/ROLES.md) | Matriz de roles, módulos y RBAC del servidor. |
+| [`docs/VERIFICACION.md`](docs/VERIFICACION.md) | Checklist de verificación y smoke test de la Fase 0. |
 | [`docs/ROADMAP.md`](docs/ROADMAP.md) | Fases y pendientes. |
 | [`docs/DESPLIEGUE.md`](docs/DESPLIEGUE.md) | Vercel, Railway, Supabase/Neon. |
 | [`docs/CALIDAD.md`](docs/CALIDAD.md) | Indicadores de calidad y cómo medirlos. |
@@ -453,7 +470,7 @@ Usa mensajes de commit en formato [Conventional Commits](https://www.conventiona
 
 ## 📄 Licencia
 
-Licencia **por definir**. Hasta que se añada un archivo `LICENSE`, el código queda bajo “todos los derechos reservados”. Si deseas publicarlo como software libre, se recomienda **MIT** o **Apache-2.0**.
+Licencia **propietaria** (`UNLICENSED`): todos los derechos reservados. El código se publica para consulta y evaluación, pero no se concede permiso de uso, copia, modificación ni distribución sin autorización expresa del titular. La licencia definitiva (por ejemplo MIT o Apache-2.0) se decidirá antes de una distribución pública como software libre.
 
 ---
 

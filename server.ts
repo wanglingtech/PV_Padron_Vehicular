@@ -27,7 +27,8 @@ import {
   reviewPadronChangeRequest,
   swapVehiclesPadron,
 } from './frontend/src/db/padron-changes.ts';
-import { requireAdmin, requireAuth, AuthRequest } from './frontend/src/middleware/auth.ts';
+import { requireAdmin, requireAuth, requireModule, AuthRequest } from './frontend/src/middleware/auth.ts';
+import { DEFAULT_USER_ACCOUNTS, ROLE_DEFINITIONS } from './frontend/src/config/roles.ts';
 import { executeImportBatch, generateExcelExport, parseAndPreviewExcel } from './frontend/src/utils/excel-handler.ts';
 import {
   ChangePadronSchema,
@@ -157,7 +158,7 @@ async function startServer() {
   });
 
   // 5. Registrar nuevo vehículo
-  app.post('/api/vehicles', requireAuth, async (req: AuthRequest, res) => {
+  app.post('/api/vehicles', requireAuth, requireModule('nuevo', 'write'), async (req: AuthRequest, res) => {
     try {
       const validation = VehicleInputSchema.safeParse(req.body);
       if (!validation.success) {
@@ -180,7 +181,7 @@ async function startServer() {
   });
 
   // 6. Actualizar vehículo existente
-  app.put('/api/vehicles/:id', requireAuth, async (req: AuthRequest, res) => {
+  app.put('/api/vehicles/:id', requireAuth, requireModule('padron', 'write'), async (req: AuthRequest, res) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) {
@@ -448,7 +449,7 @@ async function startServer() {
     }
   });
 
-  app.put('/api/persons/:id', requireAuth, requireAdmin, async (req: AuthRequest, res) => {
+  app.put('/api/persons/:id', requireAuth, requireModule('personas', 'write'), async (req: AuthRequest, res) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) {
@@ -469,7 +470,7 @@ async function startServer() {
   });
 
   // 14b. Directorio de Contactos Telefónico y WhatsApp por Rol
-  app.get('/api/contacts', async (req, res) => {
+  app.get('/api/contacts', requireAuth, requireModule('directorio-contacto', 'read'), async (req: AuthRequest, res) => {
     try {
       const search = (req.query.search as string || '').toLowerCase().trim();
       const roleFilter = (req.query.role as string || 'ALL').trim();
@@ -663,7 +664,7 @@ async function startServer() {
   });
 
   // 15. Estadísticas para el Dashboard
-  app.get('/api/dashboard/stats', async (req, res) => {
+  app.get('/api/dashboard/stats', requireAuth, requireModule('dashboard', 'read'), async (req: AuthRequest, res) => {
     try {
       const stats = await getDashboardStats();
       res.json(stats);
@@ -674,7 +675,7 @@ async function startServer() {
   });
 
   // 16. Pantalla de Vencimientos
-  app.get('/api/expirations', async (req, res) => {
+  app.get('/api/expirations', requireAuth, requireModule('vencimientos', 'read'), async (req: AuthRequest, res) => {
     try {
       const timeframe = (req.query.timeframe as any) || 'all';
       const docType = (req.query.docType as string) || 'all';
@@ -689,7 +690,7 @@ async function startServer() {
   });
 
   // 16b. Conductores y Curso de Educación Vial Anual
-  app.get('/api/drivers/courses', async (req, res) => {
+  app.get('/api/drivers/courses', requireAuth, requireModule('curso-vial', 'read'), async (req: AuthRequest, res) => {
     try {
       const search = req.query.search as string;
       const courseStatus = req.query.courseStatus as string;
@@ -701,7 +702,7 @@ async function startServer() {
     }
   });
 
-  app.put('/api/drivers/:id/course', requireAuth, requireAdmin, async (req: AuthRequest, res) => {
+  app.put('/api/drivers/:id/course', requireAuth, requireModule('curso-vial', 'write'), async (req: AuthRequest, res) => {
     try {
       const driverId = parseInt(req.params.id);
       if (isNaN(driverId)) {
@@ -721,7 +722,7 @@ async function startServer() {
     }
   });
 
-  app.post('/api/drivers/courses/bulk-sync', requireAuth, requireAdmin, async (req: AuthRequest, res) => {
+  app.post('/api/drivers/courses/bulk-sync', requireAuth, requireModule('curso-vial', 'write'), async (req: AuthRequest, res) => {
     try {
       const { approvedIdentifiers, evaluations, year } = req.body;
       const hasIdentifiers = Array.isArray(approvedIdentifiers) && approvedIdentifiers.length > 0;
@@ -753,7 +754,7 @@ async function startServer() {
   });
 
   // 16. Procesamiento con IA de Planilla o Documento Escaneado (PDF / Imagen) de Curso Vial
-  app.post('/api/drivers/courses/process-ai-document', requireAuth, requireAdmin, async (req: AuthRequest, res) => {
+  app.post('/api/drivers/courses/process-ai-document', requireAuth, requireModule('curso-vial', 'write'), async (req: AuthRequest, res) => {
     try {
       const { fileBase64, mimeType = 'application/pdf', courseYear = new Date().getFullYear() } = req.body;
       if (!fileBase64) {
@@ -844,7 +845,7 @@ Devuelve estrictamente un JSON con esta estructura:
   });
 
   // 17. Historial de Auditoría
-  app.get('/api/audit-logs', async (req, res) => {
+  app.get('/api/audit-logs', requireAuth, async (req: AuthRequest, res) => {
     try {
       const padron = req.query.padron as string;
       const entity = req.query.entity as string;
@@ -860,7 +861,7 @@ Devuelve estrictamente un JSON con esta estructura:
   });
 
   // 18. Previsualizar archivo Excel antes de importar
-  app.post('/api/import/preview', requireAuth, async (req: AuthRequest, res) => {
+  app.post('/api/import/preview', requireAuth, requireModule('importar-exportar', 'write'), async (req: AuthRequest, res) => {
     try {
       const { fileBase64 } = req.body;
       if (!fileBase64) {
@@ -877,7 +878,7 @@ Devuelve estrictamente un JSON con esta estructura:
   });
 
   // 18b. Previsualizar archivo PDF oficial antes de importar (Procesamiento con IA)
-  app.post('/api/import/preview-pdf', requireAuth, async (req: AuthRequest, res) => {
+  app.post('/api/import/preview-pdf', requireAuth, requireModule('importar-exportar', 'write'), async (req: AuthRequest, res) => {
     try {
       const { fileBase64, fileName } = req.body;
       if (!fileBase64) {
@@ -993,7 +994,7 @@ Devuelve ÚNICAMENTE un JSON válido con la siguiente estructura:
   });
 
   // 18c. Endpoints de Backup & Migración Integral del Sistema
-  app.get('/api/backup/export', requireAuth, requireAdmin, async (req: AuthRequest, res) => {
+  app.get('/api/backup/export', requireAuth, requireModule('backup-migracion', 'write'), async (req: AuthRequest, res) => {
     try {
       const format = (req.query.format as string) === 'sql' ? 'sql' : 'json';
       const userEmail = req.user?.email || 'admin@transporte.pe';
@@ -1016,7 +1017,7 @@ Devuelve ÚNICAMENTE un JSON válido con la siguiente estructura:
     }
   });
 
-  app.get('/api/backup/stats', requireAuth, async (req: AuthRequest, res) => {
+  app.get('/api/backup/stats', requireAuth, requireModule('backup-migracion', 'read'), async (req: AuthRequest, res) => {
     try {
       const stats = await getDatabaseBackupStats();
       res.json(stats);
@@ -1026,7 +1027,7 @@ Devuelve ÚNICAMENTE un JSON válido con la siguiente estructura:
     }
   });
 
-  app.post('/api/backup/restore', requireAuth, requireAdmin, async (req: AuthRequest, res) => {
+  app.post('/api/backup/restore', requireAuth, requireModule('backup-migracion', 'write'), async (req: AuthRequest, res) => {
     try {
       const { backupData, mode = 'merge' } = req.body;
       if (!backupData || !backupData.data) {
@@ -1043,7 +1044,7 @@ Devuelve ÚNICAMENTE un JSON válido con la siguiente estructura:
   });
 
   // 19. Confirmar importación
-  app.post('/api/import/confirm', requireAuth, async (req: AuthRequest, res) => {
+  app.post('/api/import/confirm', requireAuth, requireModule('importar-exportar', 'write'), async (req: AuthRequest, res) => {
     try {
       const { rows } = req.body;
       if (!rows || !Array.isArray(rows) || rows.length === 0) {
@@ -1067,7 +1068,7 @@ Devuelve ÚNICAMENTE un JSON válido con la siguiente estructura:
   });
 
   // 20. Exportar Padrón a Excel o CSV
-  app.get('/api/export', async (req, res) => {
+  app.get('/api/export', requireAuth, requireModule('importar-exportar', 'read'), async (req: AuthRequest, res) => {
     try {
       const format = req.query.format === 'csv' ? 'csv' : 'xlsx';
       const search = req.query.search as string;
@@ -1171,8 +1172,19 @@ Devuelve ÚNICAMENTE un JSON válido con la siguiente estructura:
   app.delete('/api/roles/:id', requireAuth, requireAdmin, async (req: AuthRequest, res) => {
     try {
       const roleId = req.params.id;
-      if (roleId === 'admin' || roleId === 'operator') {
-        return res.status(400).json({ error: 'No se pueden eliminar los roles maestros del sistema' });
+      const [role] = await db
+        .select()
+        .from(systemRoles)
+        .where(eq(systemRoles.id, roleId))
+        .limit(1);
+
+      if (!role) {
+        return res.status(404).json({ error: 'El rol no existe.' });
+      }
+      if (role.isSystem) {
+        return res.status(400).json({
+          error: 'No se pueden eliminar los roles institucionales del sistema.',
+        });
       }
       // Reasignar usuarios de este rol a 'operator'
       await db.update(users).set({ role: 'operator' }).where(eq(users.role, roleId));
@@ -1185,7 +1197,7 @@ Devuelve ÚNICAMENTE un JSON válido con la siguiente estructura:
   });
 
   // 22. Usuarios del sistema en Base de Datos
-  app.get('/api/users', requireAuth, async (req: AuthRequest, res) => {
+  app.get('/api/users', requireAuth, requireModule('usuarios', 'read'), async (req: AuthRequest, res) => {
     try {
       const list = await db.select().from(users);
       res.json(list);
@@ -1267,7 +1279,7 @@ Devuelve ÚNICAMENTE un JSON válido con la siguiente estructura:
     }
   });
 
-  app.post('/api/portal/posts', requireAuth, async (req: AuthRequest, res) => {
+  app.post('/api/portal/posts', requireAuth, requireModule('gestion-portal', 'write'), async (req: AuthRequest, res) => {
     try {
       const {
         title,
@@ -1325,7 +1337,7 @@ Devuelve ÚNICAMENTE un JSON válido con la siguiente estructura:
     }
   });
 
-  app.put('/api/portal/posts/:id', requireAuth, async (req: AuthRequest, res) => {
+  app.put('/api/portal/posts/:id', requireAuth, requireModule('gestion-portal', 'write'), async (req: AuthRequest, res) => {
     try {
       const id = parseInt(req.params.id);
       const updates = { ...req.body, updatedAt: new Date() };
@@ -1345,7 +1357,7 @@ Devuelve ÚNICAMENTE un JSON válido con la siguiente estructura:
     }
   });
 
-  app.delete('/api/portal/posts/:id', requireAuth, async (req: AuthRequest, res) => {
+  app.delete('/api/portal/posts/:id', requireAuth, requireModule('gestion-portal', 'write'), async (req: AuthRequest, res) => {
     try {
       const id = parseInt(req.params.id);
       await db.delete(portalPosts).where(eq(portalPosts.id, id));
@@ -1356,7 +1368,7 @@ Devuelve ÚNICAMENTE un JSON válido con la siguiente estructura:
     }
   });
 
-  app.patch('/api/portal/posts/reorder', requireAuth, async (req: AuthRequest, res) => {
+  app.patch('/api/portal/posts/reorder', requireAuth, requireModule('gestion-portal', 'write'), async (req: AuthRequest, res) => {
     try {
       const { orderedIds } = req.body;
       if (Array.isArray(orderedIds)) {
@@ -1388,7 +1400,7 @@ Devuelve ÚNICAMENTE un JSON válido con la siguiente estructura:
     }
   });
 
-  app.post('/api/portal/events', requireAuth, async (req: AuthRequest, res) => {
+  app.post('/api/portal/events', requireAuth, requireModule('gestion-portal', 'write'), async (req: AuthRequest, res) => {
     try {
       const { title, type, eventDate, eventTime, location, description, agenda, status, isActive, orderIndex } = req.body;
       if (!title || !eventDate) {
@@ -1418,7 +1430,7 @@ Devuelve ÚNICAMENTE un JSON válido con la siguiente estructura:
     }
   });
 
-  app.put('/api/portal/events/:id', requireAuth, async (req: AuthRequest, res) => {
+  app.put('/api/portal/events/:id', requireAuth, requireModule('gestion-portal', 'write'), async (req: AuthRequest, res) => {
     try {
       const id = parseInt(req.params.id);
       const updates = { ...req.body };
@@ -1438,7 +1450,7 @@ Devuelve ÚNICAMENTE un JSON válido con la siguiente estructura:
     }
   });
 
-  app.delete('/api/portal/events/:id', requireAuth, async (req: AuthRequest, res) => {
+  app.delete('/api/portal/events/:id', requireAuth, requireModule('gestion-portal', 'write'), async (req: AuthRequest, res) => {
     try {
       const id = parseInt(req.params.id);
       await db.delete(portalEvents).where(eq(portalEvents.id, id));
@@ -1452,108 +1464,71 @@ Devuelve ÚNICAMENTE un JSON válido con la siguiente estructura:
   // Inicialización de roles maestros, usuarios, publicaciones y agenda en base de datos si estuviesen vacíos
   const seedDefaultRolesAndUsers = async () => {
     try {
+      // 1. Roles institucionales: inserta los que falten sin borrar los existentes.
       const existingRoles = await db.select().from(systemRoles);
-      if (existingRoles.length === 0) {
-        await db.insert(systemRoles).values([
-          {
-            id: 'admin',
-            name: 'Administrador General',
-            description: 'Control absoluto sobre todos los módulos, configuraciones y auditoría del padrón',
-            badgeColor: 'indigo',
+      const existingRoleIds = new Set(existingRoles.map((r) => r.id));
+      const missingRoles = ROLE_DEFINITIONS.filter((role) => !existingRoleIds.has(role.id));
+
+      if (missingRoles.length > 0) {
+        await db.insert(systemRoles).values(
+          missingRoles.map((role) => ({
+            id: role.id,
+            name: role.name,
+            description: role.description,
+            badgeColor: role.badgeColor,
             isSystem: true,
-            permissions: JSON.stringify({
-              'portal-inicio': 'write',
-              dashboard: 'write',
-              padron: 'write',
-              nuevo: 'write',
-              personas: 'write',
-              'curso-vial': 'write',
-              vencimientos: 'write',
-              'importar-exportar': 'write',
-              'operario-portal': 'write',
-              historial: 'write',
-              usuarios: 'write',
-              configuracion: 'write',
-              'gestion-portal': 'write',
-            }),
-          },
-          {
-            id: 'operator',
-            name: 'Operario de Turno',
-            description: 'Acceso operativo para registro en campo, consulta de flota y portal vehicular de su unidad',
-            badgeColor: 'amber',
-            isSystem: true,
-            permissions: JSON.stringify({
-              'portal-inicio': 'read',
-              dashboard: 'read',
-              padron: 'read',
-              nuevo: 'none',
-              personas: 'read',
-              'curso-vial': 'read',
-              vencimientos: 'read',
-              'importar-exportar': 'none',
-              'operario-portal': 'write',
-              historial: 'none',
-              usuarios: 'none',
-              configuracion: 'none',
-              'gestion-portal': 'none',
-            }),
-          },
-          {
-            id: 'tesorero',
-            name: 'Tesorero / Finanzas',
-            description: 'Supervisión contable, padrón general, reportes oficiales e importación/exportación',
-            badgeColor: 'emerald',
-            isSystem: false,
-            permissions: JSON.stringify({
-              'portal-inicio': 'read',
-              dashboard: 'read',
-              padron: 'read',
-              nuevo: 'none',
-              personas: 'read',
-              'curso-vial': 'read',
-              vencimientos: 'read',
-              'importar-exportar': 'write',
-              'operario-portal': 'none',
-              historial: 'read',
-              usuarios: 'none',
-              configuracion: 'read',
-              'gestion-portal': 'none',
-            }),
-          },
-        ]);
-        console.log('Roles maestros inicializados en PostgreSQL Cloud SQL');
+            permissions: JSON.stringify(role.permissions),
+          }))
+        );
+        console.log(`Roles institucionales agregados: ${missingRoles.map((r) => r.id).join(', ')}`);
       }
 
+      // 2. Fusiona claves de permisos nuevas en roles existentes sin pisar
+      //    los ajustes que el usuario haya hecho desde la interfaz.
+      for (const definition of ROLE_DEFINITIONS) {
+        const existing = existingRoles.find((role) => role.id === definition.id);
+        if (!existing) continue;
+
+        let currentPermissions: Record<string, string> = {};
+        try {
+          const parsed = JSON.parse(existing.permissions);
+          if (parsed && typeof parsed === 'object') currentPermissions = parsed;
+        } catch {
+          currentPermissions = {};
+        }
+
+        // Los permisos ya guardados tienen prioridad; solo se agregan claves nuevas.
+        const merged = { ...definition.permissions, ...currentPermissions };
+        if (JSON.stringify(merged) !== JSON.stringify(currentPermissions)) {
+          await db
+            .update(systemRoles)
+            .set({ permissions: JSON.stringify(merged), updatedAt: new Date() })
+            .where(eq(systemRoles.id, definition.id));
+        }
+      }
+
+      // 3. Usuarios demo: inserta solo los que falten (por uid o correo).
       const existingUsers = await db.select().from(users);
-      if (existingUsers.length === 0) {
-        await db.insert(users).values([
-          {
-            uid: 'admin-dev-01',
-            email: 'admin@transporte.pe',
-            name: 'Carlos Mendoza (Administrador)',
-            role: 'admin',
-            assignedPadron: null,
-            isActive: true,
-          },
-          {
-            uid: 'operador-dev-01',
-            email: 'operador@transporte.pe',
-            name: 'Juan Quispe (Operario Padrón 04)',
-            role: 'operator',
-            assignedPadron: 'PAD-004',
-            isActive: true,
-          },
-          {
-            uid: 'tesorero-dev-01',
-            email: 'finanzas@transporte.pe',
-            name: 'Ana María Rojas (Tesorera)',
-            role: 'tesorero',
-            assignedPadron: null,
-            isActive: true,
-          },
-        ]);
-        console.log('Usuarios base inicializados en PostgreSQL Cloud SQL');
+      const existingUids = new Set(existingUsers.map((u) => u.uid));
+      const existingEmails = new Set(existingUsers.map((u) => u.email.toLowerCase()));
+      const missingUsers = DEFAULT_USER_ACCOUNTS.filter(
+        (account) =>
+          !existingUids.has(account.uid) && !existingEmails.has(account.email.toLowerCase())
+      );
+
+      if (missingUsers.length > 0) {
+        await db.insert(users).values(
+          missingUsers.map((account) => ({
+            uid: account.uid,
+            email: account.email.toLowerCase(),
+            name: account.name,
+            role: account.role,
+            password: account.password || '123456',
+            assignedPadron: account.assignedPadron ?? null,
+            isActive: account.isActive,
+          }))
+        );
+        console.log(`Usuarios demo agregados: ${missingUsers.map((u) => u.email).join(', ')}`);
       }
 
       // Seed de Cartelera & Anuncios del Portal de Inicio
