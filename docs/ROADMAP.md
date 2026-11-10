@@ -38,7 +38,7 @@ Leyenda: `[x]` hecho · `[ ]` pendiente · `[~]` en progreso
 - [x] App Express en `backend/app.ts` con rutas, middlewares y seed.
 - [x] Mover lógica de servidor a `backend/` (`db`, `utils`, `middleware`, `lib`, `routes`, `services`, `config`).
 - [x] Catálogo compartido de roles, módulos y fechas en `shared/`.
-- [ ] Dividir `backend/app.ts` en routers por dominio (`vehicles`, `persons`, `portal`, `backup`).
+- [x] Dividir `backend/app.ts` en routers por dominio (`vehicles`, `persons`, `portal`, `backup`, `courses`, `users`, `roles`, `import-export`, `dashboard`, `padron-requests`, `health`).
 
 ### Arquitectura de despliegue
 - [x] Decisión registrada: mantener **monolito modular** (`npm run dev`, un proceso, puerto 3000).
@@ -163,7 +163,7 @@ Ver [`DESPLIEGUE.md`](DESPLIEGUE.md).
 | Prioridad | Deuda | Impacto |
 | :---: | :--- | :--- |
 | 🔴 Alta | Sin pruebas automatizadas | Regresiones |
-| 🟠 Media | `backend/app.ts` monolítico (~1.600 líneas) | Mantenibilidad |
+| 🟠 Media | `backend/app.ts` todavía concentra el seed y el montaje | Mantenibilidad |
 | 🟠 Media | Sin separación frontend/API | Despliegue |
 | 🟡 Baja | Sin paginación en algunos listados | Rendimiento |
 | 🟡 Baja | Sin i18n | Alcance |
@@ -172,8 +172,8 @@ Ver [`DESPLIEGUE.md`](DESPLIEGUE.md).
 
 ## Próximos 5 pasos concretos
 
-1. Dividir `backend/app.ts` en routers por dominio (`vehicles`, `persons`, `portal`, `backup`).
-2. Añadir Vitest + Supertest y un primer E2E con Playwright.
+1. Añadir Vitest + Supertest y un primer E2E con Playwright.
+2. Validación Zod en el 100% de las rutas de escritura.
 3. Configurar CI con lint, build y tests.
 4. Desplegar frontend en Vercel y API + BD en Railway/Supabase.
 5. Prototipo Tauri con SQLite local.

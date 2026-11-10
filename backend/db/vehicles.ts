@@ -36,7 +36,7 @@ export interface VehicleFullInput {
   importSource?: string;
   importBatchId?: string;
   importRawData?: string;
-  importNotes?: string;
+  importNotes?: string | null;
 
   // Propietarios (soporta múltiples)
   owners: VehicleOwnerInput[];
@@ -987,7 +987,7 @@ export async function updateVehicle(
 // 5. Baja Lógica / Retiro de unidad (Solo Administrador)
 export async function retireVehicle(
   id: number,
-  params: { reason: string; withdrawalDate?: string },
+  params: { reason: string; withdrawalDate?: string | null },
   user: { email: string; name: string }
 ) {
   const current = await getVehicleById(id);

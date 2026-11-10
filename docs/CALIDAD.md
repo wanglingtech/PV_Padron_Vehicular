@@ -8,10 +8,10 @@ Marco de referencia para evaluar y mejorar el proyecto según estándares de ing
 
 | Aspecto | Estado actual | Objetivo |
 | :--- | :--- | :--- |
-| Tipado estricto | TypeScript en todo el código | Mantener |
-| Estructura | Monolito modular con backend separado | Dividir `backend/app.ts` en routers por dominio |
+| Tipado estricto | TypeScript con `strict: true` en todo el proyecto | Mantener |
+| Estructura | Monolito modular con routers por dominio | Extraer `shared/` como paquete publicable |
 | Documentación | README + `docs/` + `.agents/` | Mantener actualizada |
-| Complejidad | `backend/app.ts` y algunas vistas son grandes | Dividir archivos > 500 líneas |
+| Complejidad | `backend/services/seed.service.ts` y algunas vistas son grandes | Dividir archivos > 500 líneas |
 | Duplicación | Media en vistas y utilidades | Extraer componentes/hooks |
 
 **Métricas sugeridas:** complejidad ciclomática < 15 por función, archivos < 500 líneas, cobertura ≥ 60%.

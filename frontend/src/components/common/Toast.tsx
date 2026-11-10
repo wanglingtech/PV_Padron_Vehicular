@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, { createContext, useContext, useState, useCallback, useMemo } from 'react';
 import { CheckCircle2, AlertCircle, AlertTriangle, Info, X } from 'lucide-react';
 
 export type ToastType = 'success' | 'error' | 'warning' | 'info';
@@ -12,10 +12,20 @@ interface Toast {
 
 interface ToastContextType {
   showToast: (title: string, message?: string, type?: ToastType) => void;
+  showSuccess: (title: string, message?: string) => void;
+  showError: (title: string, message?: string) => void;
+  showInfo: (title: string, message?: string) => void;
+  showWarning: (title: string, message?: string) => void;
+  addToast: (title: string, message?: string, type?: ToastType) => void;
 }
 
 const ToastContext = createContext<ToastContextType>({
   showToast: () => {},
+  showSuccess: () => {},
+  showError: () => {},
+  showInfo: () => {},
+  showWarning: () => {},
+  addToast: () => {},
 });
 
 export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -34,8 +44,31 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setToasts(prev => prev.filter(t => t.id !== id));
   };
 
+  // Atajos por tipo de notificación usados en las vistas.
+  const showSuccess = useCallback(
+    (title: string, message?: string) => showToast(title, message, 'success'),
+    [showToast]
+  );
+  const showError = useCallback(
+    (title: string, message?: string) => showToast(title, message, 'error'),
+    [showToast]
+  );
+  const showInfo = useCallback(
+    (title: string, message?: string) => showToast(title, message, 'info'),
+    [showToast]
+  );
+  const showWarning = useCallback(
+    (title: string, message?: string) => showToast(title, message, 'warning'),
+    [showToast]
+  );
+
+  const contextValue = useMemo(
+    () => ({ showToast, showSuccess, showError, showInfo, showWarning, addToast: showToast }),
+    [showToast, showSuccess, showError, showInfo, showWarning]
+  );
+
   return (
-    <ToastContext.Provider value={{ showToast }}>
+    <ToastContext.Provider value={contextValue}>
       {children}
       <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none px-4 sm:px-0">
         {toasts.map(t => {

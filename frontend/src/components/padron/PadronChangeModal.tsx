@@ -15,9 +15,9 @@ interface PadronChangeModalProps {
 type Mode = 'FREE_PADRON' | 'SWAP_PADRON' | 'REQUEST';
 
 export function PadronChangeModal({ vehicle, isOpen, onClose, onSuccess }: PadronChangeModalProps) {
-  const { user } = useAuth();
+  const { currentUser } = useAuth();
   const { showToast } = useToast();
-  const isAdmin = isPrivilegedRole(user?.role);
+  const isAdmin = isPrivilegedRole(currentUser?.role);
 
   const [mode, setMode] = useState<Mode>(isAdmin ? 'FREE_PADRON' : 'REQUEST');
   const [loading, setLoading] = useState(false);
@@ -36,7 +36,7 @@ export function PadronChangeModal({ vehicle, isOpen, onClose, onSuccess }: Padro
   const [newPadron, setNewPadron] = useState('');
   const [reason, setReason] = useState('');
   const [authDoc, setAuthDoc] = useState('');
-  const [authorizedBy, setAuthorizedBy] = useState(isAdmin ? user?.name || 'Administrador' : '');
+  const [authorizedBy, setAuthorizedBy] = useState(isAdmin ? currentUser?.name || 'Administrador' : '');
   const [effectiveDate, setEffectiveDate] = useState(new Date().toISOString().slice(0, 10));
 
   // Form states - Mode 2: Swap
@@ -53,7 +53,7 @@ export function PadronChangeModal({ vehicle, isOpen, onClose, onSuccess }: Padro
       setNewPadron('');
       setReason('');
       setAuthDoc('');
-      setAuthorizedBy(user?.name || '');
+      setAuthorizedBy(currentUser?.name || '');
       setEffectiveDate(new Date().toISOString().slice(0, 10));
       setSelectedVehicleBId('');
       setShowConfirmStep(false);
@@ -65,7 +65,7 @@ export function PadronChangeModal({ vehicle, isOpen, onClose, onSuccess }: Padro
         })
         .catch(() => {});
     }
-  }, [isOpen, vehicle.id, isAdmin, user?.name]);
+  }, [isOpen, vehicle.id, isAdmin, currentUser?.name]);
 
   if (!isOpen) return null;
 

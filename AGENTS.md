@@ -37,9 +37,9 @@ npm run db:studio    # explorar la base
 ## Mapa mental del código
 
 - `server.ts` — solo arranque: dotenv, Vite/estáticos y `listen`.
-- `backend/app.ts` — app Express: seguridad, rutas de la API y seed.
-- `backend/routes/` — rutas por dominio (auth y futuros routers).
-- `backend/services/` — lógica de autenticación, tokens y contraseñas.
+- `backend/app.ts` — app Express: seguridad, middlewares y montaje de routers.
+- `backend/routes/` — un router por dominio (`auth`, `health`, `vehicles`, `padron-requests`, `persons`, `dashboard`, `courses`, `import-export`, `backup`, `roles`, `users`, `portal`). Cada router exporta `registerXRoutes(app)`.
+- `backend/services/` — lógica de autenticación, tokens, contraseñas, seed, contactos e IA (Gemini).
 - `backend/db/schema.ts` — modelo de datos (fuente de verdad).
 - `backend/db/vehicles.ts` y `padron-changes.ts` — lógica de negocio de datos.
 - `frontend/src/api/client.ts` — cliente HTTP tipado del frontend.

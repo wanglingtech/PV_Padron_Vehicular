@@ -49,8 +49,8 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
   onEdit,
   onDeleted,
 }) => {
-  const { user } = useAuth();
-  const isAdmin = isPrivilegedRole(user?.role);
+  const { currentUser } = useAuth();
+  const isAdmin = isPrivilegedRole(currentUser?.role);
   const { showToast } = useToast();
 
   const [vehicle, setVehicle] = useState<Vehicle | null>(null);
@@ -345,7 +345,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
           }`}
         >
           <Users size={16} />
-          <span>Historial Propietarios ({vehicle.ownersHistory?.length || vehicle.owners?.length || 0})</span>
+          <span>Historial Propietarios ({vehicle.ownerHistory?.length || vehicle.owners?.length || 0})</span>
         </button>
 
         <button
@@ -357,7 +357,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
           }`}
         >
           <UserCheck size={16} />
-          <span>Historial Conductores ({vehicle.driversHistory?.length || (vehicle.driver ? 1 : 0)})</span>
+          <span>Historial Conductores ({vehicle.driverHistory?.length || (vehicle.driver ? 1 : 0)})</span>
         </button>
 
         <button
@@ -673,15 +673,16 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                   {padronHistory.map((item) => (
                     <tr key={item.id} className="hover:bg-slate-50/50">
                       <td className="py-3 px-3 font-mono text-slate-600">{item.effectiveDate}</td>
-                      <td className="py-3 px-3 font-mono font-bold text-slate-700">{item.oldPadronNumber}</td>
-                      <td className="py-3 px-3 font-mono font-bold text-blue-600">{item.newPadronNumber}</td>
+                      <td className="py-3 px-3 font-mono text-slate-600">{item.previousPadron}</td>
+                      <td className="py-3 px-3 font-mono font-bold text-blue-600">{item.newPadron}</td>
                       <td className="py-3 px-3 text-slate-700">{item.reason}</td>
                       <td className="py-3 px-3 font-medium text-slate-800">{item.authorizationReference || '—'}</td>
                       <td className="py-3 px-3 text-slate-600">{item.authorizedBy || '—'}</td>
                       <td className="py-3 px-3">
-                        {item.swapWithVehicleId ? (
+                        {item.relatedVehicleId ? (
                           <span className="rounded-md bg-purple-100 px-2 py-0.5 text-[11px] font-semibold text-purple-800">
-                            Intercambio Cruzado (#{item.swapWithVehicleId})
+                            Intercambio Cruzado (#{item.relatedVehicleId}
+                            {item.relatedVehiclePlate ? ` · ${item.relatedVehiclePlate}` : ''})
                           </span>
                         ) : (
                           <span className="rounded-md bg-blue-100 px-2 py-0.5 text-[11px] font-semibold text-blue-800">
@@ -722,8 +723,8 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
-                {vehicle.ownersHistory && vehicle.ownersHistory.length > 0 ? (
-                  vehicle.ownersHistory.map((oh) => (
+                {vehicle.ownerHistory && vehicle.ownerHistory.length > 0 ? (
+                  vehicle.ownerHistory.map((oh) => (
                     <tr key={oh.id} className="hover:bg-slate-50/50">
                       <td className="py-3 px-3 font-semibold text-slate-900">{oh.fullName}</td>
                       <td className="py-3 px-3 font-mono text-slate-700">{oh.dni}</td>
@@ -801,8 +802,8 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
-                {vehicle.driversHistory && vehicle.driversHistory.length > 0 ? (
-                  vehicle.driversHistory.map((dh) => (
+                {vehicle.driverHistory && vehicle.driverHistory.length > 0 ? (
+                  vehicle.driverHistory.map((dh) => (
                     <tr key={dh.id} className="hover:bg-slate-50/50">
                       <td className="py-3 px-3 font-semibold text-slate-900">{dh.fullName}</td>
                       <td className="py-3 px-3 font-mono text-slate-700">{dh.dni}</td>
@@ -883,7 +884,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                     </p>
                   )}
 
-                  {log.notes && <p className="mt-1 text-slate-500 italic">{log.notes}</p>}
+                  {log.reason && <p className="mt-1 text-slate-500 italic">{log.reason}</p>}
 
                   <p className="mt-1 text-[11px] text-slate-400">
                     Realizado por: <span className="font-medium text-slate-600">{log.userEmail}</span> ({log.userName || 'Sistema'})

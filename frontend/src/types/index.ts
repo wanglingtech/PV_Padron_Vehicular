@@ -119,11 +119,11 @@ export interface Person {
   status: 'ACTIVO' | 'INACTIVO';
   withdrawalDate?: string | null;
   withdrawalReason?: string | null;
-  ownedCount?: number;
-  drivenCount?: number;
-  ownedVehicles?: Array<{ vehicleId: number; padronNumber: string; plate: string }>;
-  drivenVehicles?: Array<{ vehicleId: number; padronNumber: string; plate: string }>;
-  createdAt?: string;
+  ownedCount: number;
+  drivenCount: number;
+  ownedVehicles: Array<{ vehicleId: number; padronNumber: string; plate: string }>;
+  drivenVehicles: Array<{ vehicleId: number; padronNumber: string; plate: string }>;
+  createdAt: string;
   updatedAt?: string;
 }
 

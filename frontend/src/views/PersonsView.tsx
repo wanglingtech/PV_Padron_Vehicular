@@ -24,22 +24,7 @@ import { Pagination } from '../components/common/Pagination.tsx';
 import { exportPersonsDirectoryPDF } from '../utils/pdf-export.ts';
 import { Alert } from '../utils/sweetalert.ts';
 import { PersonAvatar } from '../components/common/PersonAvatar.tsx';
-
-interface PersonItem {
-  id: number;
-  dni: string;
-  fullName: string;
-  address: string | null;
-  phone: string | null;
-  status: 'ACTIVO' | 'INACTIVO';
-  withdrawalDate?: string | null;
-  withdrawalReason?: string | null;
-  ownedCount: number;
-  drivenCount: number;
-  ownedVehicles: Array<{ vehicleId: number; padronNumber: string; plate: string }>;
-  drivenVehicles: Array<{ vehicleId: number; padronNumber: string; plate: string }>;
-  createdAt: string;
-}
+import type { Person } from '../types/index.ts';
 
 interface PersonsViewProps {
   onSelectVehicle: (id: number) => void;
@@ -49,7 +34,7 @@ export const PersonsView: React.FC<PersonsViewProps> = ({ onSelectVehicle }) => 
   const { isAdmin } = useAuth();
   const { showToast } = useToast();
 
-  const [persons, setPersons] = useState<PersonItem[]>([]);
+  const [persons, setPersons] = useState<Person[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const debouncedSearch = useDebounce(search, 350);
@@ -60,7 +45,7 @@ export const PersonsView: React.FC<PersonsViewProps> = ({ onSelectVehicle }) => 
   const [pageSize, setPageSize] = useState(15);
 
   // Modal para editar persona
-  const [editingPerson, setEditingPerson] = useState<PersonItem | null>(null);
+  const [editingPerson, setEditingPerson] = useState<Person | null>(null);
   const [editForm, setEditForm] = useState({
     fullName: '',
     dni: '',
@@ -97,7 +82,7 @@ export const PersonsView: React.FC<PersonsViewProps> = ({ onSelectVehicle }) => 
     setCurrentPage(1);
   }, [debouncedSearch]);
 
-  const openEditModal = (p: PersonItem) => {
+  const openEditModal = (p: Person) => {
     setEditingPerson(p);
     setEditForm({
       fullName: p.fullName,

@@ -12,5 +12,8 @@ export * from './middleware/auth.ts';
 export * from './services/password.service.ts';
 export * from './services/token.service.ts';
 export * from './services/auth.service.ts';
+export * from './services/contacts.service.ts';
+export * from './services/gemini.service.ts';
+export * from './services/seed.service.ts';
 
-export const BACKEND_VERSION = '2.5.0';
+export const BACKEND_VERSION = '2.6.0';
