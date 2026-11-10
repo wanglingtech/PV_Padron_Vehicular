@@ -23,7 +23,7 @@ Leyenda: `[x]` hecho · `[ ]` pendiente · `[~]` en progreso
 - [x] Smoke test de API (`npm run smoke`) y guía de verificación.
 - [x] `package-lock.json` versionado (npm como gestor oficial).
 - [x] Licencia definida como propietaria (`UNLICENSED`) a la espera de la definitiva.
-- [ ] Primer release/tag `v0.1.0`.
+- [x] Primer release/tag `v0.1.0`.
 
 **Criterio de salida:** `git clone` + `npm install` + `.env` + `npm run db:push` + `npm run dev` funciona sin pasos ocultos.
 
