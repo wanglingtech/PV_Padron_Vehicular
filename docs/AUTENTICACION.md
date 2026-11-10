@@ -110,6 +110,8 @@ npm run db:reset-demo-passwords
 | `AUTH_COOKIE_SAME_SITE` | `lax` o `none` (este último requiere HTTPS). |
 | `CORS_ORIGIN` | Orígenes permitidos separados por coma. |
 | `AUTH_DEV_MODE` | Habilita tokens de desarrollo. Debe ser `false` en producción. |
+| `SEED_DEMO_DATA` | Siembra las cuentas demo y el contenido de ejemplo. En producción debe ser `false`. |
+| `ALLOW_DEMO_ACCOUNTS` | Permite arrancar en producción con cuentas demo activas. Solo para demos públicas. |
 
 Genera un secreto con:
 
@@ -133,6 +135,52 @@ node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"
 | Registrador | `registro@transporte.pe` | `registro123` |
 
 > Cambia estas claves antes de cualquier despliegue con datos reales.
+
+### Por qué estas contraseñas son públicas (y está bien)
+
+Las cuentas demo existen para que quien clone el repositorio pueda probar el sistema
+en 2 minutos. **No son credenciales reales**: son cuentas de ejemplo con contraseñas
+débiles a propósito, y el repositorio no contiene ningún dato ni clave verdadera.
+
+Lo que **no** debe pasar es que esas mismas cuentas existan en una instalación
+pública. Por eso el backend aplica estas reglas:
+
+| Entorno | Comportamiento |
+| :--- | :--- |
+| Desarrollo | El seed crea las cuentas demo y el contenido de ejemplo. |
+| Producción (`NODE_ENV=production`) | `SEED_DEMO_DATA` vale `false` → **no se crean** cuentas demo ni contenido de ejemplo. |
+| Producción con cuentas demo heredadas | El servidor **se niega a arrancar** y muestra el procedimiento para resolverlo. |
+
+### Puesta en marcha de una instalación real
+
+```bash
+# 1. Elimina las cuentas demo (si la base ya las tenía)
+npm run db:remove-demo-users
+
+# 2. Crea TU administrador real (te lo pregunta de forma interactiva)
+npm run admin:create
+
+# 3. Arranca con NODE_ENV=production
+npm run build && npm start
+```
+
+`npm run admin:create` pide:
+
+```
+Correo electrónico del administrador: tu-correo@ejemplo.com
+Nombre para mostrar (opcional): Tu Nombre
+Contraseña (mínimo 12 caracteres): ********
+```
+
+La contraseña se guarda como hash argon2 y **no se escribe ni se registra en ningún
+lugar**. También acepta flags si prefieres un proceso no interactivo:
+
+```bash
+npm run admin:create -- --email tu-correo@ejemplo.com --name "Tu Nombre" --password "TuClaveFuerte"
+```
+
+> Si de verdad necesitas una demo pública con esas cuentas, define
+> `ALLOW_DEMO_ACCOUNTS=true` y `SEED_DEMO_DATA=true`. Assume el riesgo.
 
 ---
 

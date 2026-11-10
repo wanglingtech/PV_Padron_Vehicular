@@ -60,13 +60,15 @@ Leyenda: `[x]` hecho · `[ ]` pendiente · `[~]` en progreso
 - [x] `express-rate-limit` en login.
 - [ ] `express-rate-limit` en escrituras.
 - [x] CORS restringido (`CORS_ORIGIN`).
+- [x] Cuentas demo fuera de producción (`SEED_DEMO_DATA`, arranque bloqueado) y alta de administrador real (`npm run admin:create`).
 - [ ] Validación Zod en el 100% de las rutas de escritura.
 - [ ] Sanitización de archivos subidos (tipo, tamaño, nombre).
 - [ ] `npm audit` en CI.
 
 ### Calidad
-- [ ] Vitest para `utils/` y `db/`.
-- [ ] Supertest para rutas críticas.
+- [x] Vitest + Supertest configurados (base de pruebas `padron_vehicular_test`).
+- [x] Supertest para rutas críticas: 48 pruebas en 6 archivos (auth, usuarios, padrón, portal, health, env).
+- [ ] Unitarias para `shared/date-utils.ts`, `backend/utils/validation.ts` y `frontend/src/utils/`.
 - [ ] Playwright para flujos E2E (login, alta, swap, importación).
 - [ ] axe-core para accesibilidad.
 - [ ] Cobertura mínima objetivo: 60%.
@@ -162,7 +164,7 @@ Ver [`DESPLIEGUE.md`](DESPLIEGUE.md).
 
 | Prioridad | Deuda | Impacto |
 | :---: | :--- | :--- |
-| 🔴 Alta | Sin pruebas automatizadas | Regresiones |
+| 🔴 Alta | E2E (Playwright) y cobertura ≥ 60% | Regresiones |
 | 🟠 Media | `backend/app.ts` todavía concentra el seed y el montaje | Mantenibilidad |
 | 🟠 Media | Sin separación frontend/API | Despliegue |
 | 🟡 Baja | Sin paginación en algunos listados | Rendimiento |
@@ -172,7 +174,7 @@ Ver [`DESPLIEGUE.md`](DESPLIEGUE.md).
 
 ## Próximos 5 pasos concretos
 
-1. Añadir Vitest + Supertest y un primer E2E con Playwright.
+1. Añadir Playwright para los flujos E2E críticos (login, alta, swap, importación).
 2. Validación Zod en el 100% de las rutas de escritura.
 3. Configurar CI con lint, build y tests.
 4. Desplegar frontend en Vercel y API + BD en Railway/Supabase.

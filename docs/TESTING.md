@@ -1,69 +1,87 @@
 # Estrategia de pruebas
 
-El proyecto aún no tiene pruebas automatizadas. Este documento define la estrategia para incorporarlas de forma incremental.
+El proyecto cuenta con **pruebas automatizadas** (Vitest + Supertest) sobre una base de datos PostgreSQL **independiente** de la de desarrollo.
+
+```bash
+npm test        # ejecuta la suite completa
+npm run test:watch   # modo interactivo
+```
+
+Estado actual: **48 pruebas en 6 archivos**, todas en verde.
 
 ---
 
-## Pirámide de pruebas propuesta
+## 1. Pirámide de pruebas
 
 ```text
         /\
-       /E2E\        Playwright (flujos críticos, pocos)
+       /E2E\        Playwright (flujos críticos, pocos)   → pendiente
       /------\
-     /Integra-\     Supertest + PostgreSQL de prueba
+     /Integra-\     Supertest + PostgreSQL de prueba      ✅ implementado
     /----------\
-   / Unitarias  \   Vitest (utils, validaciones, db)
+   / Unitarias  \   Vitest (config, validaciones, entorno) ✅ implementado
   /--------------\
 ```
 
 ---
 
-## 1. Pruebas unitarias (Vitest)
+## 2. Infraestructura
 
-**Objetivo:** lógica pura y utilidades.
+| Pieza | Ubicación | Responsabilidad |
+| :--- | :--- | :--- |
+| Configuración | `vitest.config.ts` | Incluye `backend/__tests__/**/*.test.ts`, un solo worker y `isolate: false`. |
+| Preparación global | `backend/__tests__/global-setup.ts` | Crea la base `padron_vehicular_test` (si no existe) y aplica el esquema con `drizzle-kit push`. |
+| Entorno por archivo | `backend/__tests__/setup.ts` | Apunta `SQL_DB_NAME` a la base de pruebas y define un `JWT_SECRET` propio. |
+| Utilidades | `backend/__tests__/helpers.ts` | `getApp()`, `login()` y `readCookie()`. |
 
-Candidatos:
+### Base de datos de pruebas
 
-- `backend/utils/validation.ts` — esquemas Zod.
-- `shared/date-utils.ts` — vencimientos y semaforización.
-- `frontend/src/utils/vehicle-routes.ts` — cálculo de rutas.
-- `backend/utils/excel-handler.ts` — parseo y normalización.
-- `backend/services/password.service.ts` — hash y verificación argon2.
-- Funciones puras de `backend/db/vehicles.ts` (sin conexión real).
+- Nombre: `padron_vehicular_test` (configurable con `TEST_SQL_DB_NAME`).
+- **Nunca** se toca la base de desarrollo: `setup.ts` fuerza `SQL_DB_NAME` antes de importar la app.
+- La app se crea con `createApp()`, que además ejecuta el seed: las cuentas demo quedan disponibles para los tests.
+- Los tests que escriben datos (usuarios, publicaciones, vehículos) **limpian al terminar** (`afterEach` / `afterAll`).
+
+### Comandos
 
 ```bash
-npm install -D vitest
-npx vitest
+npm test                       # suite completa (crea la BD de pruebas si hace falta)
+npx vitest run auth.test.ts    # un solo archivo
+npx vitest                     # modo watch
 ```
 
 ---
 
-## 2. Pruebas de integración (Supertest)
+## 3. Cobertura actual
 
-**Objetivo:** rutas HTTP contra una base de prueba.
+| Archivo | Qué verifica |
+| :--- | :--- |
+| `health.test.ts` | Health check con base conectada y marca de tiempo ISO. |
+| `auth.test.ts` | Login correcto/incorrecto, cookie `HttpOnly`, token Bearer, `401` sin credenciales, token manipulado, logout, cambio de contraseña. |
+| `users.test.ts` | RBAC (`403` al operario), validación de contraseña (mínimo 8 caracteres), **nunca se expone el hash**, CRUD completo. |
+| `vehicles.test.ts` | Listado, filtros, `404` inexistente, `400` id inválido, validación Zod en el alta, permisos de escritura. |
+| `portal.test.ts` | Publicaciones y eventos públicos, permisos de escritura, publicación y eliminación. |
+| `env.test.ts` | Reglas de seguridad: `JWT_SECRET` obligatorio en producción, cookies seguras, tokens `dev-*` deshabilitados en producción. |
 
-Recomendaciones:
-
-- Base separada `padron_vehicular_test`.
-- Ejecutar migraciones antes de la suite.
-- Limpiar datos entre pruebas.
-- Probar `401`, `403`, `400`, `404`, `409` y caminos felices.
-
-Rutas prioritarias:
-
-1. `POST /api/vehicles` + `GET /api/vehicles/:id`.
-2. `POST /api/vehicles/padron/swap` (transaccionalidad).
-3. `POST /api/import/preview` + `confirm`.
-4. `POST /api/auth/login`, `GET /api/auth/me` y `POST /api/auth/change-password`.
-5. `GET /api/health`.
+Total: **48 pruebas**.
 
 ---
 
-## 3. Pruebas E2E (Playwright)
+## 4. Qué falta
 
-**Objetivo:** flujos de usuario completos.
+### Pruebas unitarias
 
-Escenarios mínimos:
+- `shared/date-utils.ts` (semáforo de vencimientos).
+- `backend/utils/validation.ts` (esquemas Zod).
+- `frontend/src/utils/vehicle-routes.ts` (cálculo de rutas).
+
+### Pruebas de integración adicionales
+
+- `POST /api/vehicles/padron/swap` (transaccionalidad).
+- `POST /api/import/preview` + `/api/import/confirm`.
+- `POST /api/backup/export` y `/api/backup/restore`.
+- `POST /api/drivers/courses/bulk-sync`.
+
+### Pruebas E2E (Playwright)
 
 - Login y cierre de sesión.
 - Alta de vehículo y visualización en padrón.
@@ -71,8 +89,7 @@ Escenarios mínimos:
 - Intercambio de padrones y verificación del historial.
 - Importación de un Excel de prueba.
 - Creación de publicación y visualización en el portal.
-- Navegación responsive (móvil/escritorio).
-- Modo claro/oscuro.
+- Navegación responsive (móvil/escritorio) y modo claro/oscuro.
 
 ```bash
 npm install -D @playwright/test
@@ -82,7 +99,7 @@ npx playwright test
 
 ---
 
-## 4. Pruebas de API manuales (Bruno)
+## 5. Pruebas de API manuales (Bruno)
 
 Carpeta: [`../api-tests/bruno/`](../api-tests/bruno/)
 
@@ -100,7 +117,7 @@ Carpeta: [`../api-tests/bruno/`](../api-tests/bruno/)
 
 ---
 
-## 5. Accesibilidad
+## 6. Accesibilidad
 
 - `axe-core` en Playwright.
 - Revisión manual con teclado (Tab/Shift+Tab/Enter/Esc).
@@ -109,7 +126,7 @@ Carpeta: [`../api-tests/bruno/`](../api-tests/bruno/)
 
 ---
 
-## 6. Rendimiento
+## 7. Rendimiento
 
 - Lighthouse en build de producción.
 - k6/Artillery para `GET /api/vehicles` con 10k registros.
@@ -117,7 +134,7 @@ Carpeta: [`../api-tests/bruno/`](../api-tests/bruno/)
 
 ---
 
-## 7. Matriz de pruebas manuales
+## 8. Matriz de pruebas manuales
 
 | Área | Caso | Esperado |
 | :--- | :--- | :--- |
@@ -136,7 +153,19 @@ Carpeta: [`../api-tests/bruno/`](../api-tests/bruno/)
 
 ---
 
-## 8. CI
+## 9. Smoke test
+
+El smoke test (`npm run smoke`) sigue siendo útil para validar una instancia **real** en ejecución (verifica cookie, Bearer, RBAC por rol y logout). Es complementario a la suite de Vitest:
+
+```bash
+npm run dev                       # en otra terminal
+npm run smoke                     # apunta a http://localhost:3000
+SMOKE_BASE_URL=http://localhost:3001 npm run smoke   # otra instancia
+```
+
+---
+
+## 10. CI
 
 El workflow [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) ejecuta:
 
@@ -144,14 +173,14 @@ El workflow [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) ejecuta:
 2. `npm run lint`
 3. `npm run build`
 
-Cuando existan pruebas, añadir `npm test` y Playwright con PostgreSQL como servicio.
+Pendiente: añadir `npm test` con PostgreSQL como servicio y Playwright.
 
 ---
 
-## 9. Criterio de “terminado”
+## 11. Criterio de "terminado"
 
-- [ ] `npm run lint` sin errores.
-- [ ] `npm run build` correcto.
-- [ ] Pruebas nuevas pasan.
+- [x] `npm run lint` sin errores.
+- [x] `npm run build` correcto.
+- [x] Pruebas nuevas pasan (`npm test`).
 - [ ] Caso manual verificado.
-- [ ] Documentación actualizada.
+- [x] Documentación actualizada.

@@ -24,10 +24,11 @@ import helmet from 'helmet';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
-import { getCorsOrigins, isProduction } from './config/env.ts';
+import { getCorsOrigins, isDemoAccountsAllowed, isProduction } from './config/env.ts';
 import { getDatabaseTarget, verifyDatabaseConnection } from './db/index.ts';
+import { findDemoAccounts } from './services/admin.service.ts';
 import { migratePlaintextPasswords } from './services/auth.service.ts';
-import { seedDefaultRolesAndUsers } from './services/seed.service.ts';
+import { seedDatabase } from './services/seed.service.ts';
 
 import { registerAuthRoutes } from './routes/auth.routes.ts';
 import { registerHealthRoutes } from './routes/health.routes.ts';
@@ -105,8 +106,9 @@ export async function createApp(): Promise<express.Express> {
   registerUserRoutes(app);
   registerPortalRoutes(app);
 
-  // Seed inicial de roles, usuarios, publicaciones y agenda
-  await seedDefaultRolesAndUsers();
+  // Seed inicial: los roles siempre; las cuentas y el contenido de ejemplo
+  // solo en desarrollo (o con SEED_DEMO_DATA=true).
+  await seedDatabase();
 
   // Migración transparente de contraseñas heredadas en texto plano.
   try {
@@ -116,6 +118,25 @@ export async function createApp(): Promise<express.Express> {
     }
   } catch (migrationError) {
     console.error('No se pudieron migrar las contraseñas heredadas:', migrationError);
+  }
+
+  // En producción no se puede arrancar con cuentas demo activas: sus
+  // contraseñas son públicas y están documentadas en el repositorio.
+  if (isProduction() && !isDemoAccountsAllowed()) {
+    const demoAccounts = await findDemoAccounts();
+    if (demoAccounts.length > 0) {
+      console.error('\n❌ Se detectaron cuentas de demostración activas en producción:');
+      for (const email of demoAccounts) {
+        console.error(`   - ${email}`);
+      }
+      console.error('\n   Sus contraseñas son públicas (ver docs/AUTENTICACION.md).');
+      console.error('   Elimínalas con:  npm run db:remove-demo-users');
+      console.error('   Crea tu administrador real con:  npm run admin:create');
+      console.error(
+        '   Si de verdad necesitas una demo pública, define ALLOW_DEMO_ACCOUNTS=true.\n'
+      );
+      process.exit(1);
+    }
   }
 
   return app;

@@ -27,11 +27,15 @@ Este repositorio es un **monolito modular** (React + Express + PostgreSQL) para 
 ```bash
 npm install          # dependencias
 npm run dev          # desarrollo (API + Vite) en http://localhost:3000
-npm run lint         # TypeScript
+npm run lint         # TypeScript (strict)
+npm test             # Vitest + Supertest (base padron_vehicular_test)
 npm run build        # build de producción
 npm run db:push      # aplicar esquema Drizzle
 npm run db:generate  # generar migración
 npm run db:studio    # explorar la base
+npm run smoke        # smoke test contra una instancia en ejecución
+npm run admin:create # crear un administrador real (interactivo)
+npm run db:remove-demo-users  # eliminar las cuentas demo de la base
 ```
 
 ## Mapa mental del código
@@ -45,6 +49,7 @@ npm run db:studio    # explorar la base
 - `frontend/src/api/client.ts` — cliente HTTP tipado del frontend.
 - `frontend/src/context/AuthContext.tsx` — sesión, roles y permisos (cliente).
 - `backend/middleware/auth.ts` — autenticación y RBAC (servidor).
+- `backend/__tests__/` — pruebas Vitest + Supertest (base `padron_vehicular_test`).
 - `shared/roles.ts` — catálogo compartido de roles y módulos.
 - `frontend/src/views/` — una vista por módulo.
 - `frontend/src/utils/` — PDF, alertas y rutas del cliente.

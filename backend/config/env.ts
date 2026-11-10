@@ -80,3 +80,28 @@ export const getCorsOrigins = (): string[] =>
  */
 export const isDevAuthEnabled = (): boolean =>
   process.env.AUTH_DEV_MODE === 'true' || !isProduction();
+
+/**
+ * ¿Se siembran los datos de demostración (cuentas demo, cartelera y agenda)?
+ *
+ * - En desarrollo: `true` por defecto, para poder probar sin configuración.
+ * - En producción: `false` por defecto. Solo se activa si se define
+ *   explícitamente `SEED_DEMO_DATA=true` (por ejemplo, en un entorno de
+ *   demostraciones que sí se expone a internet).
+ */
+export const shouldSeedDemoData = (): boolean => {
+  const flag = process.env.SEED_DEMO_DATA?.trim().toLowerCase();
+  if (flag === 'true') return true;
+  if (flag === 'false') return false;
+  return !isProduction();
+};
+
+/**
+ * ¿Se permite que existan cuentas demo en producción?
+ *
+ * Por defecto **no**: si el servidor detecta cuentas demo activas en una
+ * instalación de producción se niega a arrancar. Se puede desactivar con
+ * `ALLOW_DEMO_ACCOUNTS=true` (solo para staging o demos públicas).
+ */
+export const isDemoAccountsAllowed = (): boolean =>
+  process.env.ALLOW_DEMO_ACCOUNTS?.trim().toLowerCase() === 'true';

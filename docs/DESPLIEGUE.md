@@ -24,8 +24,34 @@ SQL_PASSWORD=...
 SQL_DB_NAME=...
 SQL_SSL=true
 AUTH_DEV_MODE=false
+SEED_DEMO_DATA=false
+ALLOW_DEMO_ACCOUNTS=false
+JWT_SECRET=<64 caracteres aleatorios>
 GEMINI_API_KEY=...
 APP_URL=https://tu-dominio.com
+```
+
+> `SEED_DEMO_DATA=false` evita que se creen las cuentas de demostración (sus
+> contraseñas son públicas). El servidor además **se niega a arrancar** si
+> detecta cuentas demo activas en producción.
+
+### Primer arranque en una instalación real
+
+```bash
+# 1. Aplicar el esquema
+npm run db:push
+
+# 2. Crear tu administrador real (interactivo)
+npm run admin:create
+
+# 3. Arrancar
+npm run build && npm start
+```
+
+Si la base ya tenía cuentas demo, elimínalas antes:
+
+```bash
+npm run db:remove-demo-users
 ```
 
 ---
@@ -119,6 +145,10 @@ Es la opción más limpia a largo plazo, pero implica refactor. Está en el road
 - [ ] Base creada y esquema aplicado.
 - [ ] Variables de entorno cargadas en el proveedor.
 - [ ] `AUTH_DEV_MODE=false` y `NODE_ENV=production`.
+- [ ] `SEED_DEMO_DATA=false` y `ALLOW_DEMO_ACCOUNTS=false`.
+- [ ] Administrador real creado con `npm run admin:create` (contraseña de 12+ caracteres).
+- [ ] Cuentas demo eliminadas (`npm run db:remove-demo-users`).
+- [ ] `JWT_SECRET` generado y único (no el de `.env.example`).
 - [ ] `/api/health` responde `database: up`.
 - [ ] Frontend apunta a la API correcta (`VITE_API_URL`).
 - [ ] CORS configurado.

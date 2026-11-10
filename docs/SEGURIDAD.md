@@ -27,10 +27,13 @@ Documento técnico del modelo de seguridad actual, riesgos conocidos y plan de e
 - ✅ **RBAC en servidor** con `requireAuth` / `requireAdmin`.
 - ✅ **Sin admin anónimo:** una petición sin credenciales recibe `401`.
 - ✅ **Tokens de desarrollo deshabilitados en producción** (`NODE_ENV=production`), salvo `AUTH_DEV_MODE=true`.
+- ✅ **Cuentas demo fuera de producción:** `SEED_DEMO_DATA=false` impide crearlas y el servidor **se niega a arrancar** si las detecta activas.
+- ✅ **Administrador real creado bajo demanda** con `npm run admin:create` (argon2, mínimo 12 caracteres).
 - ✅ **Verificación de conexión** a la base antes de arrancar.
 - ✅ **Health check** con estado de la base.
 - ✅ **Auditoría** de cambios en `audit_logs`.
 - ✅ **Transacciones** en operaciones críticas (swap, restauración).
+- ✅ **Suite automatizada** (Vitest + Supertest) que verifica auth, RBAC y no exposición de hashes.
 
 ---
 
@@ -49,6 +52,7 @@ Documento técnico del modelo de seguridad actual, riesgos conocidos y plan de e
 | 9 | Sin política de contraseñas | 🟡 Media | Mínimo 8 caracteres; falta complejidad y bloqueo por usuario. |
 | 10 | Firebase API key pública | 🟡 Baja | Restricción por dominio y reglas. |
 | 11 | Tokens sin revocación inmediata | 🟠 Media | Añadir denylist o refresh tokens. |
+| 12 | Cuentas demo con contraseñas públicas | 🔴 Crítica | ✅ Corregido: `SEED_DEMO_DATA=false` en producción y arranque bloqueado si se detectan. |
 
 ---
 

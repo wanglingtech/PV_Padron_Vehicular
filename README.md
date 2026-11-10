@@ -324,6 +324,12 @@ Abre **http://localhost:3000**.
 
 > Credenciales demo (solo entorno local): `admin@transporte.pe` / `admin123` y `operador@transporte.pe` / `operador123`. El login valida contra PostgreSQL con **argon2id**; ver [Autenticación](docs/AUTENTICACION.md) y [Seguridad](#-seguridad).
 
+> ⚠️ **Antes de publicar en producción** las cuentas demo deben desaparecer (sus contraseñas son públicas). El backend se encarga: con `NODE_ENV=production` no las crea y **se niega a arrancar** si las detecta. Para una instalación real:
+> ```bash
+> npm run db:remove-demo-users   # elimina las cuentas demo
+> npm run admin:create           # crea tu administrador real (te lo pregunta)
+> ```
+
 ---
 
 ## 🔐 Variables de entorno
@@ -360,12 +366,16 @@ Copia `.env.example` y completa los valores. **Nunca subas tu `.env` real.**
 | `npm run build` | Compila la SPA y empaqueta el servidor en `dist/`. |
 | `npm start` | Ejecuta el servidor compilado (`dist/server.cjs`). |
 | `npm run preview` | Previsualiza el build de Vite. |
-| `npm run lint` | Verificación de tipos con TypeScript (`tsc --noEmit`). |
+| `npm run lint` | Verificación de tipos con TypeScript en modo estricto (`tsc --noEmit`). |
+| `npm test` | Pruebas automatizadas (Vitest + Supertest) sobre la base `padron_vehicular_test`. |
+| `npm run test:watch` | Modo interactivo de las pruebas. |
 | `npm run smoke` | Smoke test de API y RBAC (requiere `npm run dev`). |
 | `npm run db:push` | Aplica el esquema de Drizzle a la base de datos. |
 | `npm run db:generate` | Genera una migración SQL desde el esquema. |
 | `npm run db:studio` | Abre Drizzle Studio para explorar la base. |
 | `npm run db:reset-demo-passwords` | Restablece las contraseñas de las cuentas demo (solo desarrollo). |
+| `npm run db:remove-demo-users` | Elimina las cuentas demo de la base (antes de publicar en producción). |
+| `npm run admin:create` | Crea un administrador real (interactivo) con hash argon2. |
 | `npm run clean` | Elimina `dist/` y artefactos de build. |
 
 ---
@@ -480,6 +490,7 @@ Lee [`CONTRIBUTING.md`](CONTRIBUTING.md) y [`docs/CONTRIBUCION.md`](docs/CONTRIB
 
 ```bash
 npm run lint
+npm test
 npm run build
 ```
 
