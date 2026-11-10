@@ -3,8 +3,10 @@ import { eq } from 'drizzle-orm';
 import { adminAuth } from '../lib/firebase-admin.ts';
 import { db } from '../db/index.ts';
 import { systemRoles, users } from '../db/schema.ts';
-import { isPrivilegedRole } from '../config/roles.ts';
-import type { ModulePermissionMode, SystemModuleId } from '../types/index.ts';
+import { isPrivilegedRole } from '../../shared/roles.ts';
+import type { ModulePermissionMode, SystemModuleId } from '../../frontend/src/types/index.ts';
+import { getAuthCookieName, isDevAuthEnabled } from '../config/env.ts';
+import { verifySessionToken } from '../services/token.service.ts';
 
 export interface AuthRequest extends Request {
   user?: {
@@ -15,34 +17,49 @@ export interface AuthRequest extends Request {
   };
 }
 
-/**
- * Los tokens de desarrollo solo se aceptan en local o cuando AUTH_DEV_MODE=true.
- * En producción (NODE_ENV=production) quedan deshabilitados por defecto.
- */
-const isDevAuthEnabled = (): boolean =>
-  process.env.AUTH_DEV_MODE === 'true' || process.env.NODE_ENV !== 'production';
-
 /** Extrae el rol de un token `dev-<rol>-token` (solo en modo desarrollo). */
 const parseDevTokenRole = (token: string): string | null => {
   const match = /^dev-([a-z][a-z0-9_-]*)-token$/.exec(token);
   return match ? match[1] : null;
 };
 
+/** Obtiene el token de sesión desde `Authorization: Bearer` o la cookie HttpOnly. */
+const extractSessionToken = (req: AuthRequest): string | null => {
+  const authHeader = req.headers.authorization;
+  if (authHeader?.startsWith('Bearer ')) {
+    return authHeader.slice('Bearer '.length).trim() || null;
+  }
+
+  const cookies = (req as AuthRequest & { cookies?: Record<string, string> }).cookies;
+  const cookieToken = cookies?.[getAuthCookieName()];
+  return typeof cookieToken === 'string' && cookieToken.length > 0 ? cookieToken : null;
+};
+
+/**
+ * Autenticación de peticiones.
+ *
+ * Orden de aceptación:
+ * 1. Tokens `dev-*` (solo en desarrollo o con AUTH_DEV_MODE=true).
+ * 2. JWT propio firmado (Bearer o cookie HttpOnly).
+ * 3. Token de Firebase (compatibilidad con el login de Google).
+ * 4. Cabeceras de desarrollo (`x-user-role`).
+ *
+ * En todos los casos se refresca el rol desde PostgreSQL para que un cambio de
+ * permisos o la desactivación de una cuenta surta efecto de inmediato.
+ */
 export const requireAuth = async (
   req: AuthRequest,
   res: Response,
   next: NextFunction
 ) => {
-  const authHeader = req.headers.authorization;
+  const devAuthEnabled = isDevAuthEnabled();
+  const token = extractSessionToken(req);
   const devRole = (req.headers['x-user-role'] as string) || '';
   const devEmail = (req.headers['x-user-email'] as string) || '';
   const devName = (req.headers['x-user-name'] as string) || '';
-  const devAuthEnabled = isDevAuthEnabled();
 
   // 1. Tokens de desarrollo (solo en local o con AUTH_DEV_MODE=true)
-  if (devAuthEnabled && authHeader?.startsWith('Bearer ')) {
-    const token = authHeader.slice('Bearer '.length);
-
+  if (devAuthEnabled && token) {
     if (token === 'dev-admin-token') {
       req.user = {
         uid: 'admin-dev-01',
@@ -53,8 +70,6 @@ export const requireAuth = async (
       return next();
     }
 
-    // Permite probar cualquier rol con dev-<rol>-token, por ejemplo:
-    // dev-gerente-token, dev-fiscalizador-token, dev-registrador-token.
     const tokenRole = parseDevTokenRole(token);
     if (tokenRole) {
       const role = token === 'dev-operator-token' ? devRole || tokenRole : tokenRole;
@@ -68,26 +83,58 @@ export const requireAuth = async (
     }
   }
 
-  // 2. Token real de Firebase
-  if (authHeader?.startsWith('Bearer ')) {
-    const token = authHeader.slice('Bearer '.length);
+  // 2. JWT propio (Bearer o cookie)
+  if (token) {
+    try {
+      const payload = verifySessionToken(token);
+      const [row] = await db
+        .select()
+        .from(users)
+        .where(eq(users.uid, payload.sub))
+        .limit(1);
 
+      if (row) {
+        if (!row.isActive) {
+          return res.status(401).json({ error: 'La cuenta está desactivada.' });
+        }
+        req.user = {
+          uid: row.uid,
+          email: row.email,
+          name: row.name,
+          role: row.role,
+        };
+        return next();
+      }
+
+      // Token válido de un usuario sin fila local (por ejemplo, Firebase).
+      req.user = {
+        uid: payload.sub,
+        email: payload.email,
+        name: payload.name,
+        role: payload.role,
+      };
+      return next();
+    } catch {
+      // No era un JWT propio; se intenta con Firebase más abajo.
+    }
+
+    // 3. Token real de Firebase
     try {
       const decodedToken = await adminAuth.verifyIdToken(token);
-      const email = decodedToken.email || 'usuario@transporte.pe';
+      const email = (decodedToken.email || 'usuario@transporte.pe').toLowerCase();
 
-      // Buscamos el rol asignado en la base de datos; si no existe, usamos
-      // una heurística temporal hasta implementar el login real (Fase 1).
-      let role = devRole || (email.includes('admin') ? 'admin' : 'operator');
-      try {
-        const [dbUser] = await db
-          .select()
-          .from(users)
-          .where(eq(users.email, email.toLowerCase()))
-          .limit(1);
-        if (dbUser?.role) role = dbUser.role;
-      } catch {
-        // Si la consulta falla, conservamos el rol heurístico.
+      let role = email.includes('admin') ? 'admin' : 'operator';
+      const [dbUser] = await db
+        .select()
+        .from(users)
+        .where(eq(users.email, email))
+        .limit(1);
+
+      if (dbUser) {
+        if (!dbUser.isActive) {
+          return res.status(401).json({ error: 'La cuenta está desactivada.' });
+        }
+        role = dbUser.role;
       }
 
       req.user = {
@@ -106,7 +153,7 @@ export const requireAuth = async (
     }
   }
 
-  // 3. Cabeceras de sesión de desarrollo (solo en local o con AUTH_DEV_MODE=true)
+  // 4. Cabeceras de sesión de desarrollo (solo en local o con AUTH_DEV_MODE=true)
   if (devAuthEnabled && devRole) {
     req.user = {
       uid: `${devRole}-dev-uid`,
@@ -117,7 +164,7 @@ export const requireAuth = async (
     return next();
   }
 
-  // 4. Sin credenciales: nunca asumir administrador por defecto
+  // 5. Sin credenciales: nunca asumir administrador por defecto
   return res.status(401).json({ error: 'No autenticado. Inicia sesión para continuar.' });
 };
 

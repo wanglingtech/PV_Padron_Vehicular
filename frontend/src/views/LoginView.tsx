@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { ShieldCheck, Lock, Mail, CarFront, ArrowRight, CheckCircle2 } from 'lucide-react';
-import { useAuth, DEMO_USERS, ROLE_DEFINITIONS, DEFAULT_USER_ACCOUNTS } from '../context/AuthContext.tsx';
+import { Lock, Mail, CarFront, ArrowRight, ShieldCheck } from 'lucide-react';
+import { useAuth } from '../context/AuthContext.tsx';
 import { getStoredCompanyBrand } from '../utils/pdf-export.ts';
 import { Alert } from '../utils/sweetalert.ts';
 
@@ -12,53 +12,38 @@ export const LoginView: React.FC<LoginViewProps> = ({ onSuccessLogin }) => {
   const { login } = useAuth();
   const company = getStoredCompanyBrand();
 
-  const [role, setRole] = useState<string>('admin');
-  const [email, setEmail] = useState('admin@transporte.pe');
-  const [password, setPassword] = useState('admin123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const roleDef = ROLE_DEFINITIONS.find((r) => r.id === role);
-
-  const handleRoleChange = (newRole: string) => {
-    setRole(newRole);
-    const account = DEFAULT_USER_ACCOUNTS.find((a) => a.role === newRole);
-    setEmail(account?.email || `${newRole}@transporte.pe`);
-    setPassword(account?.password || '123456');
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!email.trim() || !password.trim()) {
       Alert.error('Campos requeridos', 'Por favor ingrese su correo electrónico y contraseña.');
       return;
     }
 
     setIsLoading(true);
-    setTimeout(() => {
-      const demo = DEMO_USERS[role];
-      login(email, role, demo?.name || `Usuario (${role})`);
-      setIsLoading(false);
-      Alert.toast(`Bienvenido al sistema como ${roleDef?.name || role}`, 'success');
+    try {
+      const user = await login(email.trim(), password);
+      Alert.toast(`Bienvenido, ${user.name}`, 'success');
       onSuccessLogin?.();
-    }, 400);
-  };
-
-  const handleQuickDemo = (demoRole: string) => {
-    const demo = DEMO_USERS[demoRole];
-    if (!demo) return;
-    login(demo.email, demoRole, demo.name);
-    const name = ROLE_DEFINITIONS.find((r) => r.id === demoRole)?.name || demoRole;
-    Alert.toast(`Acceso rápido activado como ${name}`, 'success');
-    onSuccessLogin?.();
+    } catch (error) {
+      Alert.error(
+        'No se pudo iniciar sesión',
+        error instanceof Error ? error.message : 'Correo o contraseña incorrectos.'
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="flex min-h-screen flex-col justify-center bg-slate-900 px-4 py-12 sm:px-6 lg:px-8">
-      {/* Fondo decorativo sutil */}
       <div className="absolute inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:16px_16px] opacity-40 pointer-events-none" />
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
-        {/* Logo y Encabezado de la Empresa */}
         <div className="text-center">
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-xl shadow-blue-500/20 ring-4 ring-blue-500/20">
             <CarFront size={32} />
@@ -71,26 +56,11 @@ export const LoginView: React.FC<LoginViewProps> = ({ onSuccessLogin }) => {
           </p>
         </div>
 
-        {/* Tarjeta de Inicio de Sesión */}
         <div className="mt-8 bg-slate-800/90 backdrop-blur-md px-6 py-8 shadow-2xl rounded-2xl sm:px-10 border border-slate-700/80">
-          {/* Selector de Rol */}
-          <div className="mb-6">
-            <label className="block text-xs font-medium text-slate-300 mb-1.5">
-              Rol de acceso
-            </label>
-            <select
-              value={role}
-              onChange={(e) => handleRoleChange(e.target.value)}
-              className="block w-full rounded-xl border border-slate-600 bg-slate-900/80 px-3 py-2.5 text-sm text-white focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-            >
-              {ROLE_DEFINITIONS.map((r) => (
-                <option key={r.id} value={r.id}>
-                  {r.name}
-                </option>
-              ))}
-            </select>
-            <p className="mt-1.5 text-[10px] text-slate-500">
-              La sesión demo no valida contraseña; el acceso real llega en la Fase 1.
+          <div className="mb-6 text-center">
+            <h3 className="text-sm font-semibold text-white">Iniciar sesión</h3>
+            <p className="mt-1 text-[11px] text-slate-400">
+              Accede con la cuenta institucional asignada por el administrador.
             </p>
           </div>
 
@@ -108,6 +78,7 @@ export const LoginView: React.FC<LoginViewProps> = ({ onSuccessLogin }) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
+                  autoComplete="email"
                   placeholder="usuario@transporte.pe"
                   className="block w-full rounded-xl border border-slate-600 bg-slate-900/60 pl-10 pr-3 py-2.5 text-sm text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                 />
@@ -127,20 +98,21 @@ export const LoginView: React.FC<LoginViewProps> = ({ onSuccessLogin }) => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
+                  autoComplete="current-password"
                   placeholder="••••••••"
                   className="block w-full rounded-xl border border-slate-600 bg-slate-900/60 pl-10 pr-3 py-2.5 text-sm text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                 />
               </div>
             </div>
 
-            {/* Permisos según el rol */}
             <div className="rounded-lg bg-slate-900/50 p-3 text-xs text-slate-400 border border-slate-700/60">
               <p className="font-semibold text-slate-300 mb-1 flex items-center gap-1.5">
-                <CheckCircle2 size={13} className="text-blue-400" />
-                {roleDef?.name || role}
+                <ShieldCheck size={13} className="text-blue-400" />
+                Sesión protegida
               </p>
               <p className="text-[11px] leading-relaxed">
-                {roleDef?.description || 'Acceso según la matriz de permisos configurada.'}
+                La sesión se guarda en una cookie HttpOnly y el servidor valida el rol y los
+                permisos en cada petición.
               </p>
             </div>
 
@@ -149,30 +121,14 @@ export const LoginView: React.FC<LoginViewProps> = ({ onSuccessLogin }) => {
               disabled={isLoading}
               className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 py-2.5 px-4 text-sm font-semibold text-white shadow-md shadow-blue-600/30 transition-all hover:bg-blue-500 disabled:opacity-50"
             >
-              <span>{isLoading ? 'Ingresando...' : `Iniciar Sesión como ${roleDef?.name || role}`}</span>
+              <span>{isLoading ? 'Ingresando...' : 'Ingresar al sistema'}</span>
               <ArrowRight size={16} />
             </button>
           </form>
 
-          {/* Accesos rápidos de demostración */}
-          <div className="mt-6 border-t border-slate-700 pt-5">
-            <p className="text-center text-xs text-slate-400 font-medium mb-3">
-              Acceso Directo con Cuentas Demo:
-            </p>
-            <div className="grid grid-cols-2 gap-2">
-              {ROLE_DEFINITIONS.map((r) => (
-                <button
-                  key={r.id}
-                  type="button"
-                  onClick={() => handleQuickDemo(r.id)}
-                  className="flex items-center justify-center gap-1.5 py-2 px-2 rounded-lg bg-slate-700/60 hover:bg-slate-700 text-[11px] font-medium text-slate-200 border border-slate-600 transition-colors"
-                >
-                  <ShieldCheck size={13} className="text-blue-400 shrink-0" />
-                  <span className="truncate">{r.name}</span>
-                </button>
-              ))}
-            </div>
-          </div>
+          <p className="mt-6 text-center text-[10px] text-slate-500">
+            ¿Olvidaste tu contraseña? Solicita el restablecimiento al administrador del sistema.
+          </p>
         </div>
       </div>
     </div>

@@ -1,14 +1,18 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { CurrentUser, RoleDefinition, SystemModuleId, ModulePermissionMode, UserAccount } from '../types/index.ts';
+import {
+  CurrentUser,
+  RoleDefinition,
+  SystemModuleId,
+  ModulePermissionMode,
+  UserAccount,
+} from '../types/index.ts';
 import { api } from '../api/client.ts';
-import { auth, googleAuthProvider } from '../lib/firebase.ts';
-import { signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
 import {
   DEFAULT_ROLES,
   DEFAULT_USER_ACCOUNTS,
   DEMO_USERS,
   isPrivilegedRole,
-} from '../config/roles.ts';
+} from '../../../shared/roles.ts';
 
 // Re-exportamos el catálogo para mantener compatibilidad con las vistas que
 // ya importaban estos símbolos desde AuthContext.
@@ -19,7 +23,7 @@ export {
   SYSTEM_MODULES_CONFIG,
   ROLE_DEFINITIONS,
   isPrivilegedRole,
-} from '../config/roles.ts';
+} from '../../../shared/roles.ts';
 
 export type NavigationTab =
   | 'portal-inicio'
@@ -38,58 +42,55 @@ export type NavigationTab =
   | 'gestion-portal'
   | 'backup-migracion';
 
-// El catálogo de módulos, roles, cuentas demo y helpers vive en
-// frontend/src/config/roles.ts y se re-exporta arriba.
+// El catálogo de módulos, roles y helpers vive en `shared/roles.ts`.
 
 interface AuthContextType {
   currentUser: CurrentUser | null;
   isLoggedIn: boolean;
+  isAuthLoading: boolean;
   isAdmin: boolean;
   isOperator: boolean;
   roles: RoleDefinition[];
   userAccounts: UserAccount[];
   currentRoleDef: RoleDefinition;
-  login: (email: string, role: string, name?: string) => void;
-  logout: () => void;
-  switchRole: (role: string) => void;
-  switchUserSession: (account: UserAccount | CurrentUser) => void;
-  signInGoogle: () => Promise<void>;
-  signOutUser: () => Promise<void>;
+  login: (email: string, password: string) => Promise<CurrentUser>;
+  logout: () => Promise<void>;
+  changePassword: (currentPassword: string, newPassword: string) => Promise<void>;
   hasModuleAccess: (moduleId: NavigationTab) => boolean;
   getModulePermission: (moduleId: NavigationTab) => ModulePermissionMode;
   canWrite: (moduleId: NavigationTab) => boolean;
   canRead: (moduleId: NavigationTab) => boolean;
   saveRole: (role: RoleDefinition) => void;
   deleteRole: (roleId: string) => boolean;
-  updateRolePermissions: (roleId: string, permissions: Record<SystemModuleId, ModulePermissionMode>) => void;
-  saveUserAccount: (account: Partial<UserAccount> & { email: string; name: string; role: string; password?: string }) => void;
+  updateRolePermissions: (
+    roleId: string,
+    permissions: Record<SystemModuleId, ModulePermissionMode>
+  ) => void;
+  saveUserAccount: (
+    account: Partial<UserAccount> & { email: string; name: string; role: string; password?: string }
+  ) => void;
   deleteUserAccount: (id: string) => void;
   toggleUserStatus: (id: string) => void;
 }
 
 const AuthContext = createContext<AuthContextType>({
-  currentUser: {
-    uid: 'admin-dev-01',
-    email: 'admin@transporte.pe',
-    name: 'Carlos Mendoza (Administrador)',
-    role: 'admin',
-  },
-  isLoggedIn: true,
-  isAdmin: true,
+  currentUser: null,
+  isLoggedIn: false,
+  isAuthLoading: true,
+  isAdmin: false,
   isOperator: false,
   roles: DEFAULT_ROLES,
-  userAccounts: DEFAULT_USER_ACCOUNTS,
+  userAccounts: [],
   currentRoleDef: DEFAULT_ROLES[0],
-  login: () => {},
-  logout: () => {},
-  switchRole: () => {},
-  switchUserSession: () => {},
-  signInGoogle: async () => {},
-  signOutUser: async () => {},
-  hasModuleAccess: () => true,
-  getModulePermission: () => 'write',
-  canWrite: () => true,
-  canRead: () => true,
+  login: async () => {
+    throw new Error('AuthProvider no inicializado');
+  },
+  logout: async () => {},
+  changePassword: async () => {},
+  hasModuleAccess: () => false,
+  getModulePermission: () => 'none',
+  canWrite: () => false,
+  canRead: () => false,
   saveRole: () => {},
   deleteRole: () => false,
   updateRolePermissions: () => {},
@@ -99,106 +100,60 @@ const AuthContext = createContext<AuthContextType>({
 });
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // 1. Roles del Sistema
+  // 1. Roles del sistema (caché local para pintar el menú sin esperar la API).
   const [roles, setRoles] = useState<RoleDefinition[]>(() => {
     const saved = localStorage.getItem('padron_system_roles');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          return parsed;
-        }
-      } catch (e) {
-        // fallback
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      } catch {
+        // Se usa el catálogo por defecto.
       }
     }
     return DEFAULT_ROLES;
   });
 
-  // Guardar roles en localStorage
   useEffect(() => {
     localStorage.setItem('padron_system_roles', JSON.stringify(roles));
   }, [roles]);
 
-  // 2. Cuentas de Usuario
-  const [userAccounts, setUserAccounts] = useState<UserAccount[]>(() => {
-    const saved = localStorage.getItem('padron_user_accounts');
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          return parsed;
-        }
-      } catch (e) {
-        // fallback
-      }
-    }
-    return DEFAULT_USER_ACCOUNTS;
-  });
+  // 2. Cuentas de usuario (solo se cargan si el rol puede ver el módulo).
+  const [userAccounts, setUserAccounts] = useState<UserAccount[]>([]);
 
-  // Guardar cuentas de usuario en localStorage
+  // 3. Sesión actual. La cookie HttpOnly es la fuente de verdad.
+  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
+
   useEffect(() => {
-    localStorage.setItem('padron_user_accounts', JSON.stringify(userAccounts));
-  }, [userAccounts]);
+    let cancelled = false;
 
-  // 3. Usuario actual en sesión
-  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(() => {
-    const saved = localStorage.getItem('padron_user_session');
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch (e) {
-        // fallback
-      }
-    }
-    return {
-      uid: 'admin-dev-01',
-      email: 'admin@transporte.pe',
-      name: 'Carlos Mendoza (Administrador)',
-      role: 'admin',
+    api
+      .me()
+      .then(({ user }) => {
+        if (!cancelled) setCurrentUser(user);
+      })
+      .catch(() => {
+        if (!cancelled) setCurrentUser(null);
+      })
+      .finally(() => {
+        if (!cancelled) setIsAuthLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
     };
-  });
+  }, []);
 
   const isLoggedIn = currentUser !== null;
-
-  useEffect(() => {
-    if (currentUser) {
-      api.setCurrentUser(currentUser);
-      localStorage.setItem('padron_user_session', JSON.stringify(currentUser));
-    } else {
-      localStorage.removeItem('padron_user_session');
-    }
-  }, [currentUser]);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-      if (firebaseUser) {
-        const email = firebaseUser.email || 'usuario@transporte.pe';
-        const role = email.includes('admin') ? 'admin' : (currentUser?.role || 'operator');
-        const updated: CurrentUser = {
-          uid: firebaseUser.uid,
-          email,
-          name: firebaseUser.displayName || email.split('@')[0],
-          role,
-        };
-        setCurrentUser(updated);
-      }
-    });
-    return () => unsubscribe();
-  }, [currentUser?.role]);
-
-  // Definición del rol actual
   const currentRoleDef: RoleDefinition =
-    roles.find((r) => r.id === (currentUser?.role || 'operator')) ||
-    DEFAULT_ROLES[0];
-
+    roles.find((r) => r.id === (currentUser?.role || 'operator')) || DEFAULT_ROLES[0];
   const isAdmin = isPrivilegedRole(currentUser?.role);
   const isOperator = currentUser?.role === 'operator';
 
-  // Verificación de Permisos Dinámica
+  // Verificación de permisos en el cliente (el backend vuelve a validar).
   const getModulePermission = (moduleId: NavigationTab): ModulePermissionMode => {
     if (!currentUser) return 'none';
-    // Admin, programador y gerente tienen acceso total.
     if (isPrivilegedRole(currentUser.role)) return 'write';
     const roleDef = roles.find((r) => r.id === currentUser.role);
     if (!roleDef) return 'none';
@@ -207,8 +162,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const hasModuleAccess = (moduleId: NavigationTab): boolean => {
     if (isAdmin) return true;
-    const perm = getModulePermission(moduleId);
-    return perm !== 'none';
+    return getModulePermission(moduleId) !== 'none';
   };
 
   const canWrite = (moduleId: NavigationTab): boolean => {
@@ -222,10 +176,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return perm === 'read' || perm === 'write';
   };
 
-  // Cargar roles y usuarios desde la Base de Datos PostgreSQL.
-  // El catálogo de roles es público; la lista de usuarios solo se consulta
-  // cuando el rol actual tiene permiso de lectura sobre "usuarios" para no
-  // provocar 403 innecesarios en la consola del navegador.
+  // Carga roles y, si hay permiso, la lista de usuarios desde PostgreSQL.
   const refreshRolesAndUsersFromDB = async () => {
     try {
       const canReadUsers = getModulePermission('usuarios') !== 'none';
@@ -240,7 +191,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           if (typeof permissions === 'string') {
             try {
               permissions = JSON.parse(permissions);
-            } catch (e) {
+            } catch {
               permissions = {};
             }
           }
@@ -263,10 +214,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           name: u.name,
           email: u.email,
           role: u.role,
-          password: u.password || '123456',
+          // La API nunca devuelve la contraseña ni su hash.
+          password: undefined,
           assignedPadron: u.assignedPadron || undefined,
           isActive: Boolean(u.isActive),
-          createdAt: u.createdAt ? new Date(u.createdAt).toISOString() : new Date().toISOString(),
+          createdAt: u.createdAt
+            ? new Date(u.createdAt).toISOString()
+            : new Date().toISOString(),
           lastLogin: 'Registrado en BD',
         }));
         setUserAccounts(formattedUsers);
@@ -277,13 +231,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   useEffect(() => {
+    if (!currentUser) return;
     refreshRolesAndUsersFromDB();
     // Se vuelve a sincronizar al cambiar de rol para cargar las cuentas
     // cuando el nuevo rol sí tiene acceso al módulo de usuarios.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser?.role]);
 
-  // Operaciones de Roles
+  // Operaciones de roles
   const saveRole = (newRole: RoleDefinition) => {
     const exists = roles.some((r) => r.id === newRole.id);
     setRoles((prev) => {
@@ -296,7 +251,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return [...prev, newRole];
     });
 
-    // Guardar dinámicamente en PostgreSQL
     if (exists) {
       api
         .updateRole(newRole.id, {
@@ -320,18 +274,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const deleteRole = (roleId: string): boolean => {
-    // Proteger todos los roles institucionales (isSystem), no solo admin/operator.
     const roleToDelete = roles.find((r) => r.id === roleId);
     if (!roleToDelete || roleToDelete.isSystem) return false;
+
     setRoles((prev) => prev.filter((r) => r.id !== roleId));
-    // Reasignar usuarios de este rol a 'operator'
     setUserAccounts((prev) =>
       prev.map((u) => (u.role === roleId ? { ...u, role: 'operator' } : u))
     );
     if (currentUser?.role === roleId) {
       setCurrentUser((prev) => (prev ? { ...prev, role: 'operator' } : null));
     }
-    // Eliminar en PostgreSQL
     api.deleteRole(roleId).catch((e) => console.error('Error al eliminar rol en BD:', e));
     return true;
   };
@@ -340,26 +292,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     roleId: string,
     permissions: Record<SystemModuleId, ModulePermissionMode>
   ) => {
-    setRoles((prev) =>
-      prev.map((r) => (r.id === roleId ? { ...r, permissions } : r))
-    );
-    // Persistir dinámicamente en PostgreSQL
+    setRoles((prev) => prev.map((r) => (r.id === roleId ? { ...r, permissions } : r)));
     api
-      .updateRole(roleId, {
-        permissions: permissions as any,
-      })
+      .updateRole(roleId, { permissions: permissions as any })
       .catch((e) => console.error('Error al persistir permisos en PostgreSQL:', e));
   };
 
-  // Operaciones de Cuentas de Usuario en Base de Datos
+  // Operaciones de cuentas de usuario
   const saveUserAccount = (
     data: Partial<UserAccount> & { email: string; name: string; role: string; password?: string }
   ) => {
     if (data.id && !data.id.startsWith('usr-temp')) {
-      // Actualizar existente
-      setUserAccounts((prev) =>
-        prev.map((u) => (u.id === data.id ? { ...u, ...data } : u))
-      );
+      setUserAccounts((prev) => prev.map((u) => (u.id === data.id ? { ...u, ...data } : u)));
       api
         .updateUser(data.id, {
           name: data.name,
@@ -371,7 +315,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         })
         .catch((e) => console.error('Error actualizando usuario en BD:', e));
     } else {
-      // Crear nuevo
       const tempId = `usr-${Date.now().toString(36)}`;
       const newAcc: UserAccount = {
         id: tempId,
@@ -379,7 +322,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         name: data.name,
         email: data.email,
         role: data.role,
-        password: data.password || '123456',
         assignedPadron: data.assignedPadron,
         isActive: data.isActive !== undefined ? data.isActive : true,
         createdAt: new Date().toISOString(),
@@ -392,14 +334,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           name: data.name,
           email: data.email,
           role: data.role,
-          password: data.password || '123456',
+          password: data.password,
           assignedPadron: data.assignedPadron,
           isActive: data.isActive,
         })
         .then((created) => {
           if (created?.id) {
             setUserAccounts((prev) =>
-              prev.map((u) => (u.id === tempId ? { ...u, id: String(created.id), uid: created.uid } : u))
+              prev.map((u) =>
+                u.id === tempId ? { ...u, id: String(created.id), uid: created.uid } : u
+              )
             );
           }
         })
@@ -423,78 +367,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return u;
       })
     );
-    api.updateUser(id, { isActive: nextStatus }).catch((e) =>
-      console.error('Error actualizando estado en BD:', e)
-    );
+    api
+      .updateUser(id, { isActive: nextStatus })
+      .catch((e) => console.error('Error actualizando estado en BD:', e));
   };
 
-  const switchUserSession = (account: UserAccount | CurrentUser) => {
-    const user: CurrentUser = {
-      uid: account.uid,
-      email: account.email,
-      name: account.name,
-      role: account.role,
-      assignedPadron: (account as any).assignedPadron,
-    };
+  // Autenticación real
+  const login = async (email: string, password: string): Promise<CurrentUser> => {
+    const { user, token } = await api.login(email, password);
+    api.setAuthToken(token);
     setCurrentUser(user);
+    return user;
   };
 
-  const switchRole = (role: string) => {
-    // Encontrar la primera cuenta que tenga este rol o simular una sesión
-    const matchingAccount = userAccounts.find((u) => u.role === role);
-    if (matchingAccount) {
-      switchUserSession(matchingAccount);
-      return;
+  const logout = async (): Promise<void> => {
+    try {
+      await api.logout();
+    } catch {
+      // Aunque falle la API, limpiamos la sesión local.
     }
-    const roleDef = roles.find((r) => r.id === role);
-    const roleName = roleDef ? roleDef.name : role;
-    setCurrentUser({
-      uid: `${role}-sim-uid`,
-      email: `${role}@transporte.pe`,
-      name: `Usuario de Prueba (${roleName})`,
-      role,
-    });
-  };
-
-  const login = (email: string, role: string, name?: string) => {
-    const user: CurrentUser = {
-      uid: `${role}-${Date.now()}`,
-      email,
-      name: name || `Usuario (${role})`,
-      role,
-    };
-    setCurrentUser(user);
-  };
-
-  const logout = () => {
+    api.setAuthToken(null);
     setCurrentUser(null);
+    setUserAccounts([]);
   };
 
-  const signInGoogle = async () => {
-    try {
-      const result = await signInWithPopup(auth, googleAuthProvider);
-      if (result.user) {
-        const email = result.user.email || 'usuario@transporte.pe';
-        const role = email.includes('admin') ? 'admin' : 'operator';
-        setCurrentUser({
-          uid: result.user.uid,
-          email,
-          name: result.user.displayName || email.split('@')[0],
-          role,
-        });
-      }
-    } catch (error: any) {
-      console.warn('Google Sign-In note:', error.message);
-    }
-  };
-
-  const signOutUser = async () => {
-    try {
-      await signOut(auth);
-    } catch (e) {
-      // ignore
-    }
-    logout();
+  const changePassword = async (currentPassword: string, newPassword: string): Promise<void> => {
+    await api.changePassword(currentPassword, newPassword);
   };
 
   return (
@@ -502,6 +400,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       value={{
         currentUser,
         isLoggedIn,
+        isAuthLoading,
         isAdmin,
         isOperator,
         roles,
@@ -509,10 +408,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         currentRoleDef,
         login,
         logout,
-        switchRole,
-        switchUserSession,
-        signInGoogle,
-        signOutUser,
+        changePassword,
         hasModuleAccess,
         getModulePermission,
         canWrite,

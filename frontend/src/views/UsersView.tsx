@@ -31,9 +31,7 @@ import {
   History,
   Settings,
   LayoutDashboard,
-  LogIn,
   EyeOff,
-  Copy,
   Database,
   MessageCircle,
 } from 'lucide-react';
@@ -83,7 +81,6 @@ export const UsersView: React.FC = () => {
     saveUserAccount,
     deleteUserAccount,
     toggleUserStatus,
-    switchUserSession,
   } = useAuth();
 
   const { showToast } = useToast();
@@ -100,16 +97,8 @@ export const UsersView: React.FC = () => {
   const [accountModalOpen, setAccountModalOpen] = useState(false);
   const [editingAccount, setEditingAccount] = useState<UserAccount | null>(null);
 
-  // Estados de visibilidad de contraseñas (solo admin puede ver/modificar)
-  const [revealedPasswords, setRevealedPasswords] = useState<Record<string, boolean>>({});
+  // Visibilidad de la contraseña que se escribe en el modal (nunca se precarga un hash)
   const [showModalPassword, setShowModalPassword] = useState(false);
-
-  const togglePasswordVisibility = (accountId: string) => {
-    setRevealedPasswords((prev) => ({
-      ...prev,
-      [accountId]: !prev[accountId],
-    }));
-  };
 
   const [roleModalOpen, setRoleModalOpen] = useState(false);
   const [editingRole, setEditingRole] = useState<RoleDefinition | null>(null);
@@ -192,12 +181,18 @@ export const UsersView: React.FC = () => {
     const name = (formData.get('name') as string).trim();
     const email = (formData.get('email') as string).trim();
     const role = (formData.get('role') as string).trim();
-    const password = (formData.get('password') as string)?.trim() || '123456';
+    // Vacío al editar = conservar la contraseña actual. Nunca se precarga el hash.
+    const password = (formData.get('password') as string)?.trim() || undefined;
     const assignedPadron = (formData.get('assignedPadron') as string)?.trim() || undefined;
     const isActive = formData.get('isActive') === 'on';
 
     if (!name || !email || !role) {
       showToast('Error', 'Todos los campos obligatorios deben ser completados.', 'error');
+      return;
+    }
+
+    if (!editingAccount && !password) {
+      showToast('Error', 'Debes asignar una contraseña inicial a la nueva cuenta.', 'error');
       return;
     }
 
@@ -507,7 +502,6 @@ export const UsersView: React.FC = () => {
                   <tr>
                     <th className="px-4 py-3.5">Usuario / Personal</th>
                     <th className="px-4 py-3.5">Rol Asignado</th>
-                    <th className="px-4 py-3.5">Contraseña</th>
                     <th className="px-4 py-3.5">Padrón Asignado</th>
                     <th className="px-4 py-3.5">Estado</th>
                     <th className="px-4 py-3.5">Permisos Activos</th>
@@ -517,7 +511,7 @@ export const UsersView: React.FC = () => {
                 <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                   {filteredAccounts.length === 0 ? (
                     <tr>
-                      <td colSpan={7} className="py-12 text-center text-slate-400 dark:text-slate-500">
+                      <td colSpan={6} className="py-12 text-center text-slate-400 dark:text-slate-500">
                         No se encontraron cuentas con los filtros seleccionados.
                       </td>
                     </tr>
@@ -580,38 +574,6 @@ export const UsersView: React.FC = () => {
                             </span>
                           </td>
 
-                          {/* Contraseña visible solo para el Administrador */}
-                          <td className="px-4 py-3.5">
-                            {isAdmin ? (
-                              <div className="flex items-center gap-1.5 font-mono text-xs">
-                                <span className="font-semibold text-slate-800 dark:text-slate-200 select-all">
-                                  {revealedPasswords[account.id] ? (account.password || '123456') : '••••••••'}
-                                </span>
-                                <button
-                                  type="button"
-                                  onClick={() => togglePasswordVisibility(account.id)}
-                                  title={revealedPasswords[account.id] ? 'Ocultar contraseña' : 'Ver contraseña'}
-                                  className="rounded-md p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                                >
-                                  {revealedPasswords[account.id] ? <EyeOff size={13} /> : <Eye size={13} />}
-                                </button>
-                                <button
-                                  type="button"
-                                  onClick={() => {
-                                    navigator.clipboard.writeText(account.password || '123456');
-                                    showToast('Clave copiada', 'Contraseña copiada al portapapeles', 'info');
-                                  }}
-                                  title="Copiar contraseña"
-                                  className="rounded-md p-1 text-slate-400 hover:text-blue-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                                >
-                                  <Copy size={12} />
-                                </button>
-                              </div>
-                            ) : (
-                              <span className="font-mono text-xs text-slate-400">••••••••</span>
-                            )}
-                          </td>
-
                           <td className="px-4 py-3.5">
                             {account.assignedPadron ? (
                               <span className="rounded-md bg-slate-100 dark:bg-slate-800 px-2 py-0.5 font-mono font-bold text-slate-700 dark:text-slate-200">
@@ -655,23 +617,6 @@ export const UsersView: React.FC = () => {
 
                           <td className="px-4 py-3.5 text-right">
                             <div className="flex items-center justify-end gap-1.5">
-                              {/* Botón Simular Sesión */}
-                              <button
-                                onClick={() => {
-                                  switchUserSession(account);
-                                  showToast(
-                                    'Sesión Cambiada',
-                                    `Ahora estás navegando como "${account.name}" (${roleDef?.name || account.role}).`,
-                                    'info'
-                                  );
-                                }}
-                                title="Iniciar sesión como este usuario para comprobar sus permisos"
-                                className="flex h-8 items-center gap-1 rounded-lg border border-slate-200 dark:border-slate-700 px-2 text-[11px] font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                              >
-                                <LogIn size={13} />
-                                <span className="hidden sm:inline">Simular</span>
-                              </button>
-
                               {/* Botón Editar Cuenta */}
                               <button
                                 onClick={() => {
@@ -1200,37 +1145,37 @@ export const UsersView: React.FC = () => {
                 />
               </div>
 
-              {/* Campo Contraseña de Acceso (Solo Administrador puede ver y modificar) */}
+              {/* Campo Contraseña de Acceso (se escribe nueva clave; nunca se precarga el hash) */}
               <div>
                 <div className="flex items-center justify-between">
                   <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300">
-                    Contraseña de Acceso *
+                    {editingAccount ? 'Nueva Contraseña (opcional)' : 'Contraseña de Acceso *'}
                   </label>
-                  {isAdmin && (
-                    <button
-                      type="button"
-                      onClick={() => setShowModalPassword(!showModalPassword)}
-                      className="flex items-center gap-1 text-[11px] font-semibold text-blue-600 dark:text-blue-400 hover:underline"
-                    >
-                      {showModalPassword ? (
-                        <>
-                          <EyeOff size={12} /> Ocultar
-                        </>
-                      ) : (
-                        <>
-                          <Eye size={12} /> Ver Contraseña
-                        </>
-                      )}
-                    </button>
-                  )}
+                  <button
+                    type="button"
+                    onClick={() => setShowModalPassword(!showModalPassword)}
+                    className="flex items-center gap-1 text-[11px] font-semibold text-blue-600 dark:text-blue-400 hover:underline"
+                  >
+                    {showModalPassword ? (
+                      <>
+                        <EyeOff size={12} /> Ocultar
+                      </>
+                    ) : (
+                      <>
+                        <Eye size={12} /> Ver Contraseña
+                      </>
+                    )}
+                  </button>
                 </div>
                 <div className="relative mt-1">
                   <input
                     name="password"
                     type={showModalPassword ? 'text' : 'password'}
-                    defaultValue={editingAccount?.password || '123456'}
-                    required
-                    placeholder="Mínimo 6 caracteres"
+                    defaultValue=""
+                    required={!editingAccount}
+                    minLength={8}
+                    autoComplete="new-password"
+                    placeholder={editingAccount ? 'Dejar vacío para mantener la actual' : 'Mínimo 8 caracteres'}
                     className="block w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 pr-10 text-xs text-slate-900 dark:text-white font-mono focus:border-blue-500 focus:outline-none"
                   />
                   <button
@@ -1243,9 +1188,9 @@ export const UsersView: React.FC = () => {
                   </button>
                 </div>
                 <p className="mt-1 text-[10px] text-slate-500 dark:text-slate-400">
-                  {isAdmin
-                    ? 'Como Administrador, tienes el control de ver y cambiar la clave asignada.'
-                    : 'Solo el Administrador tiene autorización para ver y modificar contraseñas.'}
+                  {editingAccount
+                    ? 'La contraseña se guarda cifrada con argon2. Si dejas el campo vacío, la clave actual no cambia.'
+                    : 'La contraseña se guarda cifrada con argon2 y debe tener al menos 8 caracteres.'}
                 </p>
               </div>
 

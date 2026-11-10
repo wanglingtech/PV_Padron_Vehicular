@@ -1,6 +1,6 @@
 import { db } from '../db/index.ts';
 import { vehicles, persons, insurances, technicalInspections, roadSafetyCourses, driverLicenses } from '../db/schema.ts';
-import { ExcelImportRow, ImportIssue, ImportPreviewResult, ImportRowClassification } from '../types/index.ts';
+import { ExcelImportRow, ImportIssue, ImportPreviewResult, ImportRowClassification } from '../../frontend/src/types/index.ts';
 import { parseDateFlexible } from './excel-handler.ts';
 
 export interface RawExtractedVehicle {

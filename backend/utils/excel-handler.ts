@@ -8,7 +8,7 @@ import {
   ImportIssue,
   ImportPreviewResult,
   ImportRowClassification,
-} from '../types/index.ts';
+} from '../../frontend/src/types/index.ts';
 
 // Diccionario exhaustivo de sinónimos de encabezados
 const HEADER_SYNONYMS: Record<string, string[]> = {

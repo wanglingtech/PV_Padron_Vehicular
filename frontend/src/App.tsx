@@ -31,7 +31,7 @@ import { ContactsDirectoryView } from './views/ContactsDirectoryView.tsx';
 import { api } from './api/client.ts';
 
 function AppContent() {
-  const { isLoggedIn, isOperator, hasModuleAccess } = useAuth();
+  const { isLoggedIn, isAuthLoading, isOperator, hasModuleAccess } = useAuth();
   const [currentTab, setCurrentTab] = useState<NavigationTab>('portal-inicio');
   const [selectedVehicleId, setSelectedVehicleId] = useState<number | null>(null);
   const [editingVehicleId, setEditingVehicleId] = useState<number | null>(null);
@@ -66,6 +66,7 @@ function AppContent() {
 
   // Carga periódica de conteo de alertas urgentes para la campana y badges
   const loadAlertsCount = useCallback(async () => {
+    if (!isLoggedIn) return;
     try {
       const stats = await api.getDashboardStats();
       const count = (stats.expiredDocuments || 0) + (stats.upcomingDocuments || 0);
@@ -73,7 +74,7 @@ function AppContent() {
     } catch {
       // Ignorar errores silenciosos en background
     }
-  }, []);
+  }, [isLoggedIn]);
 
   useEffect(() => {
     loadAlertsCount();
@@ -120,6 +121,18 @@ function AppContent() {
     setEditingVehicleId(null);
     setCurrentTab('padron');
   };
+
+  // Mientras se restaura la cookie de sesión, evitar parpadeo del login.
+  if (isAuthLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-slate-900 text-slate-300">
+        <div className="text-center">
+          <div className="mx-auto h-10 w-10 animate-spin rounded-full border-2 border-slate-700 border-t-blue-500" />
+          <p className="mt-4 text-xs font-medium">Verificando sesión...</p>
+        </div>
+      </div>
+    );
+  }
 
   // Si no ha iniciado sesión, mostrar la pantalla de Login institucional
   if (!isLoggedIn) {

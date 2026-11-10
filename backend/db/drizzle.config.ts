@@ -23,7 +23,7 @@ if (!password) {
 
 export default defineConfig({
   // Rutas relativas a la raíz del proyecto (los scripts npm se ejecutan desde allí)
-  schema: './frontend/src/db/schema.ts',
+  schema: './backend/db/schema.ts',
   out: './drizzle',
   dialect: 'postgresql',
   schemaFilter: ['public'],

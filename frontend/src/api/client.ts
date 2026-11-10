@@ -16,29 +16,77 @@ import {
 } from '../types/index.ts';
 
 class ApiService {
-  private currentUser: CurrentUser = {
-    uid: 'admin-dev-01',
-    email: 'admin@transporte.pe',
-    name: 'Administrador Principal',
-    role: 'admin',
-  };
+  /**
+   * Token Bearer en memoria para clientes de API.
+   * La web usa además la cookie HttpOnly que el navegador envía sola.
+   */
+  private authToken: string | null = null;
 
-  public getCurrentUser(): CurrentUser {
-    return this.currentUser;
-  }
-
-  public setCurrentUser(user: CurrentUser) {
-    this.currentUser = user;
+  public setAuthToken(token: string | null): void {
+    this.authToken = token;
   }
 
   private getHeaders(): HeadersInit {
-    return {
-      'Content-Type': 'application/json',
-      'x-user-role': this.currentUser.role,
-      'x-user-email': this.currentUser.email,
-      'x-user-name': this.currentUser.name,
-      'Authorization': `Bearer dev-${this.currentUser.role}-token`,
-    };
+    const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+    if (this.authToken) {
+      headers.Authorization = `Bearer ${this.authToken}`;
+    }
+    return headers;
+  }
+
+  // Autenticación real
+  async login(
+    email: string,
+    password: string
+  ): Promise<{ user: CurrentUser; token: string }> {
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ email, password }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: 'No se pudo iniciar sesión' }));
+      throw new Error(err.error);
+    }
+    return res.json();
+  }
+
+  async logout(): Promise<void> {
+    await fetch('/api/auth/logout', {
+      method: 'POST',
+      credentials: 'include',
+    });
+    this.authToken = null;
+  }
+
+  async me(): Promise<{ user: CurrentUser }> {
+    const res = await fetch('/api/auth/me', {
+      headers: this.getHeaders(),
+      credentials: 'include',
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: 'Sesión no válida' }));
+      throw new Error(err.error);
+    }
+    return res.json();
+  }
+
+  async changePassword(
+    currentPassword: string,
+    newPassword: string
+  ): Promise<{ success: boolean }> {
+    const res = await fetch('/api/auth/change-password', {
+      method: 'POST',
+      headers: this.getHeaders(),
+      credentials: 'include',
+      body: JSON.stringify({ currentPassword, newPassword }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: 'No se pudo cambiar la contraseña' }));
+      throw new Error(err.error);
+    }
+    return res.json();
   }
 
   // Padrón

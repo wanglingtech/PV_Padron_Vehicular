@@ -64,7 +64,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
     currentUser,
     isAdmin,
     currentRoleDef,
-    switchRole,
     logout,
     hasModuleAccess,
     getModulePermission,

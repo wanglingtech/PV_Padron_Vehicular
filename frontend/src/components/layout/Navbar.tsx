@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Shield, User, Bell, CarFront, Check, Sun, Moon, FileText } from 'lucide-react';
+import { Menu, Bell, CarFront, Sun, Moon, FileText } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext.tsx';
 import { useTheme } from '../../context/ThemeContext.tsx';
 import { PersonAvatar } from '../common/PersonAvatar.tsx';
@@ -17,7 +17,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onNavigateToExpirations,
   onOpenPdfModal,
 }) => {
-  const { currentUser, switchRole, isAdmin, roles, currentRoleDef } = useAuth();
+  const { currentUser, logout, isAdmin, currentRoleDef } = useAuth();
   const { isDark, toggleTheme } = useTheme();
   const [showRoleMenu, setShowRoleMenu] = React.useState(false);
 
@@ -124,37 +124,25 @@ export const Navbar: React.FC<NavbarProps> = ({
               </div>
 
               <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                Cambiar Rol Activo
+                Sesión activa
               </div>
 
-              <div className="space-y-1">
-                {roles.map((r) => {
-                  const isSelected = currentUser?.role === r.id;
-                  return (
-                    <button
-                      key={r.id}
-                      onClick={() => {
-                        switchRole(r.id);
-                        setShowRoleMenu(false);
-                      }}
-                      className={`flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-medium transition-colors ${
-                        isSelected
-                          ? 'bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 font-bold'
-                          : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/60'
-                      }`}
-                    >
-                      <span className="flex items-center gap-2 truncate">
-                        <Shield
-                          size={14}
-                          className={isSelected ? 'text-blue-600 dark:text-blue-400' : 'text-slate-400'}
-                        />
-                        <span className="truncate">{r.name}</span>
-                      </span>
-                      {isSelected && <Check size={14} className="shrink-0 text-blue-600 dark:text-blue-400" />}
-                    </button>
-                  );
-                })}
+              <div className="px-3 pb-2">
+                <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                  El rol y los permisos se validan en el servidor. Para cambiarlos, un
+                  administrador debe actualizar la cuenta.
+                </p>
               </div>
+
+              <button
+                onClick={async () => {
+                  setShowRoleMenu(false);
+                  await logout();
+                }}
+                className="flex w-full items-center justify-center gap-2 rounded-xl border border-rose-200 dark:border-rose-900/60 bg-rose-50 dark:bg-rose-950/40 px-3 py-2 text-xs font-semibold text-rose-700 dark:text-rose-300 hover:bg-rose-100 dark:hover:bg-rose-950/70 transition-colors"
+              >
+                Cerrar sesión
+              </button>
             </div>
             </>
           )}

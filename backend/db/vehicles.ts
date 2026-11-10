@@ -12,7 +12,7 @@ import {
   vehiclePadronHistory,
   vehicles,
 } from './schema.ts';
-import { evaluateDocumentDate, evaluateVehicleOverallStatus } from '../utils/date-utils.ts';
+import { evaluateDocumentDate, evaluateVehicleOverallStatus } from '../../shared/date-utils.ts';
 import { getVehiclePadronHistoryList } from './padron-changes.ts';
 
 export interface VehicleOwnerInput {

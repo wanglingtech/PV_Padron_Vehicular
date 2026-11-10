@@ -19,7 +19,7 @@ import {
 import { useAuth } from '../context/AuthContext.tsx';
 import { api } from '../api/client.ts';
 import { Alert } from '../utils/sweetalert.ts';
-import { evaluateDocumentDate } from '../utils/date-utils.ts';
+import { evaluateDocumentDate } from '../../../shared/date-utils.ts';
 
 interface CapturedPhoto {
   id: string;

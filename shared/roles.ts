@@ -4,7 +4,7 @@ import type {
   RoleDefinition,
   SystemModuleId,
   UserAccount,
-} from '../types/index.ts';
+} from '../frontend/src/types/index.ts';
 
 /**
  * Catálogo único de módulos del sistema.

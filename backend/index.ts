@@ -3,11 +3,14 @@
  * Gestión de Padrón Vehicular
  */
 
-export * from '../frontend/src/db/vehicles.ts';
-export * from '../frontend/src/db/padron-changes.ts';
-export * from '../frontend/src/db/schema.ts';
-export * from '../frontend/src/utils/excel-handler.ts';
-export * from '../frontend/src/utils/validation.ts';
-export * from '../frontend/src/middleware/auth.ts';
+export * from './db/vehicles.ts';
+export * from './db/padron-changes.ts';
+export * from './db/schema.ts';
+export * from './utils/excel-handler.ts';
+export * from './utils/validation.ts';
+export * from './middleware/auth.ts';
+export * from './services/password.service.ts';
+export * from './services/token.service.ts';
+export * from './services/auth.service.ts';
 
-export const BACKEND_VERSION = '2.4.0';
+export const BACKEND_VERSION = '2.5.0';

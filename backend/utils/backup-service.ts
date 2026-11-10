@@ -16,7 +16,7 @@ import {
   portalPosts,
   portalEvents,
 } from '../db/schema.ts';
-import { BackupPayload, BackupRestoreResult } from '../types/index.ts';
+import { BackupPayload, BackupRestoreResult } from '../../frontend/src/types/index.ts';
 import { eq } from 'drizzle-orm';
 
 /**
