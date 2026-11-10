@@ -1,4 +1,4 @@
-# Verificación de la Fase 0
+# Verificación de la Fase 0 y de la Fase 1 (1.1 + 1.2)
 
 Lista de comprobaciones para confirmar que el proyecto está listo para publicarse y que el backend, el frontend y la base de datos funcionan juntos.
 
@@ -42,22 +42,29 @@ El smoke test verifica:
 | 2 | `GET /api/vehicles` | `200` |
 | 3 | `GET /api/portal/posts` | `200` |
 | 4 | `GET /api/users` sin credenciales | `401` |
-| 5 | `GET /api/users` como admin | `200` |
-| 6 | `GET /api/users` como gerente | `200` |
-| 7 | `GET /api/users` como operario | `403` |
-| 8 | `POST /api/vehicles` como operario | `403` |
-| 9 | `POST /api/vehicles` como registrador | distinto de `403` |
-| 10 | `POST /api/portal/posts` como operario | `403` |
-| 11 | `POST /api/portal/posts` como secretaria | distinto de `403` |
-| 12 | `GET /api/backup/stats` como operario | `403` |
-| 13 | `GET /api/backup/stats` como tesorero | `200` |
-| 14 | `GET /api/backup/export` como tesorero | `403` |
-| 15 | `GET /api/dashboard/stats` como operario | `200` |
-| 16 | `GET /api/expirations` como fiscalizador | `200` |
-| 17 | `GET /api/contacts` como operario | `200` |
-| 18 | `GET /api/audit-logs` como operario | `200` |
+| 5 | `POST /api/auth/login` con contraseña incorrecta | `401` |
+| 6 | `POST /api/auth/login` con correo inexistente | `401` |
+| 7 | Login real de administrador | `200` con `user` y `token` |
+| 8 | `GET /api/auth/me` con cookie `HttpOnly` | `200` |
+| 9 | `GET /api/auth/me` con Bearer | `200` |
+| 10 | `GET /api/auth/me` con token inválido | `401` |
+| 11 | `GET /api/users` como admin | `200` y sin campo `password` |
+| 12 | `GET /api/users` como gerente | `200` |
+| 13 | `GET /api/users` como operario | `403` |
+| 14 | `POST /api/vehicles` como operario | `403` |
+| 15 | `POST /api/vehicles` como registrador | distinto de `403` |
+| 16 | `POST /api/portal/posts` como operario | `403` |
+| 17 | `POST /api/portal/posts` como secretaria | distinto de `403` |
+| 18 | `GET /api/backup/stats` como operario | `403` |
+| 19 | `GET /api/backup/stats` como tesorero | `200` |
+| 20 | `GET /api/backup/export` como tesorero | `403` |
+| 21 | `GET /api/dashboard/stats` como operario | `200` |
+| 22 | `GET /api/expirations` como fiscalizador | `200` |
+| 23 | `GET /api/contacts` como operario | `200` |
+| 24 | `GET /api/audit-logs` como operario | `200` |
+| 25 | `POST /api/auth/logout` | `200` |
 
-> El smoke test no crea registros: las escrituras usan `{}` para que el RBAC responda antes de la validación de datos.
+> El smoke test usa el login real con las cuentas demo. No crea registros: las escrituras usan `{}` para que el RBAC responda antes de la validación de datos.
 
 ---
 
@@ -65,13 +72,17 @@ El smoke test verifica:
 
 | Área | Pasos | Esperado |
 | :--- | :--- | :--- |
-| Login | Abrir `http://localhost:3000` y cerrar sesión | Se muestra el login con selector de rol |
-| Roles | Entrar como `Operario` | Menú solo con Inicio, Dashboard, Padrón, Personas, Curso Vial, Vencimientos, Directorio y Portal del Operario |
-| Roles | Entrar como `Fiscalizador` | Menú con Vencimientos en escritura y lecturas relacionadas |
-| Roles | Entrar como `Registrador` | Menú con Registrar Unidad, Padrón y Personas |
-| Roles | Entrar como `Secretaría` | Menú con Personas, Curso Vial, Directorio y Gestión del Portal |
-| Roles | Entrar como `Admin`, `Programador` o `Gerente` | Todos los módulos visibles |
+| Login | Abrir `http://localhost:3000` y entrar con `admin@transporte.pe` / `admin123` | Se muestra el panel con el nombre del usuario |
+| Sesión | Recargar la página tras el login | La cookie `HttpOnly` restaura la sesión sin volver al login |
+| Logout | Pulsar “Cerrar sesión” | Vuelve al login y la sesión se limpia |
+| Login inválido | Intentar con una contraseña incorrecta | Mensaje de error y `401` en la API |
+| Roles | Entrar como `operador@transporte.pe` / `operador123` | Menú en solo lectura, sin Registrar Unidad, Cuentas ni Backup |
+| Roles | Entrar como `fiscalizacion@transporte.pe` / `fiscalizador123` | Menú con Vencimientos en escritura y lecturas relacionadas |
+| Roles | Entrar como `registro@transporte.pe` / `registro123` | Menú con Registrar Unidad, Padrón y Personas |
+| Roles | Entrar como `secretaria@transporte.pe` / `secretaria123` | Menú con Personas, Curso Vial, Directorio y Gestión del Portal |
+| Roles | Entrar como `admin`, `soporte` o `gerencia` | Todos los módulos visibles |
 | Matriz | Admin → Cuentas y Accesos | Se ven los 8 roles institucionales y la matriz de 15 módulos |
+| Contraseñas | Admin → Cuentas y Accesos | La tabla no muestra contraseñas ni hashes; el modal solo permite escribir una nueva |
 | Protección | Intentar eliminar un rol institucional | La interfaz no muestra el botón y la API responde `400` |
 | Backend | Operario intenta abrir `/api/users` | `403` |
 | Datos | Crear/editar un vehículo como admin | Se guarda y aparece en el padrón |
@@ -84,13 +95,14 @@ El smoke test verifica:
 ```bash
 # Windows
 "C:\Program Files\PostgreSQL\17\bin\psql.exe" -U postgres -d padron_vehicular -c "SELECT id, name, is_system FROM system_roles ORDER BY id;"
-"C:\Program Files\PostgreSQL\17\bin\psql.exe" -U postgres -d padron_vehicular -c "SELECT uid, email, role FROM users ORDER BY id;"
+"C:\Program Files\PostgreSQL\17\bin\psql.exe" -U postgres -d padron_vehicular -c "SELECT uid, email, role, left(password, 12) AS hash_prefix FROM users ORDER BY id;"
 ```
 
 Esperado:
 
 - 8 roles institucionales (`admin`, `developer`, `gerente`, `operator`, `tesorero`, `fiscalizador`, `secretaria`, `registrador`).
 - 8 usuarios demo (uno por rol).
+- Todos los `password` empiezan con `$argon2id$` (nunca texto plano).
 - Los roles con `is_system = true` no se pueden eliminar.
 
 ---
@@ -100,7 +112,10 @@ Esperado:
 - [ ] `.env` no está versionado (`git check-ignore .env`).
 - [ ] No hay contraseñas reales ni claves privadas en el repositorio.
 - [ ] `AUTH_DEV_MODE=false` en producción.
+- [ ] `JWT_SECRET` definido con al menos 32 caracteres y distinto del valor de ejemplo.
+- [ ] `AUTH_COOKIE_SECURE=true` y HTTPS en producción.
 - [ ] `GET /api/users` sin token responde `401`.
+- [ ] `GET /api/users` no devuelve `password` ni hashes.
 - [ ] `POST /api/vehicles` como operario responde `403`.
 - [ ] `GET /api/backup/export` como tesorero responde `403`.
 - [ ] `npm audit` revisado (deuda conocida documentada en [`SEGURIDAD.md`](SEGURIDAD.md)).

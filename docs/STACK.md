@@ -59,13 +59,14 @@ Documento de referencia de las tecnologías usadas, sus versiones y el motivo de
 
 ### Express 4
 
-- API REST en `server.ts`.
+- La app se construye en `backend/app.ts`; `server.ts` solo arranca el proceso.
+- Rutas por dominio en `backend/routes/` y servicios en `backend/services/`.
 - Middlewares de JSON (25 MB para importaciones en base64).
 - En producción sirve `dist/` como estático.
 
 ### Drizzle ORM
 
-- Esquema tipado en `frontend/src/db/schema.ts`.
+- Esquema tipado en `backend/db/schema.ts`.
 - Migraciones reproducibles con `drizzle-kit`.
 - Consultas composables y transacciones.
 
@@ -76,7 +77,7 @@ Documento de referencia de las tecnologías usadas, sus versiones y el motivo de
 
 ### Zod
 
-- Validación de payloads en el servidor (`frontend/src/utils/validation.ts`).
+- Validación de payloads en el servidor (`backend/utils/validation.ts` y esquemas por ruta).
 
 ### dotenv
 
@@ -86,11 +87,13 @@ Documento de referencia de las tecnologías usadas, sus versiones y el motivo de
 
 ## Autenticación
 
-- **Firebase Auth** para login con Google (opcional).
-- **Sesión local** para el modo demo (rol en `localStorage`).
-- **RBAC** en `frontend/src/middleware/auth.ts` y matriz de permisos en `AuthContext.tsx`.
+- **Login real** con correo y contraseña contra PostgreSQL (`POST /api/auth/login`).
+- **argon2id** para el hash de contraseñas, con migración transparente de claves antiguas.
+- **JWT firmado** (`jsonwebtoken`) entregado en cookie `HttpOnly` (`padron_session`) y como Bearer para API/pruebas.
+- **RBAC** en `backend/middleware/auth.ts`; el rol se refresca desde la base en cada petición.
+- **Firebase Auth** queda como compatibilidad opcional para tokens de Google.
 
-> La autenticación real está pendiente. Ver [`SEGURIDAD.md`](SEGURIDAD.md).
+> Ver [`AUTENTICACION.md`](AUTENTICACION.md).
 
 ---
 

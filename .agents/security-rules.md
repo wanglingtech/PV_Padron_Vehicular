@@ -15,22 +15,23 @@
 
 | Riesgo | Estado | Acción pendiente |
 | :--- | :--- | :--- |
-| Login sin validación de contraseña | Abierto | Implementar endpoint de login + hash. |
-| Contraseñas en texto plano | Abierto | Migrar a `bcrypt`/`argon2`. |
+| Login sin validación de contraseña | Corregido | `POST /api/auth/login` valida contra argon2id. |
+| Contraseñas en texto plano | Corregido | Migración a argon2id al arrancar y en el primer login. |
 | Tokens `dev-*` | Mitigado | Solo activos si `AUTH_DEV_MODE=true` o `NODE_ENV!=production`. |
 | Fallback de admin anónimo | Corregido | `requireAuth` devuelve 401 sin credenciales. |
-| Sin rate limiting | Abierto | Añadir `express-rate-limit` en login y escritura. |
-| Sin cabeceras de seguridad | Abierto | Evaluar `helmet` con CSP compatible con Vite. |
-| Sin CORS explícito | Abierto | Configurar al separar frontend/API. |
+| Sin rate limiting | Mitigado | `express-rate-limit` en `/api/auth/login`; falta en escrituras. |
+| Sin cabeceras de seguridad | Mitigado | `helmet` con CSP en producción; revisar al desplegar. |
+| Sin CORS explícito | Mitigado | `CORS_ORIGIN` configurable; vacío = mismo origen. |
 | Firebase API key pública | Aceptado | Restringir dominios y reglas en Firebase. |
+| Tokens de sesión sin revocación | Abierto | Añadir denylist/refresh tokens si se requiere cierre inmediato. |
 
 ## Antes de un despliegue público
 
-- [ ] Autenticación real y sesiones firmadas (JWT o cookies `HttpOnly`).
-- [ ] Hash de contraseñas y política mínima.
+- [x] Autenticación real y sesiones firmadas (JWT + cookie `HttpOnly`).
+- [x] Hash de contraseñas con argon2id y política mínima de 8 caracteres.
 - [ ] HTTPS obligatorio.
-- [ ] CORS restringido al dominio del frontend.
-- [ ] Rate limiting y protección contra fuerza bruta.
+- [x] CORS restringido al dominio del frontend (`CORS_ORIGIN`).
+- [x] Rate limiting en login; falta protección contra fuerza bruta distribuida.
 - [ ] Backups cifrados y probados.
 - [ ] Revisión de dependencias (`npm audit`).
 - [ ] Variables de entorno configuradas en el proveedor (nunca en el repo).

@@ -24,11 +24,12 @@ El proyecto aún no tiene pruebas automatizadas. Este documento define la estrat
 
 Candidatos:
 
-- `frontend/src/utils/validation.ts` — esquemas Zod.
-- `frontend/src/utils/date-utils.ts` — vencimientos y semaforización.
+- `backend/utils/validation.ts` — esquemas Zod.
+- `shared/date-utils.ts` — vencimientos y semaforización.
 - `frontend/src/utils/vehicle-routes.ts` — cálculo de rutas.
-- `frontend/src/utils/excel-handler.ts` — parseo y normalización.
-- Funciones puras de `db/vehicles.ts` (sin conexión real).
+- `backend/utils/excel-handler.ts` — parseo y normalización.
+- `backend/services/password.service.ts` — hash y verificación argon2.
+- Funciones puras de `backend/db/vehicles.ts` (sin conexión real).
 
 ```bash
 npm install -D vitest
@@ -53,7 +54,7 @@ Rutas prioritarias:
 1. `POST /api/vehicles` + `GET /api/vehicles/:id`.
 2. `POST /api/vehicles/padron/swap` (transaccionalidad).
 3. `POST /api/import/preview` + `confirm`.
-4. `POST /api/auth/login` (cuando exista).
+4. `POST /api/auth/login`, `GET /api/auth/me` y `POST /api/auth/change-password`.
 5. `GET /api/health`.
 
 ---

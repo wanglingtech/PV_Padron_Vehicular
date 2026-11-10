@@ -4,7 +4,8 @@
 
 ```bash
 npm run lint     # obligatorio
-npm run build    # obligatorio si se tocó server.ts, vite o configuración
+npm run build    # obligatorio si se tocó server.ts, backend/, vite o configuración
+npm run smoke    # recomendado si se tocó la API o auth (requiere npm run dev)
 ```
 
 Si el cambio afecta a la base de datos:

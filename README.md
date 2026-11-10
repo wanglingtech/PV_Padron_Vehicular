@@ -224,20 +224,28 @@ padrón-vehicular/
 ├── docs/                    # Documentación del proyecto
 │   └── screenshots/         # Capturas de los módulos
 ├── drizzle/                 # Migraciones generadas por drizzle-kit
+├── backend/
+│   ├── app.ts               # App Express: middlewares, rutas y seed
+│   ├── config/              # Variables de entorno y sesión
+│   ├── db/                  # Esquema, conexión y consultas Drizzle
+│   ├── lib/                 # Firebase Admin
+│   ├── middleware/          # Autenticación y RBAC del servidor
+│   ├── routes/              # Rutas por dominio (auth, etc.)
+│   ├── services/            # Password, tokens y lógica de auth
+│   └── utils/               # Excel, PDF, backup, validación
+├── shared/                  # Roles, módulos y utilidades compartidas
 ├── frontend/
 │   ├── public/              # Recursos estáticos
 │   └── src/
 │       ├── api/             # Cliente HTTP
 │       ├── components/      # Componentes reutilizables
 │       ├── context/         # Auth, tema y estado global
-│       ├── db/              # Esquema, conexión y consultas Drizzle
 │       ├── hooks/           # Hooks personalizados
-│       ├── lib/             # Firebase y utilidades de plataforma
-│       ├── middleware/      # Autenticación y RBAC del servidor
+│       ├── lib/             # Firebase del cliente
 │       ├── types/           # Tipos compartidos
-│       ├── utils/           # Excel, PDF, backup, validación, rutas
+│       ├── utils/           # PDF, alertas y rutas del cliente
 │       └── views/           # Vistas por módulo
-├── server.ts                # API Express + servidor Vite/estático
+├── server.ts                # Arranque: Express + Vite/estático
 ├── index.html               # HTML raíz de la SPA
 ├── package.json
 ├── tsconfig.json
@@ -304,7 +312,7 @@ Edita `.env` con tus credenciales reales (ver [Variables de entorno](#-variables
 npm run db:push
 ```
 
-Esto crea las 15 tablas desde `frontend/src/db/schema.ts`. Los roles, usuarios y contenido base se insertan automáticamente al arrancar por primera vez.
+Esto crea las 15 tablas desde `backend/db/schema.ts`. Los roles, usuarios y contenido base se insertan automáticamente al arrancar por primera vez.
 
 ### 6. Arrancar en desarrollo
 
@@ -333,6 +341,12 @@ Copia `.env.example` y completa los valores. **Nunca subas tu `.env` real.**
 | `SQL_ADMIN_USER` | ❌ | Usuario para `drizzle-kit` (por defecto usa `SQL_USER`). |
 | `SQL_ADMIN_PASSWORD` | ❌ | Contraseña para `drizzle-kit` (por defecto usa `SQL_PASSWORD`). |
 | `AUTH_DEV_MODE` | ❌ | `true` habilita tokens de desarrollo. En producción debe ser `false`. |
+| `JWT_SECRET` | ✅ (prod) | Secreto para firmar sesiones JWT (mínimo 32 caracteres en producción). |
+| `JWT_EXPIRES_IN` | ❌ | Duración de la sesión (`8h` por defecto). |
+| `AUTH_COOKIE_NAME` | ❌ | Nombre de la cookie de sesión (`padron_session`). |
+| `AUTH_COOKIE_SECURE` | ❌ | `true` fuerza cookies `Secure` (HTTPS). En producción se activa solo. |
+| `AUTH_COOKIE_SAME_SITE` | ❌ | `lax` (mismo origen) o `none` (dominios distintos, requiere HTTPS). |
+| `CORS_ORIGIN` | ❌ | Orígenes permitidos separados por coma. Vacío = mismo origen. |
 | `GEMINI_API_KEY` | ❌ | Clave de Google Gemini para funciones de IA. |
 | `APP_URL` | ❌ | URL pública de la aplicación. |
 
@@ -351,13 +365,14 @@ Copia `.env.example` y completa los valores. **Nunca subas tu `.env` real.**
 | `npm run db:push` | Aplica el esquema de Drizzle a la base de datos. |
 | `npm run db:generate` | Genera una migración SQL desde el esquema. |
 | `npm run db:studio` | Abre Drizzle Studio para explorar la base. |
+| `npm run db:reset-demo-passwords` | Restablece las contraseñas de las cuentas demo (solo desarrollo). |
 | `npm run clean` | Elimina `dist/` y artefactos de build. |
 
 ---
 
 ## 🗄 Base de datos y migraciones
 
-La **fuente de verdad** del esquema es [`frontend/src/db/schema.ts`](frontend/src/db/schema.ts). El archivo [`database/schema.sql`](database/schema.sql) se genera automáticamente y no debe editarse a mano.
+La **fuente de verdad** del esquema es [`backend/db/schema.ts`](backend/db/schema.ts). El archivo [`database/schema.sql`](database/schema.sql) se genera automáticamente y no debe editarse a mano.
 
 ```bash
 # Tras cambiar schema.ts
@@ -382,7 +397,7 @@ La colección vive en [`api-tests/bruno/`](api-tests/bruno/):
 2. Elige el entorno `local` (`api-tests/bruno/environments/local.bru`).
 3. Ejecuta las peticiones: health, vehículos, personas, dashboard, portal y auditoría.
 
-Las peticiones de escritura envían los headers de desarrollo (`Authorization: Bearer dev-admin-token`). Con `AUTH_DEV_MODE=false` debes reemplazarlos por un token real de Firebase.
+Las peticiones de escritura envían los headers de desarrollo (`Authorization: Bearer dev-admin-token`). Con `AUTH_DEV_MODE=false` debes iniciar sesión con `POST /api/auth/login` y reemplazarlos por el token Bearer devuelto.
 
 > También puedes importar la colección en Postman si lo prefieres; Bruno se eligió por ser *git-friendly* (cada request es un archivo de texto).
 
@@ -401,7 +416,7 @@ La arquitectura actual es un **monolito Express** que sirve la SPA. Hay dos cami
 - Un solo servicio con `npm run build && npm start` y un addon PostgreSQL.
 
 ### Opción C — Vercel serverless
-- Requiere adaptar `server.ts` a funciones serverless y separar el frontend. Está previsto en el roadmap.
+- Requiere adaptar `backend/app.ts` a un handler serverless y separar el frontend. Está previsto en el roadmap.
 
 > **Nota:** hoy el frontend llama a `/api/*` en el mismo origen. Para separar frontend y API hay que introducir `VITE_API_URL` y configurar CORS. Está documentado en [`docs/DESPLIEGUE.md`](docs/DESPLIEGUE.md).
 
@@ -413,9 +428,11 @@ Antes de publicar el repositorio o desplegar con datos reales, revisa [`SECURITY
 
 - ✅ `.env` y credenciales están excluidos por `.gitignore`.
 - ✅ La API verifica la conexión a PostgreSQL al arrancar y falla con un mensaje claro.
-- ⚠️ **La autenticación actual es de demostración**: el login del frontend no valida contraseñas y los tokens `dev-*` existen para desarrollo. En producción (`NODE_ENV=production`) los tokens de desarrollo quedan deshabilitados salvo que `AUTH_DEV_MODE=true`.
-- ⚠️ Las contraseñas de usuarios se almacenan en texto plano en la tabla `users`. **Debe migrarse a hash (bcrypt/argon2) antes de usar datos reales.**
+- ✅ Autenticación real con argon2id, JWT firmado y cookie `HttpOnly`; los tokens `dev-*` solo existen en desarrollo (`AUTH_DEV_MODE=true` o `NODE_ENV!=production`).
+- ✅ Las contraseñas se guardan cifradas con argon2id; las claves heredadas en texto plano se migran al arrancar.
+- ✅ `helmet`, CORS configurable y rate limit en el login.
 - ⚠️ `firebase-applet-config.json` contiene la configuración pública del SDK web de Firebase. No es un secreto, pero deben configurarse reglas y restricciones de dominio en Firebase.
+- ⚠️ En producción define `JWT_SECRET` (mínimo 32 caracteres), `AUTH_DEV_MODE=false` y `AUTH_COOKIE_SECURE=true`.
 
 ---
 

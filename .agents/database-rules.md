@@ -2,12 +2,12 @@
 
 ## Fuente de verdad
 
-- El esquema se define **solo** en `frontend/src/db/schema.ts`.
+- El esquema se define **solo** en `backend/db/schema.ts`.
 - `database/schema.sql` y `drizzle/*.sql` son **generados**. No editarlos a mano.
 - Flujo ante un cambio de modelo:
 
 ```bash
-# 1. Editar frontend/src/db/schema.ts
+# 1. Editar backend/db/schema.ts
 npm run db:generate   # genera drizzle/000X_*.sql
 npm run db:push       # aplica a la base local
 # 2. Regenerar database/schema.sql a partir de la migración
@@ -37,5 +37,5 @@ npm run db:push       # aplica a la base local
 ## Conexión
 
 - La configuración se lee de `SQL_*` (ver `.env.example`).
-- `frontend/src/db/index.ts` valida variables, soporta `SQL_SSL` y expone `verifyDatabaseConnection()`.
+- `backend/db/index.ts` valida variables, soporta `SQL_SSL` y expone `verifyDatabaseConnection()`.
 - El servidor **no arranca** si la conexión falla; muestra host/puerto/base y un mensaje accionable.

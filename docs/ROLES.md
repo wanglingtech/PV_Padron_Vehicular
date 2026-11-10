@@ -1,6 +1,6 @@
 # Roles, módulos y permisos (RBAC)
 
-Documento de referencia de la distribución de módulos por rol. La fuente de verdad del código es [`frontend/src/config/roles.ts`](../frontend/src/config/roles.ts); la del servidor es [`frontend/src/middleware/auth.ts`](../frontend/src/middleware/auth.ts).
+Documento de referencia de la distribución de módulos por rol. La fuente de verdad del catálogo es [`shared/roles.ts`](../shared/roles.ts); la validación del servidor está en [`backend/middleware/auth.ts`](../backend/middleware/auth.ts).
 
 ---
 
@@ -96,11 +96,13 @@ Las operaciones de máxima criticidad (retirar/reactivar unidad, cambiar o inter
 ### 5.1 Desde la interfaz
 
 1. Arranca con `npm run dev`.
-2. En el login elige un rol (o usa los botones de acceso demo).
+2. En el login usa una cuenta demo (por ejemplo `admin@transporte.pe` / `admin123`).
 3. Verifica que el menú lateral solo muestre los módulos permitidos.
 4. Abre **Cuentas y Accesos** con un rol privilegiado para editar la matriz.
 
 ### 5.2 Con tokens de desarrollo
+
+> Preferido: inicia sesión con `POST /api/auth/login` y usa el Bearer devuelto. Los tokens `dev-*` son solo un atajo local.
 
 Con `AUTH_DEV_MODE=true` (o `NODE_ENV!=production`) el servidor acepta:
 
@@ -154,7 +156,7 @@ El script [`scripts/smoke.mjs`](../scripts/smoke.mjs) verifica salud, autenticac
 4. Ajusta cada módulo a `Sin acceso`, `Lectura` o `Escritura`.
 5. Guarda. El cambio se persiste en `system_roles.permissions` y se aplica en la siguiente petición.
 
-> Si agregas un módulo nuevo, actualiza `SystemModuleId`, `SYSTEM_MODULES_CONFIG` y la matriz de cada rol en `frontend/src/config/roles.ts`. El seed agregará la clave faltante sin sobrescribir los permisos ya personalizados.
+> Si agregas un módulo nuevo, actualiza `SystemModuleId`, `SYSTEM_MODULES_CONFIG` y la matriz de cada rol en `shared/roles.ts`. El seed agregará la clave faltante sin sobrescribir los permisos ya personalizados.
 
 ---
 

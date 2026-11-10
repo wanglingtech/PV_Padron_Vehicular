@@ -6,7 +6,7 @@ Guía para publicar el sistema con presupuesto bajo, priorizando **Vercel** para
 
 ## Arquitectura actual
 
-Hoy es un **monolito**: `server.ts` sirve la API y, en producción, los archivos estáticos de `dist/`.
+Hoy es un **monolito**: `server.ts` arranca Express (`backend/app.ts`) y, en producción, sirve los archivos estáticos de `dist/`.
 
 ```bash
 npm run build   # genera dist/ (SPA) y dist/server.cjs (API)
@@ -95,7 +95,8 @@ Y en el servidor habilitar CORS para el dominio de Vercel.
 Vercel no ejecuta un servidor Express persistente tal cual. Requiere:
 
 - Separar la API en funciones (`api/*.ts`) o adaptar Express con un handler serverless.
-- Mover la lógica de `server.ts` a módulos reutilizables.
+- Reutilizar `backend/app.ts` como handler serverless (la lógica ya está fuera de `server.ts`).
+- Configurar `CORS_ORIGIN` y cookies `SameSite=None; Secure` si frontend y API quedan en dominios distintos.
 - Usar una base gestionada con pool compatible con serverless (Neon/Supabase con pooler).
 
 Es la opción más limpia a largo plazo, pero implica refactor. Está en el roadmap.

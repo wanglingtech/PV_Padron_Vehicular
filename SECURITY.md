@@ -53,15 +53,22 @@ Fuera de alcance:
 
 ## Estado de seguridad conocido
 
-⚠️ **Este proyecto aún no debe usarse con datos personales reales en producción.**
+⚠️ **Este proyecto aún no debe usarse con datos personales reales en producción sin una revisión final.**
 
 Riesgos abiertos:
 
-1. El login del frontend **no valida contraseñas**.
-2. Las contraseñas se guardan en **texto plano**.
-3. Los tokens `dev-*` existen para desarrollo (deshabilitados con `NODE_ENV=production`).
-4. Faltan rate limiting, CORS explícito y cabeceras de seguridad.
-5. No hay pruebas automatizadas de seguridad.
+1. Los tokens `dev-*` existen para desarrollo y deben deshabilitarse con `AUTH_DEV_MODE=false` en producción.
+2. Faltan pruebas automatizadas de seguridad y revocación inmediata de sesiones.
+3. El rate limit cubre el login, pero no todas las escrituras.
+4. La recuperación de contraseña por correo aún no está implementada.
+5. El despliegue requiere HTTPS, `JWT_SECRET` fuerte y cookies `Secure`.
+
+Mitigado en la Fase 1:
+
+- Login real con validación de contraseña contra PostgreSQL.
+- Contraseñas cifradas con argon2id y migración de claves antiguas.
+- Sesión con JWT firmado en cookie `HttpOnly` y Bearer para API.
+- `helmet`, CORS configurable y rate limit en el login.
 
 El detalle y el plan de mitigación están en [`docs/SEGURIDAD.md`](docs/SEGURIDAD.md) y [`docs/ROADMAP.md`](docs/ROADMAP.md).
 

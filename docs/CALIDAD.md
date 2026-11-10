@@ -9,9 +9,9 @@ Marco de referencia para evaluar y mejorar el proyecto según estándares de ing
 | Aspecto | Estado actual | Objetivo |
 | :--- | :--- | :--- |
 | Tipado estricto | TypeScript en todo el código | Mantener |
-| Estructura | Monolito modular con capas claras | Extraer `server.ts` en routers por dominio |
+| Estructura | Monolito modular con backend separado | Dividir `backend/app.ts` en routers por dominio |
 | Documentación | README + `docs/` + `.agents/` | Mantener actualizada |
-| Complejidad | `server.ts` y algunas vistas son grandes | Dividir archivos > 500 líneas |
+| Complejidad | `backend/app.ts` y algunas vistas son grandes | Dividir archivos > 500 líneas |
 | Duplicación | Media en vistas y utilidades | Extraer componentes/hooks |
 
 **Métricas sugeridas:** complejidad ciclomática < 15 por función, archivos < 500 líneas, cobertura ≥ 60%.
@@ -36,10 +36,11 @@ Marco de referencia para evaluar y mejorar el proyecto según estándares de ing
 
 Ver [`SEGURIDAD.md`](SEGURIDAD.md). Resumen:
 
-- 🔴 Autenticación demo y contraseñas en texto plano → **bloqueante para producción**.
+- ✅ Autenticación real con argon2id, JWT y cookie `HttpOnly`.
 - ✅ Secretos fuera del repositorio.
 - ✅ Validación Zod y consultas parametrizadas.
-- ⚠️ Faltan rate limiting, CORS explícito y cabeceras de seguridad.
+- ✅ `helmet`, CORS configurable y rate limit en login.
+- ⚠️ Faltan pruebas automatizadas de seguridad y revocación de sesiones.
 
 ---
 

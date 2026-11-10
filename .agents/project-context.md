@@ -18,10 +18,12 @@ Sistema de gestión de **padrón vehicular** para asociaciones de transporte pú
 
 ## Estado real (importante)
 
-- **Autenticación demo:** el login del frontend no valida contraseñas. El servidor acepta tokens `dev-admin-token` / `dev-operator-token` en desarrollo.
-- **Contraseñas en texto plano** en `users.password`.
-- **Monolito Express** que sirve la SPA; no hay separación frontend/API todavía.
-- **Sin pruebas automatizadas** (solo `tsc` y pruebas manuales/Bruno).
+- **Autenticación real:** `POST /api/auth/login` valida correo y contraseña contra PostgreSQL. La sesión se entrega en una cookie `HttpOnly` (`padron_session`) y también como JWT Bearer para API/pruebas.
+- **Contraseñas con argon2id** en `users.password`. Las claves heredadas en texto plano se migran al arrancar y en el primer login exitoso.
+- **RBAC en el servidor:** `requireAuth`, `requireAdmin` y `requireModule` validan rol y permisos en cada petición, refrescando el rol desde la base.
+- **Backend separado:** la lógica de servidor vive en `backend/` (`app.ts`, `routes/`, `services/`, `middleware/`, `db/`, `utils/`). `server.ts` solo arranca Express, Vite o los estáticos.
+- **Catálogo compartido:** roles, módulos y utilidades de fecha viven en `shared/` y los importan frontend y backend.
+- **Sin pruebas automatizadas todavía** (solo `tsc`, build y el smoke test de API). Vitest/Supertest están planificados.
 - **Sin offline ni SQLite** todavía; está planificado.
 
 ## Decisiones de arquitectura

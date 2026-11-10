@@ -15,7 +15,7 @@ Este repositorio es un **monolito modular** (React + Express + PostgreSQL) para 
 
 1. **No inventes comandos.** Los scripts válidos están en `package.json`.
 2. **No subas secretos.** `.env` está ignorado; usa `.env.example` con placeholders.
-3. **No cambies el esquema a mano.** Edita `frontend/src/db/schema.ts` y ejecuta `npm run db:generate`.
+3. **No cambies el esquema a mano.** Edita `backend/db/schema.ts` y ejecuta `npm run db:generate`.
 4. **No rompas la compatibilidad web.** Los cambios deben funcionar con `npm run dev` y `npm run build`.
 5. **Valida antes de terminar:** `npm run lint` y, si tocaste la API o la BD, `npm run build`.
 6. **Documenta los cambios relevantes** en `docs/` y actualiza el `ROADMAP.md` si aplica.
@@ -36,13 +36,17 @@ npm run db:studio    # explorar la base
 
 ## Mapa mental del código
 
-- `server.ts` — todas las rutas de la API y el arranque del servidor.
-- `frontend/src/db/schema.ts` — modelo de datos (fuente de verdad).
-- `frontend/src/db/vehicles.ts` y `padron-changes.ts` — lógica de negocio de datos.
+- `server.ts` — solo arranque: dotenv, Vite/estáticos y `listen`.
+- `backend/app.ts` — app Express: seguridad, rutas de la API y seed.
+- `backend/routes/` — rutas por dominio (auth y futuros routers).
+- `backend/services/` — lógica de autenticación, tokens y contraseñas.
+- `backend/db/schema.ts` — modelo de datos (fuente de verdad).
+- `backend/db/vehicles.ts` y `padron-changes.ts` — lógica de negocio de datos.
 - `frontend/src/api/client.ts` — cliente HTTP tipado del frontend.
 - `frontend/src/context/AuthContext.tsx` — sesión, roles y permisos (cliente).
-- `frontend/src/middleware/auth.ts` — autenticación y RBAC (servidor).
+- `backend/middleware/auth.ts` — autenticación y RBAC (servidor).
+- `shared/roles.ts` — catálogo compartido de roles y módulos.
 - `frontend/src/views/` — una vista por módulo.
-- `frontend/src/utils/` — Excel, PDF, backup, validación y rutas.
+- `frontend/src/utils/` — PDF, alertas y rutas del cliente.
 
 > Si una tarea afecta a más de un área, primero propone un plan y confirma con el usuario.

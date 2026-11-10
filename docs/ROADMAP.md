@@ -1,6 +1,6 @@
 # Roadmap del proyecto
 
-Plan de evolución desde el estado actual (web funcional con auth demo) hasta una plataforma **web + escritorio + móvil**, con **operación offline** y despliegue de bajo costo.
+Plan de evolución desde el estado actual (web funcional con autenticación real) hasta una plataforma **web + escritorio + móvil**, con **operación offline** y despliegue de bajo costo.
 
 Leyenda: `[x]` hecho · `[ ]` pendiente · `[~]` en progreso
 
@@ -33,19 +33,28 @@ Leyenda: `[x]` hecho · `[ ]` pendiente · `[~]` en progreso
 
 **Objetivo:** apto para uso real con datos de la asociación.
 
+### Reestructuración del backend
+- [x] `server.ts` reducido a arranque (dotenv, Vite/estáticos, `listen`).
+- [x] App Express en `backend/app.ts` con rutas, middlewares y seed.
+- [x] Mover lógica de servidor a `backend/` (`db`, `utils`, `middleware`, `lib`, `routes`, `services`, `config`).
+- [x] Catálogo compartido de roles, módulos y fechas en `shared/`.
+- [ ] Dividir `backend/app.ts` en routers por dominio (`vehicles`, `persons`, `portal`, `backup`).
+
 ### Autenticación y autorización
-- [ ] Endpoint `POST /api/auth/login` con validación de contraseña.
-- [ ] Hash de contraseñas con `argon2` o `bcrypt`.
-- [ ] Sesiones con JWT firmado o cookie `HttpOnly` + `SameSite`.
-- [ ] Eliminar el login “fake” del frontend.
-- [ ] RBAC validado **siempre** en el servidor (no solo en el cliente).
-- [ ] `AUTH_DEV_MODE=false` en producción.
-- [ ] Recuperación/cambio de contraseña.
+- [x] Endpoint `POST /api/auth/login` con validación de contraseña.
+- [x] Hash de contraseñas con `argon2id` y migración de claves antiguas.
+- [x] Sesiones con JWT firmado + cookie `HttpOnly` (`SameSite`) y Bearer para API.
+- [x] Eliminar el login “fake” del frontend.
+- [x] RBAC validado **siempre** en el servidor (no solo en el cliente).
+- [x] `AUTH_DEV_MODE=false` en producción.
+- [x] Cambio de contraseña (`POST /api/auth/change-password`).
+- [ ] Recuperación de contraseña por correo.
 
 ### Endurecimiento
-- [ ] `helmet` con CSP compatible con Vite.
-- [ ] `express-rate-limit` en login y escrituras.
-- [ ] CORS restringido.
+- [x] `helmet` con CSP compatible con Vite.
+- [x] `express-rate-limit` en login.
+- [ ] `express-rate-limit` en escrituras.
+- [x] CORS restringido (`CORS_ORIGIN`).
 - [ ] Validación Zod en el 100% de las rutas de escritura.
 - [ ] Sanitización de archivos subidos (tipo, tamaño, nombre).
 - [ ] `npm audit` en CI.
@@ -148,10 +157,8 @@ Ver [`DESPLIEGUE.md`](DESPLIEGUE.md).
 
 | Prioridad | Deuda | Impacto |
 | :---: | :--- | :--- |
-| 🔴 Alta | Auth demo sin validación de contraseña | Crítico |
-| 🔴 Alta | Contraseñas en texto plano | Crítico |
-| 🟠 Media | Sin pruebas automatizadas | Regresiones |
-| 🟠 Media | `server.ts` monolítico (~1.700 líneas) | Mantenibilidad |
+| 🔴 Alta | Sin pruebas automatizadas | Regresiones |
+| 🟠 Media | `backend/app.ts` monolítico (~1.600 líneas) | Mantenibilidad |
 | 🟠 Media | Sin separación frontend/API | Despliegue |
 | 🟡 Baja | Sin paginación en algunos listados | Rendimiento |
 | 🟡 Baja | Sin i18n | Alcance |
@@ -160,7 +167,7 @@ Ver [`DESPLIEGUE.md`](DESPLIEGUE.md).
 
 ## Próximos 5 pasos concretos
 
-1. Implementar login real + hash de contraseñas.
+1. Dividir `backend/app.ts` en routers por dominio (`vehicles`, `persons`, `portal`, `backup`).
 2. Añadir Vitest + Supertest y un primer E2E con Playwright.
 3. Configurar CI con lint, build y tests.
 4. Desplegar frontend en Vercel y API + BD en Railway/Supabase.

@@ -24,12 +24,12 @@ Colección [Bruno](https://www.usebruno.com/) para probar la API REST del Sistem
 
 ## Entornos
 
-| Entorno | Base URL | Tokens |
+| Entorno | Base URL | Autenticación |
 | :--- | :--- | :--- |
-| `local` | `http://localhost:3000` | `dev-admin-token` / `dev-operator-token` |
-| `production` | Tu API | Reemplazar por tokens reales |
+| `local` | `http://localhost:3000` | Login real (`admin@transporte.pe` / `admin123`) o tokens `dev-*` |
+| `production` | Tu API | `POST /api/auth/login` y Bearer devuelto |
 
-> Los tokens `dev-*` solo funcionan con `AUTH_DEV_MODE=true` o `NODE_ENV!=production`.
+> Los tokens `dev-*` solo funcionan con `AUTH_DEV_MODE=true` o `NODE_ENV!=production`. En cualquier otro caso usa el Bearer de `/api/auth/login`.
 
 ## Notas
 

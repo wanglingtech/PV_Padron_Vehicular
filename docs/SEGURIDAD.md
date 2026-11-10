@@ -36,18 +36,19 @@ Documento técnico del modelo de seguridad actual, riesgos conocidos y plan de e
 
 ## 3. Riesgos abiertos
 
-| # | Riesgo | Severidad | Mitigación propuesta |
+| # | Riesgo | Severidad | Estado / mitigación |
 | :---: | :--- | :---: | :--- |
-| 1 | El login del frontend no valida contraseñas | 🔴 Crítica | Endpoint de login real + verificación. |
-| 2 | Contraseñas en texto plano (`users.password`) | 🔴 Crítica | Hash `argon2`/`bcrypt` + migración. |
-| 3 | Tokens `dev-*` aceptados | 🟠 Alta | Deshabilitar en producción (hecho) y eliminar en Fase 1. |
-| 4 | Sin rate limiting | 🟠 Alta | `express-rate-limit` en login y escrituras. |
-| 5 | Sin cabeceras de seguridad | 🟠 Media | `helmet` + CSP. |
-| 6 | Sin CORS explícito | 🟠 Media | Configurar al separar frontend/API. |
-| 7 | Datos sensibles en respuestas (password) | 🟠 Alta | Excluir el campo en la API. |
+| 1 | Login sin validación de contraseñas | 🔴 Crítica | ✅ Corregido: `POST /api/auth/login` + argon2id. |
+| 2 | Contraseñas en texto plano (`users.password`) | 🔴 Crítica | ✅ Corregido: hash argon2id y migración al arrancar. |
+| 3 | Tokens `dev-*` aceptados | 🟠 Alta | Mitigado: solo con `AUTH_DEV_MODE=true` o fuera de producción. |
+| 4 | Sin rate limiting | 🟠 Alta | Mitigado en login; falta en escrituras. |
+| 5 | Sin cabeceras de seguridad | 🟠 Media | ✅ `helmet` con CSP en producción. |
+| 6 | Sin CORS explícito | 🟠 Media | ✅ `CORS_ORIGIN` configurable. |
+| 7 | Datos sensibles en respuestas (password) | 🟠 Alta | ✅ Corregido: la API nunca devuelve contraseñas. |
 | 8 | Sin cifrado de backups | 🟠 Media | Cifrar y restringir acceso. |
-| 9 | Sin política de contraseñas | 🟡 Media | Longitud mínima, complejidad y bloqueo. |
+| 9 | Sin política de contraseñas | 🟡 Media | Mínimo 8 caracteres; falta complejidad y bloqueo por usuario. |
 | 10 | Firebase API key pública | 🟡 Baja | Restricción por dominio y reglas. |
+| 11 | Tokens sin revocación inmediata | 🟠 Media | Añadir denylist o refresh tokens. |
 
 ---
 

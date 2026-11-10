@@ -14,6 +14,7 @@
 | Despliegue | `docs/DESPLIEGUE.md` |
 | Calidad e indicadores | `docs/CALIDAD.md` |
 | Seguridad | `SECURITY.md` + `docs/SEGURIDAD.md` |
+| Autenticación y sesiones | `docs/AUTENTICACION.md` |
 | Pruebas | `docs/TESTING.md` |
 | Convenciones de contribución | `CONTRIBUTING.md` + `docs/CONTRIBUCION.md` |
 | Contexto para agentes IA | `AGENTS.md` + `.agents/` |

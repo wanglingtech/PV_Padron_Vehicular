@@ -4,8 +4,8 @@ Base URL local: `http://localhost:3000`
 
 - Todas las respuestas son JSON.
 - Los errores usan `{ "error": "mensaje" }`.
-- Las rutas marcadas con 🔒 requieren `Authorization: Bearer <token>`.
-- Las rutas marcadas con 👑 requieren además rol `admin`.
+- Las rutas marcadas con 🔒 requieren `Authorization: Bearer <token>` o la cookie `padron_session`.
+- Las rutas marcadas con 👑 requieren además un rol privilegiado (`admin`, `developer`, `gerente`).
 
 ---
 
@@ -25,7 +25,12 @@ Base URL local: `http://localhost:3000`
 
 | Método | Ruta | Auth | Descripción |
 | :--- | :--- | :---: | :--- |
+| POST | `/api/auth/login` | — | Valida correo y contraseña. Devuelve `{ user, token }` y fija la cookie `HttpOnly`. |
+| POST | `/api/auth/logout` | — | Limpia la cookie de sesión. |
 | GET | `/api/auth/me` | 🔒 | Devuelve el usuario de la sesión actual. |
+| POST | `/api/auth/change-password` | 🔒 | Cambia la contraseña del usuario autenticado. |
+
+> Ver [`AUTENTICACION.md`](AUTENTICACION.md) para el detalle del flujo y las variables de sesión.
 
 ---
 
@@ -47,10 +52,15 @@ Base URL local: `http://localhost:3000`
 ### Ejemplo: crear vehículo
 
 ```bash
+# 1. Inicia sesión y guarda el token
+TOKEN=$(curl -s -X POST http://localhost:3000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"admin@transporte.pe","password":"admin123"}' | jq -r .token)
+
+# 2. Crea el vehículo con el Bearer
 curl -X POST http://localhost:3000/api/vehicles \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer dev-admin-token" \
-  -H "x-user-role: admin" \
+  -H "Authorization: Bearer $TOKEN" \
   -d '{
     "padronNumber": "P-001",
     "plate": "ABC-123",
