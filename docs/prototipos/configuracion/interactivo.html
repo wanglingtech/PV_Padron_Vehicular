@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Interactivo · Configuración &amp; Empresa · Padrón Vehicular</title>
+<link rel="stylesheet" href="../assets/app.css" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #020617;
+    color: #e2e8f0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- Barra de control ---------- */
+  .ctl {
+    position: sticky; top: 0; z-index: 60;
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    padding: 10px 16px;
+    background: rgba(2,6,23,.94);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #1e293b;
+  }
+  .ctl-title { display: flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 700; color: #fff; }
+  .ctl-title .dot { width: 9px; height: 9px; border-radius: 50%; background: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,.2); }
+  .ctl-group { display: flex; align-items: center; gap: 7px; }
+  .ctl-label { font-size: 9.5px; text-transform: uppercase; letter-spacing: .9px; color: #64748b; font-weight: 700; }
+  .seg { display: inline-flex; background: #0f172a; border: 1px solid #334155; border-radius: 10px; padding: 2px; gap: 2px; }
+  .seg button {
+    appearance: none; border: 0; background: transparent; color: #94a3b8;
+    font: inherit; font-size: 11px; font-weight: 600;
+    padding: 5px 10px; border-radius: 8px; cursor: pointer; transition: background .14s, color .14s;
+    white-space: nowrap;
+  }
+  .seg button:hover { color: #f1f5f9; }
+  .seg button[aria-pressed="true"] { background: #2563eb; color: #fff; }
+  .ctl-spacer { flex: 1; }
+  .ctl select {
+    background: #0f172a; color: #e2e8f0; border: 1px solid #334155;
+    border-radius: 10px; padding: 6px 10px; font: inherit; font-size: 11.5px; font-weight: 600; cursor: pointer;
+  }
+
+  /* ---------- Layout ---------- */
+  .layout { display: grid; grid-template-columns: minmax(0,1fr) 290px; align-items: start; }
+  @media (max-width: 1080px) { .layout { grid-template-columns: 1fr; } .side { border-left: 0 !important; border-top: 1px solid #1e293b; } }
+
+  .stage { padding: 22px; overflow: auto; }
+  .frame-wrap {
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #334155;
+    box-shadow: 0 30px 80px -20px rgba(0,0,0,.75);
+    overflow: hidden;
+    transition: width .25s ease, max-width .25s ease;
+  }
+  body.dark .frame-wrap { background: #0f172a; }
+  .frame-wrap.movil { width: 390px; max-width: 100%; }
+  .frame-inner { height: 860px; overflow: hidden; position: relative; }
+  .frame-inner > * { height: 100%; }
+
+  /* Botón de vuelta al índice */
+  .ctl-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #0f172a; border: 1px solid #334155; color: #e2e8f0;
+    font: inherit; font-size: 11px; font-weight: 600;
+    padding: 6px 12px; border-radius: 10px; cursor: pointer; text-decoration: none;
+  }
+  .ctl-back:hover { border-color: #3b82f6; color: #fff; }
+
+  /* ---------- Panel lateral ---------- */
+  .side {
+    position: sticky; top: 52px; max-height: calc(100vh - 52px); overflow-y: auto;
+    border-left: 1px solid #1e293b; background: #020617; padding: 20px 18px 48px;
+  }
+  .side h2 { margin: 0 0 3px; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; font-weight: 700; }
+  .side .sub { margin: 0 0 18px; font-size: 11.5px; color: #64748b; }
+  .side section { margin-bottom: 22px; }
+  .side h3 { margin: 0 0 9px; font-size: 10.5px; font-weight: 700; color: #cbd5e1; display: flex; align-items: center; gap: 7px; }
+  .side h3::after { content: ""; flex: 1; height: 1px; background: #1e293b; }
+  .side table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  .side td { padding: 5px 0; vertical-align: top; color: #94a3b8; }
+  .side td:first-child { color: #cbd5e1; font-weight: 600; width: 44%; }
+  .pill { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 9px; border-radius: 999px;
+    background: rgba(37,99,235,.15); color: #60a5fa; border: 1px solid rgba(37,99,235,.3); }
+  .mod-list { list-style: none; margin: 0; padding: 0; }
+  .mod-list a {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 9px; border-radius: 8px; text-decoration: none;
+    color: #94a3b8; font-size: 11.5px; font-weight: 600; transition: background .14s, color .14s;
+  }
+  .mod-list a:hover { background: #1e293b; color: #fff; }
+  .mod-list a.active { background: #2563eb; color: #fff; }
+  .mod-list .g { font-size: 9px; text-transform: uppercase; letter-spacing: .5px; color: #475569; }
+  .mod-list a.active .g { color: rgba(255,255,255,.7); }
+  .mod-list .dot { width: 5px; height: 5px; border-radius: 50%; background: #334155; flex: none; }
+  .mod-list a.active .dot { background: #fff; }
+  .hint { font-size: 11px; line-height: 16px; color: #64748b; }
+  .hint code { font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: #60a5fa; background: rgba(37,99,235,.1); padding: 1px 5px; border-radius: 4px; }
+</style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+
+<div class="ctl">
+  <div class="ctl-title"><span class="dot"></span>Configuración &amp; Empresa</div>
+  <span class="pill">Administración</span>
+
+  <div class="ctl-group">
+    <span class="ctl-label">Tema</span>
+    <div class="seg" id="segTema">
+      <button data-tema="light" aria-pressed="true">Claro</button>
+      <button data-tema="dark" aria-pressed="false">Oscuro</button>
+    </div>
+  </div>
+
+  <div class="ctl-group">
+    <span class="ctl-label">Vista</span>
+    <div class="seg" id="segVista">
+      <button data-vista="desktop" aria-pressed="true">Escritorio</button>
+      <button data-vista="movil" aria-pressed="false">Móvil</button>
+    </div>
+  </div>
+
+  <div class="ctl-spacer"></div>
+
+  <div class="ctl-group">
+    <span class="ctl-label">Ir a</span>
+    <select id="selModulo">
+      <option value="../login/interactivo.html">Inicio de sesión</option>
+      <option value="../portal-inicio/interactivo.html">Portal de Inicio y Cartelera</option>
+      <option value="../dashboard/interactivo.html">Dashboard Operativo &amp; Flota</option>
+      <option value="../padron/interactivo.html">Padrón Vehicular</option>
+      <option value="../nuevo/interactivo.html">Registrar Nueva Unidad</option>
+      <option value="../vehiculo-detalle/interactivo.html">Ficha de Vehículo</option>
+      <option value="../vehiculo-editar/interactivo.html">Editar Vehículo</option>
+      <option value="../personas/interactivo.html">Directorio de Personas</option>
+      <option value="../curso-vial/interactivo.html">Conductores &amp; Curso Vial</option>
+      <option value="../directorio-contacto/interactivo.html">Directorio WhatsApp por Roles</option>
+      <option value="../vencimientos/interactivo.html">Alertas de Vencimiento</option>
+      <option value="../importar-exportar/interactivo.html">Importar / Exportar</option>
+      <option value="../operario-portal/interactivo.html">Portal del Operario</option>
+      <option value="../historial/interactivo.html">Historial de Auditoría</option>
+      <option value="../usuarios/interactivo.html">Cuentas y Accesos</option>
+      <option value="../configuracion/interactivo.html" selected>Configuración &amp; Empresa</option>
+      <option value="../gestion-portal/interactivo.html">Gestión de Cartelera &amp; Portal</option>
+      <option value="../backup-migracion/interactivo.html">Backup &amp; Migración Multi-BD</option>
+    </select>
+  </div>
+  <a class="ctl-back" href="../index.html">← Índice</a>
+</div>
+
+<div class="layout">
+  <div class="stage">
+    <div class="frame-wrap" id="frameWrap">
+      <div class="frame-inner"><main class="h-full overflow-y-auto px-3.5 pt-3.5 pb-28 sm:px-6 sm:pt-6 sm:pb-32 lg:px-8 lg:pt-8 lg:pb-8 max-w-full"><div class="mx-auto max-w-7xl w-full min-w-0"><div class="mx-auto max-w-7xl w-full min-w-0"><div class="space-y-6 max-w-4xl"><div><h2 class="text-xl font-bold text-slate-900 tracking-tight sm:text-2xl">Configuración Institucional del Padrón</h2><p class="text-xs text-slate-500 sm:text-sm">Parámetros operativos de la asociación de transportistas, reglas de alertas y políticas del sistema</p></div><form class="space-y-6"><div class="rounded-xl border border-slate-200 bg-white p-6 shadow-xs space-y-4"><div class="flex items-center gap-3 pb-3 border-b border-slate-100"><div class="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-50 text-indigo-700"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-building2 lucide-building-2" aria-hidden="true"><path d="M10 12h4"></path><path d="M10 8h4"></path><path d="M14 21v-3a2 2 0 0 0-4 0v3"></path><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"></path><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"></path></svg></div><div><h3 class="text-sm font-bold text-slate-900">Datos de la Asociación de Transporte</h3><p class="text-xs text-slate-500">Aparece en reportes impresos y exportaciones oficiales</p></div></div><div class="grid grid-cols-1 gap-4 sm:grid-cols-2"><div class="sm:col-span-2"><label class="block text-xs font-semibold text-slate-700 mb-1">Razón Social / Nombre de la Asociación</label><input class="w-full min-h-[42px] rounded-lg border border-slate-200 bg-slate-50/50 px-3 text-xs sm:text-sm text-slate-800 focus:border-indigo-500 focus:bg-white focus:outline-hidden disabled:bg-slate-100 disabled:text-slate-500" type="text" value="ASOCIACIÓN CENTRAL DE TRANSPORTES EN MOTOTAXIS"></div><div class="sm:col-span-2"><label class="block text-xs font-semibold text-slate-700 mb-1">Subtítulo / Lema Oficial</label><input class="w-full min-h-[42px] rounded-lg border border-slate-200 bg-slate-50/50 px-3 text-xs sm:text-sm text-slate-800 focus:border-indigo-500 focus:bg-white focus:outline-hidden disabled:bg-slate-100 disabled:text-slate-500" type="text" value="SISTEMA INTEGRAL DE GESTIÓN DE PADRÓN VEHICULAR"></div><div><label class="block text-xs font-semibold text-slate-700 mb-1">RUC de la Asociación</label><input class="w-full min-h-[42px] rounded-lg border border-slate-200 bg-slate-50/50 px-3 text-xs sm:text-sm text-slate-800 focus:border-indigo-500 focus:bg-white focus:outline-hidden disabled:bg-slate-100 disabled:text-slate-500 font-mono" type="text" value="RUC: 20549281742"></div><div><label class="block text-xs font-semibold text-slate-700 mb-1">Jurisdicción / Ciudad</label><input class="w-full min-h-[42px] rounded-lg border border-slate-200 bg-slate-50/50 px-3 text-xs sm:text-sm text-slate-800 focus:border-indigo-500 focus:bg-white focus:outline-hidden disabled:bg-slate-100 disabled:text-slate-500" type="text" value="SAN JUAN DE LURIGANCHO - LIMA, PERÚ"></div></div></div><div class="rounded-xl border border-slate-200 bg-white p-6 shadow-xs space-y-4"><div class="flex items-center gap-3 pb-3 border-b border-slate-100"><div class="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-50 text-amber-700"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell-ring" aria-hidden="true"><path d="M10.268 21a2 2 0 0 0 3.464 0"></path><path d="M22 8c0-2.3-.8-4.3-2-6"></path><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path><path d="M4 2C2.8 3.7 2 5.7 2 8"></path></svg></div><div><h3 class="text-sm font-bold text-slate-900">Umbrales de Control Preventivo</h3><p class="text-xs text-slate-500">Criterio temporal para clasificación de documentos</p></div></div><div class="grid grid-cols-1 gap-4 sm:grid-cols-2"><div><label class="block text-xs font-semibold text-slate-700 mb-1">Días de anticipación para estado "Próximo a Vencer"</label><select class="w-full min-h-[42px] rounded-lg border border-slate-200 bg-white px-3 text-xs sm:text-sm text-slate-800 focus:border-indigo-500 disabled:bg-slate-100"><option value="15">15 días antes</option><option value="30">30 días antes (Recomendado MTC)</option><option value="45">45 días antes</option><option value="60">60 días antes</option></select></div><div><label class="block text-xs font-semibold text-slate-700 mb-1">Días de advertencia crítica urgente</label><select class="w-full min-h-[42px] rounded-lg border border-slate-200 bg-white px-3 text-xs sm:text-sm text-slate-800 focus:border-indigo-500 disabled:bg-slate-100"><option value="3">3 días antes</option><option value="7">7 días antes (Recomendado)</option><option value="10">10 días antes</option></select></div></div></div><div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-xs space-y-4"><div class="flex items-center gap-3 pb-3 border-b border-slate-100 dark:border-slate-800"><div class="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-database" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5V19A9 3 0 0 0 21 19V5"></path><path d="M3 12A9 3 0 0 0 21 12"></path></svg></div><div><h3 class="text-sm font-bold text-slate-900 dark:text-white">Almacenamiento y Persistencia</h3><p class="text-xs text-slate-500 dark:text-slate-400">Estado de integridad de la base de datos relacional</p></div></div><div class="rounded-lg bg-slate-50 dark:bg-slate-950/80 p-4 border border-slate-200 dark:border-slate-800 text-xs text-slate-700 dark:text-slate-300 space-y-2.5"><div class="flex items-center justify-between"><span class="text-slate-500 dark:text-slate-400">Motor de Base de Datos:</span><span class="font-semibold text-slate-900 dark:text-white">Cloud SQL PostgreSQL</span></div><div class="flex items-center justify-between"><span class="text-slate-500 dark:text-slate-400">ORM / Capa de Datos:</span><span class="font-semibold text-slate-900 dark:text-white">Drizzle ORM con TypeScript</span></div><div class="flex items-center justify-between"><span class="text-slate-500 dark:text-slate-400">Auditoría:</span><span class="inline-flex items-center gap-1 text-emerald-700 dark:text-white font-semibold"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check text-emerald-500 shrink-0" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg><span class="text-emerald-700 dark:text-white font-bold">Bitácora Inmutable Activa</span></span></div><div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1"><span class="text-slate-500 dark:text-slate-400">Esquema Relacional:</span><span class="font-mono text-slate-700 dark:text-white font-medium text-[11px]">vehicles, owners, drivers, doc_insurance, doc_technical, audit_logs</span></div></div></div><div class="flex justify-end"><button type="submit" class="flex min-h-[44px] items-center gap-2 rounded-lg bg-indigo-600 px-5 py-2.5 text-xs font-bold text-white hover:bg-indigo-700 transition-colors shadow-xs"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save" aria-hidden="true"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"></path><path d="M7 3v4a1 1 0 0 0 1 1h7"></path></svg><span>Guardar Parámetros Institucionales</span></button></div></form></div><div class="h-20 lg:hidden w-full shrink-0 pointer-events-none" aria-hidden="true"></div></div></div></main></div>
+    </div>
+  </div>
+
+  <aside class="side">
+    <h2>Ficha del módulo</h2>
+    <p class="sub">Personalización institucional de membrete, base de datos y parámetros del sistema.</p>
+
+    <section>
+      <h3>Acceso</h3>
+      <table>
+        <tr><td>Categoría</td><td>Administración</td></tr>
+        <tr><td>Roles con acceso</td><td>Administrador</td></tr>
+        <tr><td>Módulo en el menú</td><td>Configuración &amp; Empresa</td></tr>
+        <tr><td>Vista</td><td>Tab del sidebar</td></tr>
+      </table>
+    </section>
+
+    <section>
+      <h3>Interacciones</h3>
+      <p class="hint">
+        Usa <code>Tab</code> para recorrer los controles, <code>Enter</code> para activar.
+        El prototipo refleja la UI real: los botones que en el sistema disparan
+        acciones siguen siendo inertes aquí.
+      </p>
+    </section>
+
+    <section>
+      <h3>Archivos</h3>
+      <table>
+        <tr><td>Captura estática</td><td><a href="prototipo.html" style="color:#60a5fa">prototipo.html</a></td></tr>
+        <tr><td>Vector Figma</td><td><a href="prototipo.svg" style="color:#60a5fa">prototipo.svg</a></td></tr>
+        <tr><td>Imagen</td><td><a href="captura.webp" style="color:#60a5fa">captura.webp</a></td></tr>
+      </table>
+    </section>
+
+    <section>
+      <h3>Todos los módulos</h3>
+      <ul class="mod-list">
+          <li><a href="../login/interactivo.html" class=""><span class="dot"></span><span>Inicio de sesión</span></a></li>
+          <li><a href="../portal-inicio/interactivo.html" class=""><span class="dot"></span><span>Portal de Inicio y Cartelera</span></a></li>
+          <li><a href="../dashboard/interactivo.html" class=""><span class="dot"></span><span>Dashboard Operativo &amp; Flota</span></a></li>
+          <li><a href="../padron/interactivo.html" class=""><span class="dot"></span><span>Padrón Vehicular</span></a></li>
+          <li><a href="../nuevo/interactivo.html" class=""><span class="dot"></span><span>Registrar Nueva Unidad</span></a></li>
+          <li><a href="../vehiculo-detalle/interactivo.html" class=""><span class="dot"></span><span>Ficha de Vehículo</span></a></li>
+          <li><a href="../vehiculo-editar/interactivo.html" class=""><span class="dot"></span><span>Editar Vehículo</span></a></li>
+          <li><a href="../personas/interactivo.html" class=""><span class="dot"></span><span>Directorio de Personas</span></a></li>
+          <li><a href="../curso-vial/interactivo.html" class=""><span class="dot"></span><span>Conductores &amp; Curso Vial</span></a></li>
+          <li><a href="../directorio-contacto/interactivo.html" class=""><span class="dot"></span><span>Directorio WhatsApp por Roles</span></a></li>
+          <li><a href="../vencimientos/interactivo.html" class=""><span class="dot"></span><span>Alertas de Vencimiento</span></a></li>
+          <li><a href="../importar-exportar/interactivo.html" class=""><span class="dot"></span><span>Importar / Exportar</span></a></li>
+          <li><a href="../operario-portal/interactivo.html" class=""><span class="dot"></span><span>Portal del Operario</span></a></li>
+          <li><a href="../historial/interactivo.html" class=""><span class="dot"></span><span>Historial de Auditoría</span></a></li>
+          <li><a href="../usuarios/interactivo.html" class=""><span class="dot"></span><span>Cuentas y Accesos</span></a></li>
+          <li><a href="../configuracion/interactivo.html" class="active"><span class="dot"></span><span>Configuración &amp; Empresa</span></a></li>
+          <li><a href="../gestion-portal/interactivo.html" class=""><span class="dot"></span><span>Gestión de Cartelera &amp; Portal</span></a></li>
+          <li><a href="../backup-migracion/interactivo.html" class=""><span class="dot"></span><span>Backup &amp; Migración Multi-BD</span></a></li>
+      </ul>
+    </section>
+  </aside>
+</div>
+
+<script>
+  // Tema
+  const segTema = document.getElementById('segTema');
+  segTema.querySelectorAll('button').forEach(b => {
+    b.onclick = () => {
+      segTema.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', 'false'));
+      b.setAttribute('aria-pressed', 'true');
+      const oscuro = b.dataset.tema === 'dark';
+      document.documentElement.classList.toggle('dark', oscuro);
+      document.body.classList.toggle('dark', oscuro);
+    };
+  });
+
+  // Vista
+  const wrap = document.getElementById('frameWrap');
+  const segVista = document.getElementById('segVista');
+  segVista.querySelectorAll('button').forEach(b => {
+    b.onclick = () => {
+      segVista.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', 'false'));
+      b.setAttribute('aria-pressed', 'true');
+      wrap.classList.toggle('movil', b.dataset.vista === 'movil');
+    };
+  });
+
+  // Navegación
+  document.getElementById('selModulo').onchange = (e) => { location.href = e.target.value; };
+</script>
+</body>
+</html>

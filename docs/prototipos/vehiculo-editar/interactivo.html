@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Interactivo · Editar Vehículo · Padrón Vehicular</title>
+<link rel="stylesheet" href="../assets/app.css" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #020617;
+    color: #e2e8f0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- Barra de control ---------- */
+  .ctl {
+    position: sticky; top: 0; z-index: 60;
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    padding: 10px 16px;
+    background: rgba(2,6,23,.94);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #1e293b;
+  }
+  .ctl-title { display: flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 700; color: #fff; }
+  .ctl-title .dot { width: 9px; height: 9px; border-radius: 50%; background: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,.2); }
+  .ctl-group { display: flex; align-items: center; gap: 7px; }
+  .ctl-label { font-size: 9.5px; text-transform: uppercase; letter-spacing: .9px; color: #64748b; font-weight: 700; }
+  .seg { display: inline-flex; background: #0f172a; border: 1px solid #334155; border-radius: 10px; padding: 2px; gap: 2px; }
+  .seg button {
+    appearance: none; border: 0; background: transparent; color: #94a3b8;
+    font: inherit; font-size: 11px; font-weight: 600;
+    padding: 5px 10px; border-radius: 8px; cursor: pointer; transition: background .14s, color .14s;
+    white-space: nowrap;
+  }
+  .seg button:hover { color: #f1f5f9; }
+  .seg button[aria-pressed="true"] { background: #2563eb; color: #fff; }
+  .ctl-spacer { flex: 1; }
+  .ctl select {
+    background: #0f172a; color: #e2e8f0; border: 1px solid #334155;
+    border-radius: 10px; padding: 6px 10px; font: inherit; font-size: 11.5px; font-weight: 600; cursor: pointer;
+  }
+
+  /* ---------- Layout ---------- */
+  .layout { display: grid; grid-template-columns: minmax(0,1fr) 290px; align-items: start; }
+  @media (max-width: 1080px) { .layout { grid-template-columns: 1fr; } .side { border-left: 0 !important; border-top: 1px solid #1e293b; } }
+
+  .stage { padding: 22px; overflow: auto; }
+  .frame-wrap {
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #334155;
+    box-shadow: 0 30px 80px -20px rgba(0,0,0,.75);
+    overflow: hidden;
+    transition: width .25s ease, max-width .25s ease;
+  }
+  body.dark .frame-wrap { background: #0f172a; }
+  .frame-wrap.movil { width: 390px; max-width: 100%; }
+  .frame-inner { height: 860px; overflow: hidden; position: relative; }
+  .frame-inner > * { height: 100%; }
+
+  /* Botón de vuelta al índice */
+  .ctl-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #0f172a; border: 1px solid #334155; color: #e2e8f0;
+    font: inherit; font-size: 11px; font-weight: 600;
+    padding: 6px 12px; border-radius: 10px; cursor: pointer; text-decoration: none;
+  }
+  .ctl-back:hover { border-color: #3b82f6; color: #fff; }
+
+  /* ---------- Panel lateral ---------- */
+  .side {
+    position: sticky; top: 52px; max-height: calc(100vh - 52px); overflow-y: auto;
+    border-left: 1px solid #1e293b; background: #020617; padding: 20px 18px 48px;
+  }
+  .side h2 { margin: 0 0 3px; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; font-weight: 700; }
+  .side .sub { margin: 0 0 18px; font-size: 11.5px; color: #64748b; }
+  .side section { margin-bottom: 22px; }
+  .side h3 { margin: 0 0 9px; font-size: 10.5px; font-weight: 700; color: #cbd5e1; display: flex; align-items: center; gap: 7px; }
+  .side h3::after { content: ""; flex: 1; height: 1px; background: #1e293b; }
+  .side table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  .side td { padding: 5px 0; vertical-align: top; color: #94a3b8; }
+  .side td:first-child { color: #cbd5e1; font-weight: 600; width: 44%; }
+  .pill { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 9px; border-radius: 999px;
+    background: rgba(37,99,235,.15); color: #60a5fa; border: 1px solid rgba(37,99,235,.3); }
+  .mod-list { list-style: none; margin: 0; padding: 0; }
+  .mod-list a {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 9px; border-radius: 8px; text-decoration: none;
+    color: #94a3b8; font-size: 11.5px; font-weight: 600; transition: background .14s, color .14s;
+  }
+  .mod-list a:hover { background: #1e293b; color: #fff; }
+  .mod-list a.active { background: #2563eb; color: #fff; }
+  .mod-list .g { font-size: 9px; text-transform: uppercase; letter-spacing: .5px; color: #475569; }
+  .mod-list a.active .g { color: rgba(255,255,255,.7); }
+  .mod-list .dot { width: 5px; height: 5px; border-radius: 50%; background: #334155; flex: none; }
+  .mod-list a.active .dot { background: #fff; }
+  .hint { font-size: 11px; line-height: 16px; color: #64748b; }
+  .hint code { font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: #60a5fa; background: rgba(37,99,235,.1); padding: 1px 5px; border-radius: 4px; }
+</style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+
+<div class="ctl">
+  <div class="ctl-title"><span class="dot"></span>Editar Vehículo</div>
+  <span class="pill">Operaciones</span>
+
+  <div class="ctl-group">
+    <span class="ctl-label">Tema</span>
+    <div class="seg" id="segTema">
+      <button data-tema="light" aria-pressed="true">Claro</button>
+      <button data-tema="dark" aria-pressed="false">Oscuro</button>
+    </div>
+  </div>
+
+  <div class="ctl-group">
+    <span class="ctl-label">Vista</span>
+    <div class="seg" id="segVista">
+      <button data-vista="desktop" aria-pressed="true">Escritorio</button>
+      <button data-vista="movil" aria-pressed="false">Móvil</button>
+    </div>
+  </div>
+
+  <div class="ctl-spacer"></div>
+
+  <div class="ctl-group">
+    <span class="ctl-label">Ir a</span>
+    <select id="selModulo">
+      <option value="../login/interactivo.html">Inicio de sesión</option>
+      <option value="../portal-inicio/interactivo.html">Portal de Inicio y Cartelera</option>
+      <option value="../dashboard/interactivo.html">Dashboard Operativo &amp; Flota</option>
+      <option value="../padron/interactivo.html">Padrón Vehicular</option>
+      <option value="../nuevo/interactivo.html">Registrar Nueva Unidad</option>
+      <option value="../vehiculo-detalle/interactivo.html">Ficha de Vehículo</option>
+      <option value="../vehiculo-editar/interactivo.html" selected>Editar Vehículo</option>
+      <option value="../personas/interactivo.html">Directorio de Personas</option>
+      <option value="../curso-vial/interactivo.html">Conductores &amp; Curso Vial</option>
+      <option value="../directorio-contacto/interactivo.html">Directorio WhatsApp por Roles</option>
+      <option value="../vencimientos/interactivo.html">Alertas de Vencimiento</option>
+      <option value="../importar-exportar/interactivo.html">Importar / Exportar</option>
+      <option value="../operario-portal/interactivo.html">Portal del Operario</option>
+      <option value="../historial/interactivo.html">Historial de Auditoría</option>
+      <option value="../usuarios/interactivo.html">Cuentas y Accesos</option>
+      <option value="../configuracion/interactivo.html">Configuración &amp; Empresa</option>
+      <option value="../gestion-portal/interactivo.html">Gestión de Cartelera &amp; Portal</option>
+      <option value="../backup-migracion/interactivo.html">Backup &amp; Migración Multi-BD</option>
+    </select>
+  </div>
+  <a class="ctl-back" href="../index.html">← Índice</a>
+</div>
+
+<div class="layout">
+  <div class="stage">
+    <div class="frame-wrap" id="frameWrap">
+      <div class="frame-inner"><main class="h-full overflow-y-auto px-3.5 pt-3.5 pb-28 sm:px-6 sm:pt-6 sm:pb-32 lg:px-8 lg:pt-8 lg:pb-8 max-w-full"><div class="mx-auto max-w-7xl w-full min-w-0"><div class="mx-auto max-w-7xl w-full min-w-0"><div class="space-y-6"><div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"><button type="button" class="flex min-h-[44px] items-center gap-2 rounded-lg border border-slate-200 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-colors shadow-xs self-start"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left" aria-hidden="true"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg><span>Cancelar y volver</span></button><div class="flex items-center gap-2"><button type="button" class="flex min-h-[44px] items-center gap-2 rounded-lg bg-indigo-600 px-5 py-2 text-xs font-bold text-white hover:bg-indigo-700 disabled:opacity-50 transition-colors shadow-xs"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save" aria-hidden="true"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"></path><path d="M7 3v4a1 1 0 0 0 1 1h7"></path></svg><span>Guardar Cambios</span></button></div></div><div class="rounded-xl border border-slate-200 bg-white p-6 shadow-xs"><h2 class="text-xl font-bold text-slate-900 dark:text-slate-950 tracking-tight">Editar Registro: Padrón PAD-024</h2><p class="mt-1 text-xs text-slate-500">Complete la información técnica, personas a cargo y documentación obligatoria</p><div class="mt-6 flex gap-1 overflow-x-auto border-b border-slate-200 pb-2 no-scrollbar"><button type="button" class="flex min-h-[44px] items-center gap-2 rounded-lg px-3.5 py-2 text-xs font-semibold whitespace-nowrap transition-colors bg-indigo-50 text-indigo-700 ring-1 ring-indigo-200 shadow-xs"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-car" aria-hidden="true"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><path d="M9 17h6"></path><circle cx="17" cy="17" r="2"></circle></svg><span>1. Vehículo</span></button><button type="button" class="flex min-h-[44px] items-center gap-2 rounded-lg px-3.5 py-2 text-xs font-semibold whitespace-nowrap transition-colors text-slate-600 hover:bg-slate-100 hover:text-slate-900"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg><span>2. Propietarios (1)</span></button><button type="button" class="flex min-h-[44px] items-center gap-2 rounded-lg px-3.5 py-2 text-xs font-semibold whitespace-nowrap transition-colors text-slate-600 hover:bg-slate-100 hover:text-slate-900"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-check" aria-hidden="true"><path d="m16 11 2 2 4-4"></path><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg><span>3. Conductor</span></button><button type="button" class="flex min-h-[44px] items-center gap-2 rounded-lg px-3.5 py-2 text-xs font-semibold whitespace-nowrap transition-colors text-slate-600 hover:bg-slate-100 hover:text-slate-900"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg><span>4. AFOCAT / SOAT</span></button><button type="button" class="flex min-h-[44px] items-center gap-2 rounded-lg px-3.5 py-2 text-xs font-semibold whitespace-nowrap transition-colors text-slate-600 hover:bg-slate-100 hover:text-slate-900"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-check" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="m9 15 2 2 4-4"></path></svg><span>5. Rev. Técnica</span></button><button type="button" class="flex min-h-[44px] items-center gap-2 rounded-lg px-3.5 py-2 text-xs font-semibold whitespace-nowrap transition-colors text-slate-600 hover:bg-slate-100 hover:text-slate-900"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-graduation-cap" aria-hidden="true"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"></path><path d="M22 10v6"></path><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"></path></svg><span>6. Curso Vial</span></button><button type="button" class="flex min-h-[44px] items-center gap-2 rounded-lg px-3.5 py-2 text-xs font-semibold whitespace-nowrap transition-colors text-slate-600 hover:bg-slate-100 hover:text-slate-900"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="2"></rect><line x1="2" x2="22" y1="10" y2="10"></line></svg><span>7. Licencia B-II-C</span></button></div><form class="mt-6 space-y-6"><div class="space-y-4 animate-in fade-in"><div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"><div><label class="block text-xs font-semibold text-slate-700 mb-1">N.° de Padrón <span class="text-rose-500">*</span></label><input required="" placeholder="Ej. PAD-001" class="w-full min-h-[44px] rounded-lg border border-slate-300 px-3 py-2 text-xs font-bold text-indigo-700 uppercase focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200" type="text" value="PAD-024"><span class="text-[11px] text-slate-400">Identificador único en la asociación</span></div><div><label class="block text-xs font-semibold text-slate-700 mb-1">Placa Oficial <span class="text-rose-500">*</span></label><input required="" placeholder="Ej. 1234-5B o ABC-123" class="w-full min-h-[44px] rounded-lg border border-slate-300 px-3 py-2 text-xs font-bold font-mono text-slate-900 uppercase focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200" type="text" value="PQR-1693"><span class="text-[11px] text-slate-400">Placa única de rodaje</span></div><div><label class="block text-xs font-semibold text-slate-700 mb-1">Marca <span class="text-rose-500">*</span></label><input required="" placeholder="Ej. BAJAJ, TVS, HONDA, WANXIN" class="w-full min-h-[44px] rounded-lg border border-slate-300 px-3 py-2 text-xs text-slate-800 uppercase focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200" type="text" value="Honda"></div><div><label class="block text-xs font-semibold text-slate-700 mb-1">Año de Fabricación <span class="text-rose-500">*</span></label><input required="" min="1980" max="2028" class="w-full min-h-[44px] rounded-lg border border-slate-300 px-3 py-2 text-xs text-slate-800 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200" type="number" value="2025"></div><div class="sm:col-span-2"><label class="block text-xs font-semibold text-slate-700 mb-1">Número de Motor</label><input placeholder="Ej. AZ12345678" class="w-full min-h-[44px] rounded-lg border border-slate-300 px-3 py-2 text-xs font-mono text-slate-800 uppercase focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200" type="text" value="12012491"></div></div><div class="mt-6 rounded-lg border border-purple-200 bg-purple-50/60 p-4"><label class="flex items-center gap-2 cursor-pointer"><input class="h-4 w-4 rounded border-purple-300 text-purple-600 focus:ring-purple-500" type="checkbox"><span class="text-xs font-bold text-purple-900">Marcar como "Dato requiere revisión"</span></label><p class="mt-1 text-[11px] text-purple-700">Active esta casilla si este registro proviene de datos históricos con errores, inconsistencias o documentos pendientes de verificar.</p></div></div><div class="flex items-center justify-between pt-6 border-t border-slate-200"><button type="button" class="min-h-[44px] rounded-lg border border-slate-300 bg-white px-4 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50">Cancelar</button><button type="submit" class="flex min-h-[44px] items-center gap-2 rounded-lg bg-indigo-600 px-6 py-2 text-xs font-bold text-white hover:bg-indigo-700 disabled:opacity-50 transition-colors shadow-xs"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save" aria-hidden="true"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"></path><path d="M7 3v4a1 1 0 0 0 1 1h7"></path></svg><span>Guardar Cambios</span></button></div></form></div></div><div class="h-20 lg:hidden w-full shrink-0 pointer-events-none" aria-hidden="true"></div></div></div></main></div>
+    </div>
+  </div>
+
+  <aside class="side">
+    <h2>Ficha del módulo</h2>
+    <p class="sub">Formulario de edición de un registro del padrón.</p>
+
+    <section>
+      <h3>Acceso</h3>
+      <table>
+        <tr><td>Categoría</td><td>Operaciones</td></tr>
+        <tr><td>Roles con acceso</td><td>Registrador</td></tr>
+        <tr><td>Módulo en el menú</td><td>Padrón Vehicular</td></tr>
+        <tr><td>Vista</td><td>Tab del sidebar</td></tr>
+      </table>
+    </section>
+
+    <section>
+      <h3>Interacciones</h3>
+      <p class="hint">
+        Usa <code>Tab</code> para recorrer los controles, <code>Enter</code> para activar.
+        El prototipo refleja la UI real: los botones que en el sistema disparan
+        acciones siguen siendo inertes aquí.
+      </p>
+    </section>
+
+    <section>
+      <h3>Archivos</h3>
+      <table>
+        <tr><td>Captura estática</td><td><a href="prototipo.html" style="color:#60a5fa">prototipo.html</a></td></tr>
+        <tr><td>Vector Figma</td><td><a href="prototipo.svg" style="color:#60a5fa">prototipo.svg</a></td></tr>
+        <tr><td>Imagen</td><td><a href="captura.webp" style="color:#60a5fa">captura.webp</a></td></tr>
+      </table>
+    </section>
+
+    <section>
+      <h3>Todos los módulos</h3>
+      <ul class="mod-list">
+          <li><a href="../login/interactivo.html" class=""><span class="dot"></span><span>Inicio de sesión</span></a></li>
+          <li><a href="../portal-inicio/interactivo.html" class=""><span class="dot"></span><span>Portal de Inicio y Cartelera</span></a></li>
+          <li><a href="../dashboard/interactivo.html" class=""><span class="dot"></span><span>Dashboard Operativo &amp; Flota</span></a></li>
+          <li><a href="../padron/interactivo.html" class=""><span class="dot"></span><span>Padrón Vehicular</span></a></li>
+          <li><a href="../nuevo/interactivo.html" class=""><span class="dot"></span><span>Registrar Nueva Unidad</span></a></li>
+          <li><a href="../vehiculo-detalle/interactivo.html" class=""><span class="dot"></span><span>Ficha de Vehículo</span></a></li>
+          <li><a href="../vehiculo-editar/interactivo.html" class="active"><span class="dot"></span><span>Editar Vehículo</span></a></li>
+          <li><a href="../personas/interactivo.html" class=""><span class="dot"></span><span>Directorio de Personas</span></a></li>
+          <li><a href="../curso-vial/interactivo.html" class=""><span class="dot"></span><span>Conductores &amp; Curso Vial</span></a></li>
+          <li><a href="../directorio-contacto/interactivo.html" class=""><span class="dot"></span><span>Directorio WhatsApp por Roles</span></a></li>
+          <li><a href="../vencimientos/interactivo.html" class=""><span class="dot"></span><span>Alertas de Vencimiento</span></a></li>
+          <li><a href="../importar-exportar/interactivo.html" class=""><span class="dot"></span><span>Importar / Exportar</span></a></li>
+          <li><a href="../operario-portal/interactivo.html" class=""><span class="dot"></span><span>Portal del Operario</span></a></li>
+          <li><a href="../historial/interactivo.html" class=""><span class="dot"></span><span>Historial de Auditoría</span></a></li>
+          <li><a href="../usuarios/interactivo.html" class=""><span class="dot"></span><span>Cuentas y Accesos</span></a></li>
+          <li><a href="../configuracion/interactivo.html" class=""><span class="dot"></span><span>Configuración &amp; Empresa</span></a></li>
+          <li><a href="../gestion-portal/interactivo.html" class=""><span class="dot"></span><span>Gestión de Cartelera &amp; Portal</span></a></li>
+          <li><a href="../backup-migracion/interactivo.html" class=""><span class="dot"></span><span>Backup &amp; Migración Multi-BD</span></a></li>
+      </ul>
+    </section>
+  </aside>
+</div>
+
+<script>
+  // Tema
+  const segTema = document.getElementById('segTema');
+  segTema.querySelectorAll('button').forEach(b => {
+    b.onclick = () => {
+      segTema.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', 'false'));
+      b.setAttribute('aria-pressed', 'true');
+      const oscuro = b.dataset.tema === 'dark';
+      document.documentElement.classList.toggle('dark', oscuro);
+      document.body.classList.toggle('dark', oscuro);
+    };
+  });
+
+  // Vista
+  const wrap = document.getElementById('frameWrap');
+  const segVista = document.getElementById('segVista');
+  segVista.querySelectorAll('button').forEach(b => {
+    b.onclick = () => {
+      segVista.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', 'false'));
+      b.setAttribute('aria-pressed', 'true');
+      wrap.classList.toggle('movil', b.dataset.vista === 'movil');
+    };
+  });
+
+  // Navegación
+  document.getElementById('selModulo').onchange = (e) => { location.href = e.target.value; };
+</script>
+</body>
+</html>

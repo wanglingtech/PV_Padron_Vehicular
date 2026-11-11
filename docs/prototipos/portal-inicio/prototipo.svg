@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Prototipo portal-inicio — Padrón Vehicular
+  Vector editable generado desde el DOM real del módulo.
+  Importable en Figma por drag & drop: formas vectoriales y texto editable.
+  Regenerar: npm run prototipos:svg
+-->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1136" height="741" viewBox="0 0 1136 741">
+  <title>Prototipo portal-inicio — Padrón Vehicular</title>
+  <rect x="888" y="76" width="256" height="256" rx="128" fill="#ffffff" fill-opacity="0.1"/>
+  <rect x="708" y="32" width="128" height="128" rx="64" fill="#ffffff" fill-opacity="0.15"/>
+  <rect x="64" y="64" width="281.34" height="26" rx="13" fill="#ffffff" fill-opacity="0.1" stroke="#ffffff" stroke-width="1" stroke-opacity="0.15"/>
+  <g transform="translate(79 70) scale(0.58)" stroke="oklch(0.828 0.189 84.429)" fill="none"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></g>
+  <text x="101" y="81.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#bedbff" text-anchor="start">Portal de Inicio &amp; Cartelera Institucional</text>
+  <text x="64" y="129.2" font-family="-apple-system, Inter, sans-serif" font-size="30" font-weight="700" fill="#ffffff" text-anchor="start">Bienvenido,</text>
+  <text x="239.22" y="129.2" font-family="-apple-system, Inter, sans-serif" font-size="30" font-weight="700" fill="#ffffff" text-anchor="start">Carlos Mendoza (Administrador)</text>
+  <text x="64" y="165.2" font-family="-apple-system, Inter, sans-serif" font-size="30" font-weight="700" fill="#ffffff" text-anchor="start">Carlos Mendoza (Administrador)</text>
+  <text x="64" y="200.38" font-family="-apple-system, Inter, sans-serif" font-size="16" font-weight="400" fill="#cad5e2" text-anchor="start">Información oficial, asambleas de socios, festividades institucionales, comunicados urgentes y documentación normativa del padrón vehicular.</text>
+  <text x="64" y="226.38" font-family="-apple-system, Inter, sans-serif" font-size="16" font-weight="400" fill="#cad5e2" text-anchor="start">Información oficial, asambleas de socios, festividades institucionales, comunicados urgentes y documentación normativa del padrón vehicular.</text>
+  <text x="64" y="252.38" font-family="-apple-system, Inter, sans-serif" font-size="16" font-weight="400" fill="#cad5e2" text-anchor="start">Información oficial, asambleas de socios, festividades institucionales, comunicados urgentes y documentación normativa del padrón vehicular.</text>
+  <rect x="509.7" y="142" width="190.66" height="40" rx="12" fill="#fe9a00"/>
+  <g transform="translate(525.7 154) scale(0.67)" stroke="oklch(0.129 0.042 264.695)" fill="none"><path d="M10 5H3"></path><path d="M12 19H3"></path><path d="M14 3v4"></path><path d="M16 17v4"></path><path d="M21 12h-9"></path><path d="M21 19h-5"></path><path d="M21 5h-7"></path><path d="M8 10v4"></path><path d="M8 12H3"></path></g>
+  <text x="617.03" y="166.82" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="700" fill="#020618" text-anchor="middle">Configurar Cartelera</text>
+  <rect x="712.36" y="141" width="127.67" height="42" rx="12" fill="#ffffff" fill-opacity="0.1" stroke="#ffffff" stroke-width="1" stroke-opacity="0.2"/>
+  <g transform="translate(729.36 154) scale(0.67)" stroke="rgb(255, 255, 255)" fill="none"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><path d="M9 17h6"></path><circle cx="17" cy="17" r="2"></circle></g>
+  <text x="788.2" y="166.82" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="600" fill="#ffffff" text-anchor="middle">Ver Padrón</text>
+  <rect x="852.03" y="142" width="219.97" height="40" rx="12" fill="#155dfc"/>
+  <text x="950.52" y="166.82" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="600" fill="#ffffff" text-anchor="middle">Dashboard de Estadísticas</text>
+  <g transform="translate(1041 154.5) scale(0.63)" stroke="rgb(255, 255, 255)" fill="none"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></g>
+  <rect x="32" y="324" width="1072" height="109" rx="24" fill="none" stroke="#ff50da" stroke-width="1" stroke-opacity="0.4"/>
+  <rect x="53" y="345" width="44" height="44" rx="16" fill="#ffffff" fill-opacity="0.2"/>
+  <g transform="translate(64 356) scale(0.92)" stroke="rgb(255, 255, 255)" fill="none"><path d="M10.268 21a2 2 0 0 0 3.464 0"></path><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path></g>
+  <rect x="111" y="345.75" width="157.97" height="19" rx="6" fill="#ffb900"/>
+  <text x="121" y="358.67" font-family="-apple-system, Inter, sans-serif" font-size="10" font-weight="700" fill="#020618" text-anchor="start">REUNIÓN DE DIRECTORIO</text>
+  <rect x="276.97" y="345" width="61.61" height="20.5" rx="6" fill="#ffffff" fill-opacity="0.2"/>
+  <text x="284.97" y="358.7" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="700" fill="#ffe4e6" text-anchor="start">En 5 días</text>
+  <text x="111" y="387.22" font-family="-apple-system, Inter, sans-serif" font-size="18" font-weight="700" fill="#ffffff" text-anchor="start">Reunión de Junta Directiva</text>
+  <text x="128" y="408.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#ffe4e6" text-anchor="start">2026-11-16</text>
+  <text x="188.83" y="408.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#ffe4e6" text-anchor="start">• 17:30 hrs</text>
+  <g transform="translate(111 397.5) scale(0.54)" stroke="oklch(0.941 0.03 12.58)" fill="none"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></g>
+  <text x="277.55" y="408.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#ffe4e6" text-anchor="start">Sala de Offices</text>
+  <g transform="translate(260.55 397.5) scale(0.54)" stroke="oklch(0.941 0.03 12.58)" fill="none"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></g>
+  <rect x="865.91" y="360.5" width="217.09" height="36" rx="12" fill="#ffffff"/>
+  <text x="962.95" y="382.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#0f172b" text-anchor="middle">Ver Orden del Día &amp; Citación</text>
+  <g transform="translate(1052 371) scale(0.63)" stroke="oklch(0.208 0.042 265.755)" fill="none"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></g>
+  <rect x="32" y="465" width="1072" height="462" rx="24" fill="#0f172b" stroke="#1d293d" stroke-width="1"/>
+  <rect x="887.98" y="866" width="36" height="36" rx="12" fill="#000000" fill-opacity="0.6" stroke="#ffffff" stroke-width="1" stroke-opacity="0.2"/>
+  <g transform="translate(899.48 877.5) scale(0.54)" stroke="rgb(255, 255, 255)" fill="none"><rect x="14" y="3" width="5" height="18" rx="1"></rect><rect x="5" y="3" width="5" height="18" rx="1"></rect></g>
+  <rect x="931.98" y="866" width="36" height="36" rx="12" fill="#000000" fill-opacity="0.6" stroke="#ffffff" stroke-width="1" stroke-opacity="0.2"/>
+  <g transform="translate(941.98 876) scale(0.67)" stroke="rgb(255, 255, 255)" fill="none"><path d="m15 18-6-6 6-6"></path></g>
+  <rect x="975.98" y="871" width="59.02" height="26" rx="12" fill="#000000" fill-opacity="0.6" stroke="#ffffff" stroke-width="1" stroke-opacity="0.2"/>
+  <text x="988.98" y="887.92" font-family="ui-monospace, Inter, sans-serif" font-size="12" font-weight="400" fill="#ffffff" text-anchor="start">1</text>
+  <text x="995.59" y="887.92" font-family="ui-monospace, Inter, sans-serif" font-size="12" font-weight="400" fill="#ffffff" text-anchor="start">/</text>
+  <text x="1015.39" y="887.92" font-family="ui-monospace, Inter, sans-serif" font-size="12" font-weight="400" fill="#ffffff" text-anchor="start">3</text>
+  <rect x="1043" y="866" width="36" height="36" rx="12" fill="#000000" fill-opacity="0.6" stroke="#ffffff" stroke-width="1" stroke-opacity="0.2"/>
+  <g transform="translate(1053 876) scale(0.67)" stroke="rgb(255, 255, 255)" fill="none"><path d="m9 18 6-6-6-6"></path></g>
+  <rect x="81" y="611.75" width="193.02" height="24" rx="8" fill="#ffaa00" fill-opacity="0.9"/>
+  <text x="112" y="628.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#020618" text-anchor="start">35° ANIVERSARIO 2026</text>
+  <g transform="translate(93 617.25) scale(0.54)" stroke="oklch(0.129 0.042 264.695)" fill="none"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></g>
+  <rect x="282.02" y="610.75" width="177.53" height="26" rx="8" fill="#000000" fill-opacity="0.4" stroke="#ffffff" stroke-width="1" stroke-opacity="0.1"/>
+  <text x="309.02" y="628.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#cad5e2" text-anchor="start">Vigente hasta:</text>
+  <text x="387.19" y="628.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#cad5e2" text-anchor="start">2027-02-09</text>
+  <g transform="translate(293.02 617.75) scale(0.5)" stroke="oklch(0.869 0.022 252.894)" fill="none"><path d="M12 6v6l4 2"></path><circle cx="12" cy="12" r="10"></circle></g>
+  <text x="81" y="686.19" font-family="-apple-system, Inter, sans-serif" font-size="36" font-weight="700" fill="#ffffff" text-anchor="start">¡Gran 35° Aniversario Institucional!</text>
+  <text x="81" y="726.13" font-family="-apple-system, Inter, sans-serif" font-size="16" font-weight="500" fill="#8ec5ff" text-anchor="start">Detalle oficial del comunicado institucional</text>
+  <text x="81" y="761.57" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="400" fill="#cad5e2" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <text x="81" y="784.32" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="400" fill="#cad5e2" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <text x="81" y="807.07" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="400" fill="#cad5e2" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <rect x="81" y="836" width="228.88" height="42" rx="12" fill="#ffffff" fill-opacity="0.15" stroke="#ffffff" stroke-width="1" stroke-opacity="0.2"/>
+  <g transform="translate(98 849) scale(0.67)" stroke="rgb(255, 255, 255)" fill="none"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></g>
+  <text x="207.44" y="861.82" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="600" fill="#ffffff" text-anchor="middle">Ver Comunicado Completo</text>
+  <rect x="33" y="920" width="1070" height="6" fill="#000000" fill-opacity="0.4"/>
+  <rect x="33" y="920" width="356.66" height="6" fill="#ffb900"/>
+  <rect x="389.66" y="920" width="356.67" height="6" fill="#ffffff" fill-opacity="0.2"/>
+  <rect x="746.33" y="920" width="356.67" height="6" fill="#ffffff" fill-opacity="0.2"/>
+  <rect x="32" y="968" width="190.88" height="36" rx="12" fill="#155dfc"/>
+  <g transform="translate(48 978) scale(0.67)" stroke="rgb(255, 255, 255)" fill="none"><rect width="7" height="7" x="3" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="14" rx="1"></rect><rect width="7" height="7" x="3" y="14" rx="1"></rect></g>
+  <text x="139.44" y="990.82" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">Vista Integral (Todo)</text>
+  <rect x="230.88" y="967" width="302.27" height="38" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <g transform="translate(247.88 978) scale(0.67)" stroke="oklch(0.372 0.044 257.287)" fill="none"><path d="M11 6a13 13 0 0 0 8.4-2.8A1 1 0 0 1 21 4v12a1 1 0 0 1-1.6.8A13 13 0 0 0 11 14H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"></path><path d="M6 14a12 12 0 0 0 2.4 7.2 2 2 0 0 0 3.2-2.4A8 8 0 0 1 10 14"></path><path d="M8 6v8"></path></g>
+  <text x="378.98" y="990.82" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="700" fill="#314158" text-anchor="middle">Cartelera Oficial &amp; Comunicados</text>
+  <rect x="494.08" y="976.14" width="22.06" height="19.7" rx="9.85" fill="#e2e8f0"/>
+  <text x="505.11" y="989.28" font-family="ui-monospace, Inter, sans-serif" font-size="11" font-weight="700" fill="#1d293d" text-anchor="middle">6</text>
+  <rect x="541.14" y="967" width="314.61" height="38" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <g transform="translate(558.14 978) scale(0.67)" stroke="oklch(0.372 0.044 257.287)" fill="none"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></g>
+  <text x="695.41" y="990.82" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="700" fill="#314158" text-anchor="middle">Agenda Institucional &amp; Calendario</text>
+  <rect x="816.69" y="976.14" width="22.06" height="19.7" rx="9.85" fill="#e2e8f0"/>
+  <text x="827.72" y="989.28" font-family="ui-monospace, Inter, sans-serif" font-size="11" font-weight="700" fill="#1d293d" text-anchor="middle">6</text>
+  <text x="850.94" y="982.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Mostrando contenido actualizado en tiempo real</text>
+  <text x="850.94" y="998.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Mostrando contenido actualizado en tiempo real</text>
+  <rect x="32" y="1050" width="32" height="32" rx="12" fill="#dbeafe"/>
+  <g transform="translate(40 1058) scale(0.67)" stroke="oklch(0.546 0.245 262.881)" fill="none"><path d="M11 6a13 13 0 0 0 8.4-2.8A1 1 0 0 1 21 4v12a1 1 0 0 1-1.6.8A13 13 0 0 0 11 14H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"></path><path d="M6 14a12 12 0 0 0 2.4 7.2 2 2 0 0 0 3.2-2.4A8 8 0 0 1 10 14"></path><path d="M8 6v8"></path></g>
+  <text x="72" y="1073.06" font-family="-apple-system, Inter, sans-serif" font-size="20" font-weight="700" fill="#0f172b" text-anchor="start">Cartelera Oficial &amp; Comunicados Institucionales</text>
+  <text x="32" y="1098.82" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="400" fill="#62748e" text-anchor="start">Directivas oficiales, pronunciamientos, asambleas, normativas y videos instructivos</text>
+  <g transform="translate(937.14 1070) scale(0.58)" stroke="oklch(0.666 0.179 58.318)" fill="none"><path d="M10 5H3"></path><path d="M12 19H3"></path><path d="M14 3v4"></path><path d="M16 17v4"></path><path d="M21 12h-9"></path><path d="M21 19h-5"></path><path d="M21 5h-7"></path><path d="M8 10v4"></path><path d="M8 12H3"></path></g>
+  <text x="1030.57" y="1081.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#e17100" text-anchor="middle">Administrar Publicaciones</text>
+  <rect x="32" y="1124" width="1072" height="118" rx="16" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <g transform="translate(63 1151) scale(0.75)" stroke="oklch(0.704 0.04 256.788)" fill="none"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></g>
+  <rect x="49" y="1141" width="878.69" height="38" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="939.69" y="1164.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#62748e" text-anchor="start">Mostrando</text>
+  <text x="1002.86" y="1164.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#62748e" text-anchor="start">6</text>
+  <text x="1009.56" y="1164.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#62748e" text-anchor="start">publicaciones</text>
+  <rect x="49" y="1193" width="124.52" height="28" rx="12" fill="#155dfc"/>
+  <text x="111.26" y="1211.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#ffffff" text-anchor="middle">Todas las Noticias</text>
+  <rect x="179.52" y="1193" width="94.55" height="28" rx="12" fill="#f1f5f9"/>
+  <text x="226.79" y="1211.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#45556c" text-anchor="middle">Festividades</text>
+  <rect x="280.06" y="1193" width="86.31" height="28" rx="12" fill="#f1f5f9"/>
+  <text x="323.22" y="1211.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#45556c" text-anchor="middle">Asambleas</text>
+  <rect x="372.38" y="1193" width="85.33" height="28" rx="12" fill="#f1f5f9"/>
+  <text x="415.04" y="1211.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#45556c" text-anchor="middle">Normativa</text>
+  <rect x="463.7" y="1193" width="97.41" height="28" rx="12" fill="#f1f5f9"/>
+  <text x="512.41" y="1211.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#45556c" text-anchor="middle">Capacitación</text>
+  <rect x="567.11" y="1193" width="96.7" height="28" rx="12" fill="#f1f5f9"/>
+  <text x="615.46" y="1211.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#45556c" text-anchor="middle">Comunicado</text>
+  <rect x="32" y="1262" width="341.33" height="281.5" rx="16" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="33" y="1263" width="339.33" height="56" fill="#f8fafc"/>
+  <rect x="49" y="1280.5" width="89.09" height="20" rx="6" fill="#dbeafe"/>
+  <text x="59" y="1294.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1447e6" text-anchor="start">Festividades</text>
+  <rect x="218.92" y="1280.25" width="137.41" height="20.5" rx="6" fill="#ffff00" fill-opacity="0.2"/>
+  <text x="226.92" y="1293.95" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="700" fill="#bb4d00" text-anchor="start">35° ANIVERSARIO 2026</text>
+  <text x="53" y="1355.38" font-family="-apple-system, Inter, sans-serif" font-size="16" font-weight="700" fill="#0f172b" text-anchor="start">¡Gran 35° Aniversario Institucional!</text>
+  <text x="53" y="1379.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#155dfc" text-anchor="start">Detalle oficial del comunicado institucional</text>
+  <text x="53" y="1402.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <text x="53" y="1421.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <text x="53" y="1441.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <text x="53" y="1460.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <text x="53" y="1480.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <rect x="53" y="1481.5" width="299.33" height="41" fill="none" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="53" y="1511.95" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#90a1b9" text-anchor="start">Por:</text>
+  <text x="74.42" y="1511.95" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#90a1b9" text-anchor="start">Administración Central</text>
+  <rect x="277.09" y="1494.5" width="75.23" height="28" rx="8" fill="#eff6ff"/>
+  <text x="306.21" y="1512.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#155dfc" text-anchor="middle">Detalle</text>
+  <g transform="translate(329.33 1502) scale(0.54)" stroke="oklch(0.546 0.245 262.881)" fill="none"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></g>
+  <rect x="397.33" y="1262" width="341.33" height="281.5" rx="16" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="398.33" y="1263" width="339.33" height="56" fill="#f8fafc"/>
+  <rect x="414.33" y="1280.5" width="80.25" height="20" rx="6" fill="#dbeafe"/>
+  <text x="424.33" y="1294.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1447e6" text-anchor="start">Asambleas</text>
+  <rect x="571.97" y="1280.25" width="149.69" height="20.5" rx="6" fill="#ffff00" fill-opacity="0.2"/>
+  <text x="579.97" y="1293.95" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="700" fill="#bb4d00" text-anchor="start">ASAMBLEA OBLIGATORIA</text>
+  <text x="418.33" y="1355.38" font-family="-apple-system, Inter, sans-serif" font-size="16" font-weight="700" fill="#0f172b" text-anchor="start">Convocatoria a Magna Asamblea General Ordinaria</text>
+  <text x="418.33" y="1377.38" font-family="-apple-system, Inter, sans-serif" font-size="16" font-weight="700" fill="#0f172b" text-anchor="start">Convocatoria a Magna Asamblea General Ordinaria</text>
+  <text x="418.33" y="1401.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#155dfc" text-anchor="start">Detalle oficial del comunicado institucional</text>
+  <text x="418.33" y="1424.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <text x="418.33" y="1443.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <text x="418.33" y="1463.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <text x="418.33" y="1482.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <text x="418.33" y="1502.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <rect x="418.33" y="1481.5" width="299.33" height="41" fill="none" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="418.33" y="1511.95" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#90a1b9" text-anchor="start">Por:</text>
+  <text x="439.75" y="1511.95" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#90a1b9" text-anchor="start">Administración Central</text>
+  <rect x="642.42" y="1494.5" width="75.23" height="28" rx="8" fill="#eff6ff"/>
+  <text x="671.54" y="1512.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#155dfc" text-anchor="middle">Detalle</text>
+  <g transform="translate(694.66 1502) scale(0.54)" stroke="oklch(0.546 0.245 262.881)" fill="none"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></g>
+  <rect x="762.66" y="1262" width="341.34" height="281.5" rx="16" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="763.66" y="1263" width="339.34" height="56" fill="#f8fafc"/>
+  <rect x="779.66" y="1280.5" width="89.09" height="20" rx="6" fill="#dbeafe"/>
+  <text x="789.66" y="1294.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1447e6" text-anchor="start">Festividades</text>
+  <rect x="934.11" y="1280.25" width="152.89" height="20.5" rx="6" fill="#ffff00" fill-opacity="0.2"/>
+  <text x="942.11" y="1293.95" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="700" fill="#bb4d00" text-anchor="start">NAVIDAD INSTITUCIONAL</text>
+  <text x="783.66" y="1355.38" font-family="-apple-system, Inter, sans-serif" font-size="16" font-weight="700" fill="#0f172b" text-anchor="start">Campaña Navideña y Empadronamiento de Canastas</text>
+  <text x="783.66" y="1377.38" font-family="-apple-system, Inter, sans-serif" font-size="16" font-weight="700" fill="#0f172b" text-anchor="start">Campaña Navideña y Empadronamiento de Canastas</text>
+  <text x="783.66" y="1401.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#155dfc" text-anchor="start">Detalle oficial del comunicado institucional</text>
+  <text x="783.66" y="1424.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <text x="783.66" y="1443.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <text x="783.66" y="1463.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <text x="783.66" y="1482.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <text x="783.66" y="1502.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <rect x="783.66" y="1481.5" width="299.34" height="41" fill="none" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="783.66" y="1511.95" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#90a1b9" text-anchor="start">Por:</text>
+  <text x="805.08" y="1511.95" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#90a1b9" text-anchor="start">Administración Central</text>
+  <rect x="1007.77" y="1494.5" width="75.23" height="28" rx="8" fill="#eff6ff"/>
+  <text x="1036.88" y="1512.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#155dfc" text-anchor="middle">Detalle</text>
+  <g transform="translate(1060 1502) scale(0.54)" stroke="oklch(0.546 0.245 262.881)" fill="none"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></g>
+  <rect x="32" y="1567.5" width="341.33" height="353.5" rx="16" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="49" y="1608" width="48" height="48" rx="12" fill="#ec003f"/>
+  <g transform="translate(61 1620)" stroke="rgb(255, 255, 255)" fill="none"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></g>
+  <rect x="109" y="1615" width="142.03" height="18" rx="4" fill="#ffe4e6"/>
+  <text x="117" y="1627.92" font-family="-apple-system, Inter, sans-serif" font-size="10" font-weight="700" fill="#c70036" text-anchor="start">DOCUMENTO OFICIAL PDF</text>
+  <text x="109" y="1650.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#314158" text-anchor="start">Archivo PDF</text>
+  <text x="53" y="1732.88" font-family="-apple-system, Inter, sans-serif" font-size="16" font-weight="700" fill="#0f172b" text-anchor="start">Directiva N° 004-2026: Actualización de SOAT/AFOCAT</text>
+  <text x="53" y="1754.88" font-family="-apple-system, Inter, sans-serif" font-size="16" font-weight="700" fill="#0f172b" text-anchor="start">Directiva N° 004-2026: Actualización de SOAT/AFOCAT</text>
+  <text x="53" y="1778.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#155dfc" text-anchor="start">Detalle oficial del comunicado institucional</text>
+  <text x="53" y="1801.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <text x="53" y="1821.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <text x="53" y="1840.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <text x="53" y="1860.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <text x="53" y="1879.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <rect x="53" y="1859" width="299.33" height="41" fill="none" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="53" y="1889.45" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#90a1b9" text-anchor="start">Por:</text>
+  <text x="74.42" y="1889.45" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#90a1b9" text-anchor="start">Administración Central</text>
+  <text x="74.42" y="1889.45" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#90a1b9" text-anchor="start">Administración Central</text>
+  <rect x="184.42" y="1872" width="86.67" height="28" rx="8" fill="#fff1f2"/>
+  <g transform="translate(194.42 1879.5) scale(0.54)" stroke="oklch(0.586 0.253 17.585)" fill="none"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></g>
+  <text x="236.26" y="1890.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#ec003f" text-anchor="middle">Leer PDF</text>
+  <rect x="277.09" y="1872" width="75.23" height="28" rx="8" fill="#eff6ff"/>
+  <text x="306.21" y="1890.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#155dfc" text-anchor="middle">Detalle</text>
+  <g transform="translate(329.33 1879.5) scale(0.54)" stroke="oklch(0.546 0.245 262.881)" fill="none"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></g>
+  <rect x="397.33" y="1567.5" width="341.33" height="353.5" rx="16" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="398.33" y="1568.5" width="339.33" height="56" fill="#f8fafc"/>
+  <rect x="414.33" y="1586" width="91.8" height="20" rx="6" fill="#dbeafe"/>
+  <text x="424.33" y="1600.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1447e6" text-anchor="start">Capacitación</text>
+  <rect x="597.11" y="1585.75" width="124.55" height="20.5" rx="6" fill="#ffff00" fill-opacity="0.2"/>
+  <text x="605.11" y="1599.45" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="700" fill="#bb4d00" text-anchor="start">VIDEO INSTRUCTIVO</text>
+  <text x="418.33" y="1660.88" font-family="-apple-system, Inter, sans-serif" font-size="16" font-weight="700" fill="#0f172b" text-anchor="start">Video Instructivo: Curso de Seguridad Vial Anual</text>
+  <text x="418.33" y="1682.88" font-family="-apple-system, Inter, sans-serif" font-size="16" font-weight="700" fill="#0f172b" text-anchor="start">Video Instructivo: Curso de Seguridad Vial Anual</text>
+  <text x="418.33" y="1706.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#155dfc" text-anchor="start">Detalle oficial del comunicado institucional</text>
+  <text x="418.33" y="1729.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <text x="418.33" y="1749.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <text x="418.33" y="1768.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <text x="418.33" y="1788.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <text x="418.33" y="1807.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <rect x="418.33" y="1859" width="299.33" height="41" fill="none" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="418.33" y="1889.45" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#90a1b9" text-anchor="start">Por:</text>
+  <text x="439.75" y="1889.45" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#90a1b9" text-anchor="start">Administración Central</text>
+  <rect x="642.42" y="1872" width="75.23" height="28" rx="8" fill="#eff6ff"/>
+  <text x="671.54" y="1890.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#155dfc" text-anchor="middle">Detalle</text>
+  <g transform="translate(694.66 1879.5) scale(0.54)" stroke="oklch(0.546 0.245 262.881)" fill="none"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></g>
+  <rect x="762.66" y="1567.5" width="341.34" height="353.5" rx="16" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="763.66" y="1568.5" width="339.34" height="56" fill="#f8fafc"/>
+  <rect x="779.66" y="1586" width="90.73" height="20" rx="6" fill="#dbeafe"/>
+  <text x="789.66" y="1600.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1447e6" text-anchor="start">Comunicado</text>
+  <rect x="979.06" y="1585.75" width="107.94" height="20.5" rx="6" fill="#ffff00" fill-opacity="0.2"/>
+  <text x="987.06" y="1599.45" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="700" fill="#bb4d00" text-anchor="start">NUEVO HORARIO</text>
+  <text x="783.66" y="1660.88" font-family="-apple-system, Inter, sans-serif" font-size="16" font-weight="700" fill="#0f172b" text-anchor="start">Nuevo Horario de atención en Secretaría General</text>
+  <text x="783.66" y="1682.88" font-family="-apple-system, Inter, sans-serif" font-size="16" font-weight="700" fill="#0f172b" text-anchor="start">Nuevo Horario de atención en Secretaría General</text>
+  <text x="783.66" y="1706.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#155dfc" text-anchor="start">Detalle oficial del comunicado institucional</text>
+  <text x="783.66" y="1729.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <text x="783.66" y="1749.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <text x="783.66" y="1768.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <text x="783.66" y="1788.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <text x="783.66" y="1807.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Contenido institucional detallado. La Junta Directiva informa a todos los asociados sobre las disposiciones adoptadas y los plazos correspondientes. Documento disponible en Secretaría General con copia de DNI vigente.</text>
+  <rect x="783.66" y="1859" width="299.34" height="41" fill="none" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="783.66" y="1889.45" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#90a1b9" text-anchor="start">Por:</text>
+  <text x="805.08" y="1889.45" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#90a1b9" text-anchor="start">Administración Central</text>
+  <rect x="1007.77" y="1872" width="75.23" height="28" rx="8" fill="#eff6ff"/>
+  <text x="1036.88" y="1890.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#155dfc" text-anchor="middle">Detalle</text>
+  <g transform="translate(1060 1879.5) scale(0.54)" stroke="oklch(0.546 0.245 262.881)" fill="none"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></g>
+  <rect x="32" y="1953" width="1072" height="1163.25" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="32" y="1970" width="32" height="32" rx="12" fill="#e0e7ff"/>
+  <g transform="translate(40 1978) scale(0.67)" stroke="oklch(0.511 0.262 276.966)" fill="none"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></g>
+  <text x="72" y="1993.06" font-family="-apple-system, Inter, sans-serif" font-size="20" font-weight="700" fill="#0f172b" text-anchor="start">Agenda Institucional, Convocatorias &amp; Control de Flota</text>
+  <text x="32" y="2018.82" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="400" fill="#62748e" text-anchor="start">Cronograma de asambleas generales, reuniones de directorio, capacitaciones y revisiones técnicas</text>
+  <rect x="945.11" y="1982" width="158.89" height="30" rx="12" fill="#eef2ff" stroke="#c6d2ff" stroke-width="1"/>
+  <text x="958.11" y="2001.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#432dd7" text-anchor="start">6</text>
+  <text x="965.02" y="2001.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#432dd7" text-anchor="start">Eventos Programados</text>
+  <rect x="32" y="2044" width="704" height="111.25" rx="16" fill="none" stroke="#ff72ff" stroke-width="1" stroke-opacity="0.3"/>
+  <rect x="647" y="2066.25" width="112" height="112" rx="56" fill="#ffffff" fill-opacity="0.1"/>
+  <rect x="53" y="2065" width="44" height="44" rx="12" fill="#ffffff" fill-opacity="0.2"/>
+  <g transform="translate(65 2077) scale(0.83)" stroke="rgb(255, 255, 255)" fill="none"><path d="M10.268 21a2 2 0 0 0 3.464 0"></path><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path></g>
+  <rect x="111" y="2065.75" width="183.2" height="19" rx="6" fill="#ffb900"/>
+  <text x="119" y="2078.67" font-family="-apple-system, Inter, sans-serif" font-size="10" font-weight="700" fill="#020618" text-anchor="start">CONVOCATORIA OBLIGATORIA</text>
+  <rect x="302.2" y="2065" width="61.61" height="20.5" rx="6" fill="#ffffff" fill-opacity="0.2"/>
+  <text x="310.2" y="2078.7" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="700" fill="#ffe4e6" text-anchor="start">En 5 días</text>
+  <text x="111" y="2108.22" font-family="-apple-system, Inter, sans-serif" font-size="18" font-weight="700" fill="#ffffff" text-anchor="start">Reunión de Junta Directiva</text>
+  <text x="128" y="2130.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#ffe4e6" text-anchor="start">2026-11-16</text>
+  <text x="185.52" y="2130.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#ffe4e6" text-anchor="start">• 17:30 hrs</text>
+  <g transform="translate(111 2119.75) scale(0.54)" stroke="oklch(0.941 0.03 12.58)" fill="none"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></g>
+  <g transform="translate(260.53 2119.75) scale(0.54)" stroke="oklch(0.941 0.03 12.58)" fill="none"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></g>
+  <text x="277.53" y="2130.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#ffe4e6" text-anchor="start">Sala de Offices</text>
+  <rect x="536.94" y="2079.63" width="178.06" height="40" rx="12" fill="#ffffff"/>
+  <text x="614.97" y="2104.45" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="700" fill="#0f172b" text-anchor="middle">Ver Orden del Día</text>
+  <g transform="translate(681 2092.63) scale(0.58)" stroke="oklch(0.208 0.042 265.755)" fill="none"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></g>
+  <rect x="32" y="2171.25" width="704" height="945" rx="24" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="33" y="2172.25" width="702" height="81.5" fill="#ffffff" fill-opacity="0.5"/>
+  <rect x="53" y="2194.5" width="36" height="36" rx="12" fill="#eef2ff"/>
+  <g transform="translate(62 2203.5) scale(0.75)" stroke="oklch(0.511 0.262 276.966)" fill="none"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></g>
+  <text x="97" y="2209.63" font-family="-apple-system, Inter, sans-serif" font-size="16" font-weight="700" fill="#0f172b" text-anchor="start">Noviembre</text>
+  <text x="189.3" y="2209.63" font-family="-apple-system, Inter, sans-serif" font-size="16" font-weight="700" fill="#0f172b" text-anchor="start">2026</text>
+  <text x="97" y="2227.95" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#62748e" text-anchor="start">Agenda institucional y fechas clave</text>
+  <rect x="277.72" y="2196.5" width="32" height="32" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <g transform="translate(285.72 2204.5) scale(0.67)" stroke="oklch(0.446 0.043 257.281)" fill="none"><path d="m15 18-6-6 6-6"></path></g>
+  <rect x="313.72" y="2199.5" width="45" height="26" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="336.22" y="2216.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#314158" text-anchor="middle">Hoy</text>
+  <rect x="362.72" y="2196.5" width="32" height="32" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <g transform="translate(370.72 2204.5) scale(0.67)" stroke="oklch(0.446 0.043 257.281)" fill="none"><path d="m9 18 6-6-6-6"></path></g>
+  <rect x="484.94" y="2196.5" width="140.05" height="32" rx="12" fill="#ffffff" fill-opacity="0.7"/>
+  <rect x="486.94" y="2198.5" width="67.27" height="28" rx="8" fill="#ffffff"/>
+  <g transform="translate(498.94 2205.5) scale(0.58)" stroke="oklch(0.208 0.042 265.755)" fill="none"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path><path d="M8 14h.01"></path><path d="M12 14h.01"></path><path d="M16 14h.01"></path><path d="M8 18h.01"></path><path d="M12 18h.01"></path><path d="M16 18h.01"></path></g>
+  <text x="530.57" y="2216.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#0f172b" text-anchor="middle">Mes</text>
+  <g transform="translate(566.2 2205.5) scale(0.58)" stroke="oklch(0.446 0.043 257.281)" fill="none"><path d="M3 5h.01"></path><path d="M3 12h.01"></path><path d="M3 19h.01"></path><path d="M8 5h13"></path><path d="M8 12h13"></path><path d="M8 19h13"></path></g>
+  <text x="598.59" y="2216.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#45556c" text-anchor="middle">Lista</text>
+  <text x="673.99" y="2216.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#4f39f6" text-anchor="middle">+ Gestionar</text>
+  <text x="49" y="2277.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="700" fill="#90a1b9" text-anchor="start">FILTRAR:</text>
+  <rect x="109.03" y="2261.75" width="53.34" height="24" rx="8" fill="#4f39f6"/>
+  <text x="135.7" y="2278.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">Todos</text>
+  <rect x="168.38" y="2261.75" width="80.25" height="24" rx="8" fill="#f1f5f9"/>
+  <text x="208.5" y="2278.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#45556c" text-anchor="middle">Asambleas</text>
+  <rect x="254.63" y="2261.75" width="78.33" height="24" rx="8" fill="#f1f5f9"/>
+  <text x="293.79" y="2278.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#45556c" text-anchor="middle">Reuniones</text>
+  <rect x="338.95" y="2261.75" width="89.09" height="24" rx="8" fill="#f1f5f9"/>
+  <text x="383.5" y="2278.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#45556c" text-anchor="middle">Festividades</text>
+  <rect x="434.05" y="2261.75" width="103.56" height="24" rx="8" fill="#f1f5f9"/>
+  <text x="485.83" y="2278.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#45556c" text-anchor="middle">Capacitaciones</text>
+  <rect x="543.61" y="2261.75" width="81.36" height="24" rx="8" fill="#f1f5f9"/>
+  <text x="584.29" y="2278.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#45556c" text-anchor="middle">Operativos</text>
+  <text x="98.56" y="2331.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#90a1b9" text-anchor="middle">Lun</text>
+  <text x="193.7" y="2331.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#90a1b9" text-anchor="middle">Mar</text>
+  <text x="288.85" y="2331.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#90a1b9" text-anchor="middle">Mié</text>
+  <text x="383.99" y="2331.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#90a1b9" text-anchor="middle">Jue</text>
+  <text x="479.13" y="2331.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#90a1b9" text-anchor="middle">Vie</text>
+  <text x="574.27" y="2331.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#90a1b9" text-anchor="middle">Sáb</text>
+  <text x="669.42" y="2331.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#90a1b9" text-anchor="middle">Dom</text>
+  <rect x="53" y="2355.75" width="89.42" height="70" rx="12" fill="#ffffff" fill-opacity="0.3"/>
+  <text x="63.09" y="2377.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#90a1b9" text-anchor="start">26</text>
+  <rect x="148.42" y="2355.75" width="89.42" height="70" rx="12" fill="#ffffff" fill-opacity="0.3"/>
+  <text x="158.52" y="2377.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#90a1b9" text-anchor="start">27</text>
+  <rect x="243.84" y="2355.75" width="89.44" height="70" rx="12" fill="#ffffff" fill-opacity="0.3"/>
+  <text x="253.94" y="2377.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#90a1b9" text-anchor="start">28</text>
+  <rect x="339.28" y="2355.75" width="89.42" height="70" rx="12" fill="#ffffff" fill-opacity="0.3"/>
+  <text x="349.38" y="2377.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#90a1b9" text-anchor="start">29</text>
+  <rect x="434.7" y="2355.75" width="89.44" height="70" rx="12" fill="#ffffff" fill-opacity="0.3"/>
+  <text x="444.8" y="2377.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#90a1b9" text-anchor="start">30</text>
+  <rect x="530.14" y="2355.75" width="89.42" height="70" rx="12" fill="#ffffff" fill-opacity="0.3"/>
+  <text x="540.23" y="2377.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#90a1b9" text-anchor="start">31</text>
+  <rect x="625.56" y="2355.75" width="89.44" height="70" rx="12" fill="#ffffff" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="639.11" y="2377.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">1</text>
+  <rect x="53" y="2431.75" width="89.42" height="70" rx="12" fill="#ffffff" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="66.55" y="2453.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">2</text>
+  <rect x="148.42" y="2431.75" width="89.42" height="70" rx="12" fill="#ffffff" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="161.97" y="2453.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">3</text>
+  <rect x="243.84" y="2431.75" width="89.44" height="70" rx="12" fill="#ffffff" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="257.39" y="2453.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">4</text>
+  <rect x="339.28" y="2431.75" width="89.42" height="70" rx="12" fill="#ffffff" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="352.83" y="2453.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">5</text>
+  <rect x="434.7" y="2431.75" width="89.44" height="70" rx="12" fill="#ffffff" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="448.25" y="2453.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">6</text>
+  <rect x="530.14" y="2431.75" width="89.42" height="70" rx="12" fill="#ffffff" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="543.69" y="2453.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">7</text>
+  <rect x="625.56" y="2431.75" width="89.44" height="70" rx="12" fill="#ffffff" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="639.11" y="2453.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">8</text>
+  <rect x="53" y="2507.75" width="89.42" height="70" rx="12" fill="#ffffff" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="66.55" y="2529.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">9</text>
+  <rect x="148.42" y="2507.75" width="89.42" height="70" rx="12" fill="#ffffff" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="158.52" y="2529.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">10</text>
+  <rect x="243.84" y="2507.75" width="89.44" height="70" rx="12" fill="#ffffff" fill-opacity="0.4" stroke="#50a2ff" stroke-width="1"/>
+  <rect x="250.84" y="2514.75" width="20" height="20" rx="10" fill="#155dfc"/>
+  <text x="253.94" y="2529.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="start">11</text>
+  <rect x="339.28" y="2507.75" width="89.42" height="70" rx="12" fill="#ffffff" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="349.38" y="2529.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">12</text>
+  <rect x="434.7" y="2507.75" width="89.44" height="70" rx="12" fill="#ffffff" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="444.8" y="2529.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">13</text>
+  <rect x="530.14" y="2507.75" width="89.42" height="70" rx="12" fill="#ffffff" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="540.23" y="2529.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">14</text>
+  <rect x="599.72" y="2517.25" width="12.84" height="15" rx="4" fill="#f1f5f9"/>
+  <text x="603.72" y="2528.17" font-family="-apple-system, Inter, sans-serif" font-size="10" font-weight="700" fill="#314158" text-anchor="start">1</text>
+  <rect x="537.14" y="2551.25" width="75.42" height="17.5" rx="4" fill="#f1f5f9"/>
+  <rect x="541.14" y="2557" width="6" height="6" rx="3" fill="#ad46ff"/>
+  <text x="551.14" y="2562.61" font-family="-apple-system, Inter, sans-serif" font-size="9" font-weight="700" fill="#314158" text-anchor="start">Operativo de fiscalización vehicular</text>
+  <text x="551.14" y="2562.61" font-family="-apple-system, Inter, sans-serif" font-size="9" font-weight="700" fill="#314158" text-anchor="start">Operativo de fiscalización vehicular</text>
+  <rect x="625.56" y="2507.75" width="89.44" height="70" rx="12" fill="#ffffff" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="635.66" y="2529.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">15</text>
+  <rect x="53" y="2583.75" width="89.42" height="70" rx="12" fill="#ffffff" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="63.09" y="2605.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">16</text>
+  <rect x="122.58" y="2593.25" width="12.84" height="15" rx="4" fill="#f1f5f9"/>
+  <text x="126.58" y="2604.17" font-family="-apple-system, Inter, sans-serif" font-size="10" font-weight="700" fill="#314158" text-anchor="start">1</text>
+  <rect x="60" y="2627.25" width="75.42" height="17.5" rx="4" fill="#f1f5f9"/>
+  <rect x="64" y="2633" width="6" height="6" rx="3" fill="#615fff"/>
+  <text x="74" y="2638.61" font-family="-apple-system, Inter, sans-serif" font-size="9" font-weight="700" fill="#314158" text-anchor="start">Reunión de Junta Directiva</text>
+  <text x="74" y="2638.61" font-family="-apple-system, Inter, sans-serif" font-size="9" font-weight="700" fill="#314158" text-anchor="start">Reunión de Junta Directiva</text>
+  <rect x="148.42" y="2583.75" width="89.42" height="70" rx="12" fill="#ffffff" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="158.52" y="2605.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">17</text>
+  <rect x="243.84" y="2583.75" width="89.44" height="70" rx="12" fill="#ffffff" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="253.94" y="2605.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">18</text>
+  <rect x="339.28" y="2583.75" width="89.42" height="70" rx="12" fill="#ffffff" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="349.38" y="2605.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">19</text>
+  <rect x="434.7" y="2583.75" width="89.44" height="70" rx="12" fill="#ffffff" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="444.8" y="2605.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">20</text>
+  <rect x="530.14" y="2583.75" width="89.42" height="70" rx="12" fill="#ffffff" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="540.23" y="2605.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">21</text>
+  <rect x="625.56" y="2583.75" width="89.44" height="70" rx="12" fill="#ffffff" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="635.66" y="2605.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">22</text>
+  <rect x="53" y="2659.75" width="89.42" height="70" rx="12" fill="#ffffff" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="63.09" y="2681.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">23</text>
+  <rect x="122.58" y="2669.25" width="12.84" height="15" rx="4" fill="#f1f5f9"/>
+  <text x="126.58" y="2680.17" font-family="-apple-system, Inter, sans-serif" font-size="10" font-weight="700" fill="#314158" text-anchor="start">1</text>
+  <rect x="60" y="2703.25" width="75.42" height="17.5" rx="4" fill="#f1f5f9"/>
+  <rect x="64" y="2709" width="6" height="6" rx="3" fill="#ff2056"/>
+  <text x="74" y="2714.61" font-family="-apple-system, Inter, sans-serif" font-size="9" font-weight="700" fill="#314158" text-anchor="start">Magna Asamblea General Ordinaria</text>
+  <text x="74" y="2714.61" font-family="-apple-system, Inter, sans-serif" font-size="9" font-weight="700" fill="#314158" text-anchor="start">Magna Asamblea General Ordinaria</text>
+  <rect x="148.42" y="2659.75" width="89.42" height="70" rx="12" fill="#ffffff" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="158.52" y="2681.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">24</text>
+  <rect x="243.84" y="2659.75" width="89.44" height="70" rx="12" fill="#ffffff" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="253.94" y="2681.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">25</text>
+  <rect x="339.28" y="2659.75" width="89.42" height="70" rx="12" fill="#ffffff" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="349.38" y="2681.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">26</text>
+  <rect x="434.7" y="2659.75" width="89.44" height="70" rx="12" fill="#ffffff" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="444.8" y="2681.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">27</text>
+  <rect x="530.14" y="2659.75" width="89.42" height="70" rx="12" fill="#ffffff" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="540.23" y="2681.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">28</text>
+  <rect x="625.56" y="2659.75" width="89.44" height="70" rx="12" fill="#ffffff" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="635.66" y="2681.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">29</text>
+  <rect x="53" y="2735.75" width="89.42" height="70" rx="12" fill="#ffffff" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="63.09" y="2757.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">30</text>
+  <rect x="148.42" y="2735.75" width="89.42" height="70" rx="12" fill="#ffffff" fill-opacity="0.3"/>
+  <text x="161.97" y="2757.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#90a1b9" text-anchor="start">1</text>
+  <rect x="243.84" y="2735.75" width="89.44" height="70" rx="12" fill="#ffffff" fill-opacity="0.3"/>
+  <text x="257.39" y="2757.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#90a1b9" text-anchor="start">2</text>
+  <rect x="313.44" y="2745.25" width="12.84" height="15" rx="4" fill="#f1f5f9"/>
+  <text x="317.44" y="2756.17" font-family="-apple-system, Inter, sans-serif" font-size="10" font-weight="700" fill="#314158" text-anchor="start">1</text>
+  <rect x="250.84" y="2779.25" width="75.44" height="17.5" rx="4" fill="#f1f5f9"/>
+  <rect x="254.84" y="2785" width="6" height="6" rx="3" fill="#00bc7d"/>
+  <text x="264.84" y="2790.61" font-family="-apple-system, Inter, sans-serif" font-size="9" font-weight="700" fill="#314158" text-anchor="start">Capacitación: Manejo Defensivo</text>
+  <text x="264.84" y="2790.61" font-family="-apple-system, Inter, sans-serif" font-size="9" font-weight="700" fill="#314158" text-anchor="start">Capacitación: Manejo Defensivo</text>
+  <rect x="339.28" y="2735.75" width="89.42" height="70" rx="12" fill="#ffffff" fill-opacity="0.3"/>
+  <text x="352.83" y="2757.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#90a1b9" text-anchor="start">3</text>
+  <rect x="434.7" y="2735.75" width="89.44" height="70" rx="12" fill="#ffffff" fill-opacity="0.3"/>
+  <text x="448.25" y="2757.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#90a1b9" text-anchor="start">4</text>
+  <rect x="530.14" y="2735.75" width="89.42" height="70" rx="12" fill="#ffffff" fill-opacity="0.3"/>
+  <text x="543.69" y="2757.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#90a1b9" text-anchor="start">5</text>
+  <rect x="625.56" y="2735.75" width="89.44" height="70" rx="12" fill="#ffffff" fill-opacity="0.3"/>
+  <text x="639.11" y="2757.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#90a1b9" text-anchor="start">6</text>
+  <rect x="33" y="2825.75" width="702" height="289.5" fill="#ffffff" fill-opacity="0.6" stroke="#f1f5f9" stroke-width="1"/>
+  <g transform="translate(53 2847.75) scale(0.58)" stroke="oklch(0.511 0.262 276.966)" fill="none"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path><path d="m9 16 2 2 4-4"></path></g>
+  <text x="73" y="2859.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#314158" text-anchor="start">EVENTOS DE NOVIEMBRE 2026</text>
+  <rect x="276.67" y="2848.08" width="22.11" height="13.33" rx="6.66" fill="#e2e8f0"/>
+  <text x="284.67" y="2857.44" font-family="ui-monospace, Inter, sans-serif" font-size="10" font-weight="700" fill="#314158" text-anchor="start">3</text>
+  <rect x="53" y="2874.75" width="323" height="114.25" rx="16" fill="#faf5ff" stroke="#e9d4ff" stroke-width="1"/>
+  <rect x="68" y="2889.75" width="74.58" height="19" rx="6" fill="#9810fa"/>
+  <text x="76" y="2902.67" font-family="-apple-system, Inter, sans-serif" font-size="10" font-weight="700" fill="#ffffff" text-anchor="start">OPERATIVO</text>
+  <rect x="150.58" y="2889.75" width="57.47" height="19" rx="6" fill="#155dfc"/>
+  <text x="158.58" y="2902.67" font-family="-apple-system, Inter, sans-serif" font-size="10" font-weight="700" fill="#ffffff" text-anchor="start">En 3 días</text>
+  <text x="68" y="2927.57" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="700" fill="#0f172b" text-anchor="start">Operativo de fiscalización vehicular</text>
+  <text x="84" y="2950.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#45556c" text-anchor="start">08:00 hrs</text>
+  <g transform="translate(68 2940) scale(0.5)" stroke="oklch(0.585 0.233 277.117)" fill="none"><path d="M12 6v6l4 2"></path><circle cx="12" cy="12" r="10"></circle></g>
+  <g transform="translate(68 2960) scale(0.5)" stroke="oklch(0.585 0.233 277.117)" fill="none"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></g>
+  <text x="84" y="2970.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Puesto de control - Av. Los Ollivos</text>
+  <rect x="329" y="2915.88" width="32" height="32" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <g transform="translate(338 2924.88) scale(0.58)" stroke="oklch(0.446 0.043 257.281)" fill="none"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></g>
+  <rect x="388" y="2874.75" width="323" height="114.25" rx="16" fill="#eef2ff" stroke="#c6d2ff" stroke-width="1"/>
+  <rect x="403" y="2889.75" width="63.13" height="19" rx="6" fill="#4f39f6"/>
+  <text x="411" y="2902.67" font-family="-apple-system, Inter, sans-serif" font-size="10" font-weight="700" fill="#ffffff" text-anchor="start">REUNION</text>
+  <rect x="474.13" y="2889.75" width="57.47" height="19" rx="6" fill="#155dfc"/>
+  <text x="482.13" y="2902.67" font-family="-apple-system, Inter, sans-serif" font-size="10" font-weight="700" fill="#ffffff" text-anchor="start">En 5 días</text>
+  <text x="403" y="2927.57" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="700" fill="#0f172b" text-anchor="start">Reunión de Junta Directiva</text>
+  <text x="419" y="2950.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#45556c" text-anchor="start">17:30 hrs</text>
+  <g transform="translate(403 2940) scale(0.5)" stroke="oklch(0.585 0.233 277.117)" fill="none"><path d="M12 6v6l4 2"></path><circle cx="12" cy="12" r="10"></circle></g>
+  <g transform="translate(478.47 2940) scale(0.5)" stroke="oklch(0.585 0.233 277.117)" fill="none"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></g>
+  <text x="494.47" y="2950.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Sala de Offices</text>
+  <rect x="664" y="2905.88" width="32" height="32" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <g transform="translate(673 2914.88) scale(0.58)" stroke="oklch(0.446 0.043 257.281)" fill="none"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></g>
+  <rect x="53" y="3001" width="323" height="94.25" rx="16" fill="#fff1f2" stroke="#ffccd3" stroke-width="1"/>
+  <rect x="68" y="3016" width="71.94" height="19" rx="6" fill="#ec003f"/>
+  <text x="76" y="3028.92" font-family="-apple-system, Inter, sans-serif" font-size="10" font-weight="700" fill="#ffffff" text-anchor="start">ASAMBLEA</text>
+  <rect x="147.94" y="3016" width="63.22" height="19" rx="6" fill="#155dfc"/>
+  <text x="155.94" y="3028.92" font-family="-apple-system, Inter, sans-serif" font-size="10" font-weight="700" fill="#ffffff" text-anchor="start">En 12 días</text>
+  <text x="68" y="3053.82" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="700" fill="#0f172b" text-anchor="start">Magna Asamblea General Ordinaria</text>
+  <text x="84" y="3076.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#45556c" text-anchor="start">18:00 hrs</text>
+  <g transform="translate(68 3066.25) scale(0.5)" stroke="oklch(0.585 0.233 277.117)" fill="none"><path d="M12 6v6l4 2"></path><circle cx="12" cy="12" r="10"></circle></g>
+  <g transform="translate(143.69 3066.25) scale(0.5)" stroke="oklch(0.585 0.233 277.117)" fill="none"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></g>
+  <text x="159.69" y="3076.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Auditorio Principal ACTEM</text>
+  <rect x="329" y="3032.13" width="32" height="32" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <g transform="translate(338 3041.13) scale(0.58)" stroke="oklch(0.446 0.043 257.281)" fill="none"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></g>
+  <rect x="768" y="2044" width="336" height="216.5" rx="24" fill="none" stroke="#bedbff" stroke-width="1"/>
+  <rect x="793" y="2069" width="40" height="40" rx="12" fill="#155dfc"/>
+  <g transform="translate(803 2079) scale(0.83)" stroke="rgb(255, 255, 255)" fill="none"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></g>
+  <text x="843" y="2085.57" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="700" fill="#0f172b" text-anchor="start">Control Preventivo de Flota</text>
+  <text x="843" y="2102.45" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="600" fill="#155dfc" text-anchor="start">Fiscalización y formalización</text>
+  <text x="793" y="2138.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Consulte el estado de vencimiento de sus pólizas de SOAT/AFOCAT, Revisiones Técnicas y Curso Vial para evitar suspensiones operativas.</text>
+  <text x="793" y="2157.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Consulte el estado de vencimiento de sus pólizas de SOAT/AFOCAT, Revisiones Técnicas y Curso Vial para evitar suspensiones operativas.</text>
+  <text x="793" y="2177.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Consulte el estado de vencimiento de sus pólizas de SOAT/AFOCAT, Revisiones Técnicas y Curso Vial para evitar suspensiones operativas.</text>
+  <rect x="793" y="2199.5" width="286" height="36" rx="12" fill="#155dfc"/>
+  <g transform="translate(848.25 2210) scale(0.63)" stroke="rgb(255, 255, 255)" fill="none"><path d="M16 14v2.2l1.6 1"></path><path d="M16 2v4"></path><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"></path><path d="M3 10h5"></path><path d="M8 2v4"></path><circle cx="16" cy="16" r="6"></circle></g>
+  <text x="947.49" y="2221.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">Ver Alertas de Vencimiento</text>
+  <rect x="768" y="2284.5" width="336" height="491.5" rx="24" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <g transform="translate(793 2310.75) scale(0.58)" stroke="oklch(0.511 0.262 276.966)" fill="none"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></g>
+  <text x="815" y="2322.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">PRÓXIMAS CONVOCATORIAS</text>
+  <text x="1021.94" y="2321.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="700" fill="#90a1b9" text-anchor="start">5</text>
+  <text x="1028.27" y="2321.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="700" fill="#90a1b9" text-anchor="start">próximas</text>
+  <rect x="793" y="2355" width="286" height="90" rx="16" fill="#ffffff" fill-opacity="0.5" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="806" y="2380.92" font-family="-apple-system, Inter, sans-serif" font-size="10" font-weight="700" fill="#4f39f6" text-anchor="start">OPERATIVO</text>
+  <rect x="1008.53" y="2368" width="57.47" height="19" rx="6" fill="#155dfc"/>
+  <text x="1016.53" y="2380.92" font-family="-apple-system, Inter, sans-serif" font-size="10" font-weight="700" fill="#ffffff" text-anchor="start">En 3 días</text>
+  <text x="806" y="2405.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#0f172b" text-anchor="start">Operativo de fiscalización vehicular</text>
+  <g transform="translate(806 2418.25) scale(0.46)" stroke="oklch(0.554 0.046 257.417)" fill="none"><path d="M12 6v6l4 2"></path><circle cx="12" cy="12" r="10"></circle></g>
+  <text x="823" y="2427.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#62748e" text-anchor="start">2026-11-14</text>
+  <text x="885.25" y="2427.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#62748e" text-anchor="start">•</text>
+  <text x="892.73" y="2427.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#62748e" text-anchor="start">08:00</text>
+  <rect x="793" y="2457" width="286" height="90" rx="16" fill="#ffffff" fill-opacity="0.5" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="806" y="2482.92" font-family="-apple-system, Inter, sans-serif" font-size="10" font-weight="700" fill="#4f39f6" text-anchor="start">REUNION</text>
+  <rect x="1008.53" y="2470" width="57.47" height="19" rx="6" fill="#155dfc"/>
+  <text x="1016.53" y="2482.92" font-family="-apple-system, Inter, sans-serif" font-size="10" font-weight="700" fill="#ffffff" text-anchor="start">En 5 días</text>
+  <text x="806" y="2507.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#0f172b" text-anchor="start">Reunión de Junta Directiva</text>
+  <g transform="translate(806 2520.25) scale(0.46)" stroke="oklch(0.554 0.046 257.417)" fill="none"><path d="M12 6v6l4 2"></path><circle cx="12" cy="12" r="10"></circle></g>
+  <text x="823" y="2529.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#62748e" text-anchor="start">2026-11-16</text>
+  <text x="885.25" y="2529.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#62748e" text-anchor="start">•</text>
+  <text x="892.73" y="2529.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#62748e" text-anchor="start">17:30</text>
+  <rect x="793" y="2559" width="286" height="90" rx="16" fill="#ffffff" fill-opacity="0.5" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="806" y="2584.92" font-family="-apple-system, Inter, sans-serif" font-size="10" font-weight="700" fill="#4f39f6" text-anchor="start">ASAMBLEA</text>
+  <rect x="1002.78" y="2572" width="63.22" height="19" rx="6" fill="#155dfc"/>
+  <text x="1010.78" y="2584.92" font-family="-apple-system, Inter, sans-serif" font-size="10" font-weight="700" fill="#ffffff" text-anchor="start">En 12 días</text>
+  <text x="806" y="2609.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#0f172b" text-anchor="start">Magna Asamblea General Ordinaria</text>
+  <g transform="translate(806 2622.25) scale(0.46)" stroke="oklch(0.554 0.046 257.417)" fill="none"><path d="M12 6v6l4 2"></path><circle cx="12" cy="12" r="10"></circle></g>
+  <text x="823" y="2631.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#62748e" text-anchor="start">2026-11-23</text>
+  <text x="885.25" y="2631.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#62748e" text-anchor="start">•</text>
+  <text x="892.73" y="2631.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#62748e" text-anchor="start">18:00</text>
+  <rect x="793" y="2661" width="286" height="90" rx="16" fill="#ffffff" fill-opacity="0.5" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="806" y="2686.92" font-family="-apple-system, Inter, sans-serif" font-size="10" font-weight="700" fill="#4f39f6" text-anchor="start">CAPACITACION</text>
+  <rect x="1002.78" y="2674" width="63.22" height="19" rx="6" fill="#155dfc"/>
+  <text x="1010.78" y="2686.92" font-family="-apple-system, Inter, sans-serif" font-size="10" font-weight="700" fill="#ffffff" text-anchor="start">En 21 días</text>
+  <text x="806" y="2711.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#0f172b" text-anchor="start">Capacitación: Manejo Defensivo</text>
+  <g transform="translate(806 2724.25) scale(0.46)" stroke="oklch(0.554 0.046 257.417)" fill="none"><path d="M12 6v6l4 2"></path><circle cx="12" cy="12" r="10"></circle></g>
+  <text x="823" y="2733.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#62748e" text-anchor="start">2026-12-02</text>
+  <text x="885.25" y="2733.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#62748e" text-anchor="start">•</text>
+  <text x="892.73" y="2733.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#62748e" text-anchor="start">09:00</text>
+</svg>

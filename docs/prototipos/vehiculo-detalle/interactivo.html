@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Interactivo · Ficha de Vehículo · Padrón Vehicular</title>
+<link rel="stylesheet" href="../assets/app.css" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #020617;
+    color: #e2e8f0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- Barra de control ---------- */
+  .ctl {
+    position: sticky; top: 0; z-index: 60;
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    padding: 10px 16px;
+    background: rgba(2,6,23,.94);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #1e293b;
+  }
+  .ctl-title { display: flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 700; color: #fff; }
+  .ctl-title .dot { width: 9px; height: 9px; border-radius: 50%; background: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,.2); }
+  .ctl-group { display: flex; align-items: center; gap: 7px; }
+  .ctl-label { font-size: 9.5px; text-transform: uppercase; letter-spacing: .9px; color: #64748b; font-weight: 700; }
+  .seg { display: inline-flex; background: #0f172a; border: 1px solid #334155; border-radius: 10px; padding: 2px; gap: 2px; }
+  .seg button {
+    appearance: none; border: 0; background: transparent; color: #94a3b8;
+    font: inherit; font-size: 11px; font-weight: 600;
+    padding: 5px 10px; border-radius: 8px; cursor: pointer; transition: background .14s, color .14s;
+    white-space: nowrap;
+  }
+  .seg button:hover { color: #f1f5f9; }
+  .seg button[aria-pressed="true"] { background: #2563eb; color: #fff; }
+  .ctl-spacer { flex: 1; }
+  .ctl select {
+    background: #0f172a; color: #e2e8f0; border: 1px solid #334155;
+    border-radius: 10px; padding: 6px 10px; font: inherit; font-size: 11.5px; font-weight: 600; cursor: pointer;
+  }
+
+  /* ---------- Layout ---------- */
+  .layout { display: grid; grid-template-columns: minmax(0,1fr) 290px; align-items: start; }
+  @media (max-width: 1080px) { .layout { grid-template-columns: 1fr; } .side { border-left: 0 !important; border-top: 1px solid #1e293b; } }
+
+  .stage { padding: 22px; overflow: auto; }
+  .frame-wrap {
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #334155;
+    box-shadow: 0 30px 80px -20px rgba(0,0,0,.75);
+    overflow: hidden;
+    transition: width .25s ease, max-width .25s ease;
+  }
+  body.dark .frame-wrap { background: #0f172a; }
+  .frame-wrap.movil { width: 390px; max-width: 100%; }
+  .frame-inner { height: 860px; overflow: hidden; position: relative; }
+  .frame-inner > * { height: 100%; }
+
+  /* Botón de vuelta al índice */
+  .ctl-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #0f172a; border: 1px solid #334155; color: #e2e8f0;
+    font: inherit; font-size: 11px; font-weight: 600;
+    padding: 6px 12px; border-radius: 10px; cursor: pointer; text-decoration: none;
+  }
+  .ctl-back:hover { border-color: #3b82f6; color: #fff; }
+
+  /* ---------- Panel lateral ---------- */
+  .side {
+    position: sticky; top: 52px; max-height: calc(100vh - 52px); overflow-y: auto;
+    border-left: 1px solid #1e293b; background: #020617; padding: 20px 18px 48px;
+  }
+  .side h2 { margin: 0 0 3px; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; font-weight: 700; }
+  .side .sub { margin: 0 0 18px; font-size: 11.5px; color: #64748b; }
+  .side section { margin-bottom: 22px; }
+  .side h3 { margin: 0 0 9px; font-size: 10.5px; font-weight: 700; color: #cbd5e1; display: flex; align-items: center; gap: 7px; }
+  .side h3::after { content: ""; flex: 1; height: 1px; background: #1e293b; }
+  .side table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  .side td { padding: 5px 0; vertical-align: top; color: #94a3b8; }
+  .side td:first-child { color: #cbd5e1; font-weight: 600; width: 44%; }
+  .pill { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 9px; border-radius: 999px;
+    background: rgba(37,99,235,.15); color: #60a5fa; border: 1px solid rgba(37,99,235,.3); }
+  .mod-list { list-style: none; margin: 0; padding: 0; }
+  .mod-list a {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 9px; border-radius: 8px; text-decoration: none;
+    color: #94a3b8; font-size: 11.5px; font-weight: 600; transition: background .14s, color .14s;
+  }
+  .mod-list a:hover { background: #1e293b; color: #fff; }
+  .mod-list a.active { background: #2563eb; color: #fff; }
+  .mod-list .g { font-size: 9px; text-transform: uppercase; letter-spacing: .5px; color: #475569; }
+  .mod-list a.active .g { color: rgba(255,255,255,.7); }
+  .mod-list .dot { width: 5px; height: 5px; border-radius: 50%; background: #334155; flex: none; }
+  .mod-list a.active .dot { background: #fff; }
+  .hint { font-size: 11px; line-height: 16px; color: #64748b; }
+  .hint code { font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: #60a5fa; background: rgba(37,99,235,.1); padding: 1px 5px; border-radius: 4px; }
+</style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+
+<div class="ctl">
+  <div class="ctl-title"><span class="dot"></span>Ficha de Vehículo</div>
+  <span class="pill">Operaciones</span>
+
+  <div class="ctl-group">
+    <span class="ctl-label">Tema</span>
+    <div class="seg" id="segTema">
+      <button data-tema="light" aria-pressed="true">Claro</button>
+      <button data-tema="dark" aria-pressed="false">Oscuro</button>
+    </div>
+  </div>
+
+  <div class="ctl-group">
+    <span class="ctl-label">Vista</span>
+    <div class="seg" id="segVista">
+      <button data-vista="desktop" aria-pressed="true">Escritorio</button>
+      <button data-vista="movil" aria-pressed="false">Móvil</button>
+    </div>
+  </div>
+
+  <div class="ctl-spacer"></div>
+
+  <div class="ctl-group">
+    <span class="ctl-label">Ir a</span>
+    <select id="selModulo">
+      <option value="../login/interactivo.html">Inicio de sesión</option>
+      <option value="../portal-inicio/interactivo.html">Portal de Inicio y Cartelera</option>
+      <option value="../dashboard/interactivo.html">Dashboard Operativo &amp; Flota</option>
+      <option value="../padron/interactivo.html">Padrón Vehicular</option>
+      <option value="../nuevo/interactivo.html">Registrar Nueva Unidad</option>
+      <option value="../vehiculo-detalle/interactivo.html" selected>Ficha de Vehículo</option>
+      <option value="../vehiculo-editar/interactivo.html">Editar Vehículo</option>
+      <option value="../personas/interactivo.html">Directorio de Personas</option>
+      <option value="../curso-vial/interactivo.html">Conductores &amp; Curso Vial</option>
+      <option value="../directorio-contacto/interactivo.html">Directorio WhatsApp por Roles</option>
+      <option value="../vencimientos/interactivo.html">Alertas de Vencimiento</option>
+      <option value="../importar-exportar/interactivo.html">Importar / Exportar</option>
+      <option value="../operario-portal/interactivo.html">Portal del Operario</option>
+      <option value="../historial/interactivo.html">Historial de Auditoría</option>
+      <option value="../usuarios/interactivo.html">Cuentas y Accesos</option>
+      <option value="../configuracion/interactivo.html">Configuración &amp; Empresa</option>
+      <option value="../gestion-portal/interactivo.html">Gestión de Cartelera &amp; Portal</option>
+      <option value="../backup-migracion/interactivo.html">Backup &amp; Migración Multi-BD</option>
+    </select>
+  </div>
+  <a class="ctl-back" href="../index.html">← Índice</a>
+</div>
+
+<div class="layout">
+  <div class="stage">
+    <div class="frame-wrap" id="frameWrap">
+      <div class="frame-inner"><main class="h-full overflow-y-auto px-3.5 pt-3.5 pb-28 sm:px-6 sm:pt-6 sm:pb-32 lg:px-8 lg:pt-8 lg:pb-8 max-w-full"><div class="mx-auto max-w-7xl w-full min-w-0"><div class="mx-auto max-w-7xl w-full min-w-0"><div class="space-y-6"><div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"><button class="flex min-h-[44px] items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-colors shadow-xs self-start"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left" aria-hidden="true"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg><span>Volver al Padrón</span></button><div class="flex flex-wrap items-center gap-2"><button class="flex min-h-[44px] items-center gap-2 rounded-xl border border-blue-200 bg-blue-50 px-3.5 py-2 text-xs font-semibold text-blue-700 hover:bg-blue-100 transition-colors shadow-xs"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left-right" aria-hidden="true"><path d="M8 3 4 7l4 4"></path><path d="M4 7h16"></path><path d="m16 21 4-4-4-4"></path><path d="M20 17H4"></path></svg><span>Reasignar / Intercambiar Padrón</span></button><button class="flex min-h-[44px] items-center gap-2 rounded-xl border border-amber-200 bg-amber-50 px-3.5 py-2 text-xs font-semibold text-amber-700 hover:bg-amber-100 transition-colors shadow-xs"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-octagon-alert" aria-hidden="true"><path d="M12 16h.01"></path><path d="M12 8v4"></path><path d="M15.312 2a2 2 0 0 1 1.414.586l4.688 4.688A2 2 0 0 1 22 8.688v6.624a2 2 0 0 1-.586 1.414l-4.688 4.688a2 2 0 0 1-1.414.586H8.688a2 2 0 0 1-1.414-.586l-4.688-4.688A2 2 0 0 1 2 15.312V8.688a2 2 0 0 1 .586-1.414l4.688-4.688A2 2 0 0 1 8.688 2z"></path></svg><span>Baja Lógica / Retirar</span></button><button class="flex min-h-[44px] items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-700 transition-colors shadow-xs"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen" aria-hidden="true"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg><span>Editar Unidad</span></button><button class="flex min-h-[44px] items-center gap-2 rounded-xl border border-rose-200 bg-rose-50 px-3.5 py-2 text-xs font-semibold text-rose-700 hover:bg-rose-100 transition-colors" title="Eliminación física definitiva"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2 lucide-trash-2" aria-hidden="true"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg><span>Eliminar</span></button></div></div><div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs"><div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"><div class="flex items-center gap-4"><div class="flex h-14 w-14 items-center justify-center rounded-2xl text-white shadow-md bg-blue-600"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-car" aria-hidden="true"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><path d="M9 17h6"></path><circle cx="17" cy="17" r="2"></circle></svg></div><div><div class="flex flex-wrap items-center gap-2.5"><h1 class="text-2xl font-bold text-slate-900 dark:text-slate-950 tracking-tight">Padrón PAD-024</h1><span class="rounded-lg bg-slate-100 px-3 py-1 font-mono text-sm font-bold tracking-wider text-slate-800">PQR-1693</span><span class="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-800">ACTIVO EN FLOTA</span><button type="button" class="inline-flex items-center gap-1.5 rounded-full border border-blue-200 dark:border-blue-800 bg-blue-50/90 dark:bg-blue-950/70 px-3 py-1 text-xs font-bold text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900 transition-colors shadow-2xs cursor-pointer" title="Ver trazado de ruta y paraderos autorizados en mapa interactivo"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin text-blue-600 dark:text-blue-400" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg><span>R-01: Ruta Troncal Central</span><span class="text-[10px] text-blue-500 font-semibold underline ml-0.5">Ver Mapa →</span></button></div><p class="mt-1 text-xs text-slate-500 sm:text-sm">Honda • Año: 2025 • N.° Motor: 12012491 • ID Interno Permanente #24</p></div></div><div class="shrink-0 flex flex-col items-start sm:items-end gap-1.5"><span class="text-xs font-medium text-slate-400">Estado Documentario:</span><span class="inline-flex items-center rounded-md border shadow-xs whitespace-nowrap transition-colors text-sm sm:text-base px-3 py-1.5 gap-2 font-medium bg-emerald-50 text-emerald-800 border-emerald-300 ring-1 ring-emerald-300/40"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check shrink-0" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg><span>Documentación al Día</span></span></div></div></div><div class="flex border-b border-slate-200 dark:border-slate-800 text-xs font-semibold overflow-x-auto"><button class="flex items-center gap-2 border-b-2 px-4 py-3 whitespace-nowrap transition-colors border-blue-600 font-bold text-blue-600 dark:text-blue-400"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-check" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="m9 15 2 2 4-4"></path></svg><span>Documentación &amp; Personas</span></button><button class="flex items-center gap-2 border-b-2 px-4 py-3 whitespace-nowrap transition-colors border-transparent text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg><span>Ruta Asignada &amp; Mapa (R-01)</span></button><button class="flex items-center gap-2 border-b-2 px-4 py-3 whitespace-nowrap transition-colors border-transparent text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left-right" aria-hidden="true"><path d="M8 3 4 7l4 4"></path><path d="M4 7h16"></path><path d="m16 21 4-4-4-4"></path><path d="M20 17H4"></path></svg><span>Historial de Padrón (0)</span></button><button class="flex items-center gap-2 border-b-2 px-4 py-3 whitespace-nowrap transition-colors border-transparent text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg><span>Historial Propietarios (1)</span></button><button class="flex items-center gap-2 border-b-2 px-4 py-3 whitespace-nowrap transition-colors border-transparent text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-check" aria-hidden="true"><path d="m16 11 2 2 4-4"></path><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg><span>Historial Conductores (1)</span></button><button class="flex items-center gap-2 border-b-2 px-4 py-3 whitespace-nowrap transition-colors border-transparent text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-history" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M12 7v5l4 2"></path></svg><span>Bitácora de Auditoría (1)</span></button></div><div class="grid grid-cols-1 gap-6 lg:grid-cols-2"><div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs"><div class="flex items-center gap-2.5 pb-3 border-b border-slate-100"><div class="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-50 text-blue-600"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg></div><h3 class="text-sm font-bold text-slate-900">Propietario(s) Actual(es)</h3></div><div class="mt-4 flex flex-col sm:flex-row items-start gap-4"><div class="relative inline-flex shrink-0 items-center justify-center rounded-full overflow-hidden border-2 border-white dark:border-slate-800 shadow-2xs cursor-pointer hover:ring-2 hover:ring-blue-400 transition-all h-20 w-20 text-xl " title="Ana Lucía Fernández Torres · DNI: 410000413 (Clic para ver ficha)"><img alt="Ana Lucía Fernández Torres" class="h-full w-full object-cover" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2248%22%20fill%3D%22%23f8fafc%22%20stroke%3D%22%232563eb%22%20stroke-width%3D%223%22%2F%3E%0A%20%20%20%20%3C!--%20Cuerpo%20y%20Ropa%20--%3E%0A%20%20%20%20%3Cpath%20d%3D%22M20%2092%20C25%2068%2C%2075%2068%2C%2080%2092%20Z%22%20fill%3D%22%232563eb%22%2F%3E%0A%20%20%20%20%3C!--%20Cuello%20--%3E%0A%20%20%20%20%3Crect%20x%3D%2244%22%20y%3D%2255%22%20width%3D%2212%22%20height%3D%2215%22%20rx%3D%223%22%20fill%3D%22%23ffdbac%22%2F%3E%0A%20%20%20%20%3C!--%20Cabeza%20--%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2250%22%20cy%3D%2240%22%20r%3D%2220%22%20fill%3D%22%23ffdbac%22%2F%3E%0A%20%20%20%20%3C!--%20Cabello%20--%3E%0A%20%20%20%20%3Cpath%20d%3D%22M30%2040%20Q50%2016%2070%2040%20Q50%2024%2030%2040%20Z%22%20fill%3D%22%23334155%22%2F%3E%0A%20%20%20%20%3C!--%20Ojos%20--%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2243%22%20cy%3D%2239%22%20r%3D%222%22%20fill%3D%22%230f172a%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2257%22%20cy%3D%2239%22%20r%3D%222%22%20fill%3D%22%230f172a%22%2F%3E%0A%20%20%20%20%3C!--%20Sonrisa%20%2F%20Boca%20--%3E%0A%20%20%20%20%3Cpath%20d%3D%22M44%2047%20Q50%2051%2056%2047%22%20stroke%3D%22%239a3412%22%20stroke-width%3D%221.8%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%2F%3E%0A%20%20%20%20%3C!--%20Gorra%20o%20Distintivo%20conductor%20--%3E%0A%20%20%20%20%3Crect%20x%3D%2234%22%20y%3D%2224%22%20width%3D%2232%22%20height%3D%226%22%20rx%3D%222%22%20fill%3D%22%23334155%22%2F%3E%0A%20%20%3C%2Fsvg%3E"><div class="absolute inset-0 flex items-center justify-center font-bold bg-blue-600 text-white -z-10">AL</div><span class="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full ring-2 ring-white dark:ring-slate-900 bg-emerald-500"></span></div><dl class="flex-1 space-y-2.5 text-xs w-full"><div><dt class="text-slate-400 font-medium">Nombre Completo</dt><dd class="mt-0.5 text-sm font-bold text-slate-900">Ana Lucía Fernández Torres</dd></div><div class="grid grid-cols-2 gap-3"><div><dt class="text-slate-400 font-medium">DNI</dt><dd class="mt-0.5 font-mono font-semibold text-slate-800">410000413</dd></div><div><dt class="text-slate-400 font-medium">Celular</dt><dd class="mt-0.5 text-slate-800">910012633</dd></div></div><div><dt class="text-slate-400 font-medium">Domicilio</dt><dd class="mt-0.5 text-slate-800">Calle Fernández 121, San Juan de Lurigancho</dd></div></dl></div></div><div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs"><div class="flex items-center gap-2.5 pb-3 border-b border-slate-100"><div class="flex h-8 w-8 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-check" aria-hidden="true"><path d="m16 11 2 2 4-4"></path><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg></div><h3 class="text-sm font-bold text-slate-900">Conductor Activo Asignado</h3></div><div class="mt-4 flex flex-col sm:flex-row items-start gap-4"><div class="relative inline-flex shrink-0 items-center justify-center rounded-full overflow-hidden border-2 border-white dark:border-slate-800 shadow-2xs cursor-pointer hover:ring-2 hover:ring-blue-400 transition-all h-20 w-20 text-xl " title="Ana Lucía Fernández Torres · DNI: 410000413 (Clic para ver ficha)"><img alt="Ana Lucía Fernández Torres" class="h-full w-full object-cover" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2248%22%20fill%3D%22%23f8fafc%22%20stroke%3D%22%232563eb%22%20stroke-width%3D%223%22%2F%3E%0A%20%20%20%20%3C!--%20Cuerpo%20y%20Ropa%20--%3E%0A%20%20%20%20%3Cpath%20d%3D%22M20%2092%20C25%2068%2C%2075%2068%2C%2080%2092%20Z%22%20fill%3D%22%232563eb%22%2F%3E%0A%20%20%20%20%3C!--%20Cuello%20--%3E%0A%20%20%20%20%3Crect%20x%3D%2244%22%20y%3D%2255%22%20width%3D%2212%22%20height%3D%2215%22%20rx%3D%223%22%20fill%3D%22%23ffdbac%22%2F%3E%0A%20%20%20%20%3C!--%20Cabeza%20--%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2250%22%20cy%3D%2240%22%20r%3D%2220%22%20fill%3D%22%23ffdbac%22%2F%3E%0A%20%20%20%20%3C!--%20Cabello%20--%3E%0A%20%20%20%20%3Cpath%20d%3D%22M30%2040%20Q50%2016%2070%2040%20Q50%2024%2030%2040%20Z%22%20fill%3D%22%23334155%22%2F%3E%0A%20%20%20%20%3C!--%20Ojos%20--%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2243%22%20cy%3D%2239%22%20r%3D%222%22%20fill%3D%22%230f172a%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2257%22%20cy%3D%2239%22%20r%3D%222%22%20fill%3D%22%230f172a%22%2F%3E%0A%20%20%20%20%3C!--%20Sonrisa%20%2F%20Boca%20--%3E%0A%20%20%20%20%3Cpath%20d%3D%22M44%2047%20Q50%2051%2056%2047%22%20stroke%3D%22%239a3412%22%20stroke-width%3D%221.8%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%2F%3E%0A%20%20%20%20%3C!--%20Gorra%20o%20Distintivo%20conductor%20--%3E%0A%20%20%20%20%3Crect%20x%3D%2234%22%20y%3D%2224%22%20width%3D%2232%22%20height%3D%226%22%20rx%3D%222%22%20fill%3D%22%23334155%22%2F%3E%0A%20%20%3C%2Fsvg%3E"><div class="absolute inset-0 flex items-center justify-center font-bold bg-blue-600 text-white -z-10">AL</div><span class="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full ring-2 ring-white dark:ring-slate-900 bg-emerald-500"></span></div><dl class="flex-1 space-y-2.5 text-xs w-full"><div><dt class="text-slate-400 font-medium">Nombre Completo</dt><dd class="mt-0.5 text-sm font-bold text-slate-900">Ana Lucía Fernández Torres</dd></div><div class="grid grid-cols-2 gap-3"><div><dt class="text-slate-400 font-medium">DNI</dt><dd class="mt-0.5 font-mono font-semibold text-slate-800">410000413</dd></div><div><dt class="text-slate-400 font-medium">Celular</dt><dd class="mt-0.5 text-slate-800">910012633</dd></div></div><div><dt class="text-slate-400 font-medium">Domicilio</dt><dd class="mt-0.5 text-slate-800">Calle Fernández 121, San Juan de Lurigancho</dd></div></dl></div></div><div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs"><div class="flex items-center justify-between pb-3 border-b border-slate-100"><div class="flex items-center gap-2.5"><div class="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-50 text-blue-600"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg></div><h3 class="text-sm font-bold text-slate-900">Seguro AFOCAT / SOAT</h3></div><span class="inline-flex items-center rounded-md border shadow-xs whitespace-nowrap transition-colors text-xs px-2 py-0.5 gap-1 bg-emerald-50 text-emerald-800 border-emerald-300 ring-1 ring-emerald-300/40"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check shrink-0" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg><span>Vigente (200 días)</span></span></div><dl class="mt-4 grid grid-cols-2 gap-3 text-xs"><div class="col-span-2"><dt class="text-slate-400 font-medium">Entidad Aseguradora</dt><dd class="mt-0.5 font-semibold text-slate-800">SOAT Rimac</dd></div><div class="col-span-2"><dt class="text-slate-400 font-medium">N.° Póliza / Certificado</dt><dd class="mt-0.5 font-mono text-slate-800">AF-2025023</dd></div><div><dt class="text-slate-400 font-medium">Fecha Emisión</dt><dd class="mt-0.5 text-slate-700">2026-07-14</dd></div><div><dt class="text-slate-400 font-medium">Fecha Vencimiento</dt><dd class="mt-0.5 font-bold text-slate-900">2027-05-30</dd></div></dl></div><div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs"><div class="flex items-center justify-between pb-3 border-b border-slate-100"><div class="flex items-center gap-2.5"><div class="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-check" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="m9 15 2 2 4-4"></path></svg></div><h3 class="text-sm font-bold text-slate-900">Revisión Técnica (CITV)</h3></div><span class="inline-flex items-center rounded-md border shadow-xs whitespace-nowrap transition-colors text-xs px-2 py-0.5 gap-1 bg-emerald-50 text-emerald-800 border-emerald-300 ring-1 ring-emerald-300/40"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check shrink-0" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg><span>Vigente (200 días)</span></span></div><dl class="mt-4 grid grid-cols-2 gap-3 text-xs"><div class="col-span-2"><dt class="text-slate-400 font-medium">Centro CITV</dt><dd class="mt-0.5 font-semibold text-slate-800">Inspectorio Autorizado San Juan</dd></div><div class="col-span-2"><dt class="text-slate-400 font-medium">N.° Certificado CITV</dt><dd class="mt-0.5 font-mono text-slate-800">CITV-202624</dd></div><div><dt class="text-slate-400 font-medium">Fecha Emisión</dt><dd class="mt-0.5 text-slate-700">2026-07-14</dd></div><div><dt class="text-slate-400 font-medium">Fecha Vencimiento</dt><dd class="mt-0.5 font-bold text-slate-900">2027-05-30</dd></div></dl></div><div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs"><div class="flex items-center justify-between pb-3 border-b border-slate-100"><div class="flex items-center gap-2.5"><div class="flex h-8 w-8 items-center justify-center rounded-xl bg-purple-50 text-purple-600"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-graduation-cap" aria-hidden="true"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"></path><path d="M22 10v6"></path><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"></path></svg></div><h3 class="text-sm font-bold text-slate-900">Curso de Educación Vial</h3></div><span class="inline-flex items-center rounded-md border shadow-xs whitespace-nowrap transition-colors text-xs px-2 py-0.5 gap-1 bg-emerald-50 text-emerald-800 border-emerald-300 ring-1 ring-emerald-300/40"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check shrink-0" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg><span>Vigente (200 días)</span></span></div><dl class="mt-4 grid grid-cols-2 gap-3 text-xs"><div class="col-span-2"><dt class="text-slate-400 font-medium">N.° Certificado</dt><dd class="mt-0.5 font-mono text-slate-800">CSV-2026-1024</dd></div><div><dt class="text-slate-400 font-medium">Fecha Emisión</dt><dd class="mt-0.5 text-slate-700">2026-07-14</dd></div><div><dt class="text-slate-400 font-medium">Fecha Vencimiento</dt><dd class="mt-0.5 font-bold text-slate-900">2027-05-30</dd></div></dl></div><div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs"><div class="flex items-center justify-between pb-3 border-b border-slate-100"><div class="flex items-center gap-2.5"><div class="flex h-8 w-8 items-center justify-center rounded-xl bg-teal-50 text-teal-600"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="2"></rect><line x1="2" x2="22" y1="10" y2="10"></line></svg></div><h3 class="text-sm font-bold text-slate-900">Licencia B-II-C</h3></div><span class="inline-flex items-center rounded-md border shadow-xs whitespace-nowrap transition-colors text-xs px-2 py-0.5 gap-1 bg-emerald-50 text-emerald-800 border-emerald-300 ring-1 ring-emerald-300/40"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check shrink-0" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg><span>Vigente (200 días)</span></span></div><dl class="mt-4 grid grid-cols-2 gap-3 text-xs"><div><dt class="text-slate-400 font-medium">Municipalidad / Origen</dt><dd class="mt-0.5 font-semibold text-slate-800">Municipalidad de San Juan de Lurigancho</dd></div><div><dt class="text-slate-400 font-medium">N.° Licencia</dt><dd class="mt-0.5 font-mono text-slate-800">L-24-BIII</dd></div><div><dt class="text-slate-400 font-medium">Fecha Emisión</dt><dd class="mt-0.5 text-slate-700">2026-07-14</dd></div><div><dt class="text-slate-400 font-medium">Fecha Vencimiento</dt><dd class="mt-0.5 font-bold text-slate-900">2027-05-30</dd></div></dl></div></div></div><div class="h-20 lg:hidden w-full shrink-0 pointer-events-none" aria-hidden="true"></div></div></div></main></div>
+    </div>
+  </div>
+
+  <aside class="side">
+    <h2>Ficha del módulo</h2>
+    <p class="sub">Detalle de una unidad: propietario, conductor, documentos e historial.</p>
+
+    <section>
+      <h3>Acceso</h3>
+      <table>
+        <tr><td>Categoría</td><td>Operaciones</td></tr>
+        <tr><td>Roles con acceso</td><td>Todos</td></tr>
+        <tr><td>Módulo en el menú</td><td>Padrón Vehicular</td></tr>
+        <tr><td>Vista</td><td>Tab del sidebar</td></tr>
+      </table>
+    </section>
+
+    <section>
+      <h3>Interacciones</h3>
+      <p class="hint">
+        Usa <code>Tab</code> para recorrer los controles, <code>Enter</code> para activar.
+        El prototipo refleja la UI real: los botones que en el sistema disparan
+        acciones siguen siendo inertes aquí.
+      </p>
+    </section>
+
+    <section>
+      <h3>Archivos</h3>
+      <table>
+        <tr><td>Captura estática</td><td><a href="prototipo.html" style="color:#60a5fa">prototipo.html</a></td></tr>
+        <tr><td>Vector Figma</td><td><a href="prototipo.svg" style="color:#60a5fa">prototipo.svg</a></td></tr>
+        <tr><td>Imagen</td><td><a href="captura.webp" style="color:#60a5fa">captura.webp</a></td></tr>
+      </table>
+    </section>
+
+    <section>
+      <h3>Todos los módulos</h3>
+      <ul class="mod-list">
+          <li><a href="../login/interactivo.html" class=""><span class="dot"></span><span>Inicio de sesión</span></a></li>
+          <li><a href="../portal-inicio/interactivo.html" class=""><span class="dot"></span><span>Portal de Inicio y Cartelera</span></a></li>
+          <li><a href="../dashboard/interactivo.html" class=""><span class="dot"></span><span>Dashboard Operativo &amp; Flota</span></a></li>
+          <li><a href="../padron/interactivo.html" class=""><span class="dot"></span><span>Padrón Vehicular</span></a></li>
+          <li><a href="../nuevo/interactivo.html" class=""><span class="dot"></span><span>Registrar Nueva Unidad</span></a></li>
+          <li><a href="../vehiculo-detalle/interactivo.html" class="active"><span class="dot"></span><span>Ficha de Vehículo</span></a></li>
+          <li><a href="../vehiculo-editar/interactivo.html" class=""><span class="dot"></span><span>Editar Vehículo</span></a></li>
+          <li><a href="../personas/interactivo.html" class=""><span class="dot"></span><span>Directorio de Personas</span></a></li>
+          <li><a href="../curso-vial/interactivo.html" class=""><span class="dot"></span><span>Conductores &amp; Curso Vial</span></a></li>
+          <li><a href="../directorio-contacto/interactivo.html" class=""><span class="dot"></span><span>Directorio WhatsApp por Roles</span></a></li>
+          <li><a href="../vencimientos/interactivo.html" class=""><span class="dot"></span><span>Alertas de Vencimiento</span></a></li>
+          <li><a href="../importar-exportar/interactivo.html" class=""><span class="dot"></span><span>Importar / Exportar</span></a></li>
+          <li><a href="../operario-portal/interactivo.html" class=""><span class="dot"></span><span>Portal del Operario</span></a></li>
+          <li><a href="../historial/interactivo.html" class=""><span class="dot"></span><span>Historial de Auditoría</span></a></li>
+          <li><a href="../usuarios/interactivo.html" class=""><span class="dot"></span><span>Cuentas y Accesos</span></a></li>
+          <li><a href="../configuracion/interactivo.html" class=""><span class="dot"></span><span>Configuración &amp; Empresa</span></a></li>
+          <li><a href="../gestion-portal/interactivo.html" class=""><span class="dot"></span><span>Gestión de Cartelera &amp; Portal</span></a></li>
+          <li><a href="../backup-migracion/interactivo.html" class=""><span class="dot"></span><span>Backup &amp; Migración Multi-BD</span></a></li>
+      </ul>
+    </section>
+  </aside>
+</div>
+
+<script>
+  // Tema
+  const segTema = document.getElementById('segTema');
+  segTema.querySelectorAll('button').forEach(b => {
+    b.onclick = () => {
+      segTema.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', 'false'));
+      b.setAttribute('aria-pressed', 'true');
+      const oscuro = b.dataset.tema === 'dark';
+      document.documentElement.classList.toggle('dark', oscuro);
+      document.body.classList.toggle('dark', oscuro);
+    };
+  });
+
+  // Vista
+  const wrap = document.getElementById('frameWrap');
+  const segVista = document.getElementById('segVista');
+  segVista.querySelectorAll('button').forEach(b => {
+    b.onclick = () => {
+      segVista.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', 'false'));
+      b.setAttribute('aria-pressed', 'true');
+      wrap.classList.toggle('movil', b.dataset.vista === 'movil');
+    };
+  });
+
+  // Navegación
+  document.getElementById('selModulo').onchange = (e) => { location.href = e.target.value; };
+</script>
+</body>
+</html>

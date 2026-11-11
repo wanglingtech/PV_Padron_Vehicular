@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Prototipo dashboard — Padrón Vehicular
+  Vector editable generado desde el DOM real del módulo.
+  Importable en Figma por drag & drop: formas vectoriales y texto editable.
+  Regenerar: npm run prototipos:svg
+-->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1136" height="741" viewBox="0 0 1136 741">
+  <title>Prototipo dashboard — Padrón Vehicular</title>
+  <text x="32" y="56.96" font-family="-apple-system, Inter, sans-serif" font-size="24" font-weight="700" fill="#0f172b" text-anchor="start">Panel de Control del Padrón</text>
+  <text x="32" y="78.82" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="400" fill="#62748e" text-anchor="start">Monitoreo en tiempo real de unidades asociadas, vigencias documentales y estado operativo</text>
+  <rect x="968.75" y="38" width="135.25" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <g transform="translate(981.75 51) scale(0.58)" stroke="oklch(0.446 0.043 257.281)" fill="none"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></g>
+  <text x="1047.38" y="62.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#45556c" text-anchor="middle">Actualizar datos</text>
+  <rect x="32" y="108" width="168.66" height="130.5" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="49" y="145.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#62748e" text-anchor="start">Vehículos</text>
+  <rect x="151.66" y="125" width="32" height="32" rx="8" fill="#eef2ff"/>
+  <g transform="translate(158.66 132) scale(0.75)" stroke="oklch(0.511 0.262 276.966)" fill="none"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><path d="M9 17h6"></path><circle cx="17" cy="17" r="2"></circle></g>
+  <text x="49" y="193.96" font-family="-apple-system, Inter, sans-serif" font-size="24" font-weight="700" fill="#0f172b" text-anchor="start">24</text>
+  <text x="49" y="216.7" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="500" fill="#4f39f6" text-anchor="start">Ver padrón completo</text>
+  <g transform="translate(158.47 207.25) scale(0.5)" stroke="oklch(0.511 0.262 276.966)" fill="none"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></g>
+  <rect x="212.66" y="108" width="168.67" height="130.5" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="229.66" y="145.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#62748e" text-anchor="start">Propietarios</text>
+  <rect x="332.33" y="125" width="32" height="32" rx="8" fill="#eff6ff"/>
+  <g transform="translate(339.33 132) scale(0.75)" stroke="oklch(0.546 0.245 262.881)" fill="none"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></g>
+  <text x="229.66" y="193.96" font-family="-apple-system, Inter, sans-serif" font-size="24" font-weight="700" fill="#0f172b" text-anchor="start">20</text>
+  <text x="229.66" y="216.7" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#90a1b9" text-anchor="start">Titulares y co-propietarios</text>
+  <rect x="393.33" y="108" width="168.67" height="130.5" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="410.33" y="145.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#62748e" text-anchor="start">Conductores</text>
+  <rect x="513" y="125" width="32" height="32" rx="8" fill="#ecfdf5"/>
+  <g transform="translate(520 132) scale(0.75)" stroke="oklch(0.596 0.145 163.225)" fill="none"><path d="m16 11 2 2 4-4"></path><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></g>
+  <text x="410.33" y="193.96" font-family="-apple-system, Inter, sans-serif" font-size="24" font-weight="700" fill="#0f172b" text-anchor="start">15</text>
+  <text x="410.33" y="216.7" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#90a1b9" text-anchor="start">Pilotos habilitados</text>
+  <rect x="574" y="108" width="168.66" height="130.5" rx="12" fill="#ffffff" fill-opacity="0.5" stroke="#ffa1ad" stroke-width="1"/>
+  <text x="591" y="145.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#45556c" text-anchor="start">Vencidos</text>
+  <rect x="693.66" y="125" width="32" height="32" rx="8" fill="#ffe4e6"/>
+  <g transform="translate(700.66 132) scale(0.75)" stroke="oklch(0.586 0.253 17.585)" fill="none"><path d="M12 16h.01"></path><path d="M12 8v4"></path><path d="M15.312 2a2 2 0 0 1 1.414.586l4.688 4.688A2 2 0 0 1 22 8.688v6.624a2 2 0 0 1-.586 1.414l-4.688 4.688a2 2 0 0 1-1.414.586H8.688a2 2 0 0 1-1.414-.586l-4.688-4.688A2 2 0 0 1 2 15.312V8.688a2 2 0 0 1 .586-1.414l4.688-4.688A2 2 0 0 1 8.688 2z"></path></g>
+  <text x="591" y="193.96" font-family="-apple-system, Inter, sans-serif" font-size="24" font-weight="700" fill="#c70036" text-anchor="start">16</text>
+  <text x="591" y="216.7" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="600" fill="#c70036" text-anchor="start">Requieren atención</text>
+  <g transform="translate(691.38 207.25) scale(0.5)" stroke="oklch(0.514 0.222 16.935)" fill="none"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></g>
+  <rect x="754.66" y="108" width="168.67" height="130.5" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="771.66" y="145.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#62748e" text-anchor="start">Por Vencer</text>
+  <rect x="874.33" y="125" width="32" height="32" rx="8" fill="#fffbeb"/>
+  <g transform="translate(881.33 132) scale(0.75)" stroke="oklch(0.666 0.179 58.318)" fill="none"><path d="M12 6v6l4 2"></path><circle cx="12" cy="12" r="10"></circle></g>
+  <text x="771.66" y="193.96" font-family="-apple-system, Inter, sans-serif" font-size="24" font-weight="700" fill="#e17100" text-anchor="start">16</text>
+  <text x="771.66" y="216.7" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="500" fill="#bb4d00" text-anchor="start">Próximos 30 días</text>
+  <rect x="935.33" y="108" width="168.67" height="130.5" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="952.33" y="145.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#62748e" text-anchor="start">Revisión</text>
+  <rect x="1055" y="125" width="32" height="32" rx="8" fill="#faf5ff"/>
+  <g transform="translate(1062 132) scale(0.75)" stroke="oklch(0.558 0.288 302.321)" fill="none"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></g>
+  <text x="952.33" y="193.96" font-family="-apple-system, Inter, sans-serif" font-size="24" font-weight="700" fill="#8200db" text-anchor="start">2</text>
+  <text x="952.33" y="216.7" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#9810fa" text-anchor="start">Datos históricos a validar</text>
+  <text x="36" y="277.32" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="700" fill="#1d293d" text-anchor="start">MÉTRICAS CLAVE &amp; ANÁLISIS GRÁFICO</text>
+  <text x="36" y="294.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Diagnóstico visual de operatividad de flota, riesgos de conductores y mantenimiento preventivo</text>
+  <rect x="32" y="310.5" width="346.66" height="406.5" rx="16" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="53" y="337.75" width="35.63" height="36" rx="12" fill="#d0fae5"/>
+  <g transform="translate(61.31 346.25) scale(0.79)" stroke="oklch(0.508 0.118 165.612)" fill="none"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><path d="M9 17h6"></path><circle cx="17" cy="17" r="2"></circle></g>
+  <text x="98.63" y="343.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#0f172b" text-anchor="start">VEHÍCULOS ACTIVOS EN FLOTA</text>
+  <text x="98.63" y="359.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#0f172b" text-anchor="start">VEHÍCULOS ACTIVOS EN FLOTA</text>
+  <text x="98.63" y="375.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#90a1b9" text-anchor="start">Operatividad del padrón vehicular</text>
+  <rect x="265.78" y="337.25" width="91.88" height="37" rx="18.5" fill="#ecfdf5"/>
+  <text x="273.78" y="350.95" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="700" fill="#007a55" text-anchor="start">88</text>
+  <text x="286.44" y="350.95" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="700" fill="#007a55" text-anchor="start">% Operativo</text>
+  <text x="273.78" y="367.45" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="700" fill="#007a55" text-anchor="start">% Operativo</text>
+  <text x="53" y="438.2" font-family="-apple-system, Inter, sans-serif" font-size="30" font-weight="700" fill="#0f172b" text-anchor="start">21</text>
+  <text x="89.98" y="438.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#62748e" text-anchor="start">de</text>
+  <text x="106.89" y="438.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#62748e" text-anchor="start">24</text>
+  <text x="120.47" y="438.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#62748e" text-anchor="start">unidades registradas</text>
+  <rect x="96.09" y="617.25" width="8" height="8" rx="4" fill="#00bc7d"/>
+  <text x="110.09" y="624.7" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#45556c" text-anchor="start">Activos (</text>
+  <text x="151.39" y="624.7" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#45556c" text-anchor="start">21</text>
+  <text x="163.25" y="624.7" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#45556c" text-anchor="start">)</text>
+  <rect x="178.58" y="617.25" width="8" height="8" rx="4" fill="#fe9a00"/>
+  <text x="192.58" y="624.7" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#45556c" text-anchor="start">Revisión (</text>
+  <text x="238.86" y="624.7" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#45556c" text-anchor="start">2</text>
+  <text x="244.8" y="624.7" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#45556c" text-anchor="start">)</text>
+  <rect x="260.13" y="617.25" width="8" height="8" rx="4" fill="#90a1b9"/>
+  <text x="274.13" y="624.7" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#45556c" text-anchor="start">Bajas (</text>
+  <text x="305.3" y="624.7" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#45556c" text-anchor="start">3</text>
+  <text x="311.23" y="624.7" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#45556c" text-anchor="start">)</text>
+  <rect x="53" y="662" width="304.66" height="34" rx="12" fill="#f8fafc" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="134.78" y="683.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#006045" text-anchor="middle">Ver listado de flota activa</text>
+  <g transform="translate(331.66 672.5) scale(0.54)" stroke="oklch(0.432 0.095 166.913)" fill="none"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></g>
+  <rect x="394.66" y="310.5" width="346.67" height="406.5" rx="16" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="415.66" y="331.5" width="36" height="36" rx="12" fill="#ffe4e6"/>
+  <g transform="translate(424.16 340) scale(0.79)" stroke="oklch(0.514 0.222 16.935)" fill="none"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></g>
+  <text x="461.66" y="345.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#0f172b" text-anchor="start">CONDUCTORES EN RIESGO</text>
+  <text x="461.66" y="360.95" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#90a1b9" text-anchor="start">Licencias, AFOCAT y curso vial</text>
+  <rect x="642.63" y="339.25" width="77.7" height="20.5" rx="10.25" fill="#fff1f2"/>
+  <text x="650.63" y="352.95" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="700" fill="#c70036" text-anchor="start">16</text>
+  <text x="663.28" y="352.95" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="700" fill="#c70036" text-anchor="start">Vencidos</text>
+  <text x="415.66" y="425.7" font-family="-apple-system, Inter, sans-serif" font-size="30" font-weight="700" fill="#c70036" text-anchor="start">15</text>
+  <text x="452.64" y="425.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#62748e" text-anchor="start">conductores con alertas críticas</text>
+  <rect x="446.81" y="604.75" width="8" height="8" rx="4" fill="#ff2056"/>
+  <text x="460.81" y="612.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#45556c" text-anchor="start">Vencido (Infracción)</text>
+  <rect x="572.77" y="604.75" width="8" height="8" rx="4" fill="#fe9a00"/>
+  <text x="586.77" y="612.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#45556c" text-anchor="start">Por vencer (≤30 días)</text>
+  <rect x="415.66" y="662" width="304.67" height="34" rx="12" fill="#f8fafc" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="499.76" y="683.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#a50036" text-anchor="middle">Ver documentos en riesgo</text>
+  <g transform="translate(694.33 672.5) scale(0.54)" stroke="oklch(0.455 0.188 13.697)" fill="none"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></g>
+  <rect x="757.33" y="310.5" width="346.66" height="406.5" rx="16" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="778.33" y="346" width="33.05" height="36" rx="12" fill="#dbeafe"/>
+  <g transform="translate(785.34 354.5) scale(0.79)" stroke="oklch(0.488 0.243 264.376)" fill="none"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"></path></g>
+  <text x="821.38" y="343.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#0f172b" text-anchor="start">MANTENIMIENTO PREVENTIVO</text>
+  <text x="821.38" y="359.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#0f172b" text-anchor="start">MANTENIMIENTO PREVENTIVO</text>
+  <text x="821.38" y="375.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#90a1b9" text-anchor="start">Revisión técnica CITV y chequeos</text>
+  <text x="821.38" y="391.7" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#90a1b9" text-anchor="start">Revisión técnica CITV y chequeos</text>
+  <rect x="979.72" y="345.5" width="103.27" height="37" rx="18.5" fill="#eff6ff"/>
+  <text x="987.72" y="359.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="700" fill="#1447e6" text-anchor="start">CITV &amp; Inspección</text>
+  <text x="987.72" y="375.7" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="700" fill="#1447e6" text-anchor="start">CITV &amp; Inspección</text>
+  <text x="778.33" y="454.7" font-family="-apple-system, Inter, sans-serif" font-size="30" font-weight="700" fill="#1447e6" text-anchor="start">17</text>
+  <text x="815.31" y="454.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#62748e" text-anchor="start">unidades programadas (60 días)</text>
+  <rect x="844.2" y="633.75" width="8" height="8" rx="4" fill="#155dfc"/>
+  <text x="858.2" y="641.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#45556c" text-anchor="start">Inspección Semestral/Anual MTC</text>
+  <rect x="778.33" y="662" width="304.66" height="34" rx="12" fill="#f8fafc" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="879.55" y="683.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#193cb8" text-anchor="middle">Ver cronograma de inspecciones</text>
+  <g transform="translate(1056.98 672.5) scale(0.54)" stroke="oklch(0.424 0.199 265.638)" fill="none"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></g>
+  <rect x="32" y="741" width="349.33" height="70" rx="12" fill="#ffffff" fill-opacity="0.7" stroke="#c6d2ff" stroke-width="1"/>
+  <rect x="47" y="756" width="40" height="40" rx="8" fill="#4f39f6"/>
+  <g transform="translate(57 766) scale(0.83)" stroke="rgb(255, 255, 255)" fill="none"><circle cx="12" cy="12" r="10"></circle><path d="M8 12h8"></path><path d="M12 8v8"></path></g>
+  <text x="101" y="772.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1e1a4d" text-anchor="start">Nuevo Registro de Vehículo</text>
+  <text x="101" y="787.45" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#432dd7" text-anchor="start">Formulario completo con validaciones</text>
+  <rect x="393.33" y="741" width="349.33" height="70" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="408.33" y="756" width="40" height="40" rx="8" fill="#009966"/>
+  <g transform="translate(418.33 766) scale(0.83)" stroke="rgb(255, 255, 255)" fill="none"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M8 13h2"></path><path d="M14 13h2"></path><path d="M8 17h2"></path><path d="M14 17h2"></path></g>
+  <text x="462.33" y="772.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#0f172b" text-anchor="start">Importar / Exportar Excel</text>
+  <text x="462.33" y="787.45" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#62748e" text-anchor="start">Migración masiva y copias de seguridad</text>
+  <rect x="754.66" y="741" width="349.34" height="70" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="769.66" y="756" width="40" height="40" rx="8" fill="#e17100"/>
+  <g transform="translate(779.66 766) scale(0.83)" stroke="rgb(255, 255, 255)" fill="none"><path d="M16 14v2.2l1.6 1"></path><path d="M16 2v4"></path><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"></path><path d="M3 10h5"></path><path d="M8 2v4"></path><circle cx="16" cy="16" r="6"></circle></g>
+  <text x="823.66" y="772.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#0f172b" text-anchor="start">Centro de Vencimientos</text>
+  <text x="823.66" y="787.45" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#62748e" text-anchor="start">Filtro por 7, 15, 30 y 60 días</text>
+  <rect x="32" y="835" width="524" height="486" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <g transform="translate(53 857) scale(0.75)" stroke="oklch(0.666 0.179 58.318)" fill="none"><path d="M12 6v6l4 2"></path><circle cx="12" cy="12" r="10"></circle></g>
+  <text x="79" y="870.82" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="700" fill="#0f172b" text-anchor="start">Alertas de Documentación Urgente (</text>
+  <text x="319.34" y="870.82" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="700" fill="#0f172b" text-anchor="start">15</text>
+  <text x="335.45" y="870.82" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="700" fill="#0f172b" text-anchor="start">)</text>
+  <text x="509.42" y="870.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#4f39f6" text-anchor="middle">Ver todas</text>
+  <rect x="61" y="922.5" width="36" height="36" rx="8" fill="#ffe4e6"/>
+  <g transform="translate(70 931.5) scale(0.75)" stroke="oklch(0.586 0.253 17.585)" fill="none"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></g>
+  <text x="109" y="928.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#0f172b" text-anchor="start">PAD-019</text>
+  <rect x="166.52" y="913" width="62.39" height="22.5" rx="4" fill="#f1f5f9"/>
+  <text x="173.52" y="927.14" font-family="ui-monospace, Inter, sans-serif" font-size="11" font-weight="600" fill="#314158" text-anchor="start">ABC-1548</text>
+  <text x="109" y="947.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#1d293d" text-anchor="start">SOAT Pacifico</text>
+  <text x="109" y="963.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#62748e" text-anchor="start">Vence:</text>
+  <text x="143.34" y="963.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#62748e" text-anchor="start">2026-10-12</text>
+  <rect x="457.89" y="929.5" width="69.11" height="24" rx="6" fill="#ffe4e6"/>
+  <text x="519" y="945.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#a50036" text-anchor="end">VENCIDO</text>
+  <rect x="61" y="1002.5" width="36" height="36" rx="8" fill="#ffe4e6"/>
+  <g transform="translate(70 1011.5) scale(0.75)" stroke="oklch(0.586 0.253 17.585)" fill="none"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="m9 15 2 2 4-4"></path></g>
+  <text x="109" y="1008.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#0f172b" text-anchor="start">PAD-019</text>
+  <rect x="166.52" y="993" width="62.39" height="22.5" rx="4" fill="#f1f5f9"/>
+  <text x="173.52" y="1007.14" font-family="ui-monospace, Inter, sans-serif" font-size="11" font-weight="600" fill="#314158" text-anchor="start">ABC-1548</text>
+  <text x="109" y="1027.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#1d293d" text-anchor="start">Inspectorio Autorizado San Juan</text>
+  <text x="109" y="1043.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#62748e" text-anchor="start">Vence:</text>
+  <text x="143.34" y="1043.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#62748e" text-anchor="start">2026-10-12</text>
+  <rect x="457.89" y="1009.5" width="69.11" height="24" rx="6" fill="#ffe4e6"/>
+  <text x="519" y="1025.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#a50036" text-anchor="end">VENCIDO</text>
+  <rect x="61" y="1082.5" width="36" height="36" rx="8" fill="#ffe4e6"/>
+  <g transform="translate(70 1091.5) scale(0.75)" stroke="oklch(0.586 0.253 17.585)" fill="none"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"></path><path d="M22 10v6"></path><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"></path></g>
+  <text x="109" y="1088.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#0f172b" text-anchor="start">PAD-019</text>
+  <rect x="166.52" y="1073" width="62.39" height="22.5" rx="4" fill="#f1f5f9"/>
+  <text x="173.52" y="1087.14" font-family="ui-monospace, Inter, sans-serif" font-size="11" font-weight="600" fill="#314158" text-anchor="start">ABC-1548</text>
+  <text x="109" y="1107.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#1d293d" text-anchor="start">Curso Educación Vial</text>
+  <text x="109" y="1123.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#62748e" text-anchor="start">Vence:</text>
+  <text x="143.34" y="1123.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#62748e" text-anchor="start">2026-10-12</text>
+  <rect x="457.89" y="1089.5" width="69.11" height="24" rx="6" fill="#ffe4e6"/>
+  <text x="519" y="1105.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#a50036" text-anchor="end">VENCIDO</text>
+  <rect x="61" y="1162.5" width="36" height="36" rx="8" fill="#ffe4e6"/>
+  <g transform="translate(70 1171.5) scale(0.75)" stroke="oklch(0.586 0.253 17.585)" fill="none"><rect width="20" height="14" x="2" y="5" rx="2"></rect><line x1="2" x2="22" y1="10" y2="10"></line></g>
+  <text x="109" y="1168.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#0f172b" text-anchor="start">PAD-019</text>
+  <rect x="166.52" y="1153" width="62.39" height="22.5" rx="4" fill="#f1f5f9"/>
+  <text x="173.52" y="1167.14" font-family="ui-monospace, Inter, sans-serif" font-size="11" font-weight="600" fill="#314158" text-anchor="start">ABC-1548</text>
+  <text x="109" y="1187.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#1d293d" text-anchor="start">Lic. L-19-BII</text>
+  <text x="109" y="1203.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#62748e" text-anchor="start">Vence:</text>
+  <text x="143.34" y="1203.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#62748e" text-anchor="start">2026-10-12</text>
+  <rect x="457.89" y="1169.5" width="69.11" height="24" rx="6" fill="#ffe4e6"/>
+  <text x="519" y="1185.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#a50036" text-anchor="end">VENCIDO</text>
+  <rect x="61" y="1242.5" width="36" height="36" rx="8" fill="#ffe4e6"/>
+  <g transform="translate(70 1251.5) scale(0.75)" stroke="oklch(0.586 0.253 17.585)" fill="none"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></g>
+  <text x="109" y="1248.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#0f172b" text-anchor="start">PAD-013</text>
+  <rect x="166.52" y="1233" width="62.39" height="22.5" rx="4" fill="#f1f5f9"/>
+  <text x="173.52" y="1247.14" font-family="ui-monospace, Inter, sans-serif" font-size="11" font-weight="600" fill="#314158" text-anchor="start">ABC-1362</text>
+  <text x="109" y="1267.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#1d293d" text-anchor="start">SOAT Pacifico</text>
+  <text x="109" y="1283.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#62748e" text-anchor="start">Vence:</text>
+  <text x="143.34" y="1283.2" font-family="-apple-system, Inter, sans-serif" font-size="11" font-weight="400" fill="#62748e" text-anchor="start">2026-10-12</text>
+  <rect x="457.89" y="1249.5" width="69.11" height="24" rx="6" fill="#ffe4e6"/>
+  <text x="519" y="1265.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#a50036" text-anchor="end">VENCIDO</text>
+  <rect x="580" y="835" width="524" height="486" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <g transform="translate(601 857) scale(0.75)" stroke="oklch(0.511 0.262 276.966)" fill="none"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><path d="M9 17h6"></path><circle cx="17" cy="17" r="2"></circle></g>
+  <text x="627" y="870.82" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="700" fill="#0f172b" text-anchor="start">Unidades en Padrón</text>
+  <text x="1025.48" y="870.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#4f39f6" text-anchor="middle">Ver padrón completo</text>
+  <rect x="609" y="914.25" width="76" height="36" rx="8" fill="#f1f5f9"/>
+  <text x="623.3" y="936.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">PAD-024</text>
+  <rect x="697" y="913" width="62.39" height="22.5" rx="4" fill="#f1f5f9"/>
+  <text x="704" y="927.14" font-family="ui-monospace, Inter, sans-serif" font-size="11" font-weight="600" fill="#314158" text-anchor="start">PQR-1693</text>
+  <text x="767.39" y="928.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#45556c" text-anchor="start">Honda</text>
+  <text x="697" y="947.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#314158" text-anchor="start">Prop:</text>
+  <text x="727.88" y="947.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#314158" text-anchor="start">Ana Lucía Fernández Torres</text>
+  <rect x="923.36" y="920.75" width="151.64" height="22" rx="6" fill="#ecfdf5" stroke="#5ee9b5" stroke-width="1"/>
+  <g transform="translate(932.36 925.25) scale(0.54)" stroke="oklch(0.432 0.095 166.913)" fill="none"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></g>
+  <text x="949.36" y="936.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#006045" text-anchor="start">Documentación al Día</text>
+  <rect x="609" y="977.75" width="76" height="36" rx="8" fill="#f1f5f9"/>
+  <text x="623.3" y="1000.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">PAD-023</text>
+  <rect x="697" y="976.5" width="62.39" height="22.5" rx="4" fill="#f1f5f9"/>
+  <text x="704" y="990.64" font-family="ui-monospace, Inter, sans-serif" font-size="11" font-weight="600" fill="#314158" text-anchor="start">MNO-1662</text>
+  <text x="767.39" y="992.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#45556c" text-anchor="start">Harley-Davidson</text>
+  <text x="697" y="1011.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#314158" text-anchor="start">Prop:</text>
+  <text x="727.88" y="1011.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#314158" text-anchor="start">Pedro Antonio Salazar Ramírez</text>
+  <rect x="923.36" y="984.25" width="151.64" height="22" rx="6" fill="#ecfdf5" stroke="#5ee9b5" stroke-width="1"/>
+  <g transform="translate(932.36 988.75) scale(0.54)" stroke="oklch(0.432 0.095 166.913)" fill="none"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></g>
+  <text x="949.36" y="999.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#006045" text-anchor="start">Documentación al Día</text>
+  <rect x="609" y="1041.25" width="76" height="36" rx="8" fill="#f1f5f9"/>
+  <text x="623.3" y="1063.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">PAD-022</text>
+  <rect x="697" y="1040" width="62.39" height="22.5" rx="4" fill="#f1f5f9"/>
+  <text x="704" y="1054.14" font-family="ui-monospace, Inter, sans-serif" font-size="11" font-weight="600" fill="#314158" text-anchor="start">JKL-1631</text>
+  <text x="767.39" y="1055.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#45556c" text-anchor="start">BMW</text>
+  <text x="697" y="1074.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#314158" text-anchor="start">Prop:</text>
+  <text x="727.88" y="1074.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#314158" text-anchor="start">María Elena Rojas Vargas</text>
+  <rect x="923.36" y="1047.75" width="151.64" height="22" rx="6" fill="#ecfdf5" stroke="#5ee9b5" stroke-width="1"/>
+  <g transform="translate(932.36 1052.25) scale(0.54)" stroke="oklch(0.432 0.095 166.913)" fill="none"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></g>
+  <text x="949.36" y="1063.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#006045" text-anchor="start">Documentación al Día</text>
+  <rect x="609" y="1104.75" width="76" height="36" rx="8" fill="#f1f5f9"/>
+  <text x="623.3" y="1127.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">PAD-021</text>
+  <rect x="697" y="1103.5" width="62.39" height="22.5" rx="4" fill="#f1f5f9"/>
+  <text x="704" y="1117.64" font-family="ui-monospace, Inter, sans-serif" font-size="11" font-weight="600" fill="#314158" text-anchor="start">GHI-1600</text>
+  <text x="767.39" y="1119.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#45556c" text-anchor="start">Kawasaki</text>
+  <text x="697" y="1138.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#314158" text-anchor="start">Prop:</text>
+  <text x="727.88" y="1138.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#314158" text-anchor="start">Juan Carlos Quispe Mamani</text>
+  <rect x="923.36" y="1111.25" width="151.64" height="22" rx="6" fill="#ecfdf5" stroke="#5ee9b5" stroke-width="1"/>
+  <g transform="translate(932.36 1115.75) scale(0.54)" stroke="oklch(0.432 0.095 166.913)" fill="none"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></g>
+  <text x="949.36" y="1126.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#006045" text-anchor="start">Documentación al Día</text>
+  <rect x="609" y="1168.25" width="76" height="36" rx="8" fill="#f1f5f9"/>
+  <text x="623.3" y="1190.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">PAD-020</text>
+  <rect x="697" y="1167" width="62.39" height="22.5" rx="4" fill="#f1f5f9"/>
+  <text x="704" y="1181.14" font-family="ui-monospace, Inter, sans-serif" font-size="11" font-weight="600" fill="#314158" text-anchor="start">DEF-1579</text>
+  <text x="767.39" y="1182.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#45556c" text-anchor="start">Suzuki</text>
+  <text x="697" y="1201.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#314158" text-anchor="start">Prop:</text>
+  <text x="727.88" y="1201.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#314158" text-anchor="start">Rocío del Carmen Huamaní Ayala</text>
+  <rect x="947.86" y="1174.75" width="127.14" height="22" rx="6" fill="#fffbeb" stroke="#ffd230" stroke-width="1"/>
+  <g transform="translate(956.86 1179.25) scale(0.54)" stroke="oklch(0.414 0.112 45.904)" fill="none"><path d="M12 6v6l4 2"></path><circle cx="12" cy="12" r="10"></circle></g>
+  <text x="973.86" y="1190.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#7b3306" text-anchor="start">Próximo a Vencer</text>
+  <rect x="609" y="1231.75" width="76" height="36" rx="8" fill="#f1f5f9"/>
+  <text x="623.3" y="1254.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#1d293d" text-anchor="start">PAD-019</text>
+  <rect x="697" y="1230.5" width="62.39" height="22.5" rx="4" fill="#f1f5f9"/>
+  <text x="704" y="1244.64" font-family="ui-monospace, Inter, sans-serif" font-size="11" font-weight="600" fill="#314158" text-anchor="start">ABC-1548</text>
+  <text x="767.39" y="1246.23" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#45556c" text-anchor="start">Toyota</text>
+  <text x="697" y="1265.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#314158" text-anchor="start">Prop:</text>
+  <text x="727.88" y="1265.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#314158" text-anchor="start">Édgar Luis Núñez Oblitas</text>
+  <rect x="919.02" y="1238.25" width="155.98" height="22" rx="6" fill="#fff1f2" stroke="#ffa1ad" stroke-width="1"/>
+  <g transform="translate(928.02 1242.75) scale(0.54)" stroke="oklch(0.455 0.188 13.697)" fill="none"><path d="M12 16h.01"></path><path d="M12 8v4"></path><path d="M15.312 2a2 2 0 0 1 1.414.586l4.688 4.688A2 2 0 0 1 22 8.688v6.624a2 2 0 0 1-.586 1.414l-4.688 4.688a2 2 0 0 1-1.414.586H8.688a2 2 0 0 1-1.414-.586l-4.688-4.688A2 2 0 0 1 2 15.312V8.688a2 2 0 0 1 .586-1.414l4.688-4.688A2 2 0 0 1 8.688 2z"></path></g>
+  <text x="945.02" y="1253.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#a50036" text-anchor="start">Documentos Vencidos</text>
+</svg>

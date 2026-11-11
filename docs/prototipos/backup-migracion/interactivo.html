@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Interactivo · Backup &amp; Migración Multi-BD · Padrón Vehicular</title>
+<link rel="stylesheet" href="../assets/app.css" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #020617;
+    color: #e2e8f0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- Barra de control ---------- */
+  .ctl {
+    position: sticky; top: 0; z-index: 60;
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    padding: 10px 16px;
+    background: rgba(2,6,23,.94);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #1e293b;
+  }
+  .ctl-title { display: flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 700; color: #fff; }
+  .ctl-title .dot { width: 9px; height: 9px; border-radius: 50%; background: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,.2); }
+  .ctl-group { display: flex; align-items: center; gap: 7px; }
+  .ctl-label { font-size: 9.5px; text-transform: uppercase; letter-spacing: .9px; color: #64748b; font-weight: 700; }
+  .seg { display: inline-flex; background: #0f172a; border: 1px solid #334155; border-radius: 10px; padding: 2px; gap: 2px; }
+  .seg button {
+    appearance: none; border: 0; background: transparent; color: #94a3b8;
+    font: inherit; font-size: 11px; font-weight: 600;
+    padding: 5px 10px; border-radius: 8px; cursor: pointer; transition: background .14s, color .14s;
+    white-space: nowrap;
+  }
+  .seg button:hover { color: #f1f5f9; }
+  .seg button[aria-pressed="true"] { background: #2563eb; color: #fff; }
+  .ctl-spacer { flex: 1; }
+  .ctl select {
+    background: #0f172a; color: #e2e8f0; border: 1px solid #334155;
+    border-radius: 10px; padding: 6px 10px; font: inherit; font-size: 11.5px; font-weight: 600; cursor: pointer;
+  }
+
+  /* ---------- Layout ---------- */
+  .layout { display: grid; grid-template-columns: minmax(0,1fr) 290px; align-items: start; }
+  @media (max-width: 1080px) { .layout { grid-template-columns: 1fr; } .side { border-left: 0 !important; border-top: 1px solid #1e293b; } }
+
+  .stage { padding: 22px; overflow: auto; }
+  .frame-wrap {
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #334155;
+    box-shadow: 0 30px 80px -20px rgba(0,0,0,.75);
+    overflow: hidden;
+    transition: width .25s ease, max-width .25s ease;
+  }
+  body.dark .frame-wrap { background: #0f172a; }
+  .frame-wrap.movil { width: 390px; max-width: 100%; }
+  .frame-inner { height: 860px; overflow: hidden; position: relative; }
+  .frame-inner > * { height: 100%; }
+
+  /* Botón de vuelta al índice */
+  .ctl-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #0f172a; border: 1px solid #334155; color: #e2e8f0;
+    font: inherit; font-size: 11px; font-weight: 600;
+    padding: 6px 12px; border-radius: 10px; cursor: pointer; text-decoration: none;
+  }
+  .ctl-back:hover { border-color: #3b82f6; color: #fff; }
+
+  /* ---------- Panel lateral ---------- */
+  .side {
+    position: sticky; top: 52px; max-height: calc(100vh - 52px); overflow-y: auto;
+    border-left: 1px solid #1e293b; background: #020617; padding: 20px 18px 48px;
+  }
+  .side h2 { margin: 0 0 3px; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; font-weight: 700; }
+  .side .sub { margin: 0 0 18px; font-size: 11.5px; color: #64748b; }
+  .side section { margin-bottom: 22px; }
+  .side h3 { margin: 0 0 9px; font-size: 10.5px; font-weight: 700; color: #cbd5e1; display: flex; align-items: center; gap: 7px; }
+  .side h3::after { content: ""; flex: 1; height: 1px; background: #1e293b; }
+  .side table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  .side td { padding: 5px 0; vertical-align: top; color: #94a3b8; }
+  .side td:first-child { color: #cbd5e1; font-weight: 600; width: 44%; }
+  .pill { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 9px; border-radius: 999px;
+    background: rgba(37,99,235,.15); color: #60a5fa; border: 1px solid rgba(37,99,235,.3); }
+  .mod-list { list-style: none; margin: 0; padding: 0; }
+  .mod-list a {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 9px; border-radius: 8px; text-decoration: none;
+    color: #94a3b8; font-size: 11.5px; font-weight: 600; transition: background .14s, color .14s;
+  }
+  .mod-list a:hover { background: #1e293b; color: #fff; }
+  .mod-list a.active { background: #2563eb; color: #fff; }
+  .mod-list .g { font-size: 9px; text-transform: uppercase; letter-spacing: .5px; color: #475569; }
+  .mod-list a.active .g { color: rgba(255,255,255,.7); }
+  .mod-list .dot { width: 5px; height: 5px; border-radius: 50%; background: #334155; flex: none; }
+  .mod-list a.active .dot { background: #fff; }
+  .hint { font-size: 11px; line-height: 16px; color: #64748b; }
+  .hint code { font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: #60a5fa; background: rgba(37,99,235,.1); padding: 1px 5px; border-radius: 4px; }
+</style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+
+<div class="ctl">
+  <div class="ctl-title"><span class="dot"></span>Backup &amp; Migración Multi-BD</div>
+  <span class="pill">Administración</span>
+
+  <div class="ctl-group">
+    <span class="ctl-label">Tema</span>
+    <div class="seg" id="segTema">
+      <button data-tema="light" aria-pressed="true">Claro</button>
+      <button data-tema="dark" aria-pressed="false">Oscuro</button>
+    </div>
+  </div>
+
+  <div class="ctl-group">
+    <span class="ctl-label">Vista</span>
+    <div class="seg" id="segVista">
+      <button data-vista="desktop" aria-pressed="true">Escritorio</button>
+      <button data-vista="movil" aria-pressed="false">Móvil</button>
+    </div>
+  </div>
+
+  <div class="ctl-spacer"></div>
+
+  <div class="ctl-group">
+    <span class="ctl-label">Ir a</span>
+    <select id="selModulo">
+      <option value="../login/interactivo.html">Inicio de sesión</option>
+      <option value="../portal-inicio/interactivo.html">Portal de Inicio y Cartelera</option>
+      <option value="../dashboard/interactivo.html">Dashboard Operativo &amp; Flota</option>
+      <option value="../padron/interactivo.html">Padrón Vehicular</option>
+      <option value="../nuevo/interactivo.html">Registrar Nueva Unidad</option>
+      <option value="../vehiculo-detalle/interactivo.html">Ficha de Vehículo</option>
+      <option value="../vehiculo-editar/interactivo.html">Editar Vehículo</option>
+      <option value="../personas/interactivo.html">Directorio de Personas</option>
+      <option value="../curso-vial/interactivo.html">Conductores &amp; Curso Vial</option>
+      <option value="../directorio-contacto/interactivo.html">Directorio WhatsApp por Roles</option>
+      <option value="../vencimientos/interactivo.html">Alertas de Vencimiento</option>
+      <option value="../importar-exportar/interactivo.html">Importar / Exportar</option>
+      <option value="../operario-portal/interactivo.html">Portal del Operario</option>
+      <option value="../historial/interactivo.html">Historial de Auditoría</option>
+      <option value="../usuarios/interactivo.html">Cuentas y Accesos</option>
+      <option value="../configuracion/interactivo.html">Configuración &amp; Empresa</option>
+      <option value="../gestion-portal/interactivo.html">Gestión de Cartelera &amp; Portal</option>
+      <option value="../backup-migracion/interactivo.html" selected>Backup &amp; Migración Multi-BD</option>
+    </select>
+  </div>
+  <a class="ctl-back" href="../index.html">← Índice</a>
+</div>
+
+<div class="layout">
+  <div class="stage">
+    <div class="frame-wrap" id="frameWrap">
+      <div class="frame-inner"><main class="h-full overflow-y-auto px-3.5 pt-3.5 pb-28 sm:px-6 sm:pt-6 sm:pb-32 lg:px-8 lg:pt-8 lg:pb-8 max-w-full"><div class="mx-auto max-w-7xl w-full min-w-0"><div class="mx-auto max-w-7xl w-full min-w-0"><div class="space-y-6 max-w-7xl mx-auto w-full min-w-0"><div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-white dark:bg-slate-900 p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800"><div class="min-w-0"><div class="flex items-center gap-3"><div class="p-3 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 rounded-xl"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-database w-6 h-6 sm:w-7 sm:h-7" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5V19A9 3 0 0 0 21 19V5"></path><path d="M3 12A9 3 0 0 0 21 12"></path></svg></div><div class="min-w-0"><h1 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white truncate">Backup Completo &amp; Migración de Base de Datos</h1><p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 truncate">Respaldo universal (JSON / SQL estándar) para conservar o migrar datos a PostgreSQL, Supabase, Neon o AWS RDS</p></div></div></div><div class="flex items-center gap-2 self-start md:self-auto shrink-0"><button class="inline-flex items-center gap-2 px-3.5 py-2 text-xs sm:text-sm font-medium rounded-lg text-slate-700 dark:text-slate-300 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 transition"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-cw w-4 h-4" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></svg><span>Actualizar Estado</span></button></div></div><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"><div class="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between"><div><p class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Motor de Base de Datos</p><p class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mt-1">Cloud SQL</p><div class="flex items-center gap-1.5 mt-1 text-xs text-emerald-600 dark:text-emerald-400 font-medium"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check w-3.5 h-3.5" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg><span>PostgreSQL Activo &amp; Seguro</span></div></div><div class="p-3 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 rounded-xl"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-server w-6 h-6" aria-hidden="true"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"></rect><rect width="20" height="8" x="2" y="14" rx="2" ry="2"></rect><line x1="6" x2="6.01" y1="6" y2="6"></line><line x1="6" x2="6.01" y1="18" y2="18"></line></svg></div></div><div class="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between"><div><p class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Tablas del Sistema</p><p class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mt-1">15 Tablas</p><p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Esquema Relacional Completo</p></div><div class="p-3 bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 rounded-xl"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layers w-6 h-6" aria-hidden="true"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"></path><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"></path><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"></path></svg></div></div><div class="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between"><div><p class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Total de Registros</p><p class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mt-1">340</p><p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Filas sincronizadas en vivo</p></div><div class="p-3 bg-purple-50 dark:bg-purple-950/50 text-purple-600 dark:text-purple-400 rounded-xl"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-hard-drive w-6 h-6" aria-hidden="true"><line x1="22" x2="2" y1="12" y2="12"></line><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path><line x1="6" x2="6.01" y1="16" y2="16"></line><line x1="10" x2="10.01" y1="16" y2="16"></line></svg></div></div><div class="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between"><div><p class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Último Respaldo</p><p class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white mt-1 truncate max-w-[140px]">Pendiente hoy</p><p class="text-xs text-slate-500 dark:text-slate-400 mt-1 truncate max-w-[140px]">Sistema</p></div><div class="p-3 bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 rounded-xl"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-history w-6 h-6" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M12 7v5l4 2"></path></svg></div></div></div><div class="flex border-b border-slate-200 dark:border-slate-800 gap-2 sm:gap-4 overflow-x-auto"><button class="flex items-center gap-2 py-3 px-4 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap transition-colors border-indigo-600 text-indigo-600 dark:border-indigo-400 dark:text-indigo-400 font-semibold"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download w-4 h-4" aria-hidden="true"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg><span>1. Exportar Respaldo (Backup)</span></button><button class="flex items-center gap-2 py-3 px-4 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap transition-colors border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-upload w-4 h-4" aria-hidden="true"><path d="M12 3v12"></path><path d="m17 8-5-5-5 5"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path></svg><span>2. Restaurar &amp; Migrar BD</span></button><button class="flex items-center gap-2 py-3 px-4 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap transition-colors border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-history w-4 h-4" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M12 7v5l4 2"></path></svg><span>3. Bitácora de Respaldos</span></button></div><div class="space-y-6"><div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm flex flex-col justify-between"><div><div class="flex items-center justify-between mb-4"><div class="p-3 bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 rounded-xl"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-json w-7 h-7" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 12a1 1 0 0 0-1 1v1a1 1 0 0 1-1 1 1 1 0 0 1 1 1v1a1 1 0 0 0 1 1"></path><path d="M14 18a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1 1 1 0 0 1-1-1v-1a1 1 0 0 0-1-1"></path></svg></div><span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300">RECOMENDADO</span></div><h3 class="text-lg font-bold text-slate-900 dark:text-white">Respaldo JSON Universal (.json)</h3><p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">Exporta una copia íntegra con metadatos, firmas de tiempo y resumen de registros de las 15 tablas. Ideal para copias de seguridad periódicas y restauración en un solo clic dentro del sistema.</p><div class="mt-4 p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl space-y-1.5 text-xs text-slate-600 dark:text-slate-300"><div class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check w-4 h-4 text-emerald-500 shrink-0" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg><span>Incluye vehículos, personas, pólizas, revisiones, trámites y usuarios.</span></div><div class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check w-4 h-4 text-emerald-500 shrink-0" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg><span>Compatible con restauración modo Fusión (Merge) o Reemplazo total.</span></div><div class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check w-4 h-4 text-emerald-500 shrink-0" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg><span>Portátil e independiente de versiones de base de datos.</span></div></div></div><div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800"><button class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-white font-medium bg-blue-600 hover:bg-blue-700 active:bg-blue-800 transition shadow-sm disabled:opacity-60 text-sm"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download w-4 h-4" aria-hidden="true"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg><span>Descargar Respaldo JSON Universal</span></button></div></div><div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm flex flex-col justify-between"><div><div class="flex items-center justify-between mb-4"><div class="p-3 bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 rounded-xl"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-code w-7 h-7" aria-hidden="true"><path d="M10 12.5 8 15l2 2.5"></path><path d="m14 12.5 2 2.5-2 2.5"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path></svg></div><span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">MIGRACIÓN MULTI-BD</span></div><h3 class="text-lg font-bold text-slate-900 dark:text-white">Script SQL Portátil (.sql)</h3><p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">Genera un script SQL ANSI estándar completo con <code class="text-indigo-600 dark:text-indigo-400 font-mono">CREATE TABLE IF NOT EXISTS</code> e <code class="text-indigo-600 dark:text-indigo-400 font-mono">INSERT INTO ... ON CONFLICT DO NOTHING</code> listo para ejecutarse en cualquier motor relacional.</p><div class="mt-4 p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl space-y-1.5 text-xs text-slate-600 dark:text-slate-300"><div class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check w-4 h-4 text-emerald-500 shrink-0" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg><span>Compatible con <b>PostgreSQL, Supabase, Neon, AWS RDS, GCP Cloud SQL</b>.</span></div><div class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check w-4 h-4 text-emerald-500 shrink-0" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg><span>Estructurado en orden estricto de claves foráneas para evitar fallos.</span></div><div class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check w-4 h-4 text-emerald-500 shrink-0" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg><span>Escapado seguro de valores y caracteres especiales en UTF-8.</span></div></div></div><div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800"><button class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-white font-medium bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 transition shadow-sm disabled:opacity-60 text-sm"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download w-4 h-4" aria-hidden="true"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg><span>Descargar Script SQL Multi-BD (.sql)</span></button></div></div></div><div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm"><div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4"><div><h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layers w-5 h-5 text-indigo-500" aria-hidden="true"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"></path><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"></path><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"></path></svg><span>Inventario de Tablas y Registros a Exportar</span></h3><p class="text-xs text-slate-500 dark:text-slate-400">Conteo en tiempo real de filas que formarán parte del respaldo universal</p></div><span class="text-xs font-semibold px-3 py-1 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 rounded-full self-start sm:self-auto">15 Tablas Activas</span></div><div class="overflow-x-auto -mx-6 px-6"><table class="w-full text-left text-xs sm:text-sm"><thead><tr class="border-b border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 font-semibold"><th class="py-2.5 px-3">Módulo / Tabla</th><th class="py-2.5 px-3">Nombre en Esquema</th><th class="py-2.5 px-3">Descripción</th><th class="py-2.5 px-3 text-right">Registros</th></tr></thead><tbody class="divide-y divide-slate-100 dark:divide-slate-800/60"><tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition"><td class="py-2.5 px-3 font-semibold text-slate-900 dark:text-white">Padrón Vehicular</td><td class="py-2.5 px-3 font-mono text-xs text-indigo-600 dark:text-indigo-400">vehicles</td><td class="py-2.5 px-3 text-slate-500 dark:text-slate-400 text-xs">Unidades de transporte, placas, marcas y estados</td><td class="py-2.5 px-3 text-right font-bold text-slate-900 dark:text-white"><span class="inline-block px-2.5 py-0.5 rounded-full text-xs bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">24 filas</span></td></tr><tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition"><td class="py-2.5 px-3 font-semibold text-slate-900 dark:text-white">Directorio de Personas</td><td class="py-2.5 px-3 font-mono text-xs text-indigo-600 dark:text-indigo-400">persons</td><td class="py-2.5 px-3 text-slate-500 dark:text-slate-400 text-xs">Propietarios, choferes y concesionarios</td><td class="py-2.5 px-3 text-right font-bold text-slate-900 dark:text-white"><span class="inline-block px-2.5 py-0.5 rounded-full text-xs bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">20 filas</span></td></tr><tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition"><td class="py-2.5 px-3 font-semibold text-slate-900 dark:text-white">Propietarios de Flota</td><td class="py-2.5 px-3 font-mono text-xs text-indigo-600 dark:text-indigo-400">vehicleOwners</td><td class="py-2.5 px-3 text-slate-500 dark:text-slate-400 text-xs">Asociaciones de titularidad por unidad</td><td class="py-2.5 px-3 text-right font-bold text-slate-900 dark:text-white"><span class="inline-block px-2.5 py-0.5 rounded-full text-xs bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">24 filas</span></td></tr><tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition"><td class="py-2.5 px-3 font-semibold text-slate-900 dark:text-white">Conductores Asignados</td><td class="py-2.5 px-3 font-mono text-xs text-indigo-600 dark:text-indigo-400">vehicleDrivers</td><td class="py-2.5 px-3 text-slate-500 dark:text-slate-400 text-xs">Historial de choferes asignados a vehículos</td><td class="py-2.5 px-3 text-right font-bold text-slate-900 dark:text-white"><span class="inline-block px-2.5 py-0.5 rounded-full text-xs bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">10 filas</span></td></tr><tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition"><td class="py-2.5 px-3 font-semibold text-slate-900 dark:text-white">Pólizas AFOCAT / SOAT</td><td class="py-2.5 px-3 font-mono text-xs text-indigo-600 dark:text-indigo-400">insurances</td><td class="py-2.5 px-3 text-slate-500 dark:text-slate-400 text-xs">Vencimientos y certificados de seguro</td><td class="py-2.5 px-3 text-right font-bold text-slate-900 dark:text-white"><span class="inline-block px-2.5 py-0.5 rounded-full text-xs bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">48 filas</span></td></tr><tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition"><td class="py-2.5 px-3 font-semibold text-slate-900 dark:text-white">Revisiones CITV</td><td class="py-2.5 px-3 font-mono text-xs text-indigo-600 dark:text-indigo-400">technicalInspections</td><td class="py-2.5 px-3 text-slate-500 dark:text-slate-400 text-xs">Inspecciones técnicas vehiculares vigentes</td><td class="py-2.5 px-3 text-right font-bold text-slate-900 dark:text-white"><span class="inline-block px-2.5 py-0.5 rounded-full text-xs bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">48 filas</span></td></tr><tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition"><td class="py-2.5 px-3 font-semibold text-slate-900 dark:text-white">Cursos de Educación Vial</td><td class="py-2.5 px-3 font-mono text-xs text-indigo-600 dark:text-indigo-400">roadSafetyCourses</td><td class="py-2.5 px-3 text-slate-500 dark:text-slate-400 text-xs">Capacitaciones anuales aprobadas</td><td class="py-2.5 px-3 text-right font-bold text-slate-900 dark:text-white"><span class="inline-block px-2.5 py-0.5 rounded-full text-xs bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">48 filas</span></td></tr><tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition"><td class="py-2.5 px-3 font-semibold text-slate-900 dark:text-white">Licencias de Conducir</td><td class="py-2.5 px-3 font-mono text-xs text-indigo-600 dark:text-indigo-400">driverLicenses</td><td class="py-2.5 px-3 text-slate-500 dark:text-slate-400 text-xs">Brevetes MTC de conductores</td><td class="py-2.5 px-3 text-right font-bold text-slate-900 dark:text-white"><span class="inline-block px-2.5 py-0.5 rounded-full text-xs bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">48 filas</span></td></tr><tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition"><td class="py-2.5 px-3 font-semibold text-slate-900 dark:text-white">Historial de Padrón</td><td class="py-2.5 px-3 font-mono text-xs text-indigo-600 dark:text-indigo-400">vehiclePadronHistory</td><td class="py-2.5 px-3 text-slate-500 dark:text-slate-400 text-xs">Trazabilidad de cambios de número interno</td><td class="py-2.5 px-3 text-right font-bold text-slate-900 dark:text-white"><span class="inline-block px-2.5 py-0.5 rounded-full text-xs bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">6 filas</span></td></tr><tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition"><td class="py-2.5 px-3 font-semibold text-slate-900 dark:text-white">Trámites de Padrón</td><td class="py-2.5 px-3 font-mono text-xs text-indigo-600 dark:text-indigo-400">padronChangeRequests</td><td class="py-2.5 px-3 text-slate-500 dark:text-slate-400 text-xs">Solicitudes y resoluciones de cambio/permuta</td><td class="py-2.5 px-3 text-right font-bold text-slate-900 dark:text-white"><span class="inline-block px-2.5 py-0.5 rounded-full text-xs bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">3 filas</span></td></tr><tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition"><td class="py-2.5 px-3 font-semibold text-slate-900 dark:text-white">Cartelera Digital</td><td class="py-2.5 px-3 font-mono text-xs text-indigo-600 dark:text-indigo-400">portalPosts</td><td class="py-2.5 px-3 text-slate-500 dark:text-slate-400 text-xs">Anuncios, videos, festividades y directivas</td><td class="py-2.5 px-3 text-right font-bold text-slate-900 dark:text-white"><span class="inline-block px-2.5 py-0.5 rounded-full text-xs bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">6 filas</span></td></tr><tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition"><td class="py-2.5 px-3 font-semibold text-slate-900 dark:text-white">Agenda &amp; Calendario</td><td class="py-2.5 px-3 font-mono text-xs text-indigo-600 dark:text-indigo-400">portalEvents</td><td class="py-2.5 px-3 text-slate-500 dark:text-slate-400 text-xs">Asambleas, operativos e inspecciones programadas</td><td class="py-2.5 px-3 text-right font-bold text-slate-900 dark:text-white"><span class="inline-block px-2.5 py-0.5 rounded-full text-xs bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">6 filas</span></td></tr><tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition"><td class="py-2.5 px-3 font-semibold text-slate-900 dark:text-white">Roles y Permisos</td><td class="py-2.5 px-3 font-mono text-xs text-indigo-600 dark:text-indigo-400">systemRoles</td><td class="py-2.5 px-3 text-slate-500 dark:text-slate-400 text-xs">Perfiles de acceso y seguridad RBAC</td><td class="py-2.5 px-3 text-right font-bold text-slate-900 dark:text-white"><span class="inline-block px-2.5 py-0.5 rounded-full text-xs bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">8 filas</span></td></tr><tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition"><td class="py-2.5 px-3 font-semibold text-slate-900 dark:text-white">Usuarios del Sistema</td><td class="py-2.5 px-3 font-mono text-xs text-indigo-600 dark:text-indigo-400">users</td><td class="py-2.5 px-3 text-slate-500 dark:text-slate-400 text-xs">Cuentas de operadores y directivos</td><td class="py-2.5 px-3 text-right font-bold text-slate-900 dark:text-white"><span class="inline-block px-2.5 py-0.5 rounded-full text-xs bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">1 filas</span></td></tr><tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition"><td class="py-2.5 px-3 font-semibold text-slate-900 dark:text-white">Bitácora de Auditoría</td><td class="py-2.5 px-3 font-mono text-xs text-indigo-600 dark:text-indigo-400">auditLogs</td><td class="py-2.5 px-3 text-slate-500 dark:text-slate-400 text-xs">Trazabilidad inmutable de cambios y respaldos</td><td class="py-2.5 px-3 text-right font-bold text-slate-900 dark:text-white"><span class="inline-block px-2.5 py-0.5 rounded-full text-xs bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">40 filas</span></td></tr></tbody></table></div></div></div></div><div class="h-20 lg:hidden w-full shrink-0 pointer-events-none" aria-hidden="true"></div></div></div></main></div>
+    </div>
+  </div>
+
+  <aside class="side">
+    <h2>Ficha del módulo</h2>
+    <p class="sub">Copias de seguridad completas en JSON y SQL para migración a cualquier base de datos o plataforma.</p>
+
+    <section>
+      <h3>Acceso</h3>
+      <table>
+        <tr><td>Categoría</td><td>Administración</td></tr>
+        <tr><td>Roles con acceso</td><td>Administrador</td></tr>
+        <tr><td>Módulo en el menú</td><td>Backup &amp; Migración BD</td></tr>
+        <tr><td>Vista</td><td>Tab del sidebar</td></tr>
+      </table>
+    </section>
+
+    <section>
+      <h3>Interacciones</h3>
+      <p class="hint">
+        Usa <code>Tab</code> para recorrer los controles, <code>Enter</code> para activar.
+        El prototipo refleja la UI real: los botones que en el sistema disparan
+        acciones siguen siendo inertes aquí.
+      </p>
+    </section>
+
+    <section>
+      <h3>Archivos</h3>
+      <table>
+        <tr><td>Captura estática</td><td><a href="prototipo.html" style="color:#60a5fa">prototipo.html</a></td></tr>
+        <tr><td>Vector Figma</td><td><a href="prototipo.svg" style="color:#60a5fa">prototipo.svg</a></td></tr>
+        <tr><td>Imagen</td><td><a href="captura.webp" style="color:#60a5fa">captura.webp</a></td></tr>
+      </table>
+    </section>
+
+    <section>
+      <h3>Todos los módulos</h3>
+      <ul class="mod-list">
+          <li><a href="../login/interactivo.html" class=""><span class="dot"></span><span>Inicio de sesión</span></a></li>
+          <li><a href="../portal-inicio/interactivo.html" class=""><span class="dot"></span><span>Portal de Inicio y Cartelera</span></a></li>
+          <li><a href="../dashboard/interactivo.html" class=""><span class="dot"></span><span>Dashboard Operativo &amp; Flota</span></a></li>
+          <li><a href="../padron/interactivo.html" class=""><span class="dot"></span><span>Padrón Vehicular</span></a></li>
+          <li><a href="../nuevo/interactivo.html" class=""><span class="dot"></span><span>Registrar Nueva Unidad</span></a></li>
+          <li><a href="../vehiculo-detalle/interactivo.html" class=""><span class="dot"></span><span>Ficha de Vehículo</span></a></li>
+          <li><a href="../vehiculo-editar/interactivo.html" class=""><span class="dot"></span><span>Editar Vehículo</span></a></li>
+          <li><a href="../personas/interactivo.html" class=""><span class="dot"></span><span>Directorio de Personas</span></a></li>
+          <li><a href="../curso-vial/interactivo.html" class=""><span class="dot"></span><span>Conductores &amp; Curso Vial</span></a></li>
+          <li><a href="../directorio-contacto/interactivo.html" class=""><span class="dot"></span><span>Directorio WhatsApp por Roles</span></a></li>
+          <li><a href="../vencimientos/interactivo.html" class=""><span class="dot"></span><span>Alertas de Vencimiento</span></a></li>
+          <li><a href="../importar-exportar/interactivo.html" class=""><span class="dot"></span><span>Importar / Exportar</span></a></li>
+          <li><a href="../operario-portal/interactivo.html" class=""><span class="dot"></span><span>Portal del Operario</span></a></li>
+          <li><a href="../historial/interactivo.html" class=""><span class="dot"></span><span>Historial de Auditoría</span></a></li>
+          <li><a href="../usuarios/interactivo.html" class=""><span class="dot"></span><span>Cuentas y Accesos</span></a></li>
+          <li><a href="../configuracion/interactivo.html" class=""><span class="dot"></span><span>Configuración &amp; Empresa</span></a></li>
+          <li><a href="../gestion-portal/interactivo.html" class=""><span class="dot"></span><span>Gestión de Cartelera &amp; Portal</span></a></li>
+          <li><a href="../backup-migracion/interactivo.html" class="active"><span class="dot"></span><span>Backup &amp; Migración Multi-BD</span></a></li>
+      </ul>
+    </section>
+  </aside>
+</div>
+
+<script>
+  // Tema
+  const segTema = document.getElementById('segTema');
+  segTema.querySelectorAll('button').forEach(b => {
+    b.onclick = () => {
+      segTema.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', 'false'));
+      b.setAttribute('aria-pressed', 'true');
+      const oscuro = b.dataset.tema === 'dark';
+      document.documentElement.classList.toggle('dark', oscuro);
+      document.body.classList.toggle('dark', oscuro);
+    };
+  });
+
+  // Vista
+  const wrap = document.getElementById('frameWrap');
+  const segVista = document.getElementById('segVista');
+  segVista.querySelectorAll('button').forEach(b => {
+    b.onclick = () => {
+      segVista.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', 'false'));
+      b.setAttribute('aria-pressed', 'true');
+      wrap.classList.toggle('movil', b.dataset.vista === 'movil');
+    };
+  });
+
+  // Navegación
+  document.getElementById('selModulo').onchange = (e) => { location.href = e.target.value; };
+</script>
+</body>
+</html>

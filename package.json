@@ -19,7 +19,15 @@
     "db:studio": "drizzle-kit studio --config=backend/db/drizzle.config.ts",
     "db:reset-demo-passwords": "tsx scripts/reset-demo-passwords.ts",
     "db:remove-demo-users": "tsx scripts/remove-demo-users.ts",
-    "admin:create": "tsx scripts/create-admin.ts"
+    "admin:create": "tsx scripts/create-admin.ts",
+    "prototipos:servir": "node docs/prototipos/serve.mjs",
+    "prototipos:capturar": "tsx scripts/capture-prototypes.mts",
+    "prototipos:construir": "tsx scripts/build-prototypes.mts",
+    "prototipos:svg": "tsx scripts/extract-svg-primitives.mts && tsx scripts/build-prototype-svg.mts",
+    "prototipos:interactivo": "tsx scripts/build-prototype-interactive.mts",
+    "prototipos:db:crear": "tsx scripts/proto-db-create.mts",
+    "prototipos:db:semear": "tsx scripts/seed-prototype-data.mts && tsx scripts/seed-prototype-admin.mts",
+    "imagenes:webp": "tsx scripts/convert-images-webp.mts"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",

@@ -44,4 +44,4 @@ El plan es reutilizar el núcleo web y añadir:
 - **Móvil:** PWA/Capacitor con cámara.
 - **Offline:** SQLite local + cola de sincronización hacia PostgreSQL.
 
-Ver `docs/ROADMAP.md`.
+Ver `docs/markdown/ROADMAP.md`.

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Interactivo · Portal del Operario · Padrón Vehicular</title>
+<link rel="stylesheet" href="../assets/app.css" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #020617;
+    color: #e2e8f0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- Barra de control ---------- */
+  .ctl {
+    position: sticky; top: 0; z-index: 60;
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    padding: 10px 16px;
+    background: rgba(2,6,23,.94);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #1e293b;
+  }
+  .ctl-title { display: flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 700; color: #fff; }
+  .ctl-title .dot { width: 9px; height: 9px; border-radius: 50%; background: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,.2); }
+  .ctl-group { display: flex; align-items: center; gap: 7px; }
+  .ctl-label { font-size: 9.5px; text-transform: uppercase; letter-spacing: .9px; color: #64748b; font-weight: 700; }
+  .seg { display: inline-flex; background: #0f172a; border: 1px solid #334155; border-radius: 10px; padding: 2px; gap: 2px; }
+  .seg button {
+    appearance: none; border: 0; background: transparent; color: #94a3b8;
+    font: inherit; font-size: 11px; font-weight: 600;
+    padding: 5px 10px; border-radius: 8px; cursor: pointer; transition: background .14s, color .14s;
+    white-space: nowrap;
+  }
+  .seg button:hover { color: #f1f5f9; }
+  .seg button[aria-pressed="true"] { background: #2563eb; color: #fff; }
+  .ctl-spacer { flex: 1; }
+  .ctl select {
+    background: #0f172a; color: #e2e8f0; border: 1px solid #334155;
+    border-radius: 10px; padding: 6px 10px; font: inherit; font-size: 11.5px; font-weight: 600; cursor: pointer;
+  }
+
+  /* ---------- Layout ---------- */
+  .layout { display: grid; grid-template-columns: minmax(0,1fr) 290px; align-items: start; }
+  @media (max-width: 1080px) { .layout { grid-template-columns: 1fr; } .side { border-left: 0 !important; border-top: 1px solid #1e293b; } }
+
+  .stage { padding: 22px; overflow: auto; }
+  .frame-wrap {
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #334155;
+    box-shadow: 0 30px 80px -20px rgba(0,0,0,.75);
+    overflow: hidden;
+    transition: width .25s ease, max-width .25s ease;
+  }
+  body.dark .frame-wrap { background: #0f172a; }
+  .frame-wrap.movil { width: 390px; max-width: 100%; }
+  .frame-inner { height: 860px; overflow: hidden; position: relative; }
+  .frame-inner > * { height: 100%; }
+
+  /* Botón de vuelta al índice */
+  .ctl-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #0f172a; border: 1px solid #334155; color: #e2e8f0;
+    font: inherit; font-size: 11px; font-weight: 600;
+    padding: 6px 12px; border-radius: 10px; cursor: pointer; text-decoration: none;
+  }
+  .ctl-back:hover { border-color: #3b82f6; color: #fff; }
+
+  /* ---------- Panel lateral ---------- */
+  .side {
+    position: sticky; top: 52px; max-height: calc(100vh - 52px); overflow-y: auto;
+    border-left: 1px solid #1e293b; background: #020617; padding: 20px 18px 48px;
+  }
+  .side h2 { margin: 0 0 3px; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; font-weight: 700; }
+  .side .sub { margin: 0 0 18px; font-size: 11.5px; color: #64748b; }
+  .side section { margin-bottom: 22px; }
+  .side h3 { margin: 0 0 9px; font-size: 10.5px; font-weight: 700; color: #cbd5e1; display: flex; align-items: center; gap: 7px; }
+  .side h3::after { content: ""; flex: 1; height: 1px; background: #1e293b; }
+  .side table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  .side td { padding: 5px 0; vertical-align: top; color: #94a3b8; }
+  .side td:first-child { color: #cbd5e1; font-weight: 600; width: 44%; }
+  .pill { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 9px; border-radius: 999px;
+    background: rgba(37,99,235,.15); color: #60a5fa; border: 1px solid rgba(37,99,235,.3); }
+  .mod-list { list-style: none; margin: 0; padding: 0; }
+  .mod-list a {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 9px; border-radius: 8px; text-decoration: none;
+    color: #94a3b8; font-size: 11.5px; font-weight: 600; transition: background .14s, color .14s;
+  }
+  .mod-list a:hover { background: #1e293b; color: #fff; }
+  .mod-list a.active { background: #2563eb; color: #fff; }
+  .mod-list .g { font-size: 9px; text-transform: uppercase; letter-spacing: .5px; color: #475569; }
+  .mod-list a.active .g { color: rgba(255,255,255,.7); }
+  .mod-list .dot { width: 5px; height: 5px; border-radius: 50%; background: #334155; flex: none; }
+  .mod-list a.active .dot { background: #fff; }
+  .hint { font-size: 11px; line-height: 16px; color: #64748b; }
+  .hint code { font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: #60a5fa; background: rgba(37,99,235,.1); padding: 1px 5px; border-radius: 4px; }
+</style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+
+<div class="ctl">
+  <div class="ctl-title"><span class="dot"></span>Portal del Operario</div>
+  <span class="pill">Operario</span>
+
+  <div class="ctl-group">
+    <span class="ctl-label">Tema</span>
+    <div class="seg" id="segTema">
+      <button data-tema="light" aria-pressed="true">Claro</button>
+      <button data-tema="dark" aria-pressed="false">Oscuro</button>
+    </div>
+  </div>
+
+  <div class="ctl-group">
+    <span class="ctl-label">Vista</span>
+    <div class="seg" id="segVista">
+      <button data-vista="desktop" aria-pressed="true">Escritorio</button>
+      <button data-vista="movil" aria-pressed="false">Móvil</button>
+    </div>
+  </div>
+
+  <div class="ctl-spacer"></div>
+
+  <div class="ctl-group">
+    <span class="ctl-label">Ir a</span>
+    <select id="selModulo">
+      <option value="../login/interactivo.html">Inicio de sesión</option>
+      <option value="../portal-inicio/interactivo.html">Portal de Inicio y Cartelera</option>
+      <option value="../dashboard/interactivo.html">Dashboard Operativo &amp; Flota</option>
+      <option value="../padron/interactivo.html">Padrón Vehicular</option>
+      <option value="../nuevo/interactivo.html">Registrar Nueva Unidad</option>
+      <option value="../vehiculo-detalle/interactivo.html">Ficha de Vehículo</option>
+      <option value="../vehiculo-editar/interactivo.html">Editar Vehículo</option>
+      <option value="../personas/interactivo.html">Directorio de Personas</option>
+      <option value="../curso-vial/interactivo.html">Conductores &amp; Curso Vial</option>
+      <option value="../directorio-contacto/interactivo.html">Directorio WhatsApp por Roles</option>
+      <option value="../vencimientos/interactivo.html">Alertas de Vencimiento</option>
+      <option value="../importar-exportar/interactivo.html">Importar / Exportar</option>
+      <option value="../operario-portal/interactivo.html" selected>Portal del Operario</option>
+      <option value="../historial/interactivo.html">Historial de Auditoría</option>
+      <option value="../usuarios/interactivo.html">Cuentas y Accesos</option>
+      <option value="../configuracion/interactivo.html">Configuración &amp; Empresa</option>
+      <option value="../gestion-portal/interactivo.html">Gestión de Cartelera &amp; Portal</option>
+      <option value="../backup-migracion/interactivo.html">Backup &amp; Migración Multi-BD</option>
+    </select>
+  </div>
+  <a class="ctl-back" href="../index.html">← Índice</a>
+</div>
+
+<div class="layout">
+  <div class="stage">
+    <div class="frame-wrap" id="frameWrap">
+      <div class="frame-inner"><main class="h-full overflow-y-auto px-3.5 pt-3.5 pb-28 sm:px-6 sm:pt-6 sm:pb-32 lg:px-8 lg:pt-8 lg:pb-8 max-w-full"><div class="mx-auto max-w-7xl w-full min-w-0"><div class="mx-auto max-w-7xl w-full min-w-0"><div class="space-y-6"><div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800"><div><div class="flex items-center gap-2.5"><div class="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100 dark:bg-amber-950/80 text-amber-700 dark:text-amber-400 ring-1 ring-amber-500/20"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-camera" aria-hidden="true"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"></path><circle cx="12" cy="13" r="3"></circle></svg></div><div><h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-2xl">Portal del Operario · Mi Padrón Vehicular</h1><p class="text-xs text-slate-500 dark:text-slate-400">Bienvenido Carlos Mendoza (Administrador). Registre sus datos, adjunte fotos en tiempo real y controle sus fechas de vencimiento.</p></div></div></div><div class="flex items-center gap-2"><span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">Unidad:</span><select class="rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-1.5 text-xs font-bold text-slate-900 dark:text-white focus:border-amber-500 focus:outline-none shadow-2xs"><option value="24">Padrón PAD-024 (PQR-1693)</option><option value="23">Padrón PAD-023 (MNO-1662)</option><option value="22">Padrón PAD-022 (JKL-1631)</option><option value="21">Padrón PAD-021 (GHI-1600)</option><option value="20">Padrón PAD-020 (DEF-1579)</option><option value="19">Padrón PAD-019 (ABC-1548)</option><option value="18">Padrón PAD-018 (PQR-1517)</option><option value="17">Padrón PAD-017 (MNO-1486)</option><option value="16">Padrón PAD-016 (JKL-1455)</option><option value="15">Padrón PAD-015 (GHI-1424)</option><option value="14">Padrón PAD-014 (DEF-1393)</option><option value="13">Padrón PAD-013 (ABC-1362)</option><option value="12">Padrón PAD-012 (PQR-1331)</option><option value="11">Padrón PAD-011 (MNO-1300)</option><option value="10">Padrón PAD-010 (JKL-1279)</option><option value="9">Padrón PAD-009 (GHI-1248)</option><option value="8">Padrón PAD-008 (DEF-1217)</option><option value="7">Padrón PAD-007 (ABC-1186)</option><option value="6">Padrón PAD-006 (PQR-1155)</option><option value="5">Padrón PAD-005 (MNO-1124)</option><option value="4">Padrón PAD-004 (JKL-1093)</option><option value="3">Padrón PAD-003 (GHI-1062)</option><option value="2">Padrón PAD-002 (DEF-1031)</option><option value="1">Padrón PAD-001 (ABC-1000)</option></select></div></div><input accept="image/*" capture="environment" class="hidden" type="file"><div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-2xs"><div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800"><div class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar text-amber-600 dark:text-amber-400" aria-hidden="true"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg><h2 class="text-sm font-bold text-slate-900 dark:text-white">Control de Fechas · ¿Cada cuánto me toca renovar?</h2></div><span class="text-xs text-slate-400 dark:text-slate-400">Monitoreo preventivo del conductor</span></div><div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3"><div class="rounded-xl p-3.5 border transition-all border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700"><div class="flex items-center justify-between"><span class="text-[11px] font-bold text-slate-800 dark:text-slate-200 uppercase">AFOCAT / SOAT</span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check text-emerald-600 dark:text-emerald-400" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></div><div class="mt-2"><p class="text-xs font-semibold text-slate-900 dark:text-white tabular-nums">Vence: 2027-05-30</p><p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Anual (Obligatorio)</p></div><div class="mt-2 pt-2 border-t border-slate-200/60 dark:border-slate-800 flex items-center justify-between text-[10px]"><span class="text-slate-400 truncate">Asociación / Aseguradora</span><span class="font-bold tabular-nums text-emerald-700 dark:text-emerald-400">Vigente (200 días)</span></div></div><div class="rounded-xl p-3.5 border transition-all border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700"><div class="flex items-center justify-between"><span class="text-[11px] font-bold text-slate-800 dark:text-slate-200 uppercase">Revisión Técnica (CITV)</span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check text-emerald-600 dark:text-emerald-400" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></div><div class="mt-2"><p class="text-xs font-semibold text-slate-900 dark:text-white tabular-nums">Vence: 2027-05-30</p><p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Semestral / Anual</p></div><div class="mt-2 pt-2 border-t border-slate-200/60 dark:border-slate-800 flex items-center justify-between text-[10px]"><span class="text-slate-400 truncate">Planta Autorizada MTC</span><span class="font-bold tabular-nums text-emerald-700 dark:text-emerald-400">Vigente (200 días)</span></div></div><div class="rounded-xl p-3.5 border transition-all border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700"><div class="flex items-center justify-between"><span class="text-[11px] font-bold text-slate-800 dark:text-slate-200 uppercase">Licencia de Conducir (B-II-C)</span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check text-emerald-600 dark:text-emerald-400" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></div><div class="mt-2"><p class="text-xs font-semibold text-slate-900 dark:text-white tabular-nums">Vence: 2027-05-30</p><p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Cada 5 años</p></div><div class="mt-2 pt-2 border-t border-slate-200/60 dark:border-slate-800 flex items-center justify-between text-[10px]"><span class="text-slate-400 truncate">Municipalidad Provincial</span><span class="font-bold tabular-nums text-emerald-700 dark:text-emerald-400">Vigente (200 días)</span></div></div><div class="rounded-xl p-3.5 border transition-all border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700"><div class="flex items-center justify-between"><span class="text-[11px] font-bold text-slate-800 dark:text-slate-200 uppercase">Curso de Educación Vial</span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check text-emerald-600 dark:text-emerald-400" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></div><div class="mt-2"><p class="text-xs font-semibold text-slate-900 dark:text-white tabular-nums">Vence: 2027-05-30</p><p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Anual</p></div><div class="mt-2 pt-2 border-t border-slate-200/60 dark:border-slate-800 flex items-center justify-between text-[10px]"><span class="text-slate-400 truncate">Comisaría / División Tránsito</span><span class="font-bold tabular-nums text-emerald-700 dark:text-emerald-400">Vigente (200 días)</span></div></div><div class="rounded-xl p-3.5 border transition-all border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700"><div class="flex items-center justify-between"><span class="text-[11px] font-bold text-slate-800 dark:text-slate-200 uppercase">Documento de Identidad (DNI)</span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check text-emerald-600 dark:text-emerald-400" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></div><div class="mt-2"><p class="text-xs font-semibold text-slate-900 dark:text-white tabular-nums">Vence: 2029-05-18</p><p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Cada 8 años</p></div><div class="mt-2 pt-2 border-t border-slate-200/60 dark:border-slate-800 flex items-center justify-between text-[10px]"><span class="text-slate-400 truncate">RENIEC</span><span class="font-bold tabular-nums text-emerald-700 dark:text-emerald-400">Vigente (919 días)</span></div></div></div></div><div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-2xs"><div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-3 border-b border-slate-100 dark:border-slate-800"><div><div class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-camera text-blue-600 dark:text-blue-400" aria-hidden="true"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"></path><circle cx="12" cy="13" r="3"></circle></svg><h2 class="text-sm font-bold text-slate-900 dark:text-white">Captura de Fotos en Vivo y Documentos Adjuntos</h2></div><p class="text-xs text-slate-500 dark:text-slate-400">Tome fotos de su DNI, Licencia, AFOCAT o Moto con la cámara de su celular o suba los archivos</p></div><div class="flex items-center gap-1.5 flex-wrap"><button class="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-700 transition-colors shadow-2xs"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-camera" aria-hidden="true"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"></path><circle cx="12" cy="13" r="3"></circle></svg><span>Tomar Foto DNI</span></button><button class="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-700 transition-colors shadow-2xs"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-camera" aria-hidden="true"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"></path><circle cx="12" cy="13" r="3"></circle></svg><span>Tomar Licencia</span></button><button class="inline-flex items-center gap-1.5 rounded-lg bg-slate-800 dark:bg-slate-700 px-3 py-1.5 text-xs font-semibold text-white hover:bg-slate-700 dark:hover:bg-slate-600 transition-colors shadow-2xs"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-camera" aria-hidden="true"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"></path><circle cx="12" cy="13" r="3"></circle></svg><span>Foto Moto</span></button></div></div><div class="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4"><div class="group relative rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-2xs hover:shadow-md hover:border-blue-300 dark:hover:border-slate-700 transition-all"><div class="relative aspect-4/3 w-full bg-slate-100 dark:bg-slate-800 overflow-hidden flex items-center justify-center"><img alt="DNI Frontal" class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-200" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;320&quot; height=&quot;200&quot; viewBox=&quot;0 0 320 200&quot;&gt;&lt;rect width=&quot;320&quot; height=&quot;200&quot; rx=&quot;12&quot; fill=&quot;%23e2e8f0&quot;/&gt;&lt;rect x=&quot;20&quot; y=&quot;20&quot; width=&quot;80&quot; height=&quot;100&quot; rx=&quot;8&quot; fill=&quot;%2394a3b8&quot;/&gt;&lt;circle cx=&quot;60&quot; cy=&quot;55&quot; r=&quot;24&quot; fill=&quot;%23cbd5e1&quot;/&gt;&lt;path d=&quot;M30 110 Q60 85 90 110&quot; fill=&quot;%23cbd5e1&quot;/&gt;&lt;text x=&quot;120&quot; y=&quot;50&quot; font-family=&quot;sans-serif&quot; font-weight=&quot;bold&quot; font-size=&quot;14&quot; fill=&quot;%231e293b&quot;&gt;DNI PERUANO&lt;/text&gt;&lt;text x=&quot;120&quot; y=&quot;75&quot; font-family=&quot;sans-serif&quot; font-size=&quot;12&quot; fill=&quot;%23475569&quot;&gt;45892147&lt;/text&gt;&lt;text x=&quot;120&quot; y=&quot;95&quot; font-family=&quot;sans-serif&quot; font-size=&quot;10&quot; fill=&quot;%2364748b&quot;&gt;QUISPE MAMANI, JUAN&lt;/text&gt;&lt;text x=&quot;120&quot; y=&quot;115&quot; font-family=&quot;sans-serif&quot; font-size=&quot;9&quot; fill=&quot;%2394a3b8&quot;&gt;EMISION: 2021 · CADUCA: 2029&lt;/text&gt;&lt;rect x=&quot;20&quot; y=&quot;145&quot; width=&quot;280&quot; height=&quot;35&quot; rx=&quot;4&quot; fill=&quot;%23cbd5e1&quot;/&gt;&lt;/svg&gt;"><div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2"><button title="Ver imagen completa" class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/95 text-slate-800 hover:bg-white"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye" aria-hidden="true"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg></button><button title="Volver a tomar foto" class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/95 text-blue-700 hover:bg-white"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-camera" aria-hidden="true"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"></path><circle cx="12" cy="13" r="3"></circle></svg></button><button title="Eliminar foto" class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/95 text-rose-700 hover:bg-white"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2 lucide-trash-2" aria-hidden="true"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button></div></div><div class="p-2.5 bg-white dark:bg-slate-900"><p class="font-bold text-xs text-slate-900 dark:text-white truncate">DNI Frontal</p><div class="mt-0.5 flex items-center justify-between text-[10px] text-slate-400"><span>2026-03-15 10:30</span><span class="tabular-nums">142 KB</span></div></div></div><div class="group relative rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-2xs hover:shadow-md hover:border-blue-300 dark:hover:border-slate-700 transition-all"><div class="relative aspect-4/3 w-full bg-slate-100 dark:bg-slate-800 overflow-hidden flex items-center justify-center"><img alt="Licencia de Conducir (B-II-C)" class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-200" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;320&quot; height=&quot;200&quot; viewBox=&quot;0 0 320 200&quot;&gt;&lt;rect width=&quot;320&quot; height=&quot;200&quot; rx=&quot;12&quot; fill=&quot;%23dbeafe&quot;/&gt;&lt;rect x=&quot;20&quot; y=&quot;20&quot; width=&quot;75&quot; height=&quot;95&quot; rx=&quot;6&quot; fill=&quot;%233b82f6&quot;/&gt;&lt;text x=&quot;110&quot; y=&quot;45&quot; font-family=&quot;sans-serif&quot; font-weight=&quot;bold&quot; font-size=&quot;13&quot; fill=&quot;%231e3a8a&quot;&gt;LICENCIA DE CONDUCIR&lt;/text&gt;&lt;text x=&quot;110&quot; y=&quot;65&quot; font-family=&quot;sans-serif&quot; font-weight=&quot;bold&quot; font-size=&quot;12&quot; fill=&quot;%232563eb&quot;&gt;CLASE B - CAT. II-C&lt;/text&gt;&lt;text x=&quot;110&quot; y=&quot;85&quot; font-family=&quot;sans-serif&quot; font-size=&quot;10&quot; fill=&quot;%23475569&quot;&gt;MTC / MUNICIPALIDAD LIMA&lt;/text&gt;&lt;text x=&quot;110&quot; y=&quot;105&quot; font-family=&quot;sans-serif&quot; font-size=&quot;10&quot; fill=&quot;%231e293b&quot;&gt;LIC: Q45892147&lt;/text&gt;&lt;rect x=&quot;20&quot; y=&quot;130&quot; width=&quot;280&quot; height=&quot;50&quot; rx=&quot;6&quot; fill=&quot;%23bfdbfe&quot;/&gt;&lt;/svg&gt;"><div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2"><button title="Ver imagen completa" class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/95 text-slate-800 hover:bg-white"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye" aria-hidden="true"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg></button><button title="Volver a tomar foto" class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/95 text-blue-700 hover:bg-white"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-camera" aria-hidden="true"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"></path><circle cx="12" cy="13" r="3"></circle></svg></button><button title="Eliminar foto" class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/95 text-rose-700 hover:bg-white"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2 lucide-trash-2" aria-hidden="true"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button></div></div><div class="p-2.5 bg-white dark:bg-slate-900"><p class="font-bold text-xs text-slate-900 dark:text-white truncate">Licencia de Conducir (B-II-C)</p><div class="mt-0.5 flex items-center justify-between text-[10px] text-slate-400"><span>2026-03-15 10:32</span><span class="tabular-nums">198 KB</span></div></div></div><div class="group relative rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-2xs hover:shadow-md hover:border-blue-300 dark:hover:border-slate-700 transition-all"><div class="relative aspect-4/3 w-full bg-slate-100 dark:bg-slate-800 overflow-hidden flex items-center justify-center"><img alt="AFOCAT / SOAT" class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-200" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;320&quot; height=&quot;200&quot; viewBox=&quot;0 0 320 200&quot;&gt;&lt;rect width=&quot;320&quot; height=&quot;200&quot; rx=&quot;12&quot; fill=&quot;%23fef3c7&quot;/&gt;&lt;rect x=&quot;20&quot; y=&quot;20&quot; width=&quot;280&quot; height=&quot;35&quot; rx=&quot;6&quot; fill=&quot;%23f59e0b&quot;/&gt;&lt;text x=&quot;35&quot; y=&quot;42&quot; font-family=&quot;sans-serif&quot; font-weight=&quot;bold&quot; font-size=&quot;14&quot; fill=&quot;%23ffffff&quot;&gt;CERTIFICADO AFOCAT REGIONAL&lt;/text&gt;&lt;text x=&quot;30&quot; y=&quot;85&quot; font-family=&quot;sans-serif&quot; font-weight=&quot;bold&quot; font-size=&quot;12&quot; fill=&quot;%2378350f&quot;&gt;POLIZA N°: AF-2026-98124&lt;/text&gt;&lt;text x=&quot;30&quot; y=&quot;110&quot; font-family=&quot;sans-serif&quot; font-size=&quot;10&quot; fill=&quot;%2392400e&quot;&gt;VEHICULO: 7421-5B · PADRON: 004&lt;/text&gt;&lt;text x=&quot;30&quot; y=&quot;135&quot; font-family=&quot;sans-serif&quot; font-size=&quot;10&quot; fill=&quot;%23b45309&quot;&gt;VIGENCIA ANUAL HASTA: 15/12/2026&lt;/text&gt;&lt;circle cx=&quot;270&quot; cy=&quot;120&quot; r=&quot;22&quot; fill=&quot;%23fde68a&quot;/&gt;&lt;/svg&gt;"><div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2"><button title="Ver imagen completa" class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/95 text-slate-800 hover:bg-white"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye" aria-hidden="true"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg></button><button title="Volver a tomar foto" class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/95 text-blue-700 hover:bg-white"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-camera" aria-hidden="true"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"></path><circle cx="12" cy="13" r="3"></circle></svg></button><button title="Eliminar foto" class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/95 text-rose-700 hover:bg-white"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2 lucide-trash-2" aria-hidden="true"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button></div></div><div class="p-2.5 bg-white dark:bg-slate-900"><p class="font-bold text-xs text-slate-900 dark:text-white truncate">AFOCAT / SOAT</p><div class="mt-0.5 flex items-center justify-between text-[10px] text-slate-400"><span>2026-03-15 10:35</span><span class="tabular-nums">215 KB</span></div></div></div><div class="group relative rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-2xs hover:shadow-md hover:border-blue-300 dark:hover:border-slate-700 transition-all"><div class="relative aspect-4/3 w-full bg-slate-100 dark:bg-slate-800 overflow-hidden flex items-center justify-center"><img alt="Foto de la Moto / Unidad" class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-200" src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;320&quot; height=&quot;200&quot; viewBox=&quot;0 0 320 200&quot;&gt;&lt;rect width=&quot;320&quot; height=&quot;200&quot; rx=&quot;12&quot; fill=&quot;%23f1f5f9&quot;/&gt;&lt;circle cx=&quot;90&quot; cy=&quot;140&quot; r=&quot;30&quot; fill=&quot;%23334155&quot;/&gt;&lt;circle cx=&quot;230&quot; cy=&quot;140&quot; r=&quot;30&quot; fill=&quot;%23334155&quot;/&gt;&lt;circle cx=&quot;90&quot; cy=&quot;140&quot; r=&quot;16&quot; fill=&quot;%2394a3b8&quot;/&gt;&lt;circle cx=&quot;230&quot; cy=&quot;140&quot; r=&quot;16&quot; fill=&quot;%2394a3b8&quot;/&gt;&lt;path d=&quot;M70 110 L120 70 L210 70 L240 110 Z&quot; fill=&quot;%232563eb&quot;/&gt;&lt;rect x=&quot;110&quot; y=&quot;75&quot; width=&quot;80&quot; height=&quot;30&quot; fill=&quot;%2393c5fd&quot;/&gt;&lt;rect x=&quot;80&quot; y=&quot;110&quot; width=&quot;160&quot; height=&quot;30&quot; fill=&quot;%231d4ed8&quot;/&gt;&lt;text x=&quot;135&quot; y=&quot;130&quot; font-family=&quot;sans-serif&quot; font-weight=&quot;bold&quot; font-size=&quot;11&quot; fill=&quot;%23ffffff&quot;&gt;PAD-004&lt;/text&gt;&lt;/svg&gt;"><div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2"><button title="Ver imagen completa" class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/95 text-slate-800 hover:bg-white"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye" aria-hidden="true"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg></button><button title="Volver a tomar foto" class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/95 text-blue-700 hover:bg-white"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-camera" aria-hidden="true"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"></path><circle cx="12" cy="13" r="3"></circle></svg></button><button title="Eliminar foto" class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/95 text-rose-700 hover:bg-white"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2 lucide-trash-2" aria-hidden="true"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button></div></div><div class="p-2.5 bg-white dark:bg-slate-900"><p class="font-bold text-xs text-slate-900 dark:text-white truncate">Foto de la Moto / Unidad</p><div class="mt-0.5 flex items-center justify-between text-[10px] text-slate-400"><span>2026-03-15 10:40</span><span class="tabular-nums">320 KB</span></div></div></div><button class="flex flex-col items-center justify-center aspect-4/3 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 hover:bg-blue-50/50 dark:hover:bg-slate-800/60 hover:border-blue-400 text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors p-4"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-camera mb-1" aria-hidden="true"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"></path><circle cx="12" cy="13" r="3"></circle></svg><span class="text-xs font-semibold">+ Tomar otra foto</span><span class="text-[10px] text-slate-400">AFOCAT, CITV o Tarjeta</span></button></div></div><div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-2xs"><div class="flex items-center gap-2 pb-3 border-b border-slate-100 dark:border-slate-800"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-car text-indigo-600 dark:text-indigo-400" aria-hidden="true"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><path d="M9 17h6"></path><circle cx="17" cy="17" r="2"></circle></svg><h2 class="text-sm font-bold text-slate-900 dark:text-white">Ficha de la Unidad · Padrón PAD-024</h2></div><form class="mt-4 space-y-4"><div class="grid grid-cols-1 sm:grid-cols-3 gap-3"><div><label class="block text-xs font-semibold text-slate-700 dark:text-slate-300">Placa de Rodaje</label><input class="mt-1 block w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-xs font-bold text-slate-900 dark:text-white uppercase focus:border-amber-500 focus:outline-none" value="PQR-1693"></div><div><label class="block text-xs font-semibold text-slate-700 dark:text-slate-300">Marca y Modelo</label><input class="mt-1 block w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-xs text-slate-900 dark:text-white uppercase focus:border-amber-500 focus:outline-none" value="Honda"></div><div><label class="block text-xs font-semibold text-slate-700 dark:text-slate-300">Año de Fabricación</label><input class="mt-1 block w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-xs text-slate-900 dark:text-white tabular-nums focus:border-amber-500 focus:outline-none" type="number" value="2025"></div></div><div class="grid grid-cols-1 sm:grid-cols-2 gap-3"><div><label class="block text-xs font-semibold text-slate-700 dark:text-slate-300">Conductor Asignado</label><input class="mt-1 block w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-xs text-slate-900 dark:text-white focus:border-amber-500 focus:outline-none" value="Ana Lucía Fernández Torres"></div><div><label class="block text-xs font-semibold text-slate-700 dark:text-slate-300">DNI del Conductor</label><input class="mt-1 block w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-xs text-slate-900 dark:text-white tabular-nums focus:border-amber-500 focus:outline-none" value="410000413"></div></div><div class="flex justify-end pt-3 border-t border-slate-100 dark:border-slate-800"><button type="submit" class="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-5 py-2 text-xs font-semibold text-white shadow-2xs hover:bg-blue-700 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg><span>Guardar y Notificar a la Administración</span></button></div></form></div></div><div class="h-20 lg:hidden w-full shrink-0 pointer-events-none" aria-hidden="true"></div></div></div></main></div>
+    </div>
+  </div>
+
+  <aside class="side">
+    <h2>Ficha del módulo</h2>
+    <p class="sub">Ficha individual del operador/conductor, cámara fotográfica y reportes de unidad.</p>
+
+    <section>
+      <h3>Acceso</h3>
+      <table>
+        <tr><td>Categoría</td><td>Operario</td></tr>
+        <tr><td>Roles con acceso</td><td>Operario</td></tr>
+        <tr><td>Módulo en el menú</td><td>Mi Unidad &amp; Fotos en Vivo</td></tr>
+        <tr><td>Vista</td><td>Tab del sidebar</td></tr>
+      </table>
+    </section>
+
+    <section>
+      <h3>Interacciones</h3>
+      <p class="hint">
+        Usa <code>Tab</code> para recorrer los controles, <code>Enter</code> para activar.
+        El prototipo refleja la UI real: los botones que en el sistema disparan
+        acciones siguen siendo inertes aquí.
+      </p>
+    </section>
+
+    <section>
+      <h3>Archivos</h3>
+      <table>
+        <tr><td>Captura estática</td><td><a href="prototipo.html" style="color:#60a5fa">prototipo.html</a></td></tr>
+        <tr><td>Vector Figma</td><td><a href="prototipo.svg" style="color:#60a5fa">prototipo.svg</a></td></tr>
+        <tr><td>Imagen</td><td><a href="captura.webp" style="color:#60a5fa">captura.webp</a></td></tr>
+      </table>
+    </section>
+
+    <section>
+      <h3>Todos los módulos</h3>
+      <ul class="mod-list">
+          <li><a href="../login/interactivo.html" class=""><span class="dot"></span><span>Inicio de sesión</span></a></li>
+          <li><a href="../portal-inicio/interactivo.html" class=""><span class="dot"></span><span>Portal de Inicio y Cartelera</span></a></li>
+          <li><a href="../dashboard/interactivo.html" class=""><span class="dot"></span><span>Dashboard Operativo &amp; Flota</span></a></li>
+          <li><a href="../padron/interactivo.html" class=""><span class="dot"></span><span>Padrón Vehicular</span></a></li>
+          <li><a href="../nuevo/interactivo.html" class=""><span class="dot"></span><span>Registrar Nueva Unidad</span></a></li>
+          <li><a href="../vehiculo-detalle/interactivo.html" class=""><span class="dot"></span><span>Ficha de Vehículo</span></a></li>
+          <li><a href="../vehiculo-editar/interactivo.html" class=""><span class="dot"></span><span>Editar Vehículo</span></a></li>
+          <li><a href="../personas/interactivo.html" class=""><span class="dot"></span><span>Directorio de Personas</span></a></li>
+          <li><a href="../curso-vial/interactivo.html" class=""><span class="dot"></span><span>Conductores &amp; Curso Vial</span></a></li>
+          <li><a href="../directorio-contacto/interactivo.html" class=""><span class="dot"></span><span>Directorio WhatsApp por Roles</span></a></li>
+          <li><a href="../vencimientos/interactivo.html" class=""><span class="dot"></span><span>Alertas de Vencimiento</span></a></li>
+          <li><a href="../importar-exportar/interactivo.html" class=""><span class="dot"></span><span>Importar / Exportar</span></a></li>
+          <li><a href="../operario-portal/interactivo.html" class="active"><span class="dot"></span><span>Portal del Operario</span></a></li>
+          <li><a href="../historial/interactivo.html" class=""><span class="dot"></span><span>Historial de Auditoría</span></a></li>
+          <li><a href="../usuarios/interactivo.html" class=""><span class="dot"></span><span>Cuentas y Accesos</span></a></li>
+          <li><a href="../configuracion/interactivo.html" class=""><span class="dot"></span><span>Configuración &amp; Empresa</span></a></li>
+          <li><a href="../gestion-portal/interactivo.html" class=""><span class="dot"></span><span>Gestión de Cartelera &amp; Portal</span></a></li>
+          <li><a href="../backup-migracion/interactivo.html" class=""><span class="dot"></span><span>Backup &amp; Migración Multi-BD</span></a></li>
+      </ul>
+    </section>
+  </aside>
+</div>
+
+<script>
+  // Tema
+  const segTema = document.getElementById('segTema');
+  segTema.querySelectorAll('button').forEach(b => {
+    b.onclick = () => {
+      segTema.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', 'false'));
+      b.setAttribute('aria-pressed', 'true');
+      const oscuro = b.dataset.tema === 'dark';
+      document.documentElement.classList.toggle('dark', oscuro);
+      document.body.classList.toggle('dark', oscuro);
+    };
+  });
+
+  // Vista
+  const wrap = document.getElementById('frameWrap');
+  const segVista = document.getElementById('segVista');
+  segVista.querySelectorAll('button').forEach(b => {
+    b.onclick = () => {
+      segVista.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', 'false'));
+      b.setAttribute('aria-pressed', 'true');
+      wrap.classList.toggle('movil', b.dataset.vista === 'movil');
+    };
+  });
+
+  // Navegación
+  document.getElementById('selModulo').onchange = (e) => { location.href = e.target.value; };
+</script>
+</body>
+</html>

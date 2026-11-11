@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Prototipo configuracion — Padrón Vehicular
+  Vector editable generado desde el DOM real del módulo.
+  Importable en Figma por drag & drop: formas vectoriales y texto editable.
+  Regenerar: npm run prototipos:svg
+-->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1136" height="741" viewBox="0 0 1136 741">
+  <title>Prototipo configuracion — Padrón Vehicular</title>
+  <text x="32" y="56.96" font-family="-apple-system, Inter, sans-serif" font-size="24" font-weight="700" fill="#0f172b" text-anchor="start">Configuración Institucional del Padrón</text>
+  <text x="32" y="78.82" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="400" fill="#62748e" text-anchor="start">Parámetros operativos de la asociación de transportistas, reglas de alertas y políticas del sistema</text>
+  <rect x="32" y="108" width="896" height="337" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="57" y="133" width="40" height="40" rx="8" fill="#eef2ff"/>
+  <g transform="translate(66 142) scale(0.92)" stroke="oklch(0.457 0.24 277.023)" fill="none"><path d="M10 12h4"></path><path d="M10 8h4"></path><path d="M14 21v-3a2 2 0 0 0-4 0v3"></path><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"></path><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"></path></g>
+  <text x="109" y="149.82" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="700" fill="#0f172b" text-anchor="start">Datos de la Asociación de Transporte</text>
+  <text x="109" y="167.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Aparece en reportes impresos y exportaciones oficiales</text>
+  <text x="57" y="214.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#314158" text-anchor="start">Razón Social / Nombre de la Asociación</text>
+  <rect x="57" y="222" width="846" height="42" rx="8" fill="#ffffff" fill-opacity="0.5" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="57" y="292.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#314158" text-anchor="start">Subtítulo / Lema Oficial</text>
+  <rect x="57" y="300" width="846" height="42" rx="8" fill="#ffffff" fill-opacity="0.5" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="57" y="370.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#314158" text-anchor="start">RUC de la Asociación</text>
+  <rect x="57" y="378" width="415" height="42" rx="8" fill="#ffffff" fill-opacity="0.5" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="488" y="370.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#314158" text-anchor="start">Jurisdicción / Ciudad</text>
+  <rect x="488" y="378" width="415" height="42" rx="8" fill="#ffffff" fill-opacity="0.5" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="32" y="469" width="896" height="181" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="57" y="494" width="40" height="40" rx="8" fill="#fffbeb"/>
+  <g transform="translate(66 503) scale(0.92)" stroke="oklch(0.555 0.163 48.998)" fill="none"><path d="M10.268 21a2 2 0 0 0 3.464 0"></path><path d="M22 8c0-2.3-.8-4.3-2-6"></path><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path><path d="M4 2C2.8 3.7 2 5.7 2 8"></path></g>
+  <text x="109" y="510.82" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="700" fill="#0f172b" text-anchor="start">Umbrales de Control Preventivo</text>
+  <text x="109" y="528.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Criterio temporal para clasificación de documentos</text>
+  <text x="57" y="575.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#314158" text-anchor="start">Días de anticipación para estado &quot;Próximo a Vencer&quot;</text>
+  <rect x="57" y="583" width="415" height="42" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="488" y="575.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#314158" text-anchor="start">Días de advertencia crítica urgente</text>
+  <rect x="488" y="583" width="415" height="42" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="32" y="674" width="896" height="247" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="57" y="699" width="40" height="40" rx="8" fill="#ecfdf5"/>
+  <g transform="translate(66 708) scale(0.92)" stroke="oklch(0.508 0.118 165.612)" fill="none"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5V19A9 3 0 0 0 21 19V5"></path><path d="M3 12A9 3 0 0 0 21 12"></path></g>
+  <text x="109" y="715.82" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="700" fill="#0f172b" text-anchor="start">Almacenamiento y Persistencia</text>
+  <text x="109" y="733.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Estado de integridad de la base de datos relacional</text>
+  <rect x="57" y="768" width="846" height="128" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="74" y="797.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Motor de Base de Datos:</text>
+  <text x="763.31" y="797.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#0f172b" text-anchor="start">Cloud SQL PostgreSQL</text>
+  <text x="74" y="823.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">ORM / Capa de Datos:</text>
+  <text x="734.78" y="823.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#0f172b" text-anchor="start">Drizzle ORM con TypeScript</text>
+  <text x="74" y="849.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Auditoría:</text>
+  <g transform="translate(721.97 838) scale(0.58)" stroke="oklch(0.696 0.17 162.48)" fill="none"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></g>
+  <text x="739.97" y="849.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#007a55" text-anchor="start">Bitácora Inmutable Activa</text>
+  <text x="74" y="875.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Esquema Relacional:</text>
+  <text x="480.78" y="873.81" font-family="ui-monospace, Inter, sans-serif" font-size="11" font-weight="500" fill="#314158" text-anchor="start">vehicles, owners, drivers, doc_insurance, doc_technical, audit_logs</text>
+  <rect x="665.72" y="945" width="262.28" height="44" rx="8" fill="#4f39f6"/>
+  <g transform="translate(685.72 959) scale(0.67)" stroke="rgb(255, 255, 255)" fill="none"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"></path><path d="M7 3v4a1 1 0 0 0 1 1h7"></path></g>
+  <text x="808.86" y="971.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">Guardar Parámetros Institucionales</text>
+</svg>

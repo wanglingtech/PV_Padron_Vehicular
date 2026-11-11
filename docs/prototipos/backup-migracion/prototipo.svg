@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Prototipo backup-migracion — Padrón Vehicular
+  Vector editable generado desde el DOM real del módulo.
+  Importable en Figma por drag & drop: formas vectoriales y texto editable.
+  Regenerar: npm run prototipos:svg
+-->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1136" height="741" viewBox="0 0 1136 741">
+  <title>Prototipo backup-migracion — Padrón Vehicular</title>
+  <rect x="32" y="32" width="1072" height="102" rx="16" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="57" y="57" width="52" height="52" rx="12" fill="#eef2ff"/>
+  <g transform="translate(69 69) scale(1.17)" stroke="oklch(0.511 0.262 276.966)" fill="none"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5V19A9 3 0 0 0 21 19V5"></path><path d="M3 12A9 3 0 0 0 21 12"></path></g>
+  <text x="121" y="81.96" font-family="-apple-system, Inter, sans-serif" font-size="24" font-weight="700" fill="#0f172b" text-anchor="start">Backup Completo &amp; Migración de Base de Datos</text>
+  <text x="121" y="103.82" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="400" fill="#62748e" text-anchor="start">Respaldo universal (JSON / SQL estándar) para conservar o migrar datos a PostgreSQL, Supabase, Neon o AWS RDS</text>
+  <rect x="917.88" y="65" width="161.13" height="36" rx="8" fill="#f1f5f9"/>
+  <g transform="translate(931.88 75) scale(0.67)" stroke="oklch(0.372 0.044 257.287)" fill="none"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></g>
+  <text x="1010.44" y="87.82" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="500" fill="#314158" text-anchor="middle">Actualizar Estado</text>
+  <rect x="32" y="158" width="256" height="126" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="53" y="191.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#62748e" text-anchor="start">MOTOR DE BASE DE DATOS</text>
+  <text x="53" y="220.06" font-family="-apple-system, Inter, sans-serif" font-size="20" font-weight="700" fill="#0f172b" text-anchor="start">Cloud SQL</text>
+  <g transform="translate(53 240) scale(0.56)" stroke="oklch(0.596 0.145 163.225)" fill="none"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></g>
+  <text x="72.33" y="243.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#009966" text-anchor="start">PostgreSQL Activo &amp; Seguro</text>
+  <text x="72.33" y="259.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="500" fill="#009966" text-anchor="start">PostgreSQL Activo &amp; Seguro</text>
+  <rect x="219" y="197" width="48" height="48" rx="12" fill="#ecfdf5"/>
+  <g transform="translate(231 209)" stroke="oklch(0.596 0.145 163.225)" fill="none"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"></rect><rect width="20" height="8" x="2" y="14" rx="2" ry="2"></rect><line x1="6" x2="6.01" y1="6" y2="6"></line><line x1="6" x2="6.01" y1="18" y2="18"></line></g>
+  <rect x="304" y="158" width="256" height="126" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="325" y="199.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#62748e" text-anchor="start">TABLAS DEL SISTEMA</text>
+  <text x="325" y="228.06" font-family="-apple-system, Inter, sans-serif" font-size="20" font-weight="700" fill="#0f172b" text-anchor="start">15 Tablas</text>
+  <text x="325" y="251.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Esquema Relacional Completo</text>
+  <rect x="491" y="197" width="48" height="48" rx="12" fill="#eff6ff"/>
+  <g transform="translate(503 209)" stroke="oklch(0.546 0.245 262.881)" fill="none"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"></path><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"></path><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"></path></g>
+  <rect x="576" y="158" width="256" height="126" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="597" y="199.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#62748e" text-anchor="start">TOTAL DE REGISTROS</text>
+  <text x="597" y="228.06" font-family="-apple-system, Inter, sans-serif" font-size="20" font-weight="700" fill="#0f172b" text-anchor="start">340</text>
+  <text x="597" y="251.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Filas sincronizadas en vivo</text>
+  <rect x="763" y="197" width="48" height="48" rx="12" fill="#faf5ff"/>
+  <g transform="translate(775 209)" stroke="oklch(0.558 0.288 302.321)" fill="none"><line x1="22" x2="2" y1="12" y2="12"></line><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path><line x1="6" x2="6.01" y1="16" y2="16"></line><line x1="10" x2="10.01" y1="16" y2="16"></line></g>
+  <rect x="848" y="158" width="256" height="126" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="869" y="203.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#62748e" text-anchor="start">ÚLTIMO RESPALDO</text>
+  <text x="869" y="225.82" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="700" fill="#0f172b" text-anchor="start">Pendiente hoy</text>
+  <text x="869" y="247.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Sistema</text>
+  <rect x="1035" y="197" width="48" height="48" rx="12" fill="#fffbeb"/>
+  <g transform="translate(1047 209)" stroke="oklch(0.666 0.179 58.318)" fill="none"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M12 7v5l4 2"></path></g>
+  <g transform="translate(48 322) scale(0.67)" stroke="oklch(0.511 0.262 276.966)" fill="none"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></g>
+  <text x="166.1" y="334.82" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="600" fill="#4f39f6" text-anchor="middle">1. Exportar Respaldo (Backup)</text>
+  <g transform="translate(308.2 322) scale(0.67)" stroke="oklch(0.554 0.046 257.417)" fill="none"><path d="M12 3v12"></path><path d="m17 8-5-5-5 5"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path></g>
+  <text x="411.1" y="334.82" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="500" fill="#62748e" text-anchor="middle">2. Restaurar &amp; Migrar BD</text>
+  <g transform="translate(538 322) scale(0.67)" stroke="oklch(0.554 0.046 257.417)" fill="none"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M12 7v5l4 2"></path></g>
+  <text x="639.19" y="334.82" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="500" fill="#62748e" text-anchor="middle">3. Bitácora de Respaldos</text>
+  <rect x="32" y="379" width="524" height="409.25" rx="16" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="57" y="404" width="52" height="52" rx="12" fill="#eff6ff"/>
+  <g transform="translate(69 416) scale(1.17)" stroke="oklch(0.546 0.245 262.881)" fill="none"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 12a1 1 0 0 0-1 1v1a1 1 0 0 1-1 1 1 1 0 0 1 1 1v1a1 1 0 0 0 1 1"></path><path d="M14 18a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1 1 1 0 0 1-1-1v-1a1 1 0 0 0-1-1"></path></g>
+  <rect x="420.28" y="418" width="110.72" height="24" rx="12" fill="#dbeafe"/>
+  <text x="430.28" y="434.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#193cb8" text-anchor="start">RECOMENDADO</text>
+  <text x="57" y="492.72" font-family="-apple-system, Inter, sans-serif" font-size="18" font-weight="700" fill="#0f172b" text-anchor="start">Respaldo JSON Universal (.json)</text>
+  <text x="57" y="523.82" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="400" fill="#45556c" text-anchor="start">Exporta una copia íntegra con metadatos, firmas de tiempo y resumen de registros de las 15 tablas. Ideal para copias de seguridad periódicas y restauración en un solo clic dentro del sistema.</text>
+  <text x="57" y="546.57" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="400" fill="#45556c" text-anchor="start">Exporta una copia íntegra con metadatos, firmas de tiempo y resumen de registros de las 15 tablas. Ideal para copias de seguridad periódicas y restauración en un solo clic dentro del sistema.</text>
+  <text x="57" y="569.32" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="400" fill="#45556c" text-anchor="start">Exporta una copia íntegra con metadatos, firmas de tiempo y resumen de registros de las 15 tablas. Ideal para copias de seguridad periódicas y restauración en un solo clic dentro del sistema.</text>
+  <rect x="57" y="592.25" width="474" height="84" rx="12" fill="#f8fafc"/>
+  <g transform="translate(69 604.25) scale(0.67)" stroke="oklch(0.696 0.17 162.48)" fill="none"><path d="M20 6 9 17l-5-5"></path></g>
+  <text x="93" y="616.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Incluye vehículos, personas, pólizas, revisiones, trámites y usuarios.</text>
+  <g transform="translate(69 626.25) scale(0.67)" stroke="oklch(0.696 0.17 162.48)" fill="none"><path d="M20 6 9 17l-5-5"></path></g>
+  <text x="93" y="638.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Compatible con restauración modo Fusión (Merge) o Reemplazo total.</text>
+  <g transform="translate(69 648.25) scale(0.67)" stroke="oklch(0.696 0.17 162.48)" fill="none"><path d="M20 6 9 17l-5-5"></path></g>
+  <text x="93" y="660.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Portátil e independiente de versiones de base de datos.</text>
+  <rect x="57" y="702.25" width="474" height="61" fill="none" stroke="#f1f5f9" stroke-width="1"/>
+  <rect x="57" y="719.25" width="474" height="44" rx="12" fill="#155dfc"/>
+  <g transform="translate(169.17 733.25) scale(0.67)" stroke="rgb(255, 255, 255)" fill="none"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></g>
+  <text x="306" y="746.07" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="500" fill="#ffffff" text-anchor="middle">Descargar Respaldo JSON Universal</text>
+  <rect x="580" y="379" width="524" height="409.25" rx="16" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="605" y="404" width="52" height="52" rx="12" fill="#ecfdf5"/>
+  <g transform="translate(617 416) scale(1.17)" stroke="oklch(0.596 0.145 163.225)" fill="none"><path d="M10 12.5 8 15l2 2.5"></path><path d="m14 12.5 2 2.5-2 2.5"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path></g>
+  <rect x="932.69" y="418" width="146.31" height="24" rx="12" fill="#d0fae5"/>
+  <text x="942.69" y="434.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#006045" text-anchor="start">MIGRACIÓN MULTI-BD</text>
+  <text x="605" y="492.72" font-family="-apple-system, Inter, sans-serif" font-size="18" font-weight="700" fill="#0f172b" text-anchor="start">Script SQL Portátil (.sql)</text>
+  <text x="605" y="523.82" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="400" fill="#45556c" text-anchor="start">Genera un script SQL ANSI estándar completo con</text>
+  <text x="651.19" y="547.57" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="400" fill="#45556c" text-anchor="start">e</text>
+  <text x="958.69" y="547.57" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="400" fill="#45556c" text-anchor="start">listo para ejecutarse en cualquier motor relacional.</text>
+  <text x="605" y="571.32" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="400" fill="#45556c" text-anchor="start">listo para ejecutarse en cualquier motor relacional.</text>
+  <text x="919.08" y="524.26" font-family="ui-monospace, Inter, sans-serif" font-size="14" font-weight="400" fill="#4f39f6" text-anchor="start">CREATE TABLE IF NOT EXISTS</text>
+  <text x="605" y="548.01" font-family="ui-monospace, Inter, sans-serif" font-size="14" font-weight="400" fill="#4f39f6" text-anchor="start">CREATE TABLE IF NOT EXISTS</text>
+  <text x="666.19" y="548.01" font-family="ui-monospace, Inter, sans-serif" font-size="14" font-weight="400" fill="#4f39f6" text-anchor="start">INSERT INTO ... ON CONFLICT DO NOTHING</text>
+  <rect x="605" y="594.25" width="474" height="84" rx="12" fill="#f8fafc"/>
+  <g transform="translate(617 606.25) scale(0.67)" stroke="oklch(0.696 0.17 162.48)" fill="none"><path d="M20 6 9 17l-5-5"></path></g>
+  <text x="641" y="618.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Compatible con</text>
+  <text x="1041.56" y="618.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">.</text>
+  <text x="728.11" y="618.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#45556c" text-anchor="start">PostgreSQL, Supabase, Neon, AWS RDS, GCP Cloud SQL</text>
+  <g transform="translate(617 628.25) scale(0.67)" stroke="oklch(0.696 0.17 162.48)" fill="none"><path d="M20 6 9 17l-5-5"></path></g>
+  <text x="641" y="640.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Estructurado en orden estricto de claves foráneas para evitar fallos.</text>
+  <g transform="translate(617 650.25) scale(0.67)" stroke="oklch(0.696 0.17 162.48)" fill="none"><path d="M20 6 9 17l-5-5"></path></g>
+  <text x="641" y="662.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">Escapado seguro de valores y caracteres especiales en UTF-8.</text>
+  <rect x="605" y="702.25" width="474" height="61" fill="none" stroke="#f1f5f9" stroke-width="1"/>
+  <rect x="605" y="719.25" width="474" height="44" rx="12" fill="#009966"/>
+  <g transform="translate(715.61 733.25) scale(0.67)" stroke="rgb(255, 255, 255)" fill="none"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></g>
+  <text x="854" y="746.07" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="500" fill="#ffffff" text-anchor="middle">Descargar Script SQL Multi-BD (.sql)</text>
+  <rect x="32" y="812.25" width="1072" height="765" rx="16" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <g transform="translate(57 841.25) scale(0.83)" stroke="oklch(0.585 0.233 277.117)" fill="none"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"></path><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"></path><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"></path></g>
+  <text x="85" y="857.97" font-family="-apple-system, Inter, sans-serif" font-size="18" font-weight="700" fill="#0f172b" text-anchor="start">Inventario de Tablas y Registros a Exportar</text>
+  <text x="57" y="877.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Conteo en tiempo real de filas que formarán parte del respaldo universal</text>
+  <rect x="964.88" y="847.25" width="114.13" height="24" rx="12" fill="#eef2ff"/>
+  <text x="976.88" y="863.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#432dd7" text-anchor="start">15 Tablas Activas</text>
+  <text x="69" y="922.07" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="700" fill="#62748e" text-anchor="start">Módulo / Tabla</text>
+  <text x="326.25" y="922.07" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="700" fill="#62748e" text-anchor="start">Nombre en Esquema</text>
+  <text x="553.22" y="922.07" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="700" fill="#62748e" text-anchor="start">Descripción</text>
+  <text x="1067" y="922.07" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="700" fill="#62748e" text-anchor="end">Registros</text>
+  <text x="69" y="963.07" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="600" fill="#0f172b" text-anchor="start">Padrón Vehicular</text>
+  <text x="326.25" y="962.17" font-family="ui-monospace, Inter, sans-serif" font-size="12" font-weight="400" fill="#4f39f6" text-anchor="start">vehicles</text>
+  <text x="553.22" y="962.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Unidades de transporte, placas, marcas y estados</text>
+  <rect x="1006.72" y="948.25" width="60.28" height="20" rx="10" fill="#d0fae5"/>
+  <text x="1030.53" y="962.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#006045" text-anchor="end">24</text>
+  <text x="1057" y="962.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#006045" text-anchor="end">filas</text>
+  <text x="69" y="1004.07" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="600" fill="#0f172b" text-anchor="start">Directorio de Personas</text>
+  <text x="326.25" y="1003.17" font-family="ui-monospace, Inter, sans-serif" font-size="12" font-weight="400" fill="#4f39f6" text-anchor="start">persons</text>
+  <text x="553.22" y="1003.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Propietarios, choferes y concesionarios</text>
+  <rect x="1006.72" y="989.25" width="60.28" height="20" rx="10" fill="#d0fae5"/>
+  <text x="1030.53" y="1003.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#006045" text-anchor="end">20</text>
+  <text x="1057" y="1003.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#006045" text-anchor="end">filas</text>
+  <text x="69" y="1045.07" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="600" fill="#0f172b" text-anchor="start">Propietarios de Flota</text>
+  <text x="326.25" y="1044.17" font-family="ui-monospace, Inter, sans-serif" font-size="12" font-weight="400" fill="#4f39f6" text-anchor="start">vehicleOwners</text>
+  <text x="553.22" y="1044.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Asociaciones de titularidad por unidad</text>
+  <rect x="1006.72" y="1030.25" width="60.28" height="20" rx="10" fill="#d0fae5"/>
+  <text x="1030.53" y="1044.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#006045" text-anchor="end">24</text>
+  <text x="1057" y="1044.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#006045" text-anchor="end">filas</text>
+  <text x="69" y="1086.07" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="600" fill="#0f172b" text-anchor="start">Conductores Asignados</text>
+  <text x="326.25" y="1085.17" font-family="ui-monospace, Inter, sans-serif" font-size="12" font-weight="400" fill="#4f39f6" text-anchor="start">vehicleDrivers</text>
+  <text x="553.22" y="1085.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Historial de choferes asignados a vehículos</text>
+  <rect x="1006.72" y="1071.25" width="60.28" height="20" rx="10" fill="#d0fae5"/>
+  <text x="1030.53" y="1085.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#006045" text-anchor="end">10</text>
+  <text x="1057" y="1085.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#006045" text-anchor="end">filas</text>
+  <text x="69" y="1127.07" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="600" fill="#0f172b" text-anchor="start">Pólizas AFOCAT / SOAT</text>
+  <text x="326.25" y="1126.17" font-family="ui-monospace, Inter, sans-serif" font-size="12" font-weight="400" fill="#4f39f6" text-anchor="start">insurances</text>
+  <text x="553.22" y="1126.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Vencimientos y certificados de seguro</text>
+  <rect x="1006.72" y="1112.25" width="60.28" height="20" rx="10" fill="#d0fae5"/>
+  <text x="1030.53" y="1126.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#006045" text-anchor="end">48</text>
+  <text x="1057" y="1126.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#006045" text-anchor="end">filas</text>
+  <text x="69" y="1168.07" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="600" fill="#0f172b" text-anchor="start">Revisiones CITV</text>
+  <text x="326.25" y="1167.17" font-family="ui-monospace, Inter, sans-serif" font-size="12" font-weight="400" fill="#4f39f6" text-anchor="start">technicalInspections</text>
+  <text x="553.22" y="1167.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Inspecciones técnicas vehiculares vigentes</text>
+  <rect x="1006.72" y="1153.25" width="60.28" height="20" rx="10" fill="#d0fae5"/>
+  <text x="1030.53" y="1167.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#006045" text-anchor="end">48</text>
+  <text x="1057" y="1167.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#006045" text-anchor="end">filas</text>
+  <text x="69" y="1209.07" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="600" fill="#0f172b" text-anchor="start">Cursos de Educación Vial</text>
+  <text x="326.25" y="1208.17" font-family="ui-monospace, Inter, sans-serif" font-size="12" font-weight="400" fill="#4f39f6" text-anchor="start">roadSafetyCourses</text>
+  <text x="553.22" y="1208.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Capacitaciones anuales aprobadas</text>
+  <rect x="1006.72" y="1194.25" width="60.28" height="20" rx="10" fill="#d0fae5"/>
+  <text x="1030.53" y="1208.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#006045" text-anchor="end">48</text>
+  <text x="1057" y="1208.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#006045" text-anchor="end">filas</text>
+  <text x="69" y="1250.07" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="600" fill="#0f172b" text-anchor="start">Licencias de Conducir</text>
+  <text x="326.25" y="1249.17" font-family="ui-monospace, Inter, sans-serif" font-size="12" font-weight="400" fill="#4f39f6" text-anchor="start">driverLicenses</text>
+  <text x="553.22" y="1249.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Brevetes MTC de conductores</text>
+  <rect x="1006.72" y="1235.25" width="60.28" height="20" rx="10" fill="#d0fae5"/>
+  <text x="1030.53" y="1249.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#006045" text-anchor="end">48</text>
+  <text x="1057" y="1249.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#006045" text-anchor="end">filas</text>
+  <text x="69" y="1291.07" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="600" fill="#0f172b" text-anchor="start">Historial de Padrón</text>
+  <text x="326.25" y="1290.17" font-family="ui-monospace, Inter, sans-serif" font-size="12" font-weight="400" fill="#4f39f6" text-anchor="start">vehiclePadronHistory</text>
+  <text x="553.22" y="1290.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Trazabilidad de cambios de número interno</text>
+  <rect x="1013.63" y="1276.25" width="53.38" height="20" rx="10" fill="#d0fae5"/>
+  <text x="1030.53" y="1290.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#006045" text-anchor="end">6</text>
+  <text x="1057" y="1290.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#006045" text-anchor="end">filas</text>
+  <text x="69" y="1332.07" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="600" fill="#0f172b" text-anchor="start">Trámites de Padrón</text>
+  <text x="326.25" y="1331.17" font-family="ui-monospace, Inter, sans-serif" font-size="12" font-weight="400" fill="#4f39f6" text-anchor="start">padronChangeRequests</text>
+  <text x="553.22" y="1331.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Solicitudes y resoluciones de cambio/permuta</text>
+  <rect x="1013.63" y="1317.25" width="53.38" height="20" rx="10" fill="#d0fae5"/>
+  <text x="1030.53" y="1331.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#006045" text-anchor="end">3</text>
+  <text x="1057" y="1331.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#006045" text-anchor="end">filas</text>
+  <text x="69" y="1373.07" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="600" fill="#0f172b" text-anchor="start">Cartelera Digital</text>
+  <text x="326.25" y="1372.17" font-family="ui-monospace, Inter, sans-serif" font-size="12" font-weight="400" fill="#4f39f6" text-anchor="start">portalPosts</text>
+  <text x="553.22" y="1372.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Anuncios, videos, festividades y directivas</text>
+  <rect x="1013.63" y="1358.25" width="53.38" height="20" rx="10" fill="#d0fae5"/>
+  <text x="1030.53" y="1372.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#006045" text-anchor="end">6</text>
+  <text x="1057" y="1372.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#006045" text-anchor="end">filas</text>
+  <text x="69" y="1414.07" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="600" fill="#0f172b" text-anchor="start">Agenda &amp; Calendario</text>
+  <text x="326.25" y="1413.17" font-family="ui-monospace, Inter, sans-serif" font-size="12" font-weight="400" fill="#4f39f6" text-anchor="start">portalEvents</text>
+  <text x="553.22" y="1413.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Asambleas, operativos e inspecciones programadas</text>
+  <rect x="1013.63" y="1399.25" width="53.38" height="20" rx="10" fill="#d0fae5"/>
+  <text x="1030.53" y="1413.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#006045" text-anchor="end">6</text>
+  <text x="1057" y="1413.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#006045" text-anchor="end">filas</text>
+  <text x="69" y="1455.07" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="600" fill="#0f172b" text-anchor="start">Roles y Permisos</text>
+  <text x="326.25" y="1454.17" font-family="ui-monospace, Inter, sans-serif" font-size="12" font-weight="400" fill="#4f39f6" text-anchor="start">systemRoles</text>
+  <text x="553.22" y="1454.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Perfiles de acceso y seguridad RBAC</text>
+  <rect x="1013.63" y="1440.25" width="53.38" height="20" rx="10" fill="#d0fae5"/>
+  <text x="1030.53" y="1454.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#006045" text-anchor="end">8</text>
+  <text x="1057" y="1454.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#006045" text-anchor="end">filas</text>
+  <text x="69" y="1496.07" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="600" fill="#0f172b" text-anchor="start">Usuarios del Sistema</text>
+  <text x="326.25" y="1495.17" font-family="ui-monospace, Inter, sans-serif" font-size="12" font-weight="400" fill="#4f39f6" text-anchor="start">users</text>
+  <text x="553.22" y="1495.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Cuentas de operadores y directivos</text>
+  <rect x="1013.63" y="1481.25" width="53.38" height="20" rx="10" fill="#d0fae5"/>
+  <text x="1030.53" y="1495.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#006045" text-anchor="end">1</text>
+  <text x="1057" y="1495.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#006045" text-anchor="end">filas</text>
+  <text x="69" y="1537.07" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="600" fill="#0f172b" text-anchor="start">Bitácora de Auditoría</text>
+  <text x="326.25" y="1536.17" font-family="ui-monospace, Inter, sans-serif" font-size="12" font-weight="400" fill="#4f39f6" text-anchor="start">auditLogs</text>
+  <text x="553.22" y="1536.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Trazabilidad inmutable de cambios y respaldos</text>
+  <rect x="1006.72" y="1522.25" width="60.28" height="20" rx="10" fill="#d0fae5"/>
+  <text x="1030.53" y="1536.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#006045" text-anchor="end">40</text>
+  <text x="1057" y="1536.73" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#006045" text-anchor="end">filas</text>
+</svg>

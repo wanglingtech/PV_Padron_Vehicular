@@ -70,7 +70,7 @@ Mitigado en la Fase 1:
 - Sesión con JWT firmado en cookie `HttpOnly` y Bearer para API.
 - `helmet`, CORS configurable y rate limit en el login.
 
-El detalle y el plan de mitigación están en [`docs/SEGURIDAD.md`](docs/SEGURIDAD.md) y [`docs/ROADMAP.md`](docs/ROADMAP.md).
+El detalle y el plan de mitigación están en [`docs/markdown/SEGURIDAD.md`](docs/markdown/SEGURIDAD.md) y [`docs/markdown/ROADMAP.md`](docs/markdown/ROADMAP.md).
 
 ## Buenas prácticas para contribuidores
 

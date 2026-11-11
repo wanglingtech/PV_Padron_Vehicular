@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Prototipos de UI · Padrón Vehicular</title>
+<link rel="stylesheet" href="./assets/app.css" />
+<style>
+  body { background: #020617; color: #e2e8f0; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 40px 24px 80px; }
+  header.top { display: flex; align-items: center; gap: 14px; margin-bottom: 8px; }
+  .dot { width: 11px; height: 11px; border-radius: 50%; background: #3b82f6; box-shadow: 0 0 0 4px rgba(59,130,246,.2); }
+  h1 { margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -.4px; color: #fff; }
+  .sub { color: #64748b; font-size: 13px; margin: 6px 0 36px; }
+  section { margin-bottom: 34px; }
+  section h2 { font-size: 11px; text-transform: uppercase; letter-spacing: 1.1px; color: #94a3b8; font-weight: 700; margin: 0 0 12px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(272px, 1fr)); gap: 14px; }
+  .card {
+    display: block; text-decoration: none; padding: 16px 18px 18px;
+    background: rgba(30,41,59,.55); border: 1px solid rgba(51,65,85,.75);
+    border-radius: 14px; transition: border-color .15s, transform .15s, background .15s;
+  }
+  .card:hover { border-color: #3b82f6; transform: translateY(-2px); background: rgba(30,41,59,.75); }
+  .card-head { margin-bottom: 9px; }
+  .pill { font-size: 9.5px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase; color: #60a5fa; background: rgba(37,99,235,.14); border: 1px solid rgba(37,99,235,.3); padding: 3px 9px; border-radius: 999px; }
+  .card h3 { margin: 0 0 6px; font-size: 14.5px; font-weight: 700; color: #fff; }
+  .card p { margin: 0 0 12px; font-size: 12px; line-height: 17px; color: #94a3b8; }
+  .go { font-size: 11.5px; font-weight: 700; color: #3b82f6; }
+  .links { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .links .l {
+    font-size: 9.5px; font-weight: 700; letter-spacing: .4px; text-transform: uppercase;
+    color: #64748b; background: #0f172a; border: 1px solid #1e293b;
+    padding: 2px 7px; border-radius: 6px;
+  }
+  .links .go { margin-right: 4px; }
+  footer { margin-top: 46px; padding-top: 22px; border-top: 1px solid #1e293b; font-size: 12px; color: #64748b; line-height: 19px; }
+  footer a { color: #60a5fa; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <span class="dot"></span>
+    <h1>Prototipos de UI · Padrón Vehicular</h1>
+  </header>
+  <p class="sub">
+    18 pantallas capturadas del sistema real · Asociación Central de Transportes en Mototaxis
+  </p>
+    <section>
+      <h2>Acceso</h2>
+      <div class="grid">
+      <a class="card" href="./login/prototipo.html">
+        <div class="card-head">
+          <span class="pill">Acceso</span>
+        </div>
+        <h3>Inicio de sesión</h3>
+        <p>Autenticación institucional del sistema.</p>
+        <div class="links">
+          <span class="go">Abrir →</span>
+          <span class="l">HTML</span>
+          <span class="l">Interactivo</span>
+          <span class="l">SVG</span>
+          <span class="l">WebP</span>
+        </div>
+      </a>
+      </div>
+    </section>
+    <section>
+      <h2>Portal</h2>
+      <div class="grid">
+      <a class="card" href="./portal-inicio/prototipo.html">
+        <div class="card-head">
+          <span class="pill">Portal</span>
+        </div>
+        <h3>Portal de Inicio y Cartelera</h3>
+        <p>Cartelera digital institucional, carrusel de eventos, comunicados y agenda.</p>
+        <div class="links">
+          <span class="go">Abrir →</span>
+          <span class="l">HTML</span>
+          <span class="l">Interactivo</span>
+          <span class="l">SVG</span>
+          <span class="l">WebP</span>
+        </div>
+      </a>
+      </div>
+    </section>
+    <section>
+      <h2>Operaciones</h2>
+      <div class="grid">
+      <a class="card" href="./dashboard/prototipo.html">
+        <div class="card-head">
+          <span class="pill">Operaciones</span>
+        </div>
+        <h3>Dashboard Operativo &amp; Flota</h3>
+        <p>Métricas clave de flota, resumen del estado operativo y alertas rápidas.</p>
+        <div class="links">
+          <span class="go">Abrir →</span>
+          <span class="l">HTML</span>
+          <span class="l">Interactivo</span>
+          <span class="l">SVG</span>
+          <span class="l">WebP</span>
+        </div>
+      </a>
+      <a class="card" href="./padron/prototipo.html">
+        <div class="card-head">
+          <span class="pill">Operaciones</span>
+        </div>
+        <h3>Padrón Vehicular</h3>
+        <p>Padrón maestro, búsqueda avanzada, filtros e historial.</p>
+        <div class="links">
+          <span class="go">Abrir →</span>
+          <span class="l">HTML</span>
+          <span class="l">Interactivo</span>
+          <span class="l">SVG</span>
+          <span class="l">WebP</span>
+        </div>
+      </a>
+      <a class="card" href="./nuevo/prototipo.html">
+        <div class="card-head">
+          <span class="pill">Operaciones</span>
+        </div>
+        <h3>Registrar Nueva Unidad</h3>
+        <p>Alta de vehículos con placa, motor y documentación inicial.</p>
+        <div class="links">
+          <span class="go">Abrir →</span>
+          <span class="l">HTML</span>
+          <span class="l">Interactivo</span>
+          <span class="l">SVG</span>
+          <span class="l">WebP</span>
+        </div>
+      </a>
+      <a class="card" href="./vehiculo-detalle/prototipo.html">
+        <div class="card-head">
+          <span class="pill">Operaciones</span>
+        </div>
+        <h3>Ficha de Vehículo</h3>
+        <p>Detalle de una unidad: propietario, conductor, documentos e historial.</p>
+        <div class="links">
+          <span class="go">Abrir →</span>
+          <span class="l">HTML</span>
+          <span class="l">Interactivo</span>
+          <span class="l">SVG</span>
+          <span class="l">WebP</span>
+        </div>
+      </a>
+      <a class="card" href="./vehiculo-editar/prototipo.html">
+        <div class="card-head">
+          <span class="pill">Operaciones</span>
+        </div>
+        <h3>Editar Vehículo</h3>
+        <p>Formulario de edición de un registro del padrón.</p>
+        <div class="links">
+          <span class="go">Abrir →</span>
+          <span class="l">HTML</span>
+          <span class="l">Interactivo</span>
+          <span class="l">SVG</span>
+          <span class="l">WebP</span>
+        </div>
+      </a>
+      </div>
+    </section>
+    <section>
+      <h2>Personal</h2>
+      <div class="grid">
+      <a class="card" href="./personas/prototipo.html">
+        <div class="card-head">
+          <span class="pill">Personal</span>
+        </div>
+        <h3>Directorio de Personas</h3>
+        <p>Padrón de propietarios y conductores con DNI, contacto y ficha técnica.</p>
+        <div class="links">
+          <span class="go">Abrir →</span>
+          <span class="l">HTML</span>
+          <span class="l">Interactivo</span>
+          <span class="l">SVG</span>
+          <span class="l">WebP</span>
+        </div>
+      </a>
+      <a class="card" href="./curso-vial/prototipo.html">
+        <div class="card-head">
+          <span class="pill">Personal</span>
+        </div>
+        <h3>Conductores &amp; Curso Vial</h3>
+        <p>Gestión del curso de educación vial anual y actas presenciales.</p>
+        <div class="links">
+          <span class="go">Abrir →</span>
+          <span class="l">HTML</span>
+          <span class="l">Interactivo</span>
+          <span class="l">SVG</span>
+          <span class="l">WebP</span>
+        </div>
+      </a>
+      <a class="card" href="./directorio-contacto/prototipo.html">
+        <div class="card-head">
+          <span class="pill">Personal</span>
+        </div>
+        <h3>Directorio WhatsApp por Roles</h3>
+        <p>Directorio de contacto y comunicación vía WhatsApp según rol.</p>
+        <div class="links">
+          <span class="go">Abrir →</span>
+          <span class="l">HTML</span>
+          <span class="l">Interactivo</span>
+          <span class="l">SVG</span>
+          <span class="l">WebP</span>
+        </div>
+      </a>
+      </div>
+    </section>
+    <section>
+      <h2>Control</h2>
+      <div class="grid">
+      <a class="card" href="./vencimientos/prototipo.html">
+        <div class="card-head">
+          <span class="pill">Control</span>
+        </div>
+        <h3>Alertas de Vencimiento</h3>
+        <p>Monitoreo de SOAT/AFOCAT, CITV, licencias y cursos con semaforización.</p>
+        <div class="links">
+          <span class="go">Abrir →</span>
+          <span class="l">HTML</span>
+          <span class="l">Interactivo</span>
+          <span class="l">SVG</span>
+          <span class="l">WebP</span>
+        </div>
+      </a>
+      <a class="card" href="./importar-exportar/prototipo.html">
+        <div class="card-head">
+          <span class="pill">Control</span>
+        </div>
+        <h3>Importar / Exportar</h3>
+        <p>Carga masiva con diagnóstico y descarga de la base de datos.</p>
+        <div class="links">
+          <span class="go">Abrir →</span>
+          <span class="l">HTML</span>
+          <span class="l">Interactivo</span>
+          <span class="l">SVG</span>
+          <span class="l">WebP</span>
+        </div>
+      </a>
+      </div>
+    </section>
+    <section>
+      <h2>Operario</h2>
+      <div class="grid">
+      <a class="card" href="./operario-portal/prototipo.html">
+        <div class="card-head">
+          <span class="pill">Operario</span>
+        </div>
+        <h3>Portal del Operario</h3>
+        <p>Ficha individual del operador, cámara fotográfica y reportes de unidad.</p>
+        <div class="links">
+          <span class="go">Abrir →</span>
+          <span class="l">HTML</span>
+          <span class="l">Interactivo</span>
+          <span class="l">SVG</span>
+          <span class="l">WebP</span>
+        </div>
+      </a>
+      </div>
+    </section>
+    <section>
+      <h2>Administración</h2>
+      <div class="grid">
+      <a class="card" href="./historial/prototipo.html">
+        <div class="card-head">
+          <span class="pill">Administración</span>
+        </div>
+        <h3>Historial de Auditoría</h3>
+        <p>Bitácora inmutable de modificaciones y trazabilidad.</p>
+        <div class="links">
+          <span class="go">Abrir →</span>
+          <span class="l">HTML</span>
+          <span class="l">Interactivo</span>
+          <span class="l">SVG</span>
+          <span class="l">WebP</span>
+        </div>
+      </a>
+      <a class="card" href="./usuarios/prototipo.html">
+        <div class="card-head">
+          <span class="pill">Administración</span>
+        </div>
+        <h3>Cuentas y Accesos</h3>
+        <p>Cuentas, asignación de roles y matriz de permisos.</p>
+        <div class="links">
+          <span class="go">Abrir →</span>
+          <span class="l">HTML</span>
+          <span class="l">Interactivo</span>
+          <span class="l">SVG</span>
+          <span class="l">WebP</span>
+        </div>
+      </a>
+      <a class="card" href="./configuracion/prototipo.html">
+        <div class="card-head">
+          <span class="pill">Administración</span>
+        </div>
+        <h3>Configuración &amp; Empresa</h3>
+        <p>Personalización institucional, umbrales y almacenamiento.</p>
+        <div class="links">
+          <span class="go">Abrir →</span>
+          <span class="l">HTML</span>
+          <span class="l">Interactivo</span>
+          <span class="l">SVG</span>
+          <span class="l">WebP</span>
+        </div>
+      </a>
+      <a class="card" href="./gestion-portal/prototipo.html">
+        <div class="card-head">
+          <span class="pill">Administración</span>
+        </div>
+        <h3>Gestión de Cartelera &amp; Portal</h3>
+        <p>Configuración de carrusel, multimedia, vigencia y agenda.</p>
+        <div class="links">
+          <span class="go">Abrir →</span>
+          <span class="l">HTML</span>
+          <span class="l">Interactivo</span>
+          <span class="l">SVG</span>
+          <span class="l">WebP</span>
+        </div>
+      </a>
+      <a class="card" href="./backup-migracion/prototipo.html">
+        <div class="card-head">
+          <span class="pill">Administración</span>
+        </div>
+        <h3>Backup &amp; Migración Multi-BD</h3>
+        <p>Copias de seguridad en JSON y SQL para migración a cualquier base.</p>
+        <div class="links">
+          <span class="go">Abrir →</span>
+          <span class="l">HTML</span>
+          <span class="l">Interactivo</span>
+          <span class="l">SVG</span>
+          <span class="l">WebP</span>
+        </div>
+      </a>
+      </div>
+    </section>
+  <footer>
+    <p style="margin:0 0 8px">
+      Cada prototipo reproduce la <strong>UI real</strong> del módulo, capturada del sistema en ejecución
+      con datos de demostración. Ábrelos como HTML autónomo en cualquier navegador.
+    </p>
+    <p style="margin:0">
+      El código de cada vista está en <code>frontend/src/views/</code>. Para regenerar las capturas:
+      <code>npm run prototipos:capturar</code> · Documentación en <code>docs/prototipos/README.md</code>.
+    </p>
+  </footer>
+</div>
+</body>
+</html>

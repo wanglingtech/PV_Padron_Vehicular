@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Prototipo importar-exportar — Padrón Vehicular
+  Vector editable generado desde el DOM real del módulo.
+  Importable en Figma por drag & drop: formas vectoriales y texto editable.
+  Regenerar: npm run prototipos:svg
+-->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1136" height="741" viewBox="0 0 1136 741">
+  <title>Prototipo importar-exportar — Padrón Vehicular</title>
+  <text x="32" y="56.96" font-family="-apple-system, Inter, sans-serif" font-size="24" font-weight="700" fill="#0f172b" text-anchor="start">Migración, Importación y Exportación de Datos</text>
+  <text x="32" y="78.82" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="400" fill="#62748e" text-anchor="start">Transición segura desde hojas Excel con previsualización por tabla paginada, filtros, edición directa por fila y verificación previa a la base de datos.</text>
+  <rect x="32" y="116" width="1072" height="327" rx="16" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="57" y="149" width="39.31" height="40" rx="12" fill="#ecfdf5"/>
+  <g transform="translate(65.66 158) scale(0.92)" stroke="oklch(0.508 0.118 165.612)" fill="none"><path d="M12 3v12"></path><path d="m17 8-5-5-5 5"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path></g>
+  <text x="108.31" y="158.38" font-family="-apple-system, Inter, sans-serif" font-size="16" font-weight="700" fill="#0f172b" text-anchor="start">Importación Inteligente desde PDF, Excel o CSV</text>
+  <rect x="472" y="143.5" width="107.52" height="19" rx="6" fill="#f3e8ff"/>
+  <text x="480" y="156.42" font-family="-apple-system, Inter, sans-serif" font-size="10" font-weight="700" fill="#8200db" text-anchor="start">IA + VALIDACIÓN</text>
+  <text x="108.31" y="177.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Sube resoluciones municipales, padrones vehiculares en PDF o planillas Excel/CSV. Podrás verificar, corregir o descartar filas antes de incorporarlas.</text>
+  <text x="108.31" y="193.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Sube resoluciones municipales, padrones vehiculares en PDF o planillas Excel/CSV. Podrás verificar, corregir o descartar filas antes de incorporarlas.</text>
+  <rect x="881.86" y="144" width="197.14" height="50" rx="12" fill="#ffffff" stroke="#cad5e2" stroke-width="1"/>
+  <g transform="translate(896.86 161) scale(0.65)" stroke="oklch(0.372 0.044 257.287)" fill="none"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M12 18v-6"></path><path d="m9 15 3 3 3-3"></path></g>
+  <text x="992.27" y="165.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#314158" text-anchor="middle">Descargar Plantilla Modelo</text>
+  <text x="992.26" y="181.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#314158" text-anchor="middle">Descargar Plantilla Modelo</text>
+  <rect x="57" y="238" width="1022" height="180" rx="16" fill="#ffffff" fill-opacity="0.5" stroke="#cad5e2" stroke-width="2"/>
+  <rect x="520" y="272" width="44" height="44" rx="16" fill="#fff1f2"/>
+  <g transform="translate(530 282)" stroke="oklch(0.586 0.253 17.585)" fill="none"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></g>
+  <rect x="572" y="272" width="44" height="44" rx="16" fill="#ecfdf5"/>
+  <g transform="translate(582 282)" stroke="oklch(0.596 0.145 163.225)" fill="none"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M8 13h2"></path><path d="M14 13h2"></path><path d="M8 17h2"></path><path d="M14 17h2"></path></g>
+  <text x="567.99" y="342.82" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="700" fill="#1d293d" text-anchor="middle">Arrastre su documento PDF (.pdf), Excel (.xlsx, .xls) o CSV (.csv) aquí</text>
+  <text x="568" y="364.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="middle">Soporta nóminas oficiales en PDF escaneadas/digitales (procesadas con IA), así como planillas Excel y CSV con validación en vivo.</text>
+  <text x="567.99" y="380.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="middle">Soporta nóminas oficiales en PDF escaneadas/digitales (procesadas con IA), así como planillas Excel y CSV con validación en vivo.</text>
+  <rect x="32" y="475" width="1072" height="224" rx="16" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="57" y="500" width="40" height="40" rx="12" fill="#eff6ff"/>
+  <g transform="translate(66 509) scale(0.92)" stroke="oklch(0.488 0.243 264.376)" fill="none"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></g>
+  <text x="109" y="517.38" font-family="-apple-system, Inter, sans-serif" font-size="16" font-weight="700" fill="#0f172b" text-anchor="start">Exportación Oficial del Padrón</text>
+  <text x="109" y="536.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#62748e" text-anchor="start">Genere copias de respaldo o reportes completos listos para imprimir o remitir a la autoridad de transporte.</text>
+  <text x="57" y="582.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">El archivo exportado contiene todas las secciones: datos del vehículo, propietarios principales y co-propietarios, datos del conductor, estado de AFOCAT/SOAT, revisiones técnicas CITV, cursos de educación vial y licencias B-II-C.</text>
+  <text x="57" y="601.98" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="400" fill="#45556c" text-anchor="start">El archivo exportado contiene todas las secciones: datos del vehículo, propietarios principales y co-propietarios, datos del conductor, estado de AFOCAT/SOAT, revisiones técnicas CITV, cursos de educación vial y licencias B-II-C.</text>
+  <rect x="57" y="632" width="234" height="42" rx="12" fill="#155dfc"/>
+  <g transform="translate(73 645) scale(0.67)" stroke="rgb(255, 255, 255)" fill="none"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M8 13h2"></path><path d="M14 13h2"></path><path d="M8 17h2"></path><path d="M14 17h2"></path></g>
+  <text x="186" y="657.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#ffffff" text-anchor="middle">Descargar Padrón en Excel (.xlsx)</text>
+  <rect x="303" y="632" width="185.06" height="42" rx="12" fill="#ffffff" stroke="#cad5e2" stroke-width="1"/>
+  <g transform="translate(320 645) scale(0.67)" stroke="oklch(0.372 0.044 257.287)" fill="none"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></g>
+  <text x="407.53" y="657.48" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="600" fill="#314158" text-anchor="middle">Descargar en CSV (.csv)</text>
+</svg>

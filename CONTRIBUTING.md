@@ -27,7 +27,7 @@ npm run build
 
 ## Documentación completa
 
-- [`docs/CONTRIBUCION.md`](docs/CONTRIBUCION.md) — flujo, ramas, commits y revisión.
+- [`docs/markdown/CONTRIBUCION.md`](docs/markdown/CONTRIBUCION.md) — flujo, ramas, commits y revisión.
 - [`AGENTS.md`](AGENTS.md) — reglas para agentes de IA.
 - [`.agents/`](.agents/) — estándares de código, seguridad, BD y pruebas.
 - [`SECURITY.md`](SECURITY.md) — cómo reportar vulnerabilidades.

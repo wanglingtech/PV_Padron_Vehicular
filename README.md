@@ -58,25 +58,37 @@ Además incluye un **portal institucional** (cartelera, comunicados y agenda), u
 
 ## 📸 Capturas
 
-> Las capturas se encuentran en [`docs/screenshots/`](docs/screenshots/). Si acabas de clonar el repositorio y aún no existen, consulta [docs/screenshots/README.md](docs/screenshots/README.md).
+> Las capturas se encuentran en [`docs/screenshots/`](docs/screenshots/) en formato **WebP** (un 45–70% más livianas que PNG). Si acabas de clonar el repositorio y aún no existen, consulta [docs/screenshots/README.md](docs/screenshots/README.md).
 
 | Módulo | Captura |
 | :--- | :--- |
-| Inicio de sesión | ![Login](docs/screenshots/01-login.png) |
-| Portal institucional | ![Portal](docs/screenshots/02-portal-inicio.png) |
-| Dashboard estadístico | ![Dashboard](docs/screenshots/03-dashboard.png) |
-| Padrón vehicular | ![Padrón](docs/screenshots/04-padron.png) |
-| Directorio de personas | ![Personas](docs/screenshots/05-personas.png) |
-| Conductores y curso vial | ![Curso vial](docs/screenshots/06-curso-vial.png) |
-| Alertas de vencimiento | ![Vencimientos](docs/screenshots/07-vencimientos.png) |
-| Importar / Exportar | ![Importar](docs/screenshots/08-importar-exportar.png) |
-| Portal del operario | ![Operario](docs/screenshots/09-operario-portal.png) |
-| Historial de auditoría | ![Auditoría](docs/screenshots/10-historial.png) |
-| Cuentas y accesos | ![Usuarios](docs/screenshots/11-usuarios.png) |
-| Configuración | ![Configuración](docs/screenshots/12-configuracion.png) |
-| Gestión del portal | ![Gestión portal](docs/screenshots/13-gestion-portal.png) |
-| Backup y migración | ![Backup](docs/screenshots/14-backup-migracion.png) |
-| Directorio WhatsApp | ![Directorio](docs/screenshots/15-directorio-whatsapp.png) |
+| Inicio de sesión | ![Login](docs/screenshots/01-login.webp) |
+| Portal institucional | ![Portal](docs/screenshots/02-portal-inicio.webp) |
+| Dashboard estadístico | ![Dashboard](docs/screenshots/03-dashboard.webp) |
+| Padrón vehicular | ![Padrón](docs/screenshots/04-padron.webp) |
+| Directorio de personas | ![Personas](docs/screenshots/05-personas.webp) |
+| Conductores y curso vial | ![Curso vial](docs/screenshots/06-curso-vial.webp) |
+| Alertas de vencimiento | ![Vencimientos](docs/screenshots/07-vencimientos.webp) |
+| Importar / Exportar | ![Importar](docs/screenshots/08-importar-exportar.webp) |
+| Portal del operario | ![Operario](docs/screenshots/09-operario-portal.webp) |
+| Historial de auditoría | ![Auditoría](docs/screenshots/10-historial.webp) |
+| Cuentas y accesos | ![Usuarios](docs/screenshots/11-usuarios.webp) |
+| Configuración | ![Configuración](docs/screenshots/12-configuracion.webp) |
+| Gestión del portal | ![Gestión portal](docs/screenshots/13-gestion-portal.webp) |
+| Backup y migración | ![Backup](docs/screenshots/14-backup-migracion.webp) |
+| Directorio WhatsApp | ![Directorio](docs/screenshots/15-directorio-whatsapp.webp) |
+
+### 🧩 Prototipos de UI
+
+Cada módulo tiene además un **prototipo navegable** generado desde la UI real del
+sistema (no es un rediseño): HTML estático, versión interactiva con tema claro/oscuro
+y vista móvil, vector SVG importable en Figma y captura WebP.
+
+```bash
+npm run prototipos:servir   # http://localhost:4321/
+```
+
+Ver [`docs/prototipos/README.md`](docs/prototipos/README.md).
 
 ---
 
@@ -112,7 +124,7 @@ Además incluye un **portal institucional** (cartelera, comunicados y agenda), u
 | `secretaria` | Personas, Curso Vial, Directorio, Gestión del Portal | Inicio, Dashboard, Padrón, Vencimientos, Auditoría |
 | `registrador` | Registrar Unidad, Padrón, Personas | Inicio, Dashboard, Curso Vial, Vencimientos, Directorio |
 
-La matriz completa y el detalle del RBAC están en [`docs/ROLES.md`](docs/ROLES.md). El backend valida las escrituras con `requireModule`, no solo el menú del frontend.
+La matriz completa y el detalle del RBAC están en [`docs/markdown/ROLES.md`](docs/markdown/ROLES.md). El backend valida las escrituras con `requireModule`, no solo el menú del frontend.
 
 ---
 
@@ -204,7 +216,7 @@ erDiagram
     VEHICLES ||--o{ PADRON_CHANGE_REQUESTS : solicita
 ```
 
-El diagrama completo está en [`docs/DIAGRAMAS.md`](docs/DIAGRAMAS.md).
+El diagrama completo está en [`docs/markdown/DIAGRAMAS.md`](docs/markdown/DIAGRAMAS.md).
 
 ---
 
@@ -317,7 +329,7 @@ npm run dev
 
 Abre **http://localhost:3000**.
 
-> Credenciales demo (solo entorno local): `admin@transporte.pe` / `admin123` y `operador@transporte.pe` / `operador123`. El login valida contra PostgreSQL con **argon2id**; ver [Autenticación](docs/AUTENTICACION.md) y [Seguridad](#-seguridad).
+> Credenciales demo (solo entorno local): `admin@transporte.pe` / `admin123` y `operador@transporte.pe` / `operador123`. El login valida contra PostgreSQL con **argon2id**; ver [Autenticación](docs/markdown/AUTENTICACION.md) y [Seguridad](#-seguridad).
 
 > ⚠️ **Antes de publicar en producción** las cuentas demo deben desaparecer (sus contraseñas son públicas). El backend se encarga: con `NODE_ENV=production` no las crea y **se niega a arrancar** si las detecta. Para una instalación real:
 > ```bash
@@ -423,13 +435,13 @@ La arquitectura actual es un **monolito Express** que sirve la SPA. Hay dos cami
 ### Opción C — Vercel serverless
 - Requiere adaptar `backend/app.ts` a un handler serverless y separar el frontend. Está previsto en el roadmap.
 
-> **Nota:** hoy el frontend llama a `/api/*` en el mismo origen. Para separar frontend y API hay que introducir `VITE_API_URL` y configurar CORS. Está documentado en [`docs/DESPLIEGUE.md`](docs/DESPLIEGUE.md).
+> **Nota:** hoy el frontend llama a `/api/*` en el mismo origen. Para separar frontend y API hay que introducir `VITE_API_URL` y configurar CORS. Está documentado en [`docs/markdown/DESPLIEGUE.md`](docs/markdown/DESPLIEGUE.md).
 
 ---
 
 ## 🔒 Seguridad
 
-Antes de publicar el repositorio o desplegar con datos reales, revisa [`SECURITY.md`](SECURITY.md) y [`docs/SEGURIDAD.md`](docs/SEGURIDAD.md). Puntos clave:
+Antes de publicar el repositorio o desplegar con datos reales, revisa [`SECURITY.md`](SECURITY.md) y [`docs/markdown/SEGURIDAD.md`](docs/markdown/SEGURIDAD.md). Puntos clave:
 
 - ✅ `.env` y credenciales están excluidos por `.gitignore`.
 - ✅ La API verifica la conexión a PostgreSQL al arrancar y falla con un mensaje claro.
@@ -443,7 +455,7 @@ Antes de publicar el repositorio o desplegar con datos reales, revisa [`SECURITY
 
 ## 🗺 Roadmap
 
-El plan por fases (web, escritorio, móvil, offline y SQLite) está en [`docs/ROADMAP.md`](docs/ROADMAP.md). Resumen:
+El plan por fases (web, escritorio, móvil, offline y SQLite) está en [`docs/markdown/ROADMAP.md`](docs/markdown/ROADMAP.md). Resumen:
 
 | Fase | Objetivo |
 | :--- | :--- |
@@ -458,30 +470,40 @@ El plan por fases (web, escritorio, móvil, offline y SQLite) está en [`docs/RO
 
 ## 📚 Documentación
 
+La documentación vive en `docs/`, organizada en tres carpetas:
+
+| Carpeta | Contenido |
+| :--- | :--- |
+| [`docs/markdown/`](docs/markdown/) | Documentación técnica en Markdown. |
+| [`docs/prototipos/`](docs/prototipos/) | Prototipos de UI de los 16 módulos (HTML autónomo, vector SVG e interactivo). |
+| [`docs/screenshots/`](docs/screenshots/) | Capturas de pantalla de cada módulo, en formato WebP. |
+
 | Documento | Contenido |
 | :--- | :--- |
-| [`docs/INSTALACION.md`](docs/INSTALACION.md) | Instalación paso a paso y solución de problemas. |
-| [`docs/STACK.md`](docs/STACK.md) | Stack, versiones y justificación técnica. |
-| [`docs/ARQUITECTURA_SISTEMA.md`](docs/ARQUITECTURA_SISTEMA.md) | Reglas de negocio y arquitectura. |
-| [`docs/DIAGRAMAS.md`](docs/DIAGRAMAS.md) | Diagramas Mermaid (arquitectura, ER, flujos). |
-| [`docs/API.md`](docs/API.md) | Endpoints de la API REST. |
-| [`docs/ROLES.md`](docs/ROLES.md) | Matriz de roles, módulos y RBAC del servidor. |
-| [`docs/AUTENTICACION.md`](docs/AUTENTICACION.md) | Flujo de sesión, cookies HttpOnly, JWT y cambio de contraseña. |
-| [`docs/MIGRACION_ARQUITECTURA.md`](docs/MIGRACION_ARQUITECTURA.md) | Cuándo y cómo separar backend, frontend y paquete compartido. |
-| [`docs/VERIFICACION.md`](docs/VERIFICACION.md) | Checklist de verificación y smoke test de la Fase 0. |
-| [`docs/ROADMAP.md`](docs/ROADMAP.md) | Fases y pendientes. |
-| [`docs/DESPLIEGUE.md`](docs/DESPLIEGUE.md) | Vercel, Railway, Supabase/Neon. |
-| [`docs/CALIDAD.md`](docs/CALIDAD.md) | Indicadores de calidad y cómo medirlos. |
-| [`docs/SEGURIDAD.md`](docs/SEGURIDAD.md) | Modelo de amenazas y deuda técnica. |
-| [`docs/TESTING.md`](docs/TESTING.md) | Estrategia de pruebas. |
-| [`docs/CONTRIBUCION.md`](docs/CONTRIBUCION.md) | Flujo de trabajo y convenciones. |
+| [`docs/markdown/INSTALACION.md`](docs/markdown/INSTALACION.md) | Instalación paso a paso y solución de problemas. |
+| [`docs/markdown/STACK.md`](docs/markdown/STACK.md) | Stack, versiones y justificación técnica. |
+| [`docs/markdown/ARQUITECTURA_SISTEMA.md`](docs/markdown/ARQUITECTURA_SISTEMA.md) | Reglas de negocio y arquitectura. |
+| [`docs/markdown/DIAGRAMAS.md`](docs/markdown/DIAGRAMAS.md) | Diagramas Mermaid (arquitectura, ER, flujos). |
+| [`docs/markdown/API.md`](docs/markdown/API.md) | Endpoints de la API REST. |
+| [`docs/markdown/ROLES.md`](docs/markdown/ROLES.md) | Matriz de roles, módulos y RBAC del servidor. |
+| [`docs/markdown/AUTENTICACION.md`](docs/markdown/AUTENTICACION.md) | Flujo de sesión, cookies HttpOnly, JWT y cambio de contraseña. |
+| [`docs/markdown/MIGRACION_ARQUITECTURA.md`](docs/markdown/MIGRACION_ARQUITECTURA.md) | Cuándo y cómo separar backend, frontend y paquete compartido. |
+| [`docs/markdown/VERIFICACION.md`](docs/markdown/VERIFICACION.md) | Checklist de verificación y smoke test de la Fase 0. |
+| [`docs/markdown/ROADMAP.md`](docs/markdown/ROADMAP.md) | Fases y pendientes. |
+| [`docs/markdown/DESPLIEGUE.md`](docs/markdown/DESPLIEGUE.md) | Vercel, Railway, Supabase/Neon. |
+| [`docs/markdown/CALIDAD.md`](docs/markdown/CALIDAD.md) | Indicadores de calidad y cómo medirlos. |
+| [`docs/markdown/SEGURIDAD.md`](docs/markdown/SEGURIDAD.md) | Modelo de amenazas y deuda técnica. |
+| [`docs/markdown/TESTING.md`](docs/markdown/TESTING.md) | Estrategia de pruebas. |
+| [`docs/markdown/CONTRIBUCION.md`](docs/markdown/CONTRIBUCION.md) | Flujo de trabajo y convenciones. |
+| [`docs/markdown/MANUAL_USUARIO.md`](docs/markdown/MANUAL_USUARIO.md) | Manual de uso de la interfaz. |
+| [`docs/prototipos/README.md`](docs/prototipos/README.md) | Prototipos de UI: cómo verlos y regenerarlos. |
 | [`AGENTS.md`](AGENTS.md) | Guía para agentes de IA que trabajen en el repo. |
 
 ---
 
 ## 🤝 Contribuir
 
-Lee [`CONTRIBUTING.md`](CONTRIBUTING.md) y [`docs/CONTRIBUCION.md`](docs/CONTRIBUCION.md). Antes de abrir un PR:
+Lee [`CONTRIBUTING.md`](CONTRIBUTING.md) y [`docs/markdown/CONTRIBUCION.md`](docs/markdown/CONTRIBUCION.md). Antes de abrir un PR:
 
 ```bash
 npm run lint

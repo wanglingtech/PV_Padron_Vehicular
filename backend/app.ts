@@ -129,7 +129,7 @@ export async function createApp(): Promise<express.Express> {
       for (const email of demoAccounts) {
         console.error(`   - ${email}`);
       }
-      console.error('\n   Sus contraseñas son públicas (ver docs/AUTENTICACION.md).');
+      console.error('\n   Sus contraseñas son públicas (ver docs/markdown/AUTENTICACION.md).');
       console.error('   Elimínalas con:  npm run db:remove-demo-users');
       console.error('   Crea tu administrador real con:  npm run admin:create');
       console.error(

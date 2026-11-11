@@ -167,3 +167,13 @@ capacitor/ios/
 *.pid
 *.seed
 *.stackdump
+
+# -----------------------------------------------------------------------------
+# 12. Prototipos de UI
+# -----------------------------------------------------------------------------
+# Las capturas crudas son intermedias: viven en %TEMP%/opencode/proto-capturas.
+# Por si acaso se copian al repo, no se versionan.
+docs/prototipos/_capturas/
+docs/prototipos/shell/
+# Los prototypes usan .webp (no .png) para no inflar el historial de git.
+docs/**/*.png

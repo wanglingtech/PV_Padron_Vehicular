@@ -40,4 +40,4 @@ Colección [Bruno](https://www.usebruno.com/) para probar la API REST del Sistem
 
 ## Postman
 
-Si prefieres Postman, puedes importar los archivos `.bru` manualmente o crear una colección equivalente con las mismas rutas documentadas en [`../docs/API.md`](../docs/API.md).
+Si prefieres Postman, puedes importar los archivos `.bru` manualmente o crear una colección equivalente con las mismas rutas documentadas en [`../docs/markdown/API.md`](../docs/markdown/API.md).
