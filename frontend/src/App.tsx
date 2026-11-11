@@ -20,6 +20,7 @@ import { ExpirationsView } from './views/ExpirationsView.tsx';
 import { RoadSafetyCoursesView } from './views/RoadSafetyCoursesView.tsx';
 import { OperatorPortalView } from './views/OperatorPortalView.tsx';
 import { LoginView } from './views/LoginView.tsx';
+import { PasswordResetView } from './views/PasswordResetView.tsx';
 import { ImportExportView } from './views/ImportExportView.tsx';
 import { AuditHistoryView } from './views/AuditHistoryView.tsx';
 import { UsersView } from './views/UsersView.tsx';
@@ -38,6 +39,17 @@ function AppContent() {
   const [isSidebarOpenMobile, setIsSidebarOpenMobile] = useState(false);
   const [urgentAlertsCount, setUrgentAlertsCount] = useState<number>(0);
   const [isGlobalPdfModalOpen, setIsGlobalPdfModalOpen] = useState(false);
+  // Ruta actual del navegador: permite navegar entre login y restablecimiento
+  // sin recargar la página.
+  const [route, setRoute] = useState(() =>
+    typeof window !== 'undefined' ? window.location.pathname : '/'
+  );
+
+  useEffect(() => {
+    const onPop = () => setRoute(window.location.pathname);
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
 
   // Redirigir a módulo permitido si el rol actual no tiene acceso al tab activo
   useEffect(() => {
@@ -134,9 +146,31 @@ function AppContent() {
     );
   }
 
+  // Si la URL trae un token de restablecimiento, se muestra esa pantalla
+  // en lugar del login normal.
+  const enRutaReset = route.startsWith('/restablecer-contrasena');
+
+  if (enRutaReset) {
+    return (
+      <PasswordResetView
+        onBack={() => {
+          window.history.pushState({}, '', '/');
+          setRoute('/');
+        }}
+      />
+    );
+  }
+
   // Si no ha iniciado sesión, mostrar la pantalla de Login institucional
   if (!isLoggedIn) {
-    return <LoginView />;
+    return (
+      <LoginView
+        onForgotPassword={() => {
+          window.history.pushState({}, '', '/restablecer-contrasena');
+          setRoute('/restablecer-contrasena');
+        }}
+      />
+    );
   }
 
   return (

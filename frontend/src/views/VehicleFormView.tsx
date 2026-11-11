@@ -388,7 +388,7 @@ export const VehicleFormView: React.FC<VehicleFormViewProps> = ({
         <h2 className="text-xl font-bold text-slate-900 dark:text-slate-950 tracking-tight">
           {isEdit ? `Editar Registro: Padrón ${padronNumber || '...'}` : 'Registrar Nuevo Vehículo en el Padrón'}
         </h2>
-        <p className="mt-1 text-xs text-slate-500">
+        <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
           Complete la información técnica, personas a cargo y documentación obligatoria
         </p>
 
@@ -451,7 +451,7 @@ export const VehicleFormView: React.FC<VehicleFormViewProps> = ({
                     }}
                     className="w-full min-h-[44px] rounded-lg border border-slate-300 px-3 py-2 text-xs font-bold text-indigo-700 uppercase focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
                   />
-                  <span className="text-[11px] text-slate-400">Identificador único en la asociación</span>
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400">Identificador único en la asociación</span>
                 </div>
 
                 <div>
@@ -469,7 +469,7 @@ export const VehicleFormView: React.FC<VehicleFormViewProps> = ({
                     }}
                     className="w-full min-h-[44px] rounded-lg border border-slate-300 px-3 py-2 text-xs font-bold font-mono text-slate-900 uppercase focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
                   />
-                  <span className="text-[11px] text-slate-400">Placa única de rodaje</span>
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400">Placa única de rodaje</span>
                 </div>
 
                 <div>
@@ -571,7 +571,7 @@ export const VehicleFormView: React.FC<VehicleFormViewProps> = ({
               <div className="flex items-center justify-between pb-2 border-b border-slate-100">
                 <div>
                   <h3 className="text-sm font-bold text-slate-900">Listado de Propietarios</h3>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
                     Puede registrar uno o más propietarios para la misma unidad vehicular
                   </p>
                 </div>
@@ -615,7 +615,7 @@ export const VehicleFormView: React.FC<VehicleFormViewProps> = ({
                         <button
                           type="button"
                           onClick={() => handleRemoveOwner(index)}
-                          className="text-slate-400 hover:text-rose-600 p-1"
+                          className="text-slate-500 dark:text-slate-400 hover:text-rose-600 p-1"
                           title="Eliminar este propietario"
                         >
                           <Trash2 size={16} />
@@ -1049,7 +1049,7 @@ export const VehicleFormView: React.FC<VehicleFormViewProps> = ({
             <button
               type="submit"
               disabled={saving}
-              className="flex min-h-[44px] items-center gap-2 rounded-lg bg-indigo-600 px-6 py-2 text-xs font-bold text-white hover:bg-indigo-700 disabled:opacity-50 transition-colors shadow-xs"
+              className="flex min-h-[44px] items-center gap-2 rounded-lg bg-indigo-600 px-6 py-2 text-xs font-bold text-white hover:bg-indigo-700 disabled:opacity-70 transition-colors shadow-xs"
             >
               <Save size={16} />
               <span>{saving ? 'Guardando...' : isEdit ? 'Guardar Cambios' : 'Guardar en Padrón'}</span>

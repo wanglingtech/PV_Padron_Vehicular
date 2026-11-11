@@ -154,7 +154,7 @@ export const PersonsView: React.FC<PersonsViewProps> = ({ onSelectVehicle }) => 
           <h2 className="text-xl font-bold text-slate-900 tracking-tight sm:text-2xl">
             Directorio de Personas (Propietarios y Conductores)
           </h2>
-          <p className="text-xs text-slate-500 sm:text-sm">
+          <p className="text-xs text-slate-500 dark:text-slate-400 sm:text-sm">
             Gestión de personas naturales vinculadas a las unidades del padrón vehicular.
           </p>
         </div>
@@ -179,9 +179,9 @@ export const PersonsView: React.FC<PersonsViewProps> = ({ onSelectVehicle }) => 
       </div>
 
       {/* Nota de distinción conceptual */}
-      <div className="rounded-2xl border border-blue-200 bg-blue-50/60 p-4 text-xs text-blue-950">
-        <p className="font-bold text-blue-900">Distinción Conceptual Importante</p>
-        <p className="mt-1 text-blue-800">
+      <div className="rounded-2xl border border-blue-200 bg-blue-50/60 p-4 text-xs text-blue-950 dark:border-blue-900 dark:bg-blue-950/40 dark:text-blue-100">
+        <p className="font-bold text-blue-900 dark:text-blue-200">Distinción Conceptual Importante</p>
+        <p className="mt-1 text-blue-800 dark:text-blue-200">
           Las <strong>Personas</strong> registradas aquí son los propietarios y choferes importados o asociados al
           padrón. <em>No tienen acceso por contraseña al sistema</em> a menos que se les cree expresamente una cuenta en
           la pestaña <strong>Usuarios</strong>.
@@ -191,18 +191,18 @@ export const PersonsView: React.FC<PersonsViewProps> = ({ onSelectVehicle }) => 
       {/* Barra de Filtros y Búsqueda */}
       <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-xs space-y-3">
         <div className="relative">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400" size={18} />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Buscar por DNI, nombres, apellidos o número telefónico..."
-            className="w-full min-h-[44px] rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-4 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-blue-200 transition-all"
+            className="w-full min-h-[44px] rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-4 text-xs sm:text-sm text-slate-800 placeholder:text-slate-500 dark:text-slate-400 focus:border-blue-500 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-blue-200 transition-all"
           />
         </div>
 
         <div className="flex flex-wrap items-center gap-2 text-xs">
-          <span className="text-slate-400 font-medium flex items-center gap-1">
+          <span className="text-slate-500 dark:text-slate-400 font-medium flex items-center gap-1">
             <Filter size={13} />
             Filtrar rol:
           </span>
@@ -259,7 +259,7 @@ export const PersonsView: React.FC<PersonsViewProps> = ({ onSelectVehicle }) => 
         <div className="rounded-2xl border border-slate-200 bg-white p-12 text-center shadow-xs">
           <Users size={40} className="mx-auto text-slate-300 mb-3" />
           <h3 className="text-base font-bold text-slate-800">No se encontraron personas</h3>
-          <p className="mt-1 text-xs sm:text-sm text-slate-500">
+          <p className="mt-1 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
             {search ? 'No hay resultados que coincidan con la búsqueda.' : 'No hay personas registradas en el padrón.'}
           </p>
         </div>
@@ -306,11 +306,11 @@ export const PersonsView: React.FC<PersonsViewProps> = ({ onSelectVehicle }) => 
                       <td className="px-4 py-3.5 text-slate-600 dark:text-slate-400">
                         {p.phone ? (
                           <span className="flex items-center gap-1 font-mono text-slate-700 dark:text-slate-300">
-                            <Phone size={12} className="text-slate-400" />
+                            <Phone size={12} className="text-slate-500 dark:text-slate-400" />
                             {p.phone}
                           </span>
                         ) : (
-                          <span className="text-slate-400 italic">Sin teléfono</span>
+                          <span className="text-slate-500 dark:text-slate-400 italic">Sin teléfono</span>
                         )}
                       </td>
                       <td className="px-4 py-3.5">
@@ -327,7 +327,7 @@ export const PersonsView: React.FC<PersonsViewProps> = ({ onSelectVehicle }) => 
                             Conductor ({p.drivenCount})
                           </span>
                         ) : (
-                          <span className="rounded-full bg-slate-100 dark:bg-slate-800 px-2.5 py-0.5 text-[11px] font-medium text-slate-600 dark:text-slate-400">
+                          <span className="rounded-full bg-slate-100 dark:bg-slate-800 px-2.5 py-0.5 text-[11px] font-medium text-slate-700 dark:text-slate-400">
                             Sin unidad activa
                           </span>
                         )}
@@ -348,7 +348,7 @@ export const PersonsView: React.FC<PersonsViewProps> = ({ onSelectVehicle }) => 
                             ))}
                           </div>
                         ) : (
-                          <span className="text-slate-400">—</span>
+                          <span className="text-slate-500 dark:text-slate-400">—</span>
                         )}
                       </td>
                       <td className="px-4 py-3.5">
@@ -367,7 +367,7 @@ export const PersonsView: React.FC<PersonsViewProps> = ({ onSelectVehicle }) => 
                             ))}
                           </div>
                         ) : (
-                          <span className="text-slate-400">—</span>
+                          <span className="text-slate-500 dark:text-slate-400">—</span>
                         )}
                       </td>
                       {isAdmin && (
@@ -375,7 +375,7 @@ export const PersonsView: React.FC<PersonsViewProps> = ({ onSelectVehicle }) => 
                           <button
                             onClick={() => openEditModal(p)}
                             title="Editar datos de contacto"
-                            className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 hover:text-blue-600 transition-colors ml-auto"
+                            className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 hover:text-blue-600 transition-colors ml-auto"
                           >
                             <Edit2 size={15} />
                           </button>
@@ -417,7 +417,7 @@ export const PersonsView: React.FC<PersonsViewProps> = ({ onSelectVehicle }) => 
               <h3 className="text-base font-bold text-slate-900">Editar Datos de Persona</h3>
               <button
                 onClick={() => setEditingPerson(null)}
-                className="rounded-lg p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-600"
+                className="rounded-lg p-1 text-slate-500 dark:text-slate-400 hover:bg-slate-100 hover:text-slate-700"
               >
                 <X size={18} />
               </button>

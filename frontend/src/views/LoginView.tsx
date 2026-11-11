@@ -6,9 +6,14 @@ import { Alert } from '../utils/sweetalert.ts';
 
 interface LoginViewProps {
   onSuccessLogin?: () => void;
+  /** Abre el flujo de restablecimiento de contraseña por correo. */
+  onForgotPassword?: () => void;
 }
 
-export const LoginView: React.FC<LoginViewProps> = ({ onSuccessLogin }) => {
+export const LoginView: React.FC<LoginViewProps> = ({
+  onSuccessLogin,
+  onForgotPassword,
+}) => {
   const { login } = useAuth();
   const company = getStoredCompanyBrand();
 
@@ -51,7 +56,7 @@ export const LoginView: React.FC<LoginViewProps> = ({ onSuccessLogin }) => {
           <h2 className="mt-4 text-xl font-bold tracking-tight text-white sm:text-2xl">
             {company.name}
           </h2>
-          <p className="mt-1 text-xs text-slate-400">
+          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
             {company.subtitle} · {company.location}
           </p>
         </div>
@@ -59,21 +64,25 @@ export const LoginView: React.FC<LoginViewProps> = ({ onSuccessLogin }) => {
         <div className="mt-8 bg-slate-800/90 backdrop-blur-md px-6 py-8 shadow-2xl rounded-2xl sm:px-10 border border-slate-700/80">
           <div className="mb-6 text-center">
             <h3 className="text-sm font-semibold text-white">Iniciar sesión</h3>
-            <p className="mt-1 text-[11px] text-slate-400">
+            <p className="mt-1 text-[11px] text-slate-500 dark:text-slate-400">
               Accede con la cuenta institucional asignada por el administrador.
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-xs font-medium text-slate-300">
+              <label
+                htmlFor="login-email"
+                className="block text-xs font-medium text-slate-300"
+              >
                 Correo Electrónico
               </label>
               <div className="relative mt-1">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500 dark:text-slate-400">
                   <Mail size={16} />
                 </div>
                 <input
+                  id="login-email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -86,14 +95,18 @@ export const LoginView: React.FC<LoginViewProps> = ({ onSuccessLogin }) => {
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-300">
+              <label
+                htmlFor="login-password"
+                className="block text-xs font-medium text-slate-300"
+              >
                 Contraseña
               </label>
               <div className="relative mt-1">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500 dark:text-slate-400">
                   <Lock size={16} />
                 </div>
                 <input
+                  id="login-password"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -126,8 +139,15 @@ export const LoginView: React.FC<LoginViewProps> = ({ onSuccessLogin }) => {
             </button>
           </form>
 
-          <p className="mt-6 text-center text-[10px] text-slate-500">
-            ¿Olvidaste tu contraseña? Solicita el restablecimiento al administrador del sistema.
+          <p className="mt-6 text-center text-[10px] text-slate-500 dark:text-slate-400">
+            ¿Olvidaste tu contraseña?{' '}
+            <button
+              type="button"
+              onClick={onForgotPassword}
+              className="font-medium text-blue-400 hover:text-blue-300 underline underline-offset-2 transition-colors"
+            >
+              Restablecer con mi correo
+            </button>
           </p>
         </div>
       </div>

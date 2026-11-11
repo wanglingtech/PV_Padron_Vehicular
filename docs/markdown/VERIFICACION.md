@@ -109,16 +109,22 @@ Esperado:
 
 ## 5. Seguridad mínima antes de publicar
 
-- [ ] `.env` no está versionado (`git check-ignore .env`).
-- [ ] No hay contraseñas reales ni claves privadas en el repositorio.
-- [ ] `AUTH_DEV_MODE=false` en producción.
-- [ ] `JWT_SECRET` definido con al menos 32 caracteres y distinto del valor de ejemplo.
-- [ ] `AUTH_COOKIE_SECURE=true` y HTTPS en producción.
-- [ ] `GET /api/users` sin token responde `401`.
-- [ ] `GET /api/users` no devuelve `password` ni hashes.
-- [ ] `POST /api/vehicles` como operario responde `403`.
-- [ ] `GET /api/backup/export` como tesorero responde `403`.
-- [ ] `npm audit` revisado (deuda conocida documentada en [`SEGURIDAD.md`](SEGURIDAD.md)).
+- [x] `.env` no está versionado (`git check-ignore .env`).
+- [x] No hay contraseñas reales ni claves privadas en el repositorio.
+- [x] `AUTH_DEV_MODE=false` en producción.
+- [x] `JWT_SECRET` definido con al menos 32 caracteres y distinto del valor de ejemplo.
+- [x] `AUTH_COOKIE_SECURE=true` y HTTPS en producción.
+- [x] `GET /api/users` sin token responde `401`.
+- [x] `GET /api/users` no devuelve `password` ni hashes.
+- [x] `POST /api/vehicles` como operario responde `403`.
+- [x] `GET /api/backup/export` como tesorero responde `403`.
+- [x] `npm audit` sin vulnerabilidades altas ni críticas (CI con `--audit-level=high`).
+- [x] Validación Zod en el 100 % de las escrituras (`npm test` lo verifica).
+- [x] Sanitización de uploads verificada (`backend/__tests__/upload.service.test.ts`).
+- [x] Recuperación de contraseña probada (`backend/__tests__/password-reset.test.ts`).
+- [x] 277 pruebas automatizadas en verde (`npm test`).
+- [x] 10 flujos E2E en verde (`npm run test:e2e`).
+- [x] Accesibilidad verificada con axe-core (sin violaciones graves en módulos principales).
 
 ---
 

@@ -187,19 +187,19 @@ export function PadronChangeModal({ vehicle, isOpen, onClose, onSuccess }: Padro
         {/* Encabezado */}
         <div className="flex items-center justify-between border-b border-slate-100 pb-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-800">
               <ArrowLeftRight className="h-5 w-5" />
             </div>
             <div>
               <h2 className="text-lg font-bold text-slate-900">Operación de Padrón</h2>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-slate-500 dark:text-slate-400">
                 Vehículo ID #{vehicle.id} | Padrón actual: <span className="font-semibold text-slate-800">{vehicle.padronNumber}</span> | Placa: <span className="font-mono font-semibold text-slate-800">{vehicle.plate}</span>
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="rounded-lg p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-600"
+            className="rounded-lg p-1 text-slate-500 dark:text-slate-400 hover:bg-slate-100 hover:text-slate-700"
           >
             <X className="h-5 w-5" />
           </button>
@@ -264,19 +264,19 @@ export function PadronChangeModal({ vehicle, isOpen, onClose, onSuccess }: Padro
             {mode === 'FREE_PADRON' && (
               <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm">
                 <div className="flex items-center justify-between py-2 border-b border-slate-200">
-                  <span className="text-slate-500">Padrón Anterior:</span>
+                  <span className="text-slate-500 dark:text-slate-400">Padrón Anterior:</span>
                   <span className="font-mono font-bold text-slate-700">{vehicle.padronNumber}</span>
                 </div>
                 <div className="flex items-center justify-between py-2 border-b border-slate-200">
-                  <span className="text-slate-500">Nuevo Padrón Asignado:</span>
+                  <span className="text-slate-500 dark:text-slate-400">Nuevo Padrón Asignado:</span>
                   <span className="font-mono font-bold text-blue-600">{newPadron.toUpperCase()}</span>
                 </div>
                 <div className="flex items-center justify-between py-2 border-b border-slate-200">
-                  <span className="text-slate-500">Placa y Propietario:</span>
+                  <span className="text-slate-500 dark:text-slate-400">Placa y Propietario:</span>
                   <span className="font-medium text-slate-800">{vehicle.plate} - {vehicle.primaryOwner?.fullName}</span>
                 </div>
                 <div className="flex items-center justify-between py-2">
-                  <span className="text-slate-500">Motivo:</span>
+                  <span className="text-slate-500 dark:text-slate-400">Motivo:</span>
                   <span className="text-slate-700">{reason}</span>
                 </div>
               </div>
@@ -287,13 +287,13 @@ export function PadronChangeModal({ vehicle, isOpen, onClose, onSuccess }: Padro
                 <div className="grid grid-cols-2 gap-4">
                   <div className="rounded-lg bg-white p-3 border border-slate-200">
                     <p className="font-semibold text-slate-900">Unidad 1 ({vehicle.plate})</p>
-                    <p className="mt-1 text-slate-600">Padrón: <span className="line-through text-slate-400">{vehicle.padronNumber}</span> → <span className="font-bold text-emerald-600">{vehicleB.padronNumber}</span></p>
-                    <p className="text-slate-500">{vehicle.primaryOwner?.fullName}</p>
+                    <p className="mt-1 text-slate-600">Padrón: <span className="line-through text-slate-500 dark:text-slate-400">{vehicle.padronNumber}</span> → <span className="font-bold text-emerald-600">{vehicleB.padronNumber}</span></p>
+                    <p className="text-slate-500 dark:text-slate-400">{vehicle.primaryOwner?.fullName}</p>
                   </div>
                   <div className="rounded-lg bg-white p-3 border border-slate-200">
                     <p className="font-semibold text-slate-900">Unidad 2 ({vehicleB.plate})</p>
-                    <p className="mt-1 text-slate-600">Padrón: <span className="line-through text-slate-400">{vehicleB.padronNumber}</span> → <span className="font-bold text-blue-600">{vehicle.padronNumber}</span></p>
-                    <p className="text-slate-500">{vehicleB.primaryOwner?.fullName}</p>
+                    <p className="mt-1 text-slate-600">Padrón: <span className="line-through text-slate-500 dark:text-slate-400">{vehicleB.padronNumber}</span> → <span className="font-bold text-blue-600">{vehicle.padronNumber}</span></p>
+                    <p className="text-slate-500 dark:text-slate-400">{vehicleB.primaryOwner?.fullName}</p>
                   </div>
                 </div>
                 <div className="pt-2 text-slate-600">
@@ -338,7 +338,7 @@ export function PadronChangeModal({ vehicle, isOpen, onClose, onSuccess }: Padro
                     placeholder="Ej. 145"
                     className="w-full rounded-xl border border-slate-200 px-3 py-2 font-mono text-sm uppercase focus:border-blue-500 focus:outline-hidden focus:ring-1 focus:ring-blue-500"
                   />
-                  <p className="mt-1 text-xs text-slate-400">
+                  <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
                     Debe ser un padrón que no esté ocupado por otro vehículo activo.
                   </p>
                 </div>
@@ -414,7 +414,7 @@ export function PadronChangeModal({ vehicle, isOpen, onClose, onSuccess }: Padro
 
                   <div className="max-h-40 overflow-y-auto rounded-xl border border-slate-200 bg-slate-50 p-1 divide-y divide-slate-100">
                     {filteredVehiclesB.length === 0 ? (
-                      <p className="p-3 text-center text-xs text-slate-400">No se encontraron otras unidades activas</p>
+                      <p className="p-3 text-center text-xs text-slate-500 dark:text-slate-400">No se encontraron otras unidades activas</p>
                     ) : (
                       filteredVehiclesB.map((v) => (
                         <div
@@ -426,7 +426,7 @@ export function PadronChangeModal({ vehicle, isOpen, onClose, onSuccess }: Padro
                         >
                           <div>
                             <span className="font-mono text-xs">Padrón {v.padronNumber}</span>
-                            <span className="ml-2 font-mono text-xs text-slate-500">[{v.plate}]</span>
+                            <span className="ml-2 font-mono text-xs text-slate-500 dark:text-slate-400">[{v.plate}]</span>
                           </div>
                           <span className="text-xs text-slate-600 truncate max-w-[200px]">{v.primaryOwner?.fullName}</span>
                         </div>

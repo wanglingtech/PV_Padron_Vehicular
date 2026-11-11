@@ -89,6 +89,41 @@ class ApiService {
     return res.json();
   }
 
+  /**
+   * Solicita el enlace de restablecimiento por correo.
+   *
+   * El backend responde igual exista o no la cuenta, para no revelar qué
+   * correos están registrados.
+   */
+  async requestPasswordReset(email: string): Promise<{ success: boolean; message: string }> {
+    const res = await fetch('/api/auth/forgot-password', {
+      method: 'POST',
+      headers: this.getHeaders(),
+      credentials: 'include',
+      body: JSON.stringify({ email }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: 'No se pudo enviar el enlace' }));
+      throw new Error(err.error);
+    }
+    return res.json();
+  }
+
+  /** Cambia la contraseña usando el token recibido por correo. */
+  async resetPassword(token: string, newPassword: string): Promise<{ success: boolean; message: string }> {
+    const res = await fetch('/api/auth/reset-password', {
+      method: 'POST',
+      headers: this.getHeaders(),
+      credentials: 'include',
+      body: JSON.stringify({ token, newPassword }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: 'No se pudo restablecer la contraseña' }));
+      throw new Error(err.error);
+    }
+    return res.json();
+  }
+
   // Padrón
   async getVehicles(params?: {
     search?: string;
@@ -388,11 +423,11 @@ class ApiService {
   }
 
   // Importar
-  async previewExcel(fileBase64: string): Promise<ImportPreviewResult> {
+  async previewExcel(fileBase64: string, fileName?: string): Promise<ImportPreviewResult> {
     const res = await fetch('/api/import/preview', {
       method: 'POST',
       headers: this.getHeaders(),
-      body: JSON.stringify({ fileBase64 }),
+      body: JSON.stringify({ fileBase64, fileName }),
     });
     if (!res.ok) {
       const err = await res.json().catch(() => ({ error: 'Error al previsualizar archivo' }));
@@ -501,7 +536,8 @@ class ApiService {
   async processCourseDocumentAI(
     fileBase64: string,
     mimeType: string,
-    courseYear?: number
+    courseYear?: number,
+    fileName?: string
   ): Promise<{
     success: boolean;
     extractedDrivers: Array<{
@@ -516,7 +552,7 @@ class ApiService {
     const res = await fetch('/api/drivers/courses/process-ai-document', {
       method: 'POST',
       headers: this.getHeaders(),
-      body: JSON.stringify({ fileBase64, mimeType, courseYear }),
+      body: JSON.stringify({ fileBase64, mimeType, courseYear, fileName }),
     });
     if (!res.ok) {
       const err = await res.json().catch(() => ({ error: 'Error al procesar documento con IA' }));
@@ -838,7 +874,9 @@ class ApiService {
     const res = await fetch('/api/backup/restore', {
       method: 'POST',
       headers: this.getHeaders(),
-      body: JSON.stringify({ backupData, mode }),
+      // `confirm` es obligatorio en el backend: una restauración puede vaciar
+      // la base de datos y no debe dispararse por un clic accidental.
+      body: JSON.stringify({ backupData, mode, confirm: 'RESTAURAR' }),
     });
     if (!res.ok) {
       const err = await res.json().catch(() => ({ error: 'Error al restaurar respaldo en base de datos' }));

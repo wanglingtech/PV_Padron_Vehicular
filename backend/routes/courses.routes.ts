@@ -10,7 +10,16 @@ import {
   updateDriverRoadSafetyCourse,
 } from '../db/vehicles.ts';
 import { requireAuth, requireModule, type AuthRequest } from '../middleware/auth.ts';
+import { validateBody, validateParam } from '../middleware/validate.ts';
+import { sensitiveWriteLimiter, writeLimiter } from '../middleware/rate-limit.ts';
+import {
+  BulkCourseSyncSchema,
+  CourseAiDocumentSchema,
+  DriverCourseUpdateSchema,
+} from '../utils/validation.ts';
 import { extractCourseDriversFromDocument } from '../services/gemini.service.ts';
+import { validateAiDocument, MIME_BY_EXTENSION } from '../services/ai-document.service.ts';
+import { UploadValidationError } from '../services/upload.service.ts';
 
 export function registerCourseRoutes(app: Express): void {
   // Listar conductores con su estado de curso vial
@@ -38,12 +47,12 @@ export function registerCourseRoutes(app: Express): void {
     '/api/drivers/:id/course',
     requireAuth,
     requireModule('curso-vial', 'write'),
+    writeLimiter,
+    validateParam('id'),
+    validateBody(DriverCourseUpdateSchema),
     async (req: AuthRequest, res) => {
       try {
-        const driverId = parseInt(req.params.id);
-        if (isNaN(driverId)) {
-          return res.status(400).json({ error: 'ID de conductor inválido' });
-        }
+        const driverId = Number(req.params.id);
 
         const user = {
           email: req.user?.email || 'admin@transporte.pe',
@@ -64,17 +73,12 @@ export function registerCourseRoutes(app: Express): void {
     '/api/drivers/courses/bulk-sync',
     requireAuth,
     requireModule('curso-vial', 'write'),
+    sensitiveWriteLimiter,
+    validateBody(BulkCourseSyncSchema),
     async (req: AuthRequest, res) => {
       try {
         const { approvedIdentifiers, evaluations, year } = req.body;
-        const hasIdentifiers = Array.isArray(approvedIdentifiers) && approvedIdentifiers.length > 0;
-        const hasEvaluations = Array.isArray(evaluations) && evaluations.length > 0;
-
-        if (!hasIdentifiers && !hasEvaluations) {
-          return res
-            .status(400)
-            .json({ error: 'Debe proporcionar una lista de evaluaciones o identificadores.' });
-        }
+        const courseYear = year || new Date().getFullYear();
 
         const user = {
           email: req.user?.email || 'admin@transporte.pe',
@@ -85,9 +89,9 @@ export function registerCourseRoutes(app: Express): void {
           {
             approvedIdentifiers,
             evaluations,
-            courseYear: year || new Date().getFullYear(),
+            courseYear,
           },
-          year || new Date().getFullYear(),
+          courseYear,
           user
         );
         res.json(result);
@@ -105,17 +109,18 @@ export function registerCourseRoutes(app: Express): void {
     '/api/drivers/courses/process-ai-document',
     requireAuth,
     requireModule('curso-vial', 'write'),
+    sensitiveWriteLimiter,
+    validateBody(CourseAiDocumentSchema),
     async (req: AuthRequest, res) => {
       try {
-        const { fileBase64, mimeType = 'application/pdf', courseYear = new Date().getFullYear() } =
-          req.body;
-        if (!fileBase64) {
-          return res.status(400).json({ error: 'No se envió el archivo para procesar con IA.' });
-        }
+        const { fileBase64, mimeType, courseYear, fileName } = req.body;
+
+        // Se valida la firma binaria: el `mimeType` lo elige el cliente.
+        const documento = validateAiDocument(fileBase64, fileName ?? 'documento.pdf', mimeType);
 
         const extractedDrivers = await extractCourseDriversFromDocument({
-          fileBase64,
-          mimeType,
+          fileBase64: documento.dataUrl,
+          mimeType: MIME_BY_EXTENSION[documento.extension],
           courseYear,
         });
 
@@ -126,6 +131,9 @@ export function registerCourseRoutes(app: Express): void {
           courseYear,
         });
       } catch (error: any) {
+        if (error instanceof UploadValidationError) {
+          return res.status(400).json({ error: error.message });
+        }
         console.error('Error in POST /api/drivers/courses/process-ai-document:', error);
         res.status(500).json({ error: error.message || 'Error al procesar documento con IA' });
       }

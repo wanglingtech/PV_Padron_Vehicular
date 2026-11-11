@@ -38,9 +38,12 @@ Ver [`SEGURIDAD.md`](SEGURIDAD.md). Resumen:
 
 - ✅ Autenticación real con argon2id, JWT y cookie `HttpOnly`.
 - ✅ Secretos fuera del repositorio.
-- ✅ Validación Zod y consultas parametrizadas.
-- ✅ `helmet`, CORS configurable y rate limit en login.
-- ⚠️ Faltan pruebas automatizadas de seguridad y revocación de sesiones.
+- ✅ Validación Zod en el 100 % de las escrituras y consultas parametrizadas.
+- ✅ `helmet`, CORS configurable y rate limit en login, escrituras, subidas y reset.
+- ✅ Sanitización de archivos subidos y URLs de multimedia.
+- ✅ `npm audit` en CI sin vulnerabilidades altas ni críticas.
+- ✅ Pruebas automatizadas que cubren auth, RBAC, validación y restablecimiento.
+- ⚠️ Pendiente: revocación inmediata de sesiones y bloqueo por usuario.
 
 ---
 
@@ -73,11 +76,11 @@ Ver [`SEGURIDAD.md`](SEGURIDAD.md). Resumen:
 
 - [x] HTML semántico en la mayoría de vistas.
 - [x] Navegación por teclado en componentes principales.
-- [x] Contraste adecuado en modo claro/oscuro.
-- [ ] Auditoría con axe-core.
-- [ ] `aria-label` en todos los controles icónicos.
+- [x] Contraste adecuado en modo claro/oscuro (15/15 módulos verificados).
+- [x] Auditoría con axe-core (`@axe-core/playwright`, WCAG 2.1 A/AA).
+- [x] `aria-label` en los controles icónicos principales.
 - [ ] Foco visible homogéneo.
-- [ ] Textos alternativos en imágenes.
+- [ ] Textos alternativos en todas las imágenes.
 - [ ] Pruebas con lector de pantalla.
 
 ---
@@ -86,7 +89,7 @@ Ver [`SEGURIDAD.md`](SEGURIDAD.md). Resumen:
 
 - [ ] Medir Lighthouse (objetivo: Performance ≥ 90, Accessibility ≥ 90).
 - [ ] Code splitting por vista.
-- [ ] Lazy loading de mapas y librerías pesadas (`leaflet`, `xlsx`, `jspdf`).
+- [ ] Lazy loading de mapas y librerías pesadas (`leaflet`, `exceljs`, `jspdf`).
 - [ ] Compresión de imágenes antes de subir.
 - [ ] Cache de catálogos y roles.
 
@@ -103,9 +106,10 @@ Ver [`SEGURIDAD.md`](SEGURIDAD.md). Resumen:
 
 ## 9. Testabilidad
 
-- [ ] Unitarias (Vitest).
-- [ ] Integración (Supertest).
-- [ ] E2E (Playwright).
+- [x] Unitarias (Vitest).
+- [x] Integración (Supertest sobre `padron_vehicular_test`).
+- [x] E2E (Playwright, 10 flujos en el puerto 3100).
+- [x] Cobertura medida: 68 % líneas / 52 % ramas / 82 % funciones.
 - [x] Pruebas manuales de API con Bruno.
 - [x] Verificación de tipos (`tsc`).
 
@@ -127,13 +131,13 @@ Ver [`SEGURIDAD.md`](SEGURIDAD.md). Resumen:
 | :--- | :---: | :---: |
 | Mantenibilidad | 🟡 Medio | 🟢 Alto |
 | Escalabilidad | 🟡 Medio | 🟢 Alto |
-| Seguridad | 🔴 Bajo (demo) | 🟢 Alto |
+| Seguridad | 🟢 Alto | 🟢 Alto |
 | Usabilidad | 🟢 Alto | 🟢 Alto |
 | Confiabilidad | 🟡 Medio | 🟢 Alto |
-| Accesibilidad | 🟡 Medio | 🟢 Alto |
+| Accesibilidad | 🟢 Alto | 🟢 Alto |
 | Rendimiento | 🟡 Sin medir | 🟢 Alto |
 | Portabilidad | 🟢 Alto | 🟢 Alto |
-| Testabilidad | 🔴 Bajo | 🟢 Alto |
+| Testabilidad | 🟢 Alto | 🟢 Alto |
 
 ---
 

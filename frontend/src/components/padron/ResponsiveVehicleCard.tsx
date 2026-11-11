@@ -85,14 +85,14 @@ export const ResponsiveVehicleCard: React.FC<ResponsiveVehicleCardProps> = ({
       {/* Datos Clave Resumidos */}
       <div className="mt-3 grid grid-cols-1 gap-2 text-xs sm:grid-cols-2">
         <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
-          <span className="text-slate-400 font-medium shrink-0">Propietario:</span>
+          <span className="text-slate-500 dark:text-slate-400 font-medium shrink-0">Propietario:</span>
           <span className="font-bold text-slate-900 dark:text-white truncate">
             {primaryOwner ? primaryOwner.fullName : 'No asignado'}
           </span>
         </div>
 
         <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
-          <span className="text-slate-400 font-medium shrink-0">Conductor:</span>
+          <span className="text-slate-500 dark:text-slate-400 font-medium shrink-0">Conductor:</span>
           <span className="font-bold text-slate-900 dark:text-white truncate">
             {vehicle.driver ? vehicle.driver.fullName : 'No asignado'}
           </span>
@@ -132,7 +132,7 @@ export const ResponsiveVehicleCard: React.FC<ResponsiveVehicleCardProps> = ({
           <button
             onClick={() => onDelete(vehicle.id, vehicle.padronNumber)}
             title="Eliminar registro"
-            className="flex min-h-[44px] w-11 items-center justify-center rounded-lg border border-rose-200 dark:border-rose-900/60 bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/50 transition-colors"
+            className="flex min-h-[44px] w-11 items-center justify-center rounded-lg border border-rose-200 dark:border-rose-900/60 bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/50 transition-colors"
           >
             <Trash2 size={16} />
           </button>
@@ -140,7 +140,7 @@ export const ResponsiveVehicleCard: React.FC<ResponsiveVehicleCardProps> = ({
 
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="flex min-h-[44px] w-11 items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+          className="flex min-h-[44px] w-11 items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
           title={isExpanded ? 'Ocultar secciones' : 'Desplegar secciones'}
         >
           {isExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
@@ -157,7 +157,7 @@ export const ResponsiveVehicleCard: React.FC<ResponsiveVehicleCardProps> = ({
               className="flex w-full items-center justify-between bg-slate-50 dark:bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800/60 active:bg-slate-200 dark:active:bg-slate-700/80 px-3 py-2 text-left text-xs font-semibold text-slate-800 dark:text-slate-200 transition-colors"
             >
               <div className="flex items-center gap-2">
-                <Car size={14} className="text-indigo-600 dark:text-indigo-400" />
+                <Car size={14} className="text-indigo-700 dark:text-indigo-400" />
                 <span>1. Datos del Vehículo</span>
               </div>
               {activeAccordion === 'vehiculo' ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
@@ -178,7 +178,7 @@ export const ResponsiveVehicleCard: React.FC<ResponsiveVehicleCardProps> = ({
               className="flex w-full items-center justify-between bg-slate-50 dark:bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800/60 active:bg-slate-200 dark:active:bg-slate-700/80 px-3 py-2 text-left text-xs font-semibold text-slate-800 dark:text-slate-200 transition-colors"
             >
               <div className="flex items-center gap-2">
-                <UserCheck size={14} className="text-blue-600 dark:text-blue-400" />
+                <UserCheck size={14} className="text-blue-700 dark:text-blue-400" />
                 <span>2. Propietario ({vehicle.owners.length})</span>
               </div>
               {activeAccordion === 'propietario' ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
@@ -188,7 +188,7 @@ export const ResponsiveVehicleCard: React.FC<ResponsiveVehicleCardProps> = ({
                 {vehicle.owners.map((o, idx) => (
                   <div key={idx} className="pb-1.5 border-b border-slate-100 dark:border-slate-800 last:border-0 last:pb-0">
                     <p className="font-semibold text-slate-800 dark:text-slate-200">
-                      {o.fullName} {o.isPrimary && <span className="text-[10px] text-indigo-600 dark:text-indigo-400 font-bold">(Titular)</span>}
+                      {o.fullName} {o.isPrimary && <span className="text-[10px] text-indigo-700 dark:text-indigo-400 font-bold">(Titular)</span>}
                     </p>
                     <p><strong className="text-slate-700 dark:text-slate-200">DNI:</strong> {o.dni}</p>
                     {o.phone && <p><strong className="text-slate-700 dark:text-slate-200">Celular:</strong> {o.phone}</p>}
@@ -206,7 +206,7 @@ export const ResponsiveVehicleCard: React.FC<ResponsiveVehicleCardProps> = ({
               className="flex w-full items-center justify-between bg-slate-50 dark:bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800/60 active:bg-slate-200 dark:active:bg-slate-700/80 px-3 py-2 text-left text-xs font-semibold text-slate-800 dark:text-slate-200 transition-colors"
             >
               <div className="flex items-center gap-2">
-                <UserCheck size={14} className="text-amber-600 dark:text-amber-400" />
+                <UserCheck size={14} className="text-amber-700 dark:text-amber-400" />
                 <span>3. Conductor</span>
               </div>
               {activeAccordion === 'conductor' ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
@@ -221,7 +221,7 @@ export const ResponsiveVehicleCard: React.FC<ResponsiveVehicleCardProps> = ({
                     {vehicle.driver.address && <p><strong className="text-slate-700 dark:text-slate-200">Domicilio:</strong> {vehicle.driver.address}</p>}
                   </>
                 ) : (
-                  <p className="italic text-slate-400">Sin conductor registrado</p>
+                  <p className="italic text-slate-500 dark:text-slate-400">Sin conductor registrado</p>
                 )}
               </div>
             )}
@@ -234,7 +234,7 @@ export const ResponsiveVehicleCard: React.FC<ResponsiveVehicleCardProps> = ({
               className="flex w-full items-center justify-between bg-slate-50 dark:bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800/60 active:bg-slate-200 dark:active:bg-slate-700/80 px-3 py-2 text-left text-xs font-semibold text-slate-800 dark:text-slate-200 transition-colors"
             >
               <div className="flex items-center gap-2">
-                <Shield size={14} className="text-emerald-600 dark:text-emerald-400" />
+                <Shield size={14} className="text-emerald-700 dark:text-emerald-400" />
                 <span>4. AFOCAT / SOAT</span>
               </div>
               <StatusBadge status={vehicle.insuranceEvaluation.status} label={vehicle.insuranceEvaluation.label} size="sm" />
@@ -256,7 +256,7 @@ export const ResponsiveVehicleCard: React.FC<ResponsiveVehicleCardProps> = ({
               className="flex w-full items-center justify-between bg-slate-50 dark:bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800/60 active:bg-slate-200 dark:active:bg-slate-700/80 px-3 py-2 text-left text-xs font-semibold text-slate-800 dark:text-slate-200 transition-colors"
             >
               <div className="flex items-center gap-2">
-                <FileCheck size={14} className="text-cyan-600 dark:text-cyan-400" />
+                <FileCheck size={14} className="text-cyan-700 dark:text-cyan-400" />
                 <span>5. Revisión Técnica</span>
               </div>
               <StatusBadge status={vehicle.technicalInspectionEvaluation.status} label={vehicle.technicalInspectionEvaluation.label} size="sm" />
@@ -278,7 +278,7 @@ export const ResponsiveVehicleCard: React.FC<ResponsiveVehicleCardProps> = ({
               className="flex w-full items-center justify-between bg-slate-50 dark:bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800/60 active:bg-slate-200 dark:active:bg-slate-700/80 px-3 py-2 text-left text-xs font-semibold text-slate-800 dark:text-slate-200 transition-colors"
             >
               <div className="flex items-center gap-2">
-                <GraduationCap size={14} className="text-purple-600 dark:text-purple-400" />
+                <GraduationCap size={14} className="text-purple-700 dark:text-purple-400" />
                 <span>6. Curso Vial</span>
               </div>
               <StatusBadge status={vehicle.roadSafetyCourseEvaluation.status} label={vehicle.roadSafetyCourseEvaluation.label} size="sm" />
@@ -299,7 +299,7 @@ export const ResponsiveVehicleCard: React.FC<ResponsiveVehicleCardProps> = ({
               className="flex w-full items-center justify-between bg-slate-50 dark:bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800/60 active:bg-slate-200 dark:active:bg-slate-700/80 px-3 py-2 text-left text-xs font-semibold text-slate-800 dark:text-slate-200 transition-colors"
             >
               <div className="flex items-center gap-2">
-                <CreditCard size={14} className="text-teal-600 dark:text-teal-400" />
+                <CreditCard size={14} className="text-teal-700 dark:text-teal-400" />
                 <span>7. Licencia B-II-C</span>
               </div>
               <StatusBadge status={vehicle.driverLicenseEvaluation.status} label={vehicle.driverLicenseEvaluation.label} size="sm" />

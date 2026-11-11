@@ -466,27 +466,27 @@ export const PortalManagementView: React.FC<PortalManagementViewProps> = ({ onPr
         <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
           <div className="text-xs font-bold text-slate-500 dark:text-slate-400">Total Publicaciones</div>
           <div className="text-2xl font-black text-slate-900 dark:text-slate-100 mt-1">{stats.total}</div>
-          <div className="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium mt-0.5">
+          <div className="text-[11px] text-emerald-700 dark:text-emerald-400 font-medium mt-0.5">
             {stats.activeCount} activas actualmente
           </div>
         </div>
 
         <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
           <div className="text-xs font-bold text-slate-500 dark:text-slate-400">En Carrusel Hero</div>
-          <div className="text-2xl font-black text-amber-600 dark:text-amber-400 mt-1">{stats.heroCount}</div>
-          <div className="text-[11px] text-slate-400 mt-0.5">Rotación automática activa</div>
+          <div className="text-2xl font-black text-amber-700 dark:text-amber-400 mt-1">{stats.heroCount}</div>
+          <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Rotación automática activa</div>
         </div>
 
         <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
           <div className="text-xs font-bold text-slate-500 dark:text-slate-400">Próximas Asambleas</div>
-          <div className="text-2xl font-black text-indigo-600 dark:text-indigo-400 mt-1">{stats.upcomingEventsCount}</div>
-          <div className="text-[11px] text-indigo-500 font-medium mt-0.5">En agenda oficial</div>
+          <div className="text-2xl font-black text-indigo-700 dark:text-indigo-400 mt-1">{stats.upcomingEventsCount}</div>
+          <div className="text-[11px] text-indigo-500 dark:text-indigo-400 font-medium mt-0.5">En agenda oficial</div>
         </div>
 
         <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
           <div className="text-xs font-bold text-slate-500 dark:text-slate-400">Vigencias Vencidas</div>
-          <div className="text-2xl font-black text-rose-600 dark:text-rose-400 mt-1">{stats.expiredCount}</div>
-          <div className="text-[11px] text-slate-400 mt-0.5">Ocultas automáticamente</div>
+          <div className="text-2xl font-black text-rose-700 dark:text-rose-400 mt-1">{stats.expiredCount}</div>
+          <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Ocultas automáticamente</div>
         </div>
       </div>
 
@@ -497,7 +497,7 @@ export const PortalManagementView: React.FC<PortalManagementViewProps> = ({ onPr
           className={`flex items-center gap-2 pb-3.5 text-sm font-bold border-b-2 transition-all ${
             activeTab === 'posts'
               ? 'border-blue-600 text-blue-600 dark:text-blue-400'
-              : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-300'
+              : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
           }`}
         >
           <Megaphone size={18} />
@@ -509,7 +509,7 @@ export const PortalManagementView: React.FC<PortalManagementViewProps> = ({ onPr
           className={`flex items-center gap-2 pb-3.5 text-sm font-bold border-b-2 transition-all ${
             activeTab === 'events'
               ? 'border-indigo-600 text-indigo-600 dark:text-indigo-400'
-              : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-300'
+              : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
           }`}
         >
           <Calendar size={18} />
@@ -523,7 +523,7 @@ export const PortalManagementView: React.FC<PortalManagementViewProps> = ({ onPr
           {/* Filtros de Publicaciones */}
           <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
             <div className="relative flex-1">
-              <Search size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+              <Search size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400" />
               <input
                 type="text"
                 placeholder="Buscar por título, subtítulo o categoría..."
@@ -563,7 +563,7 @@ export const PortalManagementView: React.FC<PortalManagementViewProps> = ({ onPr
           {/* Tabla / Tarjetas de Publicaciones con Reordenamiento */}
           {filteredPostsAdmin.length === 0 ? (
             <div className="rounded-3xl border border-dashed border-slate-300 dark:border-slate-700 p-12 text-center bg-white dark:bg-slate-900">
-              <Megaphone className="mx-auto h-12 w-12 text-slate-400 mb-3" />
+              <Megaphone className="mx-auto h-12 w-12 text-slate-500 dark:text-slate-400 mb-3" />
               <h3 className="text-base font-bold text-slate-800 dark:text-slate-200">
                 No hay publicaciones registradas con estos filtros
               </h3>
@@ -588,18 +588,18 @@ export const PortalManagementView: React.FC<PortalManagementViewProps> = ({ onPr
                         onClick={() => handleMoveOrder(idx, 'up')}
                         disabled={idx === 0}
                         title="Mover primero / subir prioridad en carrusel"
-                        className="flex h-7 w-7 items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-950 text-slate-600 dark:text-slate-300 hover:text-blue-600 disabled:opacity-30 disabled:hover:bg-transparent"
+                        className="flex h-7 w-7 items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-950 text-slate-600 dark:text-slate-300 hover:text-blue-800 disabled:opacity-30 disabled:hover:bg-transparent"
                       >
                         <MoveUp size={14} />
                       </button>
-                      <span className="text-[11px] font-mono font-bold text-slate-400">
+                      <span className="text-[11px] font-mono font-bold text-slate-500 dark:text-slate-400">
                         #{idx + 1}
                       </span>
                       <button
                         onClick={() => handleMoveOrder(idx, 'down')}
                         disabled={idx === filteredPostsAdmin.length - 1}
                         title="Bajar prioridad en carrusel"
-                        className="flex h-7 w-7 items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-950 text-slate-600 dark:text-slate-300 hover:text-blue-600 disabled:opacity-30 disabled:hover:bg-transparent"
+                        className="flex h-7 w-7 items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-950 text-slate-600 dark:text-slate-300 hover:text-blue-800 disabled:opacity-30 disabled:hover:bg-transparent"
                       >
                         <MoveDown size={14} />
                       </button>
@@ -614,17 +614,17 @@ export const PortalManagementView: React.FC<PortalManagementViewProps> = ({ onPr
                           className="h-full w-full object-cover"
                         />
                       ) : post.type === 'pdf' ? (
-                        <div className="h-full w-full flex flex-col items-center justify-center bg-rose-50 dark:bg-rose-950/50 text-rose-600">
+                        <div className="h-full w-full flex flex-col items-center justify-center bg-rose-50 dark:bg-rose-950/50 text-rose-800">
                           <FileText size={22} />
                           <span className="text-[9px] font-bold mt-1">PDF</span>
                         </div>
                       ) : post.type === 'video' ? (
-                        <div className="h-full w-full flex flex-col items-center justify-center bg-purple-50 dark:bg-purple-950/50 text-purple-600">
+                        <div className="h-full w-full flex flex-col items-center justify-center bg-purple-50 dark:bg-purple-950/50 text-purple-800">
                           <Video size={22} />
                           <span className="text-[9px] font-bold mt-1">VIDEO</span>
                         </div>
                       ) : (
-                        <div className="h-full w-full flex flex-col items-center justify-center bg-blue-50 dark:bg-blue-950/50 text-blue-600">
+                        <div className="h-full w-full flex flex-col items-center justify-center bg-blue-50 dark:bg-blue-950/50 text-blue-800">
                           <Megaphone size={22} />
                           <span className="text-[9px] font-bold mt-1">TEXTO</span>
                         </div>
@@ -639,7 +639,7 @@ export const PortalManagementView: React.FC<PortalManagementViewProps> = ({ onPr
                         </span>
 
                         {post.isHeroCarousel && (
-                          <span className="rounded-md bg-amber-500/20 text-amber-700 dark:text-amber-300 text-[10px] font-bold px-2 py-0.5 flex items-center gap-1">
+                          <span className="rounded-md bg-amber-500/20 text-amber-800 dark:text-amber-300 text-[10px] font-bold px-2 py-0.5 flex items-center gap-1">
                             <Sparkles size={11} />
                             Carrusel Principal
                           </span>
@@ -652,7 +652,7 @@ export const PortalManagementView: React.FC<PortalManagementViewProps> = ({ onPr
                         )}
 
                         {isExpired && (
-                          <span className="rounded-md bg-rose-100 dark:bg-rose-950 text-rose-600 text-[10px] font-bold px-2 py-0.5">
+                          <span className="rounded-md bg-rose-100 dark:bg-rose-950 text-rose-700 text-[10px] font-bold px-2 py-0.5">
                             Expirado por Fecha
                           </span>
                         )}
@@ -666,7 +666,7 @@ export const PortalManagementView: React.FC<PortalManagementViewProps> = ({ onPr
                         {post.content}
                       </p>
 
-                      <div className="flex flex-wrap items-center gap-3 text-[11px] text-slate-400 pt-0.5">
+                      <div className="flex flex-wrap items-center gap-3 text-[11px] text-slate-500 dark:text-slate-400 pt-0.5">
                         {post.startDate && (
                           <span>
                             Vigencia: {post.startDate} al {post.endDate || 'Indefinido'}
@@ -705,7 +705,7 @@ export const PortalManagementView: React.FC<PortalManagementViewProps> = ({ onPr
                       <button
                         onClick={() => setPreviewPost(post)}
                         title="Previsualizar cómo se ve"
-                        className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300"
+                        className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300"
                       >
                         <Eye size={16} />
                       </button>
@@ -714,7 +714,7 @@ export const PortalManagementView: React.FC<PortalManagementViewProps> = ({ onPr
                       <button
                         onClick={() => openEditPostModal(post)}
                         title="Editar publicación"
-                        className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 dark:bg-blue-950/80 hover:bg-blue-100 text-blue-600 dark:text-blue-400"
+                        className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 dark:bg-blue-950/80 hover:bg-blue-100 text-blue-700 dark:text-blue-400"
                       >
                         <Edit2 size={16} />
                       </button>
@@ -725,7 +725,7 @@ export const PortalManagementView: React.FC<PortalManagementViewProps> = ({ onPr
                           setDeleteTarget({ type: 'post', id: post.id, title: post.title })
                         }
                         title="Eliminar publicación"
-                        className="flex h-9 w-9 items-center justify-center rounded-xl bg-rose-50 dark:bg-rose-950/80 hover:bg-rose-100 text-rose-600 dark:text-rose-400"
+                        className="flex h-9 w-9 items-center justify-center rounded-xl bg-rose-50 dark:bg-rose-950/80 hover:bg-rose-100 text-rose-700 dark:text-rose-400"
                       >
                         <Trash2 size={16} />
                       </button>
@@ -764,7 +764,7 @@ export const PortalManagementView: React.FC<PortalManagementViewProps> = ({ onPr
 
             {/* Listado de Eventos */}
             {events.length === 0 ? (
-              <div className="text-center py-12 text-slate-400">
+              <div className="text-center py-12 text-slate-500 dark:text-slate-400">
                 <Calendar className="mx-auto h-12 w-12 mb-3 opacity-50" />
                 <p className="text-sm font-bold">No hay eventos en la agenda oficial</p>
                 <p className="text-xs mt-1">Presione el botón para programar una asamblea o reunión.</p>
@@ -804,25 +804,25 @@ export const PortalManagementView: React.FC<PortalManagementViewProps> = ({ onPr
 
                       <div className="flex flex-wrap items-center gap-4 text-xs text-slate-500 dark:text-slate-400">
                         <div className="flex items-center gap-1.5">
-                          <Calendar size={13} className="text-indigo-500" />
+                          <Calendar size={13} className="text-indigo-500 dark:text-indigo-400" />
                           <span>{evt.eventDate}</span>
                         </div>
                         {evt.eventTime && (
                           <div className="flex items-center gap-1.5">
-                            <Clock size={13} className="text-indigo-500" />
+                            <Clock size={13} className="text-indigo-500 dark:text-indigo-400" />
                             <span>{evt.eventTime}</span>
                           </div>
                         )}
                         {evt.location && (
                           <div className="flex items-center gap-1.5">
-                            <MapPin size={13} className="text-indigo-500" />
+                            <MapPin size={13} className="text-indigo-500 dark:text-indigo-400" />
                             <span>{evt.location}</span>
                           </div>
                         )}
                       </div>
 
                       {evt.agenda && (
-                        <div className="text-xs text-slate-600 dark:text-slate-300 font-mono bg-slate-50 dark:bg-slate-800/40 p-2.5 rounded-xl mt-1.5 line-clamp-2">
+                        <div className="text-xs text-slate-800 dark:text-slate-300 font-mono bg-slate-50 dark:bg-slate-800/40 p-2.5 rounded-xl mt-1.5 line-clamp-2">
                           {evt.agenda}
                         </div>
                       )}
@@ -831,7 +831,7 @@ export const PortalManagementView: React.FC<PortalManagementViewProps> = ({ onPr
                     <div className="flex items-center gap-2 shrink-0">
                       <button
                         onClick={() => openEditEventModal(evt)}
-                        className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-600 dark:text-slate-300"
+                        className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300"
                         title="Editar evento"
                       >
                         <Edit2 size={16} />
@@ -840,7 +840,7 @@ export const PortalManagementView: React.FC<PortalManagementViewProps> = ({ onPr
                         onClick={() =>
                           setDeleteTarget({ type: 'event', id: evt.id, title: evt.title })
                         }
-                        className="flex h-9 w-9 items-center justify-center rounded-xl bg-rose-50 dark:bg-rose-950 hover:bg-rose-100 text-rose-600"
+                        className="flex h-9 w-9 items-center justify-center rounded-xl bg-rose-50 dark:bg-rose-950 hover:bg-rose-100 text-rose-700"
                         title="Eliminar evento"
                       >
                         <Trash2 size={16} />
@@ -1088,7 +1088,7 @@ export const PortalManagementView: React.FC<PortalManagementViewProps> = ({ onPr
                     <button
                       type="button"
                       onClick={() => setIsAddingNewCategory((prev) => !prev)}
-                      className="text-[11px] text-blue-600 dark:text-blue-400 font-bold hover:underline"
+                      className="text-[11px] text-blue-700 dark:text-blue-400 font-bold hover:underline"
                     >
                       {isAddingNewCategory ? 'Elegir existente' : '+ Nueva categoría'}
                     </button>
@@ -1155,7 +1155,7 @@ export const PortalManagementView: React.FC<PortalManagementViewProps> = ({ onPr
                     onChange={(e) => setPostEndDate(e.target.value)}
                     className="w-full rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2 text-xs"
                   />
-                  <span className="text-[10px] text-slate-400 mt-0.5 block">
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 block">
                     Dejar vacío si es permanente o sin caducidad.
                   </span>
                 </div>
@@ -1385,10 +1385,10 @@ export const PortalManagementView: React.FC<PortalManagementViewProps> = ({ onPr
             className="relative w-full max-w-xl my-auto max-h-[92vh] rounded-2xl sm:rounded-3xl bg-white dark:bg-slate-900 shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden p-4 sm:p-6 space-y-4"
           >
             <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
-              <span className="text-xs font-bold text-slate-400">Previsualización de Publicación</span>
+              <span className="text-xs font-bold text-slate-500 dark:text-slate-400">Previsualización de Publicación</span>
               <button
                 onClick={() => setPreviewPost(null)}
-                className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-800"
+                className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-800"
               >
                 <X size={16} />
               </button>
@@ -1413,7 +1413,7 @@ export const PortalManagementView: React.FC<PortalManagementViewProps> = ({ onPr
               </div>
               <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100 break-words">{previewPost.title}</h3>
               {previewPost.subtitle && (
-                <p className="text-xs font-semibold text-blue-600 dark:text-blue-400 break-words">
+                <p className="text-xs font-semibold text-blue-700 dark:text-blue-400 break-words">
                   {previewPost.subtitle}
                 </p>
               )}

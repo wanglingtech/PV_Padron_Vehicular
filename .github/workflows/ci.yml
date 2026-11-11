@@ -45,3 +45,80 @@ jobs:
           SQL_USER: postgres
           SQL_PASSWORD: postgres
           SQL_DB_NAME: padron_vehicular
+
+  audit:
+    name: Auditoría de dependencias
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      # Falla si hay vulnerabilidades altas o críticas sin resolver.
+      # Las moderadas se solo se informan (no bloquean el flujo).
+      - name: Auditar vulnerabilidades
+        run: npm audit --audit-level=high
+
+  test:
+    name: Pruebas
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    # PostgreSQL 16 con el servicio completo, como en producción.
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: padron_vehicular_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Aplicar el esquema de pruebas
+        run: npx drizzle-kit push --config=backend/db/drizzle.config.ts --force
+        env:
+          SQL_HOST: localhost
+          SQL_PORT: "5432"
+          SQL_USER: postgres
+          SQL_PASSWORD: postgres
+          SQL_DB_NAME: padron_vehicular_test
+
+      - name: Ejecutar la suite de pruebas
+        run: npm test
+        env:
+          NODE_ENV: test
+          SQL_HOST: localhost
+          SQL_PORT: "5432"
+          SQL_USER: postgres
+          SQL_PASSWORD: postgres
+          SQL_DB_NAME: padron_vehicular_test
+          JWT_SECRET: ci-only-secret-at-least-32-characters-long

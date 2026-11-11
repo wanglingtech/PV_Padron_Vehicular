@@ -299,12 +299,12 @@ export const OperatorPortalView: React.FC = () => {
       <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-2xs">
         <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
           <div className="flex items-center gap-2">
-            <Calendar className="text-amber-600 dark:text-amber-400" size={18} />
+            <Calendar className="text-amber-700 dark:text-amber-400" size={18} />
             <h2 className="text-sm font-bold text-slate-900 dark:text-white">
               Control de Fechas · ¿Cada cuánto me toca renovar?
             </h2>
           </div>
-          <span className="text-xs text-slate-400 dark:text-slate-400">Monitoreo preventivo del conductor</span>
+          <span className="text-xs text-slate-500 dark:text-slate-400">Monitoreo preventivo del conductor</span>
         </div>
 
         <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
@@ -327,11 +327,11 @@ export const OperatorPortalView: React.FC = () => {
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-bold text-slate-800 dark:text-slate-200 uppercase">{proc.name}</span>
                   {isExpired ? (
-                    <AlertTriangle size={14} className="text-rose-600 dark:text-rose-400" />
+                    <AlertTriangle size={14} className="text-rose-700 dark:text-rose-400" />
                   ) : isUpcoming ? (
-                    <Clock size={14} className="text-amber-600 dark:text-amber-400" />
+                    <Clock size={14} className="text-amber-700 dark:text-amber-400" />
                   ) : (
-                    <CheckCircle2 size={14} className="text-emerald-600 dark:text-emerald-400" />
+                    <CheckCircle2 size={14} className="text-emerald-700 dark:text-emerald-400" />
                   )}
                 </div>
 
@@ -339,11 +339,11 @@ export const OperatorPortalView: React.FC = () => {
                   <p className="text-xs font-semibold text-slate-900 dark:text-white tabular-nums">
                     Vence: {proc.expirationDate}
                   </p>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">{proc.recurrence}</p>
+                  <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">{proc.recurrence}</p>
                 </div>
 
                 <div className="mt-2 pt-2 border-t border-slate-200/60 dark:border-slate-800 flex items-center justify-between text-[10px]">
-                  <span className="text-slate-400 truncate">{proc.authority}</span>
+                  <span className="text-slate-600 dark:text-slate-400 truncate">{proc.authority}</span>
                   <span
                     className={`font-bold tabular-nums ${
                       isExpired ? 'text-rose-700 dark:text-rose-400' : isUpcoming ? 'text-amber-700 dark:text-amber-400' : 'text-emerald-700 dark:text-emerald-400'
@@ -363,7 +363,7 @@ export const OperatorPortalView: React.FC = () => {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-3 border-b border-slate-100 dark:border-slate-800">
           <div>
             <div className="flex items-center gap-2">
-              <Camera className="text-blue-600 dark:text-blue-400" size={18} />
+              <Camera className="text-blue-700 dark:text-blue-400" size={18} />
               <h2 className="text-sm font-bold text-slate-900 dark:text-white">
                 Captura de Fotos en Vivo y Documentos Adjuntos
               </h2>
@@ -440,7 +440,7 @@ export const OperatorPortalView: React.FC = () => {
               {/* Pie con detalles del archivo */}
               <div className="p-2.5 bg-white dark:bg-slate-900">
                 <p className="font-bold text-xs text-slate-900 dark:text-white truncate">{photo.label}</p>
-                <div className="mt-0.5 flex items-center justify-between text-[10px] text-slate-400">
+                <div className="mt-0.5 flex items-center justify-between text-[10px] text-slate-500 dark:text-slate-400">
                   <span>{photo.timestamp}</span>
                   <span className="tabular-nums">{photo.sizeKb} KB</span>
                 </div>
@@ -451,11 +451,11 @@ export const OperatorPortalView: React.FC = () => {
           {/* Tarjeta para agregar nueva foto */}
           <button
             onClick={() => triggerCamera('afocat')}
-            className="flex flex-col items-center justify-center aspect-4/3 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 hover:bg-blue-50/50 dark:hover:bg-slate-800/60 hover:border-blue-400 text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors p-4"
+            className="flex flex-col items-center justify-center aspect-4/3 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 hover:bg-blue-50/50 dark:hover:bg-slate-800/60 hover:border-blue-400 text-slate-500 dark:text-slate-400 hover:text-blue-800 dark:hover:text-blue-400 transition-colors p-4"
           >
             <Camera size={26} className="mb-1" />
             <span className="text-xs font-semibold">+ Tomar otra foto</span>
-            <span className="text-[10px] text-slate-400">AFOCAT, CITV o Tarjeta</span>
+            <span className="text-[10px] text-slate-500 dark:text-slate-400">AFOCAT, CITV o Tarjeta</span>
           </button>
         </div>
       </div>
@@ -463,7 +463,7 @@ export const OperatorPortalView: React.FC = () => {
       {/* 4. Formulario: Datos de la Unidad del Operario */}
       <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-2xs">
         <div className="flex items-center gap-2 pb-3 border-b border-slate-100 dark:border-slate-800">
-          <Car className="text-indigo-600 dark:text-indigo-400" size={18} />
+          <Car className="text-indigo-700 dark:text-indigo-400" size={18} />
           <h2 className="text-sm font-bold text-slate-900 dark:text-white">
             Ficha de la Unidad · Padrón {vehicleData?.padronNumber || '---'}
           </h2>
@@ -538,7 +538,7 @@ export const OperatorPortalView: React.FC = () => {
               <span className="text-xs font-bold text-slate-900 dark:text-white">{previewPhoto.label}</span>
               <button
                 onClick={() => setPreviewPhoto(null)}
-                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                className="text-slate-500 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
               >
                 ✕
               </button>

@@ -246,7 +246,7 @@ export const GlobalPdfExporterModal: React.FC<GlobalPdfExporterModalProps> = ({
         {/* Cabecera */}
         <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100 dark:bg-blue-900/60 text-blue-600 dark:text-blue-400">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-400">
               <FileText size={20} />
             </div>
             <div>
@@ -260,7 +260,7 @@ export const GlobalPdfExporterModal: React.FC<GlobalPdfExporterModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="rounded-lg p-1 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-600 dark:hover:text-slate-200"
+            className="rounded-lg p-1 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200"
           >
             <X size={18} />
           </button>
@@ -299,7 +299,7 @@ export const GlobalPdfExporterModal: React.FC<GlobalPdfExporterModalProps> = ({
                       </p>
                     </div>
                   </div>
-                  {isSelected && <CheckCircle2 size={16} className="text-blue-600 dark:text-blue-400 shrink-0 ml-2" />}
+                  {isSelected && <CheckCircle2 size={16} className="text-blue-700 dark:text-blue-400 shrink-0 ml-2" />}
                 </div>
               );
             })}
@@ -350,7 +350,7 @@ export const GlobalPdfExporterModal: React.FC<GlobalPdfExporterModalProps> = ({
         </div>
 
         {/* Membrete Informativo */}
-        <div className="mt-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 p-3 text-xs text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
+        <div className="mt-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 p-3 text-xs text-slate-800 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
           <p className="font-semibold text-slate-800 dark:text-slate-200">
             Encabezado Institucional Incluido:
           </p>
@@ -364,7 +364,7 @@ export const GlobalPdfExporterModal: React.FC<GlobalPdfExporterModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-xl px-4 py-2 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+            className="rounded-xl px-4 py-2 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
           >
             Cancelar
           </button>

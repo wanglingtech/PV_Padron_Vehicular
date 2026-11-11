@@ -147,7 +147,7 @@ export const PadronView: React.FC<PadronViewProps> = ({
           <h2 className="text-xl font-bold text-slate-900 tracking-tight sm:text-2xl">
             Gestión del Padrón Vehicular
           </h2>
-          <p className="text-xs text-slate-500 sm:text-sm">
+          <p className="text-xs text-slate-500 dark:text-slate-400 sm:text-sm">
             Control de flota, conductores, propietarios y documentación obligatoria
           </p>
         </div>
@@ -195,7 +195,7 @@ export const PadronView: React.FC<PadronViewProps> = ({
       </div>
 
       {/* Pestañas de Estado Operativo de Flota */}
-      <div className="flex rounded-xl bg-slate-200/70 p-1 max-w-md">
+      <div className="flex rounded-xl bg-slate-200/70 dark:bg-slate-800 p-1 max-w-md">
         {lifeStatusTabs.map((tab) => (
           <button
             key={tab.id}
@@ -205,8 +205,8 @@ export const PadronView: React.FC<PadronViewProps> = ({
             }}
             className={`flex-1 rounded-lg py-2 text-xs font-semibold transition-all ${
               lifeStatusFilter === tab.id
-                ? 'bg-white text-blue-700 shadow-xs'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-white text-blue-700 shadow-xs dark:bg-blue-600 dark:text-white'
+                : 'text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white'
             }`}
           >
             {tab.label}
@@ -219,7 +219,7 @@ export const PadronView: React.FC<PadronViewProps> = ({
         <div className="flex flex-col gap-3 md:flex-row md:items-center">
           {/* Buscador Omnicanal */}
           <div className="relative flex-1">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400" size={18} />
             <input
               type="text"
               value={search}
@@ -228,14 +228,14 @@ export const PadronView: React.FC<PadronViewProps> = ({
                 setPage(1);
               }}
               placeholder="Buscar por padrón, placa, DNI, propietario, conductor o n.° de licencia..."
-              className="w-full min-h-[44px] rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-4 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-blue-200 transition-all"
+              className="w-full min-h-[44px] rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-4 text-xs sm:text-sm text-slate-800 placeholder:text-slate-500 dark:text-slate-400 focus:border-blue-500 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-blue-200 transition-all"
             />
           </div>
 
           <button
             onClick={fetchVehicles}
             title="Recargar padrón"
-            className="flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-slate-200 px-3.5 py-2 text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors shrink-0"
+            className="flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-slate-200 px-3.5 py-2 text-xs font-medium text-slate-800 hover:bg-slate-50 transition-colors shrink-0"
           >
             <RefreshCw size={15} className={loading ? 'animate-spin text-blue-600' : ''} />
             <span className="hidden sm:inline">Actualizar</span>
@@ -244,7 +244,7 @@ export const PadronView: React.FC<PadronViewProps> = ({
 
         {/* Píldoras de Filtro de Estado Documental */}
         <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs no-scrollbar">
-          <span className="text-slate-400 font-medium shrink-0 flex items-center gap-1">
+          <span className="text-slate-500 dark:text-slate-400 font-medium shrink-0 flex items-center gap-1">
             <Filter size={13} />
             Documentos:
           </span>
@@ -272,13 +272,13 @@ export const PadronView: React.FC<PadronViewProps> = ({
         <div className="rounded-2xl border border-slate-200 bg-white p-12 text-center shadow-xs">
           <RefreshCw size={32} className="mx-auto animate-spin text-blue-600 mb-3" />
           <p className="text-sm font-medium text-slate-700">Cargando padrón vehicular...</p>
-          <p className="text-xs text-slate-400 mt-1">Consultando base de datos en tiempo real</p>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Consultando base de datos en tiempo real</p>
         </div>
       ) : vehicles.length === 0 ? (
         <div className="rounded-2xl border border-slate-200 bg-white p-12 text-center shadow-xs">
           <AlertCircle size={40} className="mx-auto text-slate-300 mb-3" />
           <h3 className="text-base font-bold text-slate-800">No se encontraron registros</h3>
-          <p className="mt-1 text-xs sm:text-sm text-slate-500 max-w-md mx-auto">
+          <p className="mt-1 text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-md mx-auto">
             {search || statusFilter !== 'all' || lifeStatusFilter !== 'ACTIVO'
               ? 'No hay vehículos que coincidan con los criterios de búsqueda o filtros aplicados.'
               : 'El padrón se encuentra actualmente vacío. Puedes registrar una nueva unidad o importar tu Excel.'}
@@ -326,7 +326,7 @@ export const PadronView: React.FC<PadronViewProps> = ({
                     >
                       <div className="flex items-center gap-1.5">
                         <span>N.° Padrón</span>
-                        <ArrowUpDown size={12} className="text-slate-400" />
+                        <ArrowUpDown size={12} className="text-slate-500 dark:text-slate-400" />
                       </div>
                     </th>
                     <th
@@ -335,7 +335,7 @@ export const PadronView: React.FC<PadronViewProps> = ({
                     >
                       <div className="flex items-center gap-1.5">
                         <span>Placa</span>
-                        <ArrowUpDown size={12} className="text-slate-400" />
+                        <ArrowUpDown size={12} className="text-slate-500 dark:text-slate-400" />
                       </div>
                     </th>
                     <th className="px-4 py-3.5">Marca / Año</th>
@@ -345,7 +345,7 @@ export const PadronView: React.FC<PadronViewProps> = ({
                     >
                       <div className="flex items-center gap-1.5">
                         <span>Propietario</span>
-                        <ArrowUpDown size={12} className="text-slate-400" />
+                        <ArrowUpDown size={12} className="text-slate-500 dark:text-slate-400" />
                       </div>
                     </th>
                     <th className="px-4 py-3.5">DNI Prop.</th>
@@ -355,7 +355,7 @@ export const PadronView: React.FC<PadronViewProps> = ({
                     >
                       <div className="flex items-center gap-1.5">
                         <span>Conductor</span>
-                        <ArrowUpDown size={12} className="text-slate-400" />
+                        <ArrowUpDown size={12} className="text-slate-500 dark:text-slate-400" />
                       </div>
                     </th>
                     <th className="px-4 py-3.5">DNI Cond.</th>
@@ -403,7 +403,7 @@ export const PadronView: React.FC<PadronViewProps> = ({
                                 {primaryOwner ? primaryOwner.fullName : 'No asignado'}
                               </span>
                               {v.owners && v.owners.length > 1 && (
-                                <span className="block text-[10px] text-blue-600 dark:text-blue-400 font-semibold mt-0.5">
+                                <span className="block text-[10px] text-blue-700 dark:text-blue-400 font-semibold mt-0.5">
                                   +{v.owners.length - 1} co-propietario{v.owners.length > 2 ? 's' : ''}
                                 </span>
                               )}
@@ -456,7 +456,7 @@ export const PadronView: React.FC<PadronViewProps> = ({
                             <button
                               onClick={() => onViewDetail(v.id)}
                               title="Ver ficha completa e historial"
-                              className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 hover:text-blue-600 transition-colors"
+                              className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 hover:text-blue-600 transition-colors"
                             >
                               <Eye size={16} />
                             </button>
@@ -465,7 +465,7 @@ export const PadronView: React.FC<PadronViewProps> = ({
                               <button
                                 onClick={() => setVehicleForPadronOp(v)}
                                 title="Reasignar o intercambiar padrón"
-                                className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                                className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 dark:text-slate-400 hover:bg-blue-50 hover:text-blue-800 transition-colors"
                               >
                                 <ArrowLeftRight size={16} />
                               </button>
@@ -475,7 +475,7 @@ export const PadronView: React.FC<PadronViewProps> = ({
                               <button
                                 onClick={() => onEditVehicle(v.id)}
                                 title="Editar registro"
-                                className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 hover:text-amber-600 transition-colors"
+                                className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 hover:text-amber-600 transition-colors"
                               >
                                 <Edit size={16} />
                               </button>
@@ -485,7 +485,7 @@ export const PadronView: React.FC<PadronViewProps> = ({
                               <button
                                 onClick={() => setDeleteTarget({ id: v.id, padron: v.padronNumber })}
                                 title="Eliminar registro"
-                                className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 hover:bg-rose-50 hover:text-rose-600 transition-colors"
+                                className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 dark:text-slate-400 hover:bg-rose-50 hover:text-rose-800 transition-colors"
                               >
                                 <Trash2 size={16} />
                               </button>

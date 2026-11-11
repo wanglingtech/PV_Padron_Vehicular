@@ -3,11 +3,13 @@
 El proyecto cuenta con **pruebas automatizadas** (Vitest + Supertest) sobre una base de datos PostgreSQL **independiente** de la de desarrollo.
 
 ```bash
-npm test        # ejecuta la suite completa
-npm run test:watch   # modo interactivo
+npm test              # suite completa
+npm run test:watch    # modo interactivo
+npm run test:coverage # suite con informe de cobertura
+npm run test:e2e      # flujos E2E con Playwright
 ```
 
-Estado actual: **48 pruebas en 6 archivos**, todas en verde.
+Estado actual: **277 pruebas en 18 archivos** (Vitest + Supertest) y **10 flujos E2E** (Playwright), todo en verde.
 
 ---
 
@@ -15,11 +17,11 @@ Estado actual: **48 pruebas en 6 archivos**, todas en verde.
 
 ```text
         /\
-       /E2E\        Playwright (flujos críticos, pocos)   → pendiente
+       /E2E\        Playwright (flujos críticos)            ✅ 10 pruebas
       /------\
-     /Integra-\     Supertest + PostgreSQL de prueba      ✅ implementado
+     /Integra-\     Supertest + PostgreSQL de prueba        ✅ implementado
     /----------\
-   / Unitarias  \   Vitest (config, validaciones, entorno) ✅ implementado
+   / Unitarias  \   Vitest (fechas, validación, Excel, etc.)✅ implementado
   /--------------\
 ```
 
@@ -33,6 +35,7 @@ Estado actual: **48 pruebas en 6 archivos**, todas en verde.
 | Preparación global | `backend/__tests__/global-setup.ts` | Crea la base `padron_vehicular_test` (si no existe) y aplica el esquema con `drizzle-kit push`. |
 | Entorno por archivo | `backend/__tests__/setup.ts` | Apunta `SQL_DB_NAME` a la base de pruebas y define un `JWT_SECRET` propio. |
 | Utilidades | `backend/__tests__/helpers.ts` | `getApp()`, `login()` y `readCookie()`. |
+| E2E | `playwright.config.ts` + `e2e/flujos.spec.ts` | Arranca la app real en el puerto **3100** contra `padron_vehicular_test`. |
 
 ### Base de datos de pruebas
 
@@ -47,6 +50,7 @@ Estado actual: **48 pruebas en 6 archivos**, todas en verde.
 npm test                       # suite completa (crea la BD de pruebas si hace falta)
 npx vitest run auth.test.ts    # un solo archivo
 npx vitest                     # modo watch
+npm run test:e2e               # E2E en el puerto 3100 (no toca la base real)
 ```
 
 ---
@@ -57,45 +61,58 @@ npx vitest                     # modo watch
 | :--- | :--- |
 | `health.test.ts` | Health check con base conectada y marca de tiempo ISO. |
 | `auth.test.ts` | Login correcto/incorrecto, cookie `HttpOnly`, token Bearer, `401` sin credenciales, token manipulado, logout, cambio de contraseña. |
+| `password-reset.test.ts` | Solicitud de enlace, token de un solo uso, expiración, invalidación de tokens previos y respuesta idéntica exista o no la cuenta. |
 | `users.test.ts` | RBAC (`403` al operario), validación de contraseña (mínimo 8 caracteres), **nunca se expone el hash**, CRUD completo. |
+| `admin.test.ts` | Alta de administrador real y reglas de producción. |
 | `vehicles.test.ts` | Listado, filtros, `404` inexistente, `400` id inválido, validación Zod en el alta, permisos de escritura. |
+| `vehicles-queries.test.ts` | Consultas y paginación del padrón. |
+| `padron-changes.test.ts` | Reasignación, intercambio y trazabilidad de padrones. |
+| `write-routes.validation.test.ts` | Zod en todas las rutas de escritura: cuerpos incompletos, tipos erróneos y campos desconocidos. |
+| `write-routes.happy-path.test.ts` | Camino feliz de las rutas de escritura principales. |
+| `validation.test.ts` | Esquemas Zod y mensajes de error en español. |
+| `date-utils.test.ts` | Semáforo de vencimientos y estado documental del vehículo. |
+| `excel-handler.test.ts` | Previsualización, clasificación, conflictos y exportación Excel con ExcelJS. |
+| `upload.service.test.ts` | Tipo, tamaño, nombre seguro y firma binaria de los archivos subidos. |
+| `ai-document.test.ts` | Validación de documentos para IA y diagnóstico de filas extraídas de PDF. |
+| `backup-service.test.ts` | Exportación y restauración de la base. |
 | `portal.test.ts` | Publicaciones y eventos públicos, permisos de escritura, publicación y eliminación. |
 | `env.test.ts` | Reglas de seguridad: `JWT_SECRET` obligatorio en producción, cookies seguras, tokens `dev-*` deshabilitados en producción. |
 
-Total: **48 pruebas**.
+Total: **277 pruebas**.
 
 ---
 
-## 4. Qué falta
+## 4. Qué sigue faltando
 
 ### Pruebas unitarias
 
-- `shared/date-utils.ts` (semáforo de vencimientos).
-- `backend/utils/validation.ts` (esquemas Zod).
 - `frontend/src/utils/vehicle-routes.ts` (cálculo de rutas).
+- Utilidades de PDF (`frontend/src/utils/pdf-export.ts`).
 
 ### Pruebas de integración adicionales
 
-- `POST /api/vehicles/padron/swap` (transaccionalidad).
-- `POST /api/import/preview` + `/api/import/confirm`.
-- `POST /api/backup/export` y `/api/backup/restore`.
 - `POST /api/drivers/courses/bulk-sync`.
+- Casos de error de restauración de backups con archivo corrupto.
 
-### Pruebas E2E (Playwright)
+### Pruebas E2E (Playwright) — implementadas
 
-- Login y cierre de sesión.
-- Alta de vehículo y visualización en padrón.
-- Edición y retiro de unidad.
-- Intercambio de padrones y verificación del historial.
-- Importación de un Excel de prueba.
-- Creación de publicación y visualización en el portal.
-- Navegación responsive (móvil/escritorio) y modo claro/oscuro.
+`e2e/flujos.spec.ts` cubre, contra la aplicación real:
+
+- Login correcto, contraseña incorrecta y cierre de sesión.
+- Accesibilidad del login y del padrón con `axe-core`.
+- Alta de vehículo desde el formulario y visualización en el padrón.
+- Intercambio de padrón entre dos unidades.
+- Importación de un Excel por la interfaz.
+- Control de acceso por rol y rechazo de escrituras sin sesión o con cuerpo inválido.
 
 ```bash
-npm install -D @playwright/test
-npx playwright install
-npx playwright test
+npx playwright install          # una sola vez
+npm run test:e2e                # puerto 3100, base padron_vehicular_test
 ```
+
+El `webServer` de Playwright **nunca** reutiliza un servidor existente: así el E2E
+no puede escribir en la base real del puerto 3000. Usa `DISABLE_HMR=true` para no
+chocar con el WebSocket de HMR del `npm run dev`.
 
 ---
 
@@ -119,9 +136,10 @@ Carpeta: [`../api-tests/bruno/`](../../api-tests/bruno/)
 
 ## 6. Accesibilidad
 
-- `axe-core` en Playwright.
+- `axe-core` en Playwright (`@axe-core/playwright`).
+- Etiquetas WCAG 2.1 A/AA; el test falla ante violaciones `critical` o `serious`.
 - Revisión manual con teclado (Tab/Shift+Tab/Enter/Esc).
-- Contraste en modo claro y oscuro.
+- Contraste en modo claro y oscuro (15/15 módulos sin incidencias de `color-contrast`).
 - Lectores de pantalla (NVDA/VoiceOver).
 
 ---
@@ -167,13 +185,17 @@ SMOKE_BASE_URL=http://localhost:3001 npm run smoke   # otra instancia
 
 ## 10. CI
 
-El workflow [`.github/workflows/ci.yml`](../../.github/workflows/ci.yml) ejecuta:
+El workflow [`.github/workflows/ci.yml`](../../.github/workflows/ci.yml) tiene tres jobs:
 
-1. `npm ci`
-2. `npm run lint`
-3. `npm run build`
+| Job | Pasos |
+| :--- | :--- |
+| `quality` | `npm ci` → `npm run lint` → `npm run build` |
+| `audit` | `npm ci` → `npm audit --audit-level=high` (falla con altas o críticas) |
+| `test` | PostgreSQL 16 como servicio → `drizzle-kit push` → `npm test` |
 
-Pendiente: añadir `npm test` con PostgreSQL como servicio y Playwright.
+El E2E con Playwright se ejecuta en local sobre el puerto dedicado. Para llevarlo a
+CI haría falta instalar Chromium (`npx playwright install --with-deps chromium`) y un
+servicio PostgreSQL; queda como mejora pendiente.
 
 ---
 

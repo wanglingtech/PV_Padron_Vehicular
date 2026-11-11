@@ -275,7 +275,7 @@ export const AuditHistoryView: React.FC = () => {
           <button
             onClick={fetchLogs}
             disabled={loading}
-            className="flex min-h-[42px] items-center gap-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-3.5 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-750 transition-colors shadow-xs"
+            className="flex min-h-[42px] items-center gap-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-3.5 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors shadow-xs"
           >
             <RefreshCw size={15} className={loading ? 'animate-spin text-blue-600 dark:text-blue-400' : ''} />
             <span className="hidden sm:inline">Actualizar</span>
@@ -288,56 +288,56 @@ export const AuditHistoryView: React.FC = () => {
         <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-xs">
           <div className="flex items-center justify-between pb-1">
             <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">Total Eventos</span>
-            <ShieldCheck size={16} className="text-blue-600 dark:text-blue-400" />
+            <ShieldCheck size={16} className="text-blue-700 dark:text-blue-400" />
           </div>
           <p className="text-2xl font-extrabold text-slate-900 dark:text-white tabular-nums tracking-tight">
             {stats.total}
           </p>
-          <span className="text-[10px] text-slate-400">Bitácora histórica activa</span>
+          <span className="text-[10px] text-slate-500 dark:text-slate-400">Bitácora histórica activa</span>
         </div>
 
         <div className="rounded-2xl border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/50 dark:bg-emerald-950/20 p-4 shadow-xs">
           <div className="flex items-center justify-between pb-1">
             <span className="text-xs font-semibold text-emerald-800 dark:text-emerald-300">Creaciones</span>
-            <PlusCircle size={16} className="text-emerald-600 dark:text-emerald-400" />
+            <PlusCircle size={16} className="text-emerald-700 dark:text-emerald-400" />
           </div>
           <p className="text-2xl font-extrabold text-emerald-700 dark:text-emerald-400 tabular-nums tracking-tight">
             {stats.creates}
           </p>
-          <span className="text-[10px] text-emerald-600/80 dark:text-emerald-400/80">Nuevos registros dados de alta</span>
+          <span className="text-[10px] text-emerald-800/90 dark:text-emerald-400/80">Nuevos registros dados de alta</span>
         </div>
 
         <div className="rounded-2xl border border-blue-200 dark:border-blue-900/60 bg-blue-50/50 dark:bg-blue-950/20 p-4 shadow-xs">
           <div className="flex items-center justify-between pb-1">
             <span className="text-xs font-semibold text-blue-800 dark:text-blue-300">Modificaciones</span>
-            <Edit3 size={16} className="text-blue-600 dark:text-blue-400" />
+            <Edit3 size={16} className="text-blue-700 dark:text-blue-400" />
           </div>
           <p className="text-2xl font-extrabold text-blue-700 dark:text-blue-400 tabular-nums tracking-tight">
             {stats.updates}
           </p>
-          <span className="text-[10px] text-blue-600/80 dark:text-blue-400/80">Campos y datos actualizados</span>
+          <span className="text-[10px] text-blue-800/90 dark:text-blue-400/80">Campos y datos actualizados</span>
         </div>
 
         <div className="rounded-2xl border border-rose-200 dark:border-rose-900/60 bg-rose-50/50 dark:bg-rose-950/20 p-4 shadow-xs">
           <div className="flex items-center justify-between pb-1">
             <span className="text-xs font-semibold text-rose-800 dark:text-rose-300">Bajas / Eliminados</span>
-            <Trash2 size={16} className="text-rose-600 dark:text-rose-400" />
+            <Trash2 size={16} className="text-rose-700 dark:text-rose-400" />
           </div>
           <p className="text-2xl font-extrabold text-rose-700 dark:text-rose-400 tabular-nums tracking-tight">
             {stats.deletes}
           </p>
-          <span className="text-[10px] text-rose-600/80 dark:text-rose-400/80">Retiros de flota y eliminaciones</span>
+          <span className="text-[10px] text-rose-700/80 dark:text-rose-400/80">Retiros de flota y eliminaciones</span>
         </div>
 
         <div className="rounded-2xl border border-purple-200 dark:border-purple-900/60 bg-purple-50/50 dark:bg-purple-950/20 p-4 shadow-xs col-span-2 sm:col-span-1">
           <div className="flex items-center justify-between pb-1">
             <span className="text-xs font-semibold text-purple-800 dark:text-purple-300">Usuarios Actores</span>
-            <Users size={16} className="text-purple-600 dark:text-purple-400" />
+            <Users size={16} className="text-purple-700 dark:text-purple-400" />
           </div>
           <p className="text-2xl font-extrabold text-purple-700 dark:text-purple-400 tabular-nums tracking-tight">
             {stats.uniqueUserCount}
           </p>
-          <span className="text-[10px] text-purple-600/80 dark:text-purple-400/80">Personal con auditoría</span>
+          <span className="text-[10px] text-purple-700/80 dark:text-purple-400/80">Personal con auditoría</span>
         </div>
       </div>
 
@@ -346,7 +346,7 @@ export const AuditHistoryView: React.FC = () => {
         <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
           {/* Buscador de Bitácora */}
           <div className="relative flex-1 min-w-[240px]">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={17} />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400" size={17} />
             <input
               type="text"
               value={searchQuery}
@@ -449,7 +449,7 @@ export const AuditHistoryView: React.FC = () => {
       {/* Tabla de Bitácora Detallada */}
       {loading ? (
         <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-16 text-center shadow-xs">
-          <RefreshCw size={36} className="mx-auto animate-spin text-blue-600 dark:text-blue-400 mb-3" />
+          <RefreshCw size={36} className="mx-auto animate-spin text-blue-700 dark:text-blue-400 mb-3" />
           <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">
             Cargando bitácora de auditoría inmutable...
           </p>
@@ -499,7 +499,7 @@ export const AuditHistoryView: React.FC = () => {
                           <span className="font-mono text-[11px] font-semibold text-slate-800 dark:text-slate-200">
                             {new Date(log.createdAt).toLocaleDateString('es-PE')}
                           </span>
-                          <div className="flex items-center gap-1 text-[10px] text-slate-400">
+                          <div className="flex items-center gap-1 text-[10px] text-slate-500 dark:text-slate-400">
                             <Clock size={11} />
                             <span>
                               {new Date(log.createdAt).toLocaleTimeString('es-PE', {
@@ -509,7 +509,7 @@ export const AuditHistoryView: React.FC = () => {
                               })}
                             </span>
                             <span>·</span>
-                            <span className="text-blue-600 dark:text-blue-400 font-medium">
+                            <span className="text-blue-700 dark:text-blue-400 font-medium">
                               {formatRelativeTime(log.createdAt)}
                             </span>
                           </div>
@@ -529,7 +529,7 @@ export const AuditHistoryView: React.FC = () => {
                             <p className="font-bold text-slate-900 dark:text-white truncate">
                               {log.userName || log.userEmail.split('@')[0]}
                             </p>
-                            <p className="text-[10px] text-slate-400 truncate font-mono">
+                            <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate font-mono">
                               {log.userEmail}
                             </p>
                           </div>
@@ -572,7 +572,7 @@ export const AuditHistoryView: React.FC = () => {
                               {log.padronNumber}
                             </span>
                           ) : (
-                            <span className="text-[11px] text-slate-400 italic">Padrón general</span>
+                            <span className="text-[11px] text-slate-500 dark:text-slate-400 italic">Padrón general</span>
                           )}
                           <span className="text-[10px] text-slate-500 dark:text-slate-400">
                             ({entityFriendly})
@@ -586,7 +586,7 @@ export const AuditHistoryView: React.FC = () => {
                           {fieldFriendly}
                         </span>
                         {log.fieldName && log.fieldName !== fieldFriendly && (
-                          <span className="block font-mono text-[10px] text-slate-400">
+                          <span className="block font-mono text-[10px] text-slate-500 dark:text-slate-400">
                             ({log.fieldName})
                           </span>
                         )}
@@ -596,24 +596,24 @@ export const AuditHistoryView: React.FC = () => {
                       <td className="px-4 py-3.5 max-w-xs">
                         {log.oldValue && log.newValue ? (
                           <div className="flex items-center gap-1.5 font-mono text-[11px]">
-                            <span className="line-through text-slate-400 dark:text-slate-500 max-w-[120px] truncate" title={log.oldValue}>
+                            <span className="line-through text-slate-500 dark:text-slate-500 dark:text-slate-400 max-w-[120px] truncate" title={log.oldValue}>
                               {log.oldValue}
                             </span>
-                            <span className="text-slate-400 font-bold">➔</span>
-                            <span className="font-bold text-emerald-600 dark:text-emerald-400 max-w-[130px] truncate" title={log.newValue}>
+                            <span className="text-slate-500 dark:text-slate-400 font-bold">➔</span>
+                            <span className="font-bold text-emerald-700 dark:text-emerald-400 max-w-[130px] truncate" title={log.newValue}>
                               {log.newValue}
                             </span>
                           </div>
                         ) : log.newValue ? (
-                          <span className="font-medium text-emerald-600 dark:text-emerald-400 max-w-[200px] truncate block" title={log.newValue}>
+                          <span className="font-medium text-emerald-700 dark:text-emerald-400 max-w-[200px] truncate block" title={log.newValue}>
                             Alta: {log.newValue}
                           </span>
                         ) : log.oldValue ? (
-                          <span className="font-medium text-rose-600 dark:text-rose-400 line-through max-w-[200px] truncate block" title={log.oldValue}>
+                          <span className="font-medium text-rose-700 dark:text-rose-400 line-through max-w-[200px] truncate block" title={log.oldValue}>
                             Baja: {log.oldValue}
                           </span>
                         ) : (
-                          <span className="text-slate-400 italic text-[11px]">-</span>
+                          <span className="text-slate-500 dark:text-slate-400 italic text-[11px]">-</span>
                         )}
                       </td>
 
@@ -622,7 +622,7 @@ export const AuditHistoryView: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => setSelectedLogForDetail(log)}
-                          className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-800 transition-colors"
+                          className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 dark:text-slate-400 hover:text-blue-800 hover:bg-blue-50 dark:hover:bg-slate-800 transition-colors"
                           title="Ver detalle forense completo de esta operación"
                         >
                           <Eye size={15} />
@@ -636,7 +636,7 @@ export const AuditHistoryView: React.FC = () => {
           </div>
 
           {/* Paginación */}
-          <div className="border-t border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-850">
+          <div className="border-t border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800">
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}
@@ -682,7 +682,7 @@ export const AuditHistoryView: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setSelectedLogForDetail(null)}
-                className="rounded-lg p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                className="rounded-lg p-1 text-slate-500 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
               >
                 <X size={18} />
               </button>
@@ -693,7 +693,7 @@ export const AuditHistoryView: React.FC = () => {
               {/* QUIÉN Y CUÁNDO */}
               <div className="grid grid-cols-2 gap-3">
                 <div className="rounded-xl bg-slate-50 dark:bg-slate-800/60 p-3 border border-slate-200 dark:border-slate-700">
-                  <span className="text-[11px] text-slate-400 font-medium">¿Quién realizó la acción?</span>
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">¿Quién realizó la acción?</span>
                   <p className="text-xs font-bold text-slate-900 dark:text-white mt-0.5">
                     {selectedLogForDetail.userName || 'Usuario'}
                   </p>
@@ -703,11 +703,11 @@ export const AuditHistoryView: React.FC = () => {
                 </div>
 
                 <div className="rounded-xl bg-slate-50 dark:bg-slate-800/60 p-3 border border-slate-200 dark:border-slate-700">
-                  <span className="text-[11px] text-slate-400 font-medium">¿Cuándo ocurrió?</span>
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">¿Cuándo ocurrió?</span>
                   <p className="text-xs font-bold text-slate-900 dark:text-white mt-0.5">
                     {new Date(selectedLogForDetail.createdAt).toLocaleString('es-PE')}
                   </p>
-                  <p className="text-[11px] text-blue-600 dark:text-blue-400 font-semibold">
+                  <p className="text-[11px] text-blue-700 dark:text-blue-400 font-semibold">
                     {formatRelativeTime(selectedLogForDetail.createdAt)}
                   </p>
                 </div>
@@ -716,21 +716,21 @@ export const AuditHistoryView: React.FC = () => {
               {/* QUÉ ACCIÓN Y OBJETO */}
               <div className="grid grid-cols-2 gap-3">
                 <div className="rounded-xl bg-slate-50 dark:bg-slate-800/60 p-3 border border-slate-200 dark:border-slate-700">
-                  <span className="text-[11px] text-slate-400 font-medium">Operación / Acción</span>
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">Operación / Acción</span>
                   <p className="text-xs font-bold text-blue-700 dark:text-blue-400 uppercase mt-0.5">
                     {selectedLogForDetail.action}
                   </p>
-                  <span className="text-[10px] text-slate-400">
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400">
                     Módulo: {ENTITY_TRANSLATIONS[selectedLogForDetail.entity || ''] || selectedLogForDetail.entity}
                   </span>
                 </div>
 
                 <div className="rounded-xl bg-slate-50 dark:bg-slate-800/60 p-3 border border-slate-200 dark:border-slate-700">
-                  <span className="text-[11px] text-slate-400 font-medium">Padrón / Registro ID</span>
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">Padrón / Registro ID</span>
                   <p className="text-xs font-mono font-bold text-slate-900 dark:text-white mt-0.5">
                     {selectedLogForDetail.padronNumber || `ID #${selectedLogForDetail.entityId || '-'}`}
                   </p>
-                  <span className="text-[10px] text-slate-400">
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400">
                     Campo: {FIELD_TRANSLATIONS[selectedLogForDetail.fieldName] || selectedLogForDetail.fieldName}
                   </span>
                 </div>
@@ -766,7 +766,7 @@ export const AuditHistoryView: React.FC = () => {
               {/* IP / MOTIVO */}
               {selectedLogForDetail.reason && (
                 <div className="rounded-xl bg-slate-50 dark:bg-slate-800/60 p-3 border border-slate-200 dark:border-slate-700">
-                  <span className="text-[11px] text-slate-400 font-medium">Motivo u Observación:</span>
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">Motivo u Observación:</span>
                   <p className="text-xs text-slate-800 dark:text-slate-200 mt-0.5">
                     {selectedLogForDetail.reason}
                   </p>
@@ -817,7 +817,7 @@ export const AuditHistoryView: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setIsExportModalOpen(false)}
-                className="rounded-lg p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                className="rounded-lg p-1 text-slate-500 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
               >
                 <X size={18} />
               </button>
@@ -850,7 +850,7 @@ export const AuditHistoryView: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setIsExportModalOpen(false)}
-                className="rounded-xl px-4 py-2 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                className="rounded-xl px-4 py-2 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
               >
                 Cancelar
               </button>

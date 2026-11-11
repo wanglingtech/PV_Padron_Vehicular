@@ -190,9 +190,9 @@ export const BackupMigrationView: React.FC = () => {
         title: '¿Confirmar SOBRESCRITURA TOTAL?',
         html: `
           <div class="text-left text-sm space-y-2 text-slate-700 dark:text-slate-300">
-            <p class="font-bold text-rose-600 dark:text-rose-400">¡ADVERTENCIA DE SEGURIDAD CRÍTICA!</p>
+            <p class="font-bold text-rose-700 dark:text-rose-400">¡ADVERTENCIA DE SEGURIDAD CRÍTICA!</p>
             <p>Se eliminarán todos los datos actuales de las 15 tablas del sistema y se reemplazarán exactamente con el contenido del archivo de respaldo.</p>
-            <p class="text-xs text-slate-500">Esta acción no se puede deshacer. Se registrará un evento inmutable en la bitácora de auditoría.</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Esta acción no se puede deshacer. Se registrará un evento inmutable en la bitácora de auditoría.</p>
           </div>
         `,
         icon: 'warning',
@@ -240,7 +240,7 @@ export const BackupMigrationView: React.FC = () => {
           <div class="text-left text-sm space-y-2">
             <p class="text-emerald-700 dark:text-emerald-400 font-medium">${res.message}</p>
             <p class="text-xs text-slate-600 dark:text-slate-400">Total de registros procesados: <b>${res.totalRestored}</b></p>
-            <p class="text-xs text-slate-500">Modo aplicado: <b>${res.mode === 'overwrite' ? 'Sobrescritura Total' : 'Fusión Segura'}</b></p>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Modo aplicado: <b>${res.mode === 'overwrite' ? 'Sobrescritura Total' : 'Fusión Segura'}</b></p>
           </div>
         `,
         icon: 'success',
@@ -278,7 +278,7 @@ export const BackupMigrationView: React.FC = () => {
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-white dark:bg-slate-900 p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
         <div className="min-w-0">
           <div className="flex items-center gap-3">
-            <div className="p-3 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 rounded-xl">
+            <div className="p-3 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-800 dark:text-indigo-400 rounded-xl">
               <Database className="w-6 h-6 sm:w-7 sm:h-7" />
             </div>
             <div className="min-w-0">
@@ -317,12 +317,12 @@ export const BackupMigrationView: React.FC = () => {
             <p className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mt-1">
               Cloud SQL
             </p>
-            <div className="flex items-center gap-1.5 mt-1 text-xs text-emerald-600 dark:text-emerald-400 font-medium">
+            <div className="flex items-center gap-1.5 mt-1 text-xs text-emerald-700 dark:text-emerald-400 font-medium">
               <CheckCircle2 className="w-3.5 h-3.5" />
               <span>PostgreSQL Activo & Seguro</span>
             </div>
           </div>
-          <div className="p-3 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 rounded-xl">
+          <div className="p-3 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-800 dark:text-emerald-400 rounded-xl">
             <Server className="w-6 h-6" />
           </div>
         </div>
@@ -339,7 +339,7 @@ export const BackupMigrationView: React.FC = () => {
               Esquema Relacional Completo
             </p>
           </div>
-          <div className="p-3 bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 rounded-xl">
+          <div className="p-3 bg-blue-50 dark:bg-blue-950/50 text-blue-800 dark:text-blue-400 rounded-xl">
             <Layers className="w-6 h-6" />
           </div>
         </div>
@@ -356,7 +356,7 @@ export const BackupMigrationView: React.FC = () => {
               Filas sincronizadas en vivo
             </p>
           </div>
-          <div className="p-3 bg-purple-50 dark:bg-purple-950/50 text-purple-600 dark:text-purple-400 rounded-xl">
+          <div className="p-3 bg-purple-50 dark:bg-purple-950/50 text-purple-800 dark:text-purple-400 rounded-xl">
             <HardDrive className="w-6 h-6" />
           </div>
         </div>
@@ -375,7 +375,7 @@ export const BackupMigrationView: React.FC = () => {
               {backupStats?.lastBackup?.user || 'Sistema'}
             </p>
           </div>
-          <div className="p-3 bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 rounded-xl">
+          <div className="p-3 bg-amber-50 dark:bg-amber-950/50 text-amber-800 dark:text-amber-400 rounded-xl">
             <History className="w-6 h-6" />
           </div>
         </div>
@@ -428,7 +428,7 @@ export const BackupMigrationView: React.FC = () => {
             <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 rounded-xl">
+                  <div className="p-3 bg-blue-50 dark:bg-blue-950/60 text-blue-800 dark:text-blue-400 rounded-xl">
                     <FileJson className="w-7 h-7" />
                   </div>
                   <span className="px-2.5 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300">
@@ -442,7 +442,7 @@ export const BackupMigrationView: React.FC = () => {
                   Exporta una copia íntegra con metadatos, firmas de tiempo y resumen de registros de las 15 tablas. Ideal para copias de seguridad periódicas y restauración en un solo clic dentro del sistema.
                 </p>
 
-                <div className="mt-4 p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
+                <div className="mt-4 p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl space-y-1.5 text-xs text-slate-800 dark:text-slate-300">
                   <div className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-emerald-500 shrink-0" />
                     <span>Incluye vehículos, personas, pólizas, revisiones, trámites y usuarios.</span>
@@ -474,7 +474,7 @@ export const BackupMigrationView: React.FC = () => {
             <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 rounded-xl">
+                  <div className="p-3 bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-400 rounded-xl">
                     <FileCode className="w-7 h-7" />
                   </div>
                   <span className="px-2.5 py-1 text-xs font-semibold rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
@@ -485,10 +485,10 @@ export const BackupMigrationView: React.FC = () => {
                   Script SQL Portátil (.sql)
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
-                  Genera un script SQL ANSI estándar completo con <code className="text-indigo-600 dark:text-indigo-400 font-mono">CREATE TABLE IF NOT EXISTS</code> e <code className="text-indigo-600 dark:text-indigo-400 font-mono">INSERT INTO ... ON CONFLICT DO NOTHING</code> listo para ejecutarse en cualquier motor relacional.
+                  Genera un script SQL ANSI estándar completo con <code className="text-indigo-700 dark:text-indigo-400 font-mono">CREATE TABLE IF NOT EXISTS</code> e <code className="text-indigo-700 dark:text-indigo-400 font-mono">INSERT INTO ... ON CONFLICT DO NOTHING</code> listo para ejecutarse en cualquier motor relacional.
                 </p>
 
-                <div className="mt-4 p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
+                <div className="mt-4 p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl space-y-1.5 text-xs text-slate-800 dark:text-slate-300">
                   <div className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-emerald-500 shrink-0" />
                     <span>Compatible con <b>PostgreSQL, Supabase, Neon, AWS RDS, GCP Cloud SQL</b>.</span>
@@ -552,7 +552,7 @@ export const BackupMigrationView: React.FC = () => {
                         <td className="py-2.5 px-3 font-semibold text-slate-900 dark:text-white">
                           {def.label}
                         </td>
-                        <td className="py-2.5 px-3 font-mono text-xs text-indigo-600 dark:text-indigo-400">
+                        <td className="py-2.5 px-3 font-mono text-xs text-indigo-700 dark:text-indigo-400">
                           {key}
                         </td>
                         <td className="py-2.5 px-3 text-slate-500 dark:text-slate-400 text-xs">
@@ -582,7 +582,7 @@ export const BackupMigrationView: React.FC = () => {
         <div className="space-y-6">
           {/* Instrucciones y advertencia */}
           <div className="bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60 p-4 sm:p-5 rounded-2xl flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+            <AlertTriangle className="w-5 h-5 text-amber-700 dark:text-amber-400 shrink-0 mt-0.5" />
             <div className="text-xs sm:text-sm text-amber-900 dark:text-amber-200 space-y-1">
               <p className="font-bold">Asistente de Restauración y Migración Segura</p>
               <p>
@@ -607,7 +607,7 @@ export const BackupMigrationView: React.FC = () => {
                 htmlFor="backup-file-input"
                 className="cursor-pointer flex flex-col items-center justify-center space-y-3"
               >
-                <div className="p-4 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 rounded-2xl">
+                <div className="p-4 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-800 dark:text-indigo-400 rounded-2xl">
                   <Upload className="w-8 h-8" />
                 </div>
                 <div>
@@ -641,7 +641,7 @@ export const BackupMigrationView: React.FC = () => {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={clearUploadedFile}
-                    className="p-2 text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg text-xs font-medium transition flex items-center gap-1"
+                    className="p-2 text-rose-800 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg text-xs font-medium transition flex items-center gap-1"
                   >
                     <Trash2 className="w-4 h-4" />
                     <span>Cambiar Archivo</span>
@@ -688,7 +688,7 @@ export const BackupMigrationView: React.FC = () => {
                 </div>
                 <div>
                   <span className="text-slate-500 dark:text-slate-400 block font-medium">Total Entidades:</span>
-                  <span className="font-bold text-indigo-600 dark:text-indigo-400">
+                  <span className="font-bold text-indigo-700 dark:text-indigo-400">
                     {parsedBackup.metadata?.totalRecords ??
                       Object.values(parsedBackup.data).reduce(
                         (acc: number, cur: any) => acc + (Array.isArray(cur) ? cur.length : 0),
@@ -714,7 +714,7 @@ export const BackupMigrationView: React.FC = () => {
                         className="px-3 py-1.5 rounded-lg text-xs bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center gap-1.5"
                       >
                         <span className="font-medium">{def ? def.label : key}:</span>
-                        <span className="font-bold text-indigo-600 dark:text-indigo-400">{count}</span>
+                        <span className="font-bold text-indigo-700 dark:text-indigo-400">{count}</span>
                       </div>
                     );
                   })}
@@ -790,7 +790,7 @@ export const BackupMigrationView: React.FC = () => {
                 <button
                   onClick={clearUploadedFile}
                   disabled={restoring}
-                  className="px-4 py-2.5 text-xs sm:text-sm font-medium rounded-xl text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition"
+                  className="px-4 py-2.5 text-xs sm:text-sm font-medium rounded-xl text-slate-700 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition"
                 >
                   Cancelar
                 </button>
@@ -869,7 +869,7 @@ export const BackupMigrationView: React.FC = () => {
             <button
               onClick={fetchAuditLogs}
               disabled={loadingAudit}
-              className="p-2 text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 rounded-lg transition"
+              className="p-2 text-slate-700 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 rounded-lg transition"
             >
               <RefreshCw className={`w-4 h-4 ${loadingAudit ? 'animate-spin' : ''}`} />
             </button>
@@ -888,7 +888,7 @@ export const BackupMigrationView: React.FC = () => {
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
                 {auditLogs.length === 0 ? (
                   <tr>
-                    <td colSpan={4} className="py-8 text-center text-slate-400 text-xs">
+                    <td colSpan={4} className="py-8 text-center text-slate-500 dark:text-slate-400 text-xs">
                       No hay registros de respaldo o restauración registrados aún.
                     </td>
                   </tr>

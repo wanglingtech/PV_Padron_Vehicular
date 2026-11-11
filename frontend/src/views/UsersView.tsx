@@ -401,7 +401,7 @@ export const UsersView: React.FC = () => {
       {/* Aviso si la sesión no es de Administrador */}
       {!isAdmin && (
         <div className="rounded-xl border border-amber-200 dark:border-amber-800/60 bg-amber-50 dark:bg-amber-950/40 p-4 text-xs text-amber-800 dark:text-amber-200 flex items-start gap-3">
-          <AlertCircle size={18} className="shrink-0 text-amber-600 dark:text-amber-400 mt-0.5" />
+          <AlertCircle size={18} className="shrink-0 text-amber-700 dark:text-amber-400 mt-0.5" />
           <div>
             <p className="font-bold">Sesión en Modo Operativo / Consulta</p>
             <p className="mt-0.5">
@@ -444,7 +444,7 @@ export const UsersView: React.FC = () => {
           {/* Barra de Búsqueda y Filtros */}
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-12">
             <div className="relative sm:col-span-5">
-              <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+              <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400" />
               <input
                 type="text"
                 placeholder="Buscar por nombre, correo o padrón asignado..."
@@ -511,7 +511,7 @@ export const UsersView: React.FC = () => {
                 <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                   {filteredAccounts.length === 0 ? (
                     <tr>
-                      <td colSpan={6} className="py-12 text-center text-slate-400 dark:text-slate-500">
+                      <td colSpan={6} className="py-12 text-center text-slate-500 dark:text-slate-500 dark:text-slate-400">
                         No se encontraron cuentas con los filtros seleccionados.
                       </td>
                     </tr>
@@ -580,7 +580,7 @@ export const UsersView: React.FC = () => {
                                 {account.assignedPadron}
                               </span>
                             ) : (
-                              <span className="text-slate-400 text-[11px]">Todos los padrones</span>
+                              <span className="text-slate-500 dark:text-slate-400 text-[11px]">Todos los padrones</span>
                             )}
                           </td>
 
@@ -605,11 +605,11 @@ export const UsersView: React.FC = () => {
 
                           <td className="px-4 py-3.5">
                             <div className="flex items-center gap-2 text-[11px]">
-                              <span className="font-semibold text-emerald-600 dark:text-emerald-400">
+                              <span className="font-semibold text-emerald-700 dark:text-emerald-400">
                                 {writeCount} escritura
                               </span>
                               <span className="text-slate-300 dark:text-slate-700">·</span>
-                              <span className="font-semibold text-amber-600 dark:text-amber-400">
+                              <span className="font-semibold text-amber-700 dark:text-amber-400">
                                 {readCount} lectura
                               </span>
                             </div>
@@ -641,7 +641,7 @@ export const UsersView: React.FC = () => {
                                 }
                                 disabled={isCurrentActiveSession || account.email === 'admin@transporte.pe'}
                                 title="Eliminar cuenta"
-                                className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 hover:text-rose-600 dark:hover:text-rose-400 disabled:opacity-30 disabled:pointer-events-none transition-colors"
+                                className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 hover:text-rose-800 dark:hover:text-rose-400 disabled:opacity-30 disabled:pointer-events-none transition-colors"
                               >
                                 <Trash2 size={14} />
                               </button>
@@ -778,14 +778,14 @@ export const UsersView: React.FC = () => {
                           <h3 className="font-bold text-slate-900 dark:text-white text-sm">
                             {role.name}
                           </h3>
-                          <span className="font-mono text-[10px] text-slate-400 dark:text-slate-500">
+                          <span className="font-mono text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400">
                             ID: {role.id}
                           </span>
                         </div>
                       </div>
 
                       {role.isSystem ? (
-                        <span className="rounded-full bg-slate-100 dark:bg-slate-800 px-2 py-0.5 text-[10px] font-extrabold text-slate-600 dark:text-slate-300">
+                        <span className="rounded-full bg-slate-100 dark:bg-slate-800 px-2 py-0.5 text-[10px] font-extrabold text-slate-700 dark:text-slate-300">
                           Sistema
                         </span>
                       ) : (
@@ -797,7 +797,7 @@ export const UsersView: React.FC = () => {
                               setRoleModalOpen(true);
                             }}
                             title="Editar información de este rol"
-                            className="text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 p-1 rounded transition-colors"
+                            className="text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 p-1 rounded transition-colors"
                           >
                             <Edit2 size={14} />
                           </button>
@@ -812,7 +812,7 @@ export const UsersView: React.FC = () => {
                               })
                             }
                             title="Eliminar este rol personalizado"
-                            className="text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 p-1 rounded transition-colors"
+                            className="text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 p-1 rounded transition-colors"
                           >
                             <Trash2 size={14} />
                           </button>
@@ -839,8 +839,8 @@ export const UsersView: React.FC = () => {
                         <span className="font-bold text-amber-700 dark:text-amber-400">{readModules} módulos</span>
                       </div>
                       <div className="flex items-center justify-between text-[11px]">
-                        <span className="text-slate-400 font-medium">Sin Acceso (Bloqueados):</span>
-                        <span className="font-bold text-slate-400">{blockedModules} módulos</span>
+                        <span className="text-slate-500 dark:text-slate-400 font-medium">Sin Acceso (Bloqueados):</span>
+                        <span className="font-bold text-slate-500 dark:text-slate-400">{blockedModules} módulos</span>
                       </div>
                     </div>
                   </div>
@@ -952,7 +952,7 @@ export const UsersView: React.FC = () => {
               </div>
               <button
                 onClick={() => setPermissionsModalOpen(false)}
-                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1.5 rounded-lg"
+                className="text-slate-500 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1.5 rounded-lg"
               >
                 <X size={20} />
               </button>
@@ -1006,7 +1006,7 @@ export const UsersView: React.FC = () => {
                           <span className="font-bold text-slate-900 dark:text-white text-xs">
                             {module.name}
                           </span>
-                          <span className="rounded bg-slate-100 dark:bg-slate-800 px-1.5 py-0.2 text-[9px] font-semibold text-slate-500 uppercase">
+                          <span className="rounded bg-slate-100 dark:bg-slate-800 px-1.5 py-0.2 text-[9px] font-semibold text-slate-500 dark:text-slate-400 uppercase">
                             {module.category}
                           </span>
                         </div>
@@ -1111,7 +1111,7 @@ export const UsersView: React.FC = () => {
               </div>
               <button
                 onClick={() => setAccountModalOpen(false)}
-                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 rounded-lg"
+                className="text-slate-500 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 rounded-lg"
               >
                 <X size={18} />
               </button>
@@ -1154,7 +1154,7 @@ export const UsersView: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setShowModalPassword(!showModalPassword)}
-                    className="flex items-center gap-1 text-[11px] font-semibold text-blue-600 dark:text-blue-400 hover:underline"
+                    className="flex items-center gap-1 text-[11px] font-semibold text-blue-700 dark:text-blue-400 hover:underline"
                   >
                     {showModalPassword ? (
                       <>
@@ -1182,7 +1182,7 @@ export const UsersView: React.FC = () => {
                     type="button"
                     onClick={() => setShowModalPassword(!showModalPassword)}
                     tabIndex={-1}
-                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
                   >
                     {showModalPassword ? <EyeOff size={15} /> : <Eye size={15} />}
                   </button>
@@ -1241,7 +1241,7 @@ export const UsersView: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setAccountModalOpen(false)}
-                  className="rounded-xl px-4 py-2 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  className="rounded-xl px-4 py-2 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
                 >
                   Cancelar
                 </button>
@@ -1283,7 +1283,7 @@ export const UsersView: React.FC = () => {
                   setRoleModalOpen(false);
                   setEditingRole(null);
                 }}
-                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 rounded-lg"
+                className="text-slate-500 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 rounded-lg"
               >
                 <X size={18} />
               </button>
@@ -1320,7 +1320,7 @@ export const UsersView: React.FC = () => {
                   }`}
                 />
                 {editingRole && (
-                  <p className="mt-1 text-[10px] text-slate-400">
+                  <p className="mt-1 text-[10px] text-slate-500 dark:text-slate-400">
                     El identificador único no se puede modificar una vez creado para preservar la integridad de los accesos.
                   </p>
                 )}
@@ -1366,7 +1366,7 @@ export const UsersView: React.FC = () => {
                     setRoleModalOpen(false);
                     setEditingRole(null);
                   }}
-                  className="rounded-xl px-4 py-2 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
+                  className="rounded-xl px-4 py-2 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
                 >
                   Cancelar
                 </button>

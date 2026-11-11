@@ -44,7 +44,7 @@ export const SettingsView: React.FC = () => {
         <h2 className="text-xl font-bold text-slate-900 tracking-tight sm:text-2xl">
           Configuración Institucional del Padrón
         </h2>
-        <p className="text-xs text-slate-500 sm:text-sm">
+        <p className="text-xs text-slate-500 dark:text-slate-400 sm:text-sm">
           Parámetros operativos de la asociación de transportistas, reglas de alertas y políticas del sistema
         </p>
       </div>
@@ -58,7 +58,7 @@ export const SettingsView: React.FC = () => {
             </div>
             <div>
               <h3 className="text-sm font-bold text-slate-900">Datos de la Asociación de Transporte</h3>
-              <p className="text-xs text-slate-500">Aparece en reportes impresos y exportaciones oficiales</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Aparece en reportes impresos y exportaciones oficiales</p>
             </div>
           </div>
 
@@ -72,7 +72,7 @@ export const SettingsView: React.FC = () => {
                 value={assocName}
                 onChange={e => setAssocName(e.target.value)}
                 disabled={!isAdmin}
-                className="w-full min-h-[42px] rounded-lg border border-slate-200 bg-slate-50/50 px-3 text-xs sm:text-sm text-slate-800 focus:border-indigo-500 focus:bg-white focus:outline-hidden disabled:bg-slate-100 disabled:text-slate-500"
+                className="w-full min-h-[42px] rounded-lg border border-slate-200 bg-slate-50/50 px-3 text-xs sm:text-sm text-slate-800 focus:border-indigo-500 focus:bg-white focus:outline-hidden disabled:bg-slate-100 disabled:text-slate-500 dark:text-slate-400"
               />
             </div>
 
@@ -85,7 +85,7 @@ export const SettingsView: React.FC = () => {
                 value={subtitle}
                 onChange={e => setSubtitle(e.target.value)}
                 disabled={!isAdmin}
-                className="w-full min-h-[42px] rounded-lg border border-slate-200 bg-slate-50/50 px-3 text-xs sm:text-sm text-slate-800 focus:border-indigo-500 focus:bg-white focus:outline-hidden disabled:bg-slate-100 disabled:text-slate-500"
+                className="w-full min-h-[42px] rounded-lg border border-slate-200 bg-slate-50/50 px-3 text-xs sm:text-sm text-slate-800 focus:border-indigo-500 focus:bg-white focus:outline-hidden disabled:bg-slate-100 disabled:text-slate-500 dark:text-slate-400"
               />
             </div>
 
@@ -98,7 +98,7 @@ export const SettingsView: React.FC = () => {
                 value={ruc}
                 onChange={e => setRuc(e.target.value)}
                 disabled={!isAdmin}
-                className="w-full min-h-[42px] rounded-lg border border-slate-200 bg-slate-50/50 px-3 text-xs sm:text-sm text-slate-800 focus:border-indigo-500 focus:bg-white focus:outline-hidden disabled:bg-slate-100 disabled:text-slate-500 font-mono"
+                className="w-full min-h-[42px] rounded-lg border border-slate-200 bg-slate-50/50 px-3 text-xs sm:text-sm text-slate-800 focus:border-indigo-500 focus:bg-white focus:outline-hidden disabled:bg-slate-100 disabled:text-slate-500 dark:text-slate-400 font-mono"
               />
             </div>
 
@@ -111,7 +111,7 @@ export const SettingsView: React.FC = () => {
                 value={city}
                 onChange={e => setCity(e.target.value)}
                 disabled={!isAdmin}
-                className="w-full min-h-[42px] rounded-lg border border-slate-200 bg-slate-50/50 px-3 text-xs sm:text-sm text-slate-800 focus:border-indigo-500 focus:bg-white focus:outline-hidden disabled:bg-slate-100 disabled:text-slate-500"
+                className="w-full min-h-[42px] rounded-lg border border-slate-200 bg-slate-50/50 px-3 text-xs sm:text-sm text-slate-800 focus:border-indigo-500 focus:bg-white focus:outline-hidden disabled:bg-slate-100 disabled:text-slate-500 dark:text-slate-400"
               />
             </div>
           </div>
@@ -125,7 +125,7 @@ export const SettingsView: React.FC = () => {
             </div>
             <div>
               <h3 className="text-sm font-bold text-slate-900">Umbrales de Control Preventivo</h3>
-              <p className="text-xs text-slate-500">Criterio temporal para clasificación de documentos</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Criterio temporal para clasificación de documentos</p>
             </div>
           </div>
 

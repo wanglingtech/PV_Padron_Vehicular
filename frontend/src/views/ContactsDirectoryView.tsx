@@ -154,7 +154,7 @@ export const ContactsDirectoryView: React.FC = () => {
       {/* 1. Header del Módulo */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-xs">
         <div className="flex items-center gap-3.5">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-600 text-white shadow-md shadow-emerald-600/20">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-700 text-white shadow-md shadow-emerald-600/20">
             <MessageCircle size={26} />
           </div>
           <div>
@@ -187,7 +187,7 @@ export const ContactsDirectoryView: React.FC = () => {
       <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-xs space-y-3.5">
         {/* Buscador */}
         <div className="relative">
-          <Search size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+          <Search size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400" />
           <input
             type="text"
             value={searchQuery}
@@ -198,7 +198,7 @@ export const ContactsDirectoryView: React.FC = () => {
           {searchQuery && (
             <button
               onClick={() => setSearchQuery('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
             >
               <X size={15} />
             </button>
@@ -207,7 +207,7 @@ export const ContactsDirectoryView: React.FC = () => {
 
         {/* Píldoras de Filtro por Rol */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
-          <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mr-1 hidden sm:inline">
+          <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mr-1 hidden sm:inline">
             Filtrar:
           </span>
           {roleFilters.map((rf) => {
@@ -218,7 +218,7 @@ export const ContactsDirectoryView: React.FC = () => {
                 onClick={() => setSelectedRole(rf.id)}
                 className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 font-semibold whitespace-nowrap transition-all ${
                   isSelected
-                    ? 'bg-emerald-600 text-white shadow-xs font-bold'
+                    ? 'bg-emerald-700 text-white shadow-xs font-bold'
                     : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
                 }`}
               >
@@ -241,17 +241,17 @@ export const ContactsDirectoryView: React.FC = () => {
       {/* 3. Tabla Paginada de Contactos: estrictamente Foto, Nombre Completo y Teléfono / WhatsApp */}
       <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm overflow-hidden">
         {loading && contacts.length === 0 ? (
-          <div className="flex flex-col items-center justify-center p-12 text-slate-400">
+          <div className="flex flex-col items-center justify-center p-12 text-slate-500 dark:text-slate-400">
             <RefreshCw size={28} className="animate-spin text-emerald-600 mb-2" />
             <p className="text-xs font-medium">Cargando directorio de contactos...</p>
           </div>
         ) : contacts.length === 0 ? (
-          <div className="flex flex-col items-center justify-center p-12 text-center text-slate-400">
+          <div className="flex flex-col items-center justify-center p-12 text-center text-slate-500 dark:text-slate-400">
             <Users size={36} className="text-slate-300 dark:text-slate-600 mb-2" />
             <p className="text-sm font-bold text-slate-700 dark:text-slate-300">
               No se encontraron contactos
             </p>
-            <p className="text-xs text-slate-400 mt-1 max-w-sm">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-sm">
               {searchQuery
                 ? `No hay coincidencias para "${searchQuery}" en el rol seleccionado.`
                 : 'No existen registros de personal o conductores para este filtro.'}
@@ -259,7 +259,7 @@ export const ContactsDirectoryView: React.FC = () => {
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="mt-3 text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:underline"
+                className="mt-3 text-xs font-semibold text-emerald-700 dark:text-emerald-400 hover:underline"
               >
                 Limpiar búsqueda
               </button>
@@ -269,7 +269,7 @@ export const ContactsDirectoryView: React.FC = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs border-collapse">
               <thead>
-                <tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-850 text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider text-[11px]">
+                <tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider text-[11px]">
                   <th scope="col" className="py-3.5 px-4 w-16 text-center">
                     Foto
                   </th>
@@ -335,7 +335,7 @@ export const ContactsDirectoryView: React.FC = () => {
                             </span>
 
                             {contact.assignedPadron && (
-                              <span className="rounded-md bg-slate-100 dark:bg-slate-800 px-2 py-0.5 text-[10px] font-mono font-semibold text-slate-600 dark:text-slate-400">
+                              <span className="rounded-md bg-slate-100 dark:bg-slate-800 px-2 py-0.5 text-[10px] font-mono font-semibold text-slate-700 dark:text-slate-400">
                                 Padrón {contact.assignedPadron}
                               </span>
                             )}
@@ -351,7 +351,7 @@ export const ContactsDirectoryView: React.FC = () => {
                             href={whatsappLink}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 text-xs font-bold transition-all shadow-xs hover:shadow-md cursor-pointer shrink-0"
+                            className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white px-3 py-1.5 text-xs font-bold transition-all shadow-xs hover:shadow-md cursor-pointer shrink-0"
                             title={`Iniciar chat de WhatsApp con ${contact.fullName}`}
                           >
                             <MessageCircle size={15} />
@@ -369,7 +369,7 @@ export const ContactsDirectoryView: React.FC = () => {
                             className="inline-flex items-center gap-1 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 px-2.5 py-1.5 text-[11px] font-medium text-slate-700 dark:text-slate-300 transition-colors"
                             title="Seleccionar plantilla de mensaje rápido"
                           >
-                            <Send size={12} className="text-emerald-600 dark:text-emerald-400" />
+                            <Send size={12} className="text-emerald-700 dark:text-emerald-400" />
                             <span className="hidden sm:inline">Plantilla</span>
                           </button>
 
@@ -377,7 +377,7 @@ export const ContactsDirectoryView: React.FC = () => {
                           <button
                             type="button"
                             onClick={() => handleCopyPhone(contact)}
-                            className="rounded-xl border border-slate-200 dark:border-slate-700 p-1.5 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 transition-colors"
+                            className="rounded-xl border border-slate-200 dark:border-slate-700 p-1.5 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 transition-colors"
                             title="Copiar número al portapapeles"
                           >
                             {copiedId === contact.id ? (
@@ -478,7 +478,7 @@ export const ContactsDirectoryView: React.FC = () => {
                   <h3 className="text-sm font-bold text-slate-900 dark:text-white">
                     Enviar WhatsApp a {selectedContactForMessage.fullName}
                   </h3>
-                  <p className="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-bold">
+                  <p className="text-[11px] font-mono text-emerald-700 dark:text-emerald-400 font-bold">
                     {selectedContactForMessage.phone} • {selectedContactForMessage.roleLabel}
                   </p>
                 </div>
@@ -487,7 +487,7 @@ export const ContactsDirectoryView: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setSelectedContactForMessage(null)}
-                className="rounded-lg p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                className="rounded-lg p-1 text-slate-500 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
               >
                 <X size={18} />
               </button>
@@ -570,7 +570,7 @@ export const ContactsDirectoryView: React.FC = () => {
               </div>
             ) : (
               <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 p-3 text-xs text-slate-700 dark:text-slate-300">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-1">
                   Texto que se enviará:
                 </span>
                 <p className="italic leading-relaxed">
@@ -584,7 +584,7 @@ export const ContactsDirectoryView: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setSelectedContactForMessage(null)}
-                className="rounded-xl px-4 py-2 text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                className="rounded-xl px-4 py-2 text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
               >
                 Cancelar
               </button>
@@ -598,7 +598,7 @@ export const ContactsDirectoryView: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setSelectedContactForMessage(null)}
-                className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 text-xs font-bold transition-all shadow-md"
+                className="inline-flex items-center gap-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2 text-xs font-bold transition-all shadow-md"
               >
                 <MessageCircle size={16} />
                 <span>Abrir WhatsApp Ahora</span>

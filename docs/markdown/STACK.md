@@ -51,7 +51,7 @@ Documento de referencia de las tecnologías usadas, sus versiones y el motivo de
 | `motion` | Animaciones. |
 | `sweetalert2` | Alertas y confirmaciones. |
 | `jspdf` + `jspdf-autotable` | Reportes PDF. |
-| `xlsx` | Excel (importación/exportación). |
+| `exceljs` | Excel (importación/exportación). |
 
 ---
 

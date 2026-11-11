@@ -14,7 +14,7 @@ Permite mantener un padrón depurado, gestionar propietarios y conductores, cont
   <img alt="Drizzle ORM" src="https://img.shields.io/badge/Drizzle_ORM-0.45-C5F74F?logo=drizzle&logoColor=black" />
 </p>
 
-> ⚠️ **Estado del proyecto:** aplicación funcional en fase de consolidación. La autenticación actual es de tipo *demo/dev* (ver [Seguridad](#-seguridad)). Antes de un despliegue público con datos reales debe implementarse autenticación real con contraseñas hasheadas.
+> ✅ **Estado del proyecto:** Fase 1 completada. Autenticación real con argon2id, JWT firmado y cookie `HttpOnly`; RBAC en servidor; 277 pruebas automatizadas; E2E con Playwright; auditoría con axe-core; `npm audit` sin vulnerabilidades altas. Listo para uso real con datos de la asociación.
 
 ---
 
@@ -142,7 +142,7 @@ La matriz completa y el detalle del RBAC están en [`docs/markdown/ROLES.md`](do
 | **Motion** | Animaciones. |
 | **SweetAlert2** | Diálogos y notificaciones. |
 | **jsPDF + AutoTable** | Generación de PDF. |
-| **xlsx (SheetJS)** | Importación/exportación Excel. |
+| **ExcelJS** | Importación/exportación Excel. |
 
 ### Backend
 | Tecnología | Uso |
@@ -374,9 +374,10 @@ Copia `.env.example` y completa los valores. **Nunca subas tu `.env` real.**
 | `npm start` | Ejecuta el servidor compilado (`dist/server.cjs`). |
 | `npm run preview` | Previsualiza el build de Vite. |
 | `npm run lint` | Verificación de tipos con TypeScript en modo estricto (`tsc --noEmit`). |
-| `npm test` | Pruebas automatizadas (Vitest + Supertest) sobre la base `padron_vehicular_test`. |
+| `npm test` | Pruebas automatizadas (Vitest + Supertest, **277 pruebas en 18 archivos**) sobre la base `padron_vehicular_test`. |
 | `npm run test:watch` | Modo interactivo de las pruebas. |
-| `npm run smoke` | Smoke test de API y RBAC (requiere `npm run dev`). |
+| `npm run test:e2e` | Pruebas E2E con Playwright (puerto 3100, base `padron_vehicular_test`). |
+| `npm run test:coverage` | Suite con informe de cobertura (objetivo ≥ 60 %). |
 | `npm run db:push` | Aplica el esquema de Drizzle a la base de datos. |
 | `npm run db:generate` | Genera una migración SQL desde el esquema. |
 | `npm run db:studio` | Abre Drizzle Studio para explorar la base. |
@@ -443,12 +444,13 @@ La arquitectura actual es un **monolito Express** que sirve la SPA. Hay dos cami
 
 Antes de publicar el repositorio o desplegar con datos reales, revisa [`SECURITY.md`](SECURITY.md) y [`docs/markdown/SEGURIDAD.md`](docs/markdown/SEGURIDAD.md). Puntos clave:
 
-- ✅ `.env` y credenciales están excluidos por `.gitignore`.
-- ✅ La API verifica la conexión a PostgreSQL al arrancar y falla con un mensaje claro.
 - ✅ Autenticación real con argon2id, JWT firmado y cookie `HttpOnly`; los tokens `dev-*` solo existen en desarrollo (`AUTH_DEV_MODE=true` o `NODE_ENV!=production`).
 - ✅ Las contraseñas se guardan cifradas con argon2id; las claves heredadas en texto plano se migran al arrancar.
-- ✅ `helmet`, CORS configurable y rate limit en el login.
+- ✅ `helmet`, CORS configurable y rate limit en login, escrituras, subidas y restablecimiento.
 - ✅ La integración con **Firebase se eliminó**: la autenticación es 100 % propia (PostgreSQL + JWT + argon2id) y no queda ninguna clave de terceros en el repositorio.
+- ✅ Sanitización de archivos subidos (tipo, tamaño, nombre y firma binaria) y URLs de multimedia.
+- ✅ Recuperación de contraseña por correo (token 32 bytes, hash SHA-256, un uso, 60 min, invalida previos, respuesta idéntica).
+- ✅ `npm audit` sin vulnerabilidades altas ni críticas en CI.
 - ⚠️ En producción define `JWT_SECRET` (mínimo 32 caracteres), `AUTH_DEV_MODE=false`, `AUTH_COOKIE_SECURE=true` y `SEED_DEMO_DATA=false`.
 
 ---

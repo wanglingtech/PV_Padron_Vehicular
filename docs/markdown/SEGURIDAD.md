@@ -22,18 +22,24 @@ Documento técnico del modelo de seguridad actual, riesgos conocidos y plan de e
 ## 2. Controles implementados
 
 - ✅ **Secretos fuera del repositorio:** `.env` ignorado; `.env.example` con placeholders.
-- ✅ **Validación de entrada** con Zod en rutas de escritura.
+- ✅ **Validación de entrada** con Zod en el **100 %** de las rutas de escritura (`validateBody`, `validateParam`), con mensajes en español.
 - ✅ **Consultas parametrizadas** mediante Drizzle ORM.
-- ✅ **RBAC en servidor** con `requireAuth` / `requireAdmin`.
+- ✅ **RBAC en servidor** con `requireAuth` / `requireAdmin` / `requireModule`.
 - ✅ **Sin admin anónimo:** una petición sin credenciales recibe `401`.
 - ✅ **Tokens de desarrollo deshabilitados en producción** (`NODE_ENV=production`), salvo `AUTH_DEV_MODE=true`.
 - ✅ **Cuentas demo fuera de producción:** `SEED_DEMO_DATA=false` impide crearlas y el servidor **se niega a arrancar** si las detecta activas.
 - ✅ **Administrador real creado bajo demanda** con `npm run admin:create` (argon2, mínimo 12 caracteres).
+- ✅ **Rate limiting en escrituras:** 60/min general, 30/15 min en operaciones sensibles, 10/15 min en subidas y 5/h en restablecimiento de contraseña.
+- ✅ **Sanitización de archivos subidos:** extensión y MIME permitidos, tamaño máximo, nombre seguro y verificación de firma binaria (*magic number*).
+- ✅ **URLs de multimedia restringidas** a `http`/`https` (bloquea `javascript:` y `data:`).
+- ✅ **Restablecimiento de contraseña** con token aleatorio de 32 bytes, solo hash SHA-256 en base, un solo uso, 60 minutos de vigencia, invalidación de tokens previos y respuesta idéntica exista o no la cuenta.
 - ✅ **Verificación de conexión** a la base antes de arrancar.
 - ✅ **Health check** con estado de la base.
 - ✅ **Auditoría** de cambios en `audit_logs`.
 - ✅ **Transacciones** en operaciones críticas (swap, restauración).
-- ✅ **Suite automatizada** (Vitest + Supertest) que verifica auth, RBAC y no exposición de hashes.
+- ✅ **Restauración con confirmación explícita** (`confirm: "RESTAURAR"`).
+- ✅ **Suite automatizada** (Vitest + Supertest + Playwright) que verifica auth, RBAC, validación y no exposición de hashes.
+- ✅ **`npm audit` en CI** con umbral de severidad alta.
 
 ---
 
@@ -44,16 +50,19 @@ Documento técnico del modelo de seguridad actual, riesgos conocidos y plan de e
 | 1 | Login sin validación de contraseñas | 🔴 Crítica | ✅ Corregido: `POST /api/auth/login` + argon2id. |
 | 2 | Contraseñas en texto plano (`users.password`) | 🔴 Crítica | ✅ Corregido: hash argon2id y migración al arrancar. |
 | 3 | Tokens `dev-*` aceptados | 🟠 Alta | Mitigado: solo con `AUTH_DEV_MODE=true` o fuera de producción. |
-| 4 | Sin rate limiting | 🟠 Alta | Mitigado en login; falta en escrituras. |
+| 4 | Sin rate limiting | 🟠 Alta | ✅ Corregido: límites en login, escrituras, subidas y restablecimiento. |
 | 5 | Sin cabeceras de seguridad | 🟠 Media | ✅ `helmet` con CSP en producción. |
 | 6 | Sin CORS explícito | 🟠 Media | ✅ `CORS_ORIGIN` configurable. |
 | 7 | Datos sensibles en respuestas (password) | 🟠 Alta | ✅ Corregido: la API nunca devuelve contraseñas. |
-| 8 | Sin cifrado de backups | 🟠 Media | Cifrar y restringir acceso. |
+| 8 | Sin cifrado de backups | 🟠 Media | Cifrar y restringir acceso (pendiente). |
 | 9 | Sin política de contraseñas | 🟡 Media | Mínimo 8 caracteres; falta complejidad y bloqueo por usuario. |
 | 10 | Firebase API key pública | 🟡 Baja | ✅ Eliminado junto con la integración completa. |
-| 11 | Tokens sin revocación inmediata | 🟠 Media | Añadir denylist o refresh tokens. |
+| 11 | Tokens sin revocación inmediata | 🟠 Media | Añadir denylist o refresh tokens (pendiente). |
 | 12 | Cuentas demo con contraseñas públicas | 🔴 Crítica | ✅ Corregido: `SEED_DEMO_DATA=false` en producción y arranque bloqueado si se detectan. |
 | 13 | API key de Firebase versionada | 🟡 Media | ✅ Eliminado: la integración con Firebase se retiró por completo. |
+| 14 | Subida de archivos maliciosos | 🟠 Alta | ✅ Corregido: tipo, tamaño, nombre seguro y firma binaria. |
+| 15 | XSS por URLs de multimedia | 🟠 Alta | ✅ Corregido: solo se aceptan `http`/`https`. |
+| 16 | Fuerza bruta sobre restablecimiento | 🟠 Media | ✅ Corregido: 5 solicitudes/hora y respuesta genérica. |
 
 ---
 
@@ -98,14 +107,17 @@ Nunca versionar `.env`, dumps, backups ni bases SQLite.
 
 ## 6. Checklist antes de producción
 
-- [ ] Login real y hash de contraseñas.
-- [ ] Tokens de desarrollo eliminados o deshabilitados.
-- [ ] `401` sin credenciales y `403` sin permisos verificados.
-- [ ] Rate limiting activo.
-- [ ] CORS restringido.
+- [x] Login real y hash de contraseñas.
+- [x] Tokens de desarrollo eliminados o deshabilitados.
+- [x] `401` sin credenciales y `403` sin permisos verificados.
+- [x] Rate limiting activo (login, escrituras, subidas y reset).
+- [x] Validación de entrada en el 100 % de las rutas de escritura.
+- [x] Sanitización de archivos subidos.
+- [x] Recuperación de contraseña con tokens de un solo uso.
+- [x] CORS restringido.
 - [ ] HTTPS obligatorio.
-- [ ] Cabeceras de seguridad.
-- [ ] `npm audit` sin vulnerabilidades críticas.
+- [x] Cabeceras de seguridad.
+- [x] `npm audit` sin vulnerabilidades altas ni críticas.
 - [ ] Backups cifrados y restauración probada.
 - [ ] Logs sin datos sensibles.
 - [ ] Revisión de permisos de base de datos (usuario de app con privilegios mínimos).

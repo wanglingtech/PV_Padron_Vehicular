@@ -35,7 +35,27 @@ import {
 } from '../utils/pdf-export.ts';
 import { Alert } from '../utils/sweetalert.ts';
 import { PersonAvatar } from '../components/common/PersonAvatar.tsx';
-import * as XLSX from 'xlsx';
+import ExcelJS from 'exceljs';
+
+/**
+ * Extrae el texto de una celda de ExcelJS (texto enriquecido, hipervínculo,
+ * fórmula o fecha) para poder cruzar la planilla con el listado de conductores.
+ */
+function textoDeCelda(value: unknown): string {
+  if (value === null || value === undefined) return '';
+  if (value instanceof Date) return value.toISOString().slice(0, 10);
+
+  if (typeof value === 'object') {
+    const obj = value as Record<string, any>;
+    if (Array.isArray(obj.richText)) {
+      return obj.richText.map((part: any) => part?.text ?? '').join('');
+    }
+    if (typeof obj.text === 'string') return obj.text;
+    if ('result' in obj) return textoDeCelda(obj.result);
+  }
+
+  return String(value);
+}
 
 export const RoadSafetyCoursesView: React.FC = () => {
   const { isAdmin } = useAuth();
@@ -233,7 +253,7 @@ export const RoadSafetyCoursesView: React.FC = () => {
       const mimeType = file.type || (isPdf ? 'application/pdf' : 'image/jpeg');
 
       // 2. Llamada real al servicio backend de IA con Gemini API
-      const res = await api.processCourseDocumentAI(base64Data, mimeType, courseYear);
+      const res = await api.processCourseDocumentAI(base64Data, mimeType, courseYear, file.name);
       const extractedList = res.extractedDrivers || [];
 
       // 3. Comparar contra el registro de conductores y actualizar dinámicamente las columnas
@@ -324,13 +344,17 @@ export const RoadSafetyCoursesView: React.FC = () => {
     if (isExcel) {
       setUploadedFilePreview(null);
       const reader = new FileReader();
-      reader.onload = (evt) => {
+      reader.onload = async (evt) => {
         try {
-          const data = new Uint8Array(evt.target?.result as ArrayBuffer);
-          const workbook = XLSX.read(data, { type: 'array' });
-          const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-          const json: any[] = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
-          const textJoined = json.map((row) => (Array.isArray(row) ? row.join(' ') : String(row))).join('\n');
+          const workbook = new ExcelJS.Workbook();
+          await workbook.xlsx.load(evt.target?.result as ArrayBuffer);
+          const firstSheet = workbook.worksheets[0];
+          const json: string[][] = [];
+          firstSheet?.eachRow({ includeEmpty: false }, (row) => {
+            const valores = Array.isArray(row.values) ? row.values.slice(1) : [];
+            json.push(valores.map(textoDeCelda));
+          });
+          const textJoined = json.map((row) => row.join(' ')).join('\n');
           setPastedList(textJoined);
 
           // Cruce por texto para Excel
@@ -522,7 +546,7 @@ export const RoadSafetyCoursesView: React.FC = () => {
             title="Descargar reporte oficial completo con estados actuales de acreditación"
             className="inline-flex items-center gap-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3.5 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 shadow-2xs hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
           >
-            <Download size={15} className="text-blue-600 dark:text-blue-400" />
+            <Download size={15} className="text-blue-700 dark:text-blue-400" />
             <span>Reporte General (PDF)</span>
           </button>
 
@@ -555,19 +579,19 @@ export const RoadSafetyCoursesView: React.FC = () => {
         <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-2xs">
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Total Conductores</span>
-            <User size={16} className="text-slate-400" />
+            <User size={16} className="text-slate-500 dark:text-slate-400" />
           </div>
           <p className="mt-2 text-2xl font-bold text-slate-900 dark:text-white tabular-nums">{metrics.total}</p>
-          <span className="mt-1 block text-[11px] text-slate-400">En flota activa</span>
+          <span className="mt-1 block text-[11px] text-slate-500 dark:text-slate-400">En flota activa</span>
         </div>
 
         <div className="rounded-xl border border-emerald-200 dark:border-emerald-800/60 bg-emerald-50/50 dark:bg-slate-900 p-4 shadow-2xs">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-emerald-800 dark:text-emerald-400">Pasaron / Aprobados</span>
-            <CheckCircle2 size={16} className="text-emerald-600 dark:text-emerald-400" />
+            <CheckCircle2 size={16} className="text-emerald-700 dark:text-emerald-400" />
           </div>
           <p className="mt-2 text-2xl font-bold text-emerald-700 dark:text-emerald-300 tabular-nums">{metrics.passed}</p>
-          <span className="mt-1 block text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">
+          <span className="mt-1 block text-[11px] text-emerald-700 dark:text-emerald-400 font-medium">
             {metrics.complianceRate}% de cumplimiento ({courseYear})
           </span>
         </div>
@@ -575,26 +599,26 @@ export const RoadSafetyCoursesView: React.FC = () => {
         <div className="rounded-xl border border-amber-200 dark:border-amber-800/60 bg-amber-50/50 dark:bg-slate-900 p-4 shadow-2xs">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-amber-800 dark:text-amber-400">Pendientes / Faltantes</span>
-            <Clock size={16} className="text-amber-600 dark:text-amber-400" />
+            <Clock size={16} className="text-amber-700 dark:text-amber-400" />
           </div>
           <p className="mt-2 text-2xl font-bold text-amber-700 dark:text-amber-300 tabular-nums">{metrics.pending}</p>
-          <span className="mt-1 block text-[11px] text-amber-600 dark:text-amber-400 font-medium">Sin curso registrado</span>
+          <span className="mt-1 block text-[11px] text-amber-700 dark:text-amber-400 font-medium">Sin curso registrado</span>
         </div>
 
         <div className="rounded-xl border border-rose-200 dark:border-rose-800/60 bg-rose-50/50 dark:bg-slate-900 p-4 shadow-2xs">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-rose-800 dark:text-rose-400">Cursos Vencidos</span>
-            <AlertCircle size={16} className="text-rose-600 dark:text-rose-400" />
+            <AlertCircle size={16} className="text-rose-700 dark:text-rose-400" />
           </div>
           <p className="mt-2 text-2xl font-bold text-rose-700 dark:text-rose-300 tabular-nums">{metrics.expired}</p>
-          <span className="mt-1 block text-[11px] text-rose-600 dark:text-rose-400 font-medium">Requiere renovación anual</span>
+          <span className="mt-1 block text-[11px] text-rose-700 dark:text-rose-400 font-medium">Requiere renovación anual</span>
         </div>
       </div>
 
       {/* 3. Barra de búsqueda y filtros con control de peticiones */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800">
         <div className="relative w-full sm:w-80">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400" />
           <input
             type="text"
             value={search}
@@ -605,7 +629,7 @@ export const RoadSafetyCoursesView: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-1.5 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">
-          <span className="text-xs text-slate-400 font-medium whitespace-nowrap mr-1">Filtrar:</span>
+          <span className="text-xs text-slate-500 dark:text-slate-400 font-medium whitespace-nowrap mr-1">Filtrar:</span>
           {(
             [
               { id: 'all', label: 'Todos' },
@@ -633,7 +657,7 @@ export const RoadSafetyCoursesView: React.FC = () => {
       <div className="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xs">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-50/80 dark:bg-slate-950/80 text-[11px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 border-b border-slate-200 dark:border-slate-800">
+            <thead className="bg-slate-50/80 dark:bg-slate-950/80 text-[11px] font-bold uppercase tracking-wider text-slate-800 dark:text-slate-300 border-b border-slate-200 dark:border-slate-800">
               <tr>
                 <th className="py-3 px-4">Conductor</th>
                 <th className="py-3 px-4">DNI / Teléfono</th>
@@ -647,14 +671,14 @@ export const RoadSafetyCoursesView: React.FC = () => {
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
               {loading ? (
                 <tr>
-                  <td colSpan={7} className="py-12 text-center text-slate-400">
+                  <td colSpan={7} className="py-12 text-center text-slate-500 dark:text-slate-400">
                     <RefreshCw size={24} className="mx-auto animate-spin mb-2 text-blue-500" />
                     Cargando padrón de conductores...
                   </td>
                 </tr>
               ) : paginatedDrivers.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="py-12 text-center text-slate-400">
+                  <td colSpan={7} className="py-12 text-center text-slate-500 dark:text-slate-400">
                     <FileCheck size={28} className="mx-auto mb-2 text-slate-300" />
                     No se encontraron conductores con los filtros aplicados.
                   </td>
@@ -777,12 +801,12 @@ export const RoadSafetyCoursesView: React.FC = () => {
           >
             <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
               <div className="flex items-center gap-2">
-                <GraduationCap className="text-blue-600 dark:text-blue-400" size={20} />
+                <GraduationCap className="text-blue-700 dark:text-blue-400" size={20} />
                 <h3 className="text-base font-bold text-slate-900 dark:text-white">
                   Acreditar Curso de Educación Vial
                 </h3>
               </div>
-              <button onClick={() => setEditingDriver(null)} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+              <button onClick={() => setEditingDriver(null)} className="text-slate-500 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
                 <XCircle size={20} />
               </button>
             </div>
@@ -848,7 +872,7 @@ export const RoadSafetyCoursesView: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setEditingDriver(null)}
-                  className="rounded-xl px-4 py-2 text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  className="rounded-xl px-4 py-2 text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
                 >
                   Cancelar
                 </button>
@@ -908,7 +932,7 @@ export const RoadSafetyCoursesView: React.FC = () => {
 
                 <button
                   onClick={() => setShowUploadModal(false)}
-                  className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                  className="text-slate-500 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
                 >
                   <XCircle size={22} />
                 </button>
@@ -930,14 +954,14 @@ export const RoadSafetyCoursesView: React.FC = () => {
                     htmlFor="acta-upload"
                     className="cursor-pointer flex flex-col items-center gap-1.5 text-xs text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400"
                   >
-                    <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400">
+                    <div className="flex items-center gap-2 text-blue-700 dark:text-blue-400">
                       <FileText size={26} />
                       <ImageIcon size={26} />
                     </div>
                     <span className="font-bold text-slate-900 dark:text-white text-sm">
                       {uploadedFileName ? `Archivo: ${uploadedFileName}` : 'Seleccionar o arrastrar PDF escaneado o foto de la planilla'}
                     </span>
-                    <span className="text-[11px] text-slate-400">
+                    <span className="text-[11px] text-slate-500 dark:text-slate-400">
                       Formatos soportados: PDF escaneado, Imágenes JPG/PNG tomadas con celular, Excel o lista
                     </span>
                   </label>
@@ -947,7 +971,7 @@ export const RoadSafetyCoursesView: React.FC = () => {
                 <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 p-3 flex flex-col items-center justify-center text-center">
                   {uploadedFilePreview ? (
                     <div className="w-full">
-                      <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">
                         Foto / Escaneo Detectado
                       </p>
                       <img
@@ -965,7 +989,7 @@ export const RoadSafetyCoursesView: React.FC = () => {
                       <span className="text-[10px] text-emerald-600 font-semibold">✓ Cruce completado</span>
                     </div>
                   ) : (
-                    <div className="space-y-1 text-slate-400">
+                    <div className="space-y-1 text-slate-500 dark:text-slate-400">
                       <Printer size={24} className="mx-auto opacity-40" />
                       <p className="text-xs font-medium">Sin archivo cargado</p>
                       <span className="text-[10px] block">También puede marcar manualmente abajo</span>
@@ -978,7 +1002,7 @@ export const RoadSafetyCoursesView: React.FC = () => {
               {isProcessingUpload && (
                 <div className="rounded-xl border border-blue-200 dark:border-blue-900/60 bg-blue-50/80 dark:bg-blue-950/40 p-4 text-center animate-pulse">
                   <div className="flex items-center justify-center gap-3">
-                    <RefreshCw size={22} className="animate-spin text-blue-600 dark:text-blue-400" />
+                    <RefreshCw size={22} className="animate-spin text-blue-700 dark:text-blue-400" />
                     <div className="text-left">
                       <p className="text-xs font-bold text-blue-900 dark:text-blue-200 flex items-center gap-1.5">
                         <Sparkles size={14} className="text-amber-500 animate-spin" />
@@ -1053,7 +1077,7 @@ export const RoadSafetyCoursesView: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => handleBatchMark('PENDING')}
-                    className="rounded-lg border border-slate-300 dark:border-slate-700 px-2.5 py-1 text-[11px] font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                    className="rounded-lg border border-slate-300 dark:border-slate-700 px-2.5 py-1 text-[11px] font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                   >
                     Limpiar
                   </button>
@@ -1064,7 +1088,7 @@ export const RoadSafetyCoursesView: React.FC = () => {
               <div className="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xs">
                 <div className="max-h-72 overflow-y-auto">
                   <table className="w-full text-left text-xs">
-                    <thead className="sticky top-0 bg-slate-100 dark:bg-slate-950 font-bold text-[11px] text-slate-600 dark:text-slate-300 uppercase tracking-wider border-b border-slate-200 dark:border-slate-800">
+                    <thead className="sticky top-0 bg-slate-100 dark:bg-slate-950 font-bold text-[11px] text-slate-700 dark:text-slate-300 uppercase tracking-wider border-b border-slate-200 dark:border-slate-800">
                       <tr>
                         <th className="py-2.5 px-3">Conductor Oficial</th>
                         <th className="py-2.5 px-3">DNI</th>
@@ -1090,7 +1114,7 @@ export const RoadSafetyCoursesView: React.FC = () => {
                               <div>
                                 <span className="font-bold text-slate-900 dark:text-white block">{row.fullName}</span>
                                 {row.matched && (
-                                  <span className="text-[10px] text-blue-600 dark:text-blue-400 font-semibold">
+                                  <span className="text-[10px] text-blue-700 dark:text-blue-400 font-semibold">
                                     ✓ Coincidencia detectada en documento
                                   </span>
                                 )}
@@ -1102,7 +1126,7 @@ export const RoadSafetyCoursesView: React.FC = () => {
                           </td>
                           <td className="py-2 px-3">
                             <span className="font-bold text-slate-900 dark:text-white">P.{row.padronNumber}</span>
-                            <span className="text-[11px] text-slate-400 font-mono ml-1">({row.plate})</span>
+                            <span className="text-[11px] text-slate-500 dark:text-slate-400 font-mono ml-1">({row.plate})</span>
                           </td>
                           <td className="py-2 px-3 text-center">
                             <div className="inline-flex rounded-lg border border-slate-200 dark:border-slate-700 p-0.5 bg-slate-50 dark:bg-slate-800">
@@ -1159,7 +1183,7 @@ export const RoadSafetyCoursesView: React.FC = () => {
                   setUploadedFilePreview(null);
                   setPastedList('');
                 }}
-                className="rounded-xl px-4 py-2 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                className="rounded-xl px-4 py-2 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
               >
                 Cerrar sin guardar
               </button>

@@ -313,7 +313,7 @@ export const InteractiveEventCalendar: React.FC<InteractiveEventCalendarProps> =
         <div className="p-4 sm:p-5 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50/50 dark:bg-slate-800/30">
           <div className="flex items-center justify-between sm:justify-start gap-2 sm:gap-3 min-w-0">
             <div className="flex items-center gap-2 min-w-0">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-400">
                 <CalendarIcon size={18} />
               </div>
               <div className="min-w-0">
@@ -331,7 +331,7 @@ export const InteractiveEventCalendar: React.FC<InteractiveEventCalendarProps> =
               <button
                 onClick={handlePrevMonth}
                 title="Mes anterior"
-                className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
+                className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
               >
                 <ChevronLeft size={16} />
               </button>
@@ -345,7 +345,7 @@ export const InteractiveEventCalendar: React.FC<InteractiveEventCalendarProps> =
               <button
                 onClick={handleNextMonth}
                 title="Mes siguiente"
-                className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
+                className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
               >
                 <ChevronRight size={16} />
               </button>
@@ -382,7 +382,7 @@ export const InteractiveEventCalendar: React.FC<InteractiveEventCalendarProps> =
             {isAdmin && onNavigateToManagement && (
               <button
                 onClick={onNavigateToManagement}
-                className="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline px-2 py-1 shrink-0"
+                className="text-xs font-bold text-indigo-700 dark:text-indigo-400 hover:underline px-2 py-1 shrink-0"
               >
                 + Gestionar
               </button>
@@ -392,7 +392,7 @@ export const InteractiveEventCalendar: React.FC<InteractiveEventCalendarProps> =
 
         {/* Filtros Rápidos de Tipo de Evento */}
         <div className="px-3 sm:px-4 py-2 border-b border-slate-100 dark:border-slate-800 flex items-center gap-1.5 overflow-x-auto scrollbar-thin">
-          <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider shrink-0 mr-1">
+          <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider shrink-0 mr-1">
             Filtrar:
           </span>
           {[
@@ -421,7 +421,7 @@ export const InteractiveEventCalendar: React.FC<InteractiveEventCalendarProps> =
         {viewMode === 'calendar' && (
           <div className="p-2 sm:p-4 md:p-5 max-w-full overflow-hidden">
             {/* Días de la semana */}
-            <div className="grid grid-cols-7 gap-0.5 sm:gap-1 text-center font-bold text-[10px] sm:text-xs text-slate-400 pb-2 border-b border-slate-100 dark:border-slate-800">
+            <div className="grid grid-cols-7 gap-0.5 sm:gap-1 text-center font-bold text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 pb-2 border-b border-slate-100 dark:border-slate-800">
               {WEEKDAYS.map((wd) => (
                 <div key={wd} className="py-1 truncate">
                   {wd}
@@ -517,7 +517,7 @@ export const InteractiveEventCalendar: React.FC<InteractiveEventCalendarProps> =
         {viewMode === 'list' && (
           <div className="p-3 sm:p-6 divide-y divide-slate-100 dark:divide-slate-800 space-y-3 max-w-full overflow-hidden">
             {events.filter((e) => e.isActive && (selectedTypeFilter === 'all' || e.type === selectedTypeFilter)).length === 0 ? (
-              <div className="py-8 text-center text-slate-400 text-xs">
+              <div className="py-8 text-center text-slate-500 dark:text-slate-400 text-xs">
                 No hay eventos registrados para este filtro.
               </div>
             ) : (
@@ -559,7 +559,7 @@ export const InteractiveEventCalendar: React.FC<InteractiveEventCalendarProps> =
                           )}
                           {evt.location && (
                             <span className="flex items-center gap-1 min-w-0 max-w-full truncate text-[11px] sm:text-xs">
-                              <MapPin size={12} className="shrink-0 text-slate-400" />
+                              <MapPin size={12} className="shrink-0 text-slate-500 dark:text-slate-400" />
                               <span className="truncate">{evt.location}</span>
                             </span>
                           )}
@@ -577,7 +577,7 @@ export const InteractiveEventCalendar: React.FC<InteractiveEventCalendarProps> =
         <div className="p-3 sm:p-5 border-t border-slate-100 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-800/40 space-y-3 max-w-full overflow-hidden">
           <div className="flex items-center justify-between gap-2 min-w-0">
             <h4 className="text-xs font-black text-slate-700 dark:text-slate-300 uppercase tracking-wider flex items-center gap-1.5 truncate">
-              <CalendarCheck size={14} className="text-indigo-600 dark:text-indigo-400 shrink-0" />
+              <CalendarCheck size={14} className="text-indigo-700 dark:text-indigo-400 shrink-0" />
               <span className="truncate">
                 {selectedDayStr ? `Eventos del ${selectedDayStr}` : `Eventos de ${MONTH_NAMES[currentMonth]} ${currentYear}`}
               </span>
@@ -589,7 +589,7 @@ export const InteractiveEventCalendar: React.FC<InteractiveEventCalendarProps> =
             {selectedDayStr && (
               <button
                 onClick={() => setSelectedDayStr(null)}
-                className="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 hover:underline shrink-0"
+                className="text-[11px] font-bold text-indigo-700 dark:text-indigo-400 hover:underline shrink-0"
               >
                 Ver todos del mes
               </button>

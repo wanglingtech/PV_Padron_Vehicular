@@ -66,22 +66,26 @@ export function evaluateDocumentDate(expirationDate?: string | null, customToday
   };
 }
 
-export function evaluateVehicleOverallStatus(docs: {
-  insuranceExp?: string | null;
-  inspectionExp?: string | null;
-  courseExp?: string | null;
-  licenseExp?: string | null;
-  requiresReview?: boolean;
-}): {
+export function evaluateVehicleOverallStatus(
+  docs: {
+    insuranceExp?: string | null;
+    inspectionExp?: string | null;
+    courseExp?: string | null;
+    licenseExp?: string | null;
+    requiresReview?: boolean;
+  },
+  /** Fecha de referencia (`YYYY-MM-DD`). Por defecto, hoy. Permite las pruebas. */
+  customToday?: string
+): {
   status: 'vigente' | 'proximo' | 'vencido' | 'revision' | 'sin_informacion';
   label: string;
   badgeClass: string;
 } {
   const evals = [
-    evaluateDocumentDate(docs.insuranceExp),
-    evaluateDocumentDate(docs.inspectionExp),
-    evaluateDocumentDate(docs.courseExp),
-    evaluateDocumentDate(docs.licenseExp),
+    evaluateDocumentDate(docs.insuranceExp, customToday),
+    evaluateDocumentDate(docs.inspectionExp, customToday),
+    evaluateDocumentDate(docs.courseExp, customToday),
+    evaluateDocumentDate(docs.licenseExp, customToday),
   ];
 
   if (evals.some(e => e.status === 'vencido')) {

@@ -94,14 +94,14 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           <h2 className="text-xl font-bold text-slate-900 tracking-tight sm:text-2xl">
             Panel de Control del Padrón
           </h2>
-          <p className="text-xs text-slate-500 sm:text-sm">
+          <p className="text-xs text-slate-500 dark:text-slate-400 sm:text-sm">
             Monitoreo en tiempo real de unidades asociadas, vigencias documentales y estado operativo
           </p>
         </div>
 
         <button
           onClick={fetchStats}
-          className="flex min-h-[40px] items-center gap-2 self-start rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50 shadow-xs transition-colors sm:self-auto"
+          className="flex min-h-[40px] items-center gap-2 self-start rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-800 hover:bg-slate-50 shadow-xs transition-colors sm:self-auto"
         >
           <RefreshCw size={14} />
           <span>Actualizar datos</span>
@@ -117,14 +117,14 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Vehículos</span>
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-800 dark:text-indigo-400">
               <Car size={18} />
             </div>
           </div>
           <p className="mt-3 text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
             {stats.totalVehicles}
           </p>
-          <p className="mt-1 text-[11px] text-indigo-600 dark:text-indigo-400 font-medium flex items-center gap-1">
+          <p className="mt-1 text-[11px] text-indigo-700 dark:text-indigo-400 font-medium flex items-center gap-1">
             Ver padrón completo <ArrowRight size={12} />
           </p>
         </div>
@@ -133,28 +133,28 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-xs">
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Propietarios</span>
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-800 dark:text-blue-400">
               <Users size={18} />
             </div>
           </div>
           <p className="mt-3 text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
             {stats.totalOwners}
           </p>
-          <p className="mt-1 text-[11px] text-slate-400">Titulares y co-propietarios</p>
+          <p className="mt-1 text-[11px] text-slate-500 dark:text-slate-400">Titulares y co-propietarios</p>
         </div>
 
         {/* Conductores */}
         <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-xs">
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Conductores</span>
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-400">
               <UserCheck size={18} />
             </div>
           </div>
           <p className="mt-3 text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
             {stats.totalDrivers}
           </p>
-          <p className="mt-1 text-[11px] text-slate-400">Pilotos habilitados</p>
+          <p className="mt-1 text-[11px] text-slate-500 dark:text-slate-400">Pilotos habilitados</p>
         </div>
 
         {/* Documentos Vencidos */}
@@ -168,7 +168,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-slate-600 dark:text-slate-300">Vencidos</span>
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-rose-100 dark:bg-rose-950/80 text-rose-600 dark:text-rose-400">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-rose-100 dark:bg-rose-950/80 text-rose-700 dark:text-rose-400">
               <AlertOctagon size={18} />
             </div>
           </div>
@@ -187,11 +187,11 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Por Vencer</span>
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-400">
               <Clock size={18} />
             </div>
           </div>
-          <p className="mt-3 text-2xl font-bold text-amber-600 dark:text-amber-400 tracking-tight">
+          <p className="mt-3 text-2xl font-bold text-amber-700 dark:text-amber-400 tracking-tight">
             {stats.upcomingDocuments}
           </p>
           <p className="mt-1 text-[11px] text-amber-700 dark:text-amber-400 font-medium">Próximos 30 días</p>
@@ -201,14 +201,14 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-xs">
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Revisión</span>
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-purple-50 dark:bg-purple-950/60 text-purple-800 dark:text-purple-400">
               <AlertCircle size={18} />
             </div>
           </div>
           <p className="mt-3 text-2xl font-bold text-purple-700 dark:text-purple-400 tracking-tight">
             {stats.requiresReviewCount}
           </p>
-          <p className="mt-1 text-[11px] text-purple-600 dark:text-purple-400">Datos históricos a validar</p>
+          <p className="mt-1 text-[11px] text-purple-700 dark:text-purple-400">Datos históricos a validar</p>
         </div>
       </div>
 
@@ -244,7 +244,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           </div>
           <div>
             <p className="text-xs font-bold text-slate-900">Importar / Exportar Excel</p>
-            <p className="text-[11px] text-slate-500">Migración masiva y copias de seguridad</p>
+            <p className="text-[11px] text-slate-500 dark:text-slate-400">Migración masiva y copias de seguridad</p>
           </div>
         </button>
 
@@ -257,7 +257,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           </div>
           <div>
             <p className="text-xs font-bold text-slate-900">Centro de Vencimientos</p>
-            <p className="text-[11px] text-slate-500">Filtro por 7, 15, 30 y 60 días</p>
+            <p className="text-[11px] text-slate-500 dark:text-slate-400">Filtro por 7, 15, 30 y 60 días</p>
           </div>
         </button>
       </div>
@@ -268,14 +268,14 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-xs">
           <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
             <div className="flex items-center gap-2">
-              <Clock size={18} className="text-amber-600 dark:text-amber-400" />
+              <Clock size={18} className="text-amber-700 dark:text-amber-400" />
               <h3 className="text-sm font-bold text-slate-900 dark:text-white">
                 Alertas de Documentación Urgente ({stats.documentAlerts.length})
               </h3>
             </div>
             <button
               onClick={onNavigateToExpirations}
-              className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300"
+              className="text-xs font-semibold text-indigo-700 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300"
             >
               Ver todas
             </button>
@@ -338,12 +338,12 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-xs">
           <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
             <div className="flex items-center gap-2">
-              <Car size={18} className="text-indigo-600 dark:text-indigo-400" />
+              <Car size={18} className="text-indigo-700 dark:text-indigo-400" />
               <h3 className="text-sm font-bold text-slate-900 dark:text-white">Unidades en Padrón</h3>
             </div>
             <button
               onClick={onNavigateToPadron}
-              className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300"
+              className="text-xs font-semibold text-indigo-700 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300"
             >
               Ver padrón completo
             </button>

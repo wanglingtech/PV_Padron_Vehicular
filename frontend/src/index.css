@@ -58,7 +58,11 @@ html.dark .bg-white:not([class*="dark:bg-"]) p:not([class*="text-emerald"]):not(
   color: #1e293b !important;
 }
 
-html.dark .bg-white:not([class*="dark:bg-"]) span:not([class*="bg-"]):not([class*="text-emerald"]):not([class*="text-rose"]):not([class*="text-amber"]):not([class*="text-blue"]):not([class*="text-indigo"]):not([class*="text-purple"]):not([class*="text-white"]) {
+/* Los <span> sin color propio heredan el negro del panel. Pero los que están
+   dentro de un botón o enlace definen su propio color (por ejemplo
+   `text-white` sobre un fondo azul): forzarlos a negro rompía el contraste
+   del texto del botón. Por eso se excluyen button y a. */
+html.dark .bg-white:not([class*="dark:bg-"]) span:not([class*="bg-"]):not([class*="text-emerald"]):not([class*="text-rose"]):not([class*="text-amber"]):not([class*="text-blue"]):not([class*="text-indigo"]):not([class*="text-purple"]):not([class*="text-white"]):not(button *):not(a *) {
   color: #000000 !important;
 }
 

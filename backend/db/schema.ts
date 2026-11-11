@@ -191,9 +191,24 @@ export const padronChangeRequests = pgTable('padron_change_requests', {
   createdAt: timestamp('created_at').defaultNow(),
 });
 
-// 11. Historial de Auditoría General de Modificaciones
-export const auditLogs = pgTable('audit_logs', {
+// 14. Tokens de restablecimiento de contraseña
+//
+// Se guarda únicamente el hash del token: si alguien lee la tabla no puede
+// usar los tokens para restablecer la contraseña de una cuenta.
+export const passwordResetTokens = pgTable('password_reset_tokens', {
   id: serial('id').primaryKey(),
+  userId: integer('user_id')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
+  // Hash SHA-256 del token, en hexadecimal.
+  tokenHash: text('token_hash').notNull().unique(),
+  expiresAt: timestamp('expires_at').notNull(),
+  usedAt: timestamp('used_at'),
+  createdAt: timestamp('created_at').defaultNow(),
+});
+
+// 11. Historial de Auditoría General de Modificaciones
+export const auditLogs = pgTable('audit_logs', {  id: serial('id').primaryKey(),
   vehicleId: integer('vehicle_id'),
   padronNumber: text('padron_number'),
   entity: text('entity').notNull().default('VEHICLE'), // 'VEHICLE' | 'PERSON' | 'DOCUMENT' | 'PADRON' | 'IMPORT'

@@ -11,6 +11,12 @@ import {
   reviewPadronChangeRequest,
 } from '../db/padron-changes.ts';
 import { requireAdmin, requireAuth, type AuthRequest } from '../middleware/auth.ts';
+import { validateBody, validateParam } from '../middleware/validate.ts';
+import { sensitiveWriteLimiter, writeLimiter } from '../middleware/rate-limit.ts';
+import {
+  PadronChangeRequestCreateSchema,
+  PadronChangeRequestReviewSchema,
+} from '../utils/validation.ts';
 
 export function registerPadronRequestRoutes(app: Express): void {
   // Listar solicitudes
@@ -25,48 +31,51 @@ export function registerPadronRequestRoutes(app: Express): void {
   });
 
   // Crear solicitud (operador)
-  app.post('/api/padron-requests', requireAuth, async (req: AuthRequest, res) => {
-    try {
-      const { sourceVehicleId, targetVehicleId, requestedPadron, requestType, reason } = req.body;
-      if (!sourceVehicleId || !requestedPadron || !reason) {
-        return res.status(400).json({ error: 'Faltan campos obligatorios para la solicitud.' });
+  app.post(
+    '/api/padron-requests',
+    requireAuth,
+    writeLimiter,
+    validateBody(PadronChangeRequestCreateSchema),
+    async (req: AuthRequest, res) => {
+      try {
+        const { sourceVehicleId, targetVehicleId, requestedPadron, requestType, reason } = req.body;
+
+        const user = {
+          email: req.user?.email || 'operador@transporte.pe',
+          name: req.user?.name || 'Operador',
+          role: req.user?.role || 'operator',
+        };
+
+        const result = await createPadronChangeRequest({
+          sourceVehicleId,
+          targetVehicleId: targetVehicleId ?? null,
+          requestedPadron,
+          requestType,
+          reason,
+          user,
+        });
+
+        res.status(201).json(result);
+      } catch (error: any) {
+        console.error('Error in POST /api/padron-requests:', error);
+        res.status(400).json({ error: error.message || 'Error al crear solicitud' });
       }
-
-      const user = {
-        email: req.user?.email || 'operador@transporte.pe',
-        name: req.user?.name || 'Operador',
-        role: req.user?.role || 'operator',
-      };
-
-      const result = await createPadronChangeRequest({
-        sourceVehicleId: Number(sourceVehicleId),
-        targetVehicleId: targetVehicleId ? Number(targetVehicleId) : null,
-        requestedPadron: String(requestedPadron),
-        requestType: requestType || 'CHANGE',
-        reason: String(reason),
-        user,
-      });
-
-      res.status(201).json(result);
-    } catch (error: any) {
-      console.error('Error in POST /api/padron-requests:', error);
-      res.status(400).json({ error: error.message || 'Error al crear solicitud' });
     }
-  });
+  );
 
   // Resolver solicitud (solo administrador)
   app.put(
     '/api/padron-requests/:id/review',
     requireAuth,
     requireAdmin,
+    sensitiveWriteLimiter,
+    validateParam('id'),
+    validateBody(PadronChangeRequestReviewSchema),
     async (req: AuthRequest, res) => {
       try {
-        const id = parseInt(req.params.id);
-        if (isNaN(id)) {
-          return res.status(400).json({ error: 'ID de solicitud inválido' });
-        }
-
-        const { approved, rejectionReason } = req.body;
+        const id = Number(req.params.id);
+        const { approved, action, rejectionReason } = req.body;
+        const esAprobacion = action ? action === 'APPROVE' : Boolean(approved);
 
         const user = {
           email: req.user?.email || 'admin@transporte.pe',
@@ -76,7 +85,7 @@ export function registerPadronRequestRoutes(app: Express): void {
 
         const result = await reviewPadronChangeRequest({
           requestId: id,
-          approved: Boolean(approved),
+          approved: esAprobacion,
           rejectionReason,
           user,
         });

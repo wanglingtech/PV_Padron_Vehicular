@@ -111,7 +111,7 @@ export const ExpirationsView: React.FC<ExpirationsViewProps> = ({ onViewVehicle 
           <h2 className="text-xl font-bold text-slate-900 tracking-tight sm:text-2xl">
             Control Preventivo de Vencimientos
           </h2>
-          <p className="text-xs text-slate-500 sm:text-sm">
+          <p className="text-xs text-slate-500 dark:text-slate-400 sm:text-sm">
             Monitoreo anticipado de seguros AFOCAT/SOAT, revisiones técnicas CITV, cursos viales y licencias
           </p>
         </div>
@@ -127,7 +127,7 @@ export const ExpirationsView: React.FC<ExpirationsViewProps> = ({ onViewVehicle 
 
           <button
             onClick={fetchExpirations}
-            className="flex min-h-[40px] items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50 shadow-xs transition-colors"
+            className="flex min-h-[40px] items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-800 hover:bg-slate-50 shadow-xs transition-colors"
           >
             <RefreshCw size={14} className={loading ? 'animate-spin text-indigo-600' : ''} />
             <span>Actualizar</span>
@@ -140,13 +140,13 @@ export const ExpirationsView: React.FC<ExpirationsViewProps> = ({ onViewVehicle 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           {/* Buscador */}
           <div className="relative flex-1">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400" size={18} />
             <input
               type="text"
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder="Buscar por padrón, placa, titular, conductor o número de documento..."
-              className="w-full min-h-[44px] rounded-lg border border-slate-200 bg-slate-50/50 pl-10 pr-4 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 focus:border-indigo-500 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-200"
+              className="w-full min-h-[44px] rounded-lg border border-slate-200 bg-slate-50/50 pl-10 pr-4 text-xs sm:text-sm text-slate-800 placeholder:text-slate-500 dark:text-slate-400 focus:border-indigo-500 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-200"
             />
           </div>
 
@@ -168,7 +168,7 @@ export const ExpirationsView: React.FC<ExpirationsViewProps> = ({ onViewVehicle 
 
         {/* Píldoras de Ventana de Tiempo */}
         <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs no-scrollbar">
-          <span className="text-slate-400 font-medium shrink-0 flex items-center gap-1">
+          <span className="text-slate-500 dark:text-slate-400 font-medium shrink-0 flex items-center gap-1">
             <CalendarClock size={13} />
             Ventana:
           </span>
@@ -200,13 +200,13 @@ export const ExpirationsView: React.FC<ExpirationsViewProps> = ({ onViewVehicle 
         <div className="rounded-xl border border-slate-200 bg-white p-12 text-center shadow-xs">
           <AlertCircle size={40} className="mx-auto text-emerald-500 mb-3" />
           <h3 className="text-base font-bold text-slate-800">No se encontraron alertas en este rango</h3>
-          <p className="mt-1 text-xs sm:text-sm text-slate-500 max-w-md mx-auto">
+          <p className="mt-1 text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-md mx-auto">
             Todas las unidades evaluadas en este periodo se encuentran al día o no coinciden con los filtros seleccionados.
           </p>
         </div>
       ) : (
         <div className="space-y-2.5">
-          <div className="text-xs text-slate-500 font-medium px-1">
+          <div className="text-xs text-slate-500 dark:text-slate-400 font-medium px-1">
             Se encontraron <strong className="text-slate-800">{expirations.length}</strong> documentos que requieren atención
           </div>
 
@@ -254,7 +254,7 @@ export const ExpirationsView: React.FC<ExpirationsViewProps> = ({ onViewVehicle 
 
                   <div className="mt-3 space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
                     <div className="flex items-center justify-between">
-                      <span className="text-slate-400">Padrón / Placa:</span>
+                      <span className="text-slate-500 dark:text-slate-400">Padrón / Placa:</span>
                       <div className="flex items-center gap-1.5">
                         <span className="font-bold text-indigo-700 dark:text-indigo-400">{item.padronNumber}</span>
                         <span className="font-mono font-semibold bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-slate-800 dark:text-white border border-transparent dark:border-slate-700">
@@ -264,14 +264,14 @@ export const ExpirationsView: React.FC<ExpirationsViewProps> = ({ onViewVehicle 
                     </div>
 
                     <div className="flex items-center justify-between">
-                      <span className="text-slate-400">Propietario:</span>
+                      <span className="text-slate-500 dark:text-slate-400">Propietario:</span>
                       <span className="font-medium text-slate-800 dark:text-slate-200 truncate max-w-[150px]">
                         {item.primaryOwnerName}
                       </span>
                     </div>
 
                     <div className="flex items-center justify-between">
-                      <span className="text-slate-400">Fecha Vencimiento:</span>
+                      <span className="text-slate-500 dark:text-slate-400">Fecha Vencimiento:</span>
                       <span className="font-bold text-slate-900 dark:text-white">{item.expirationDate}</span>
                     </div>
                   </div>
@@ -293,7 +293,7 @@ export const ExpirationsView: React.FC<ExpirationsViewProps> = ({ onViewVehicle 
 
                     <button
                       onClick={() => onViewVehicle(item.vehicleId)}
-                      className="flex min-h-[38px] items-center gap-1 rounded-lg bg-white dark:bg-slate-800 px-3 py-1.5 text-xs font-semibold text-indigo-600 dark:text-indigo-300 hover:bg-indigo-50 dark:hover:bg-slate-700 border border-indigo-200 dark:border-slate-700 transition-colors"
+                      className="flex min-h-[38px] items-center gap-1 rounded-lg bg-white dark:bg-slate-800 px-3 py-1.5 text-xs font-semibold text-indigo-800 dark:text-indigo-300 hover:bg-indigo-50 dark:hover:bg-slate-700 border border-indigo-200 dark:border-slate-700 transition-colors"
                     >
                       <Eye size={14} />
                       <span>Ver ficha</span>

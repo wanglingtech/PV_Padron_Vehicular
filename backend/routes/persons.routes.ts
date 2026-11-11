@@ -5,6 +5,9 @@
 import type { Express } from 'express';
 import { getPersonsList, updatePerson } from '../db/vehicles.ts';
 import { requireAuth, requireModule, type AuthRequest } from '../middleware/auth.ts';
+import { validateBody, validateParam } from '../middleware/validate.ts';
+import { writeLimiter } from '../middleware/rate-limit.ts';
+import { PersonUpdateSchema } from '../utils/validation.ts';
 import { listContacts } from '../services/contacts.service.ts';
 
 export function registerPersonRoutes(app: Express): void {
@@ -26,12 +29,12 @@ export function registerPersonRoutes(app: Express): void {
     '/api/persons/:id',
     requireAuth,
     requireModule('personas', 'write'),
+    writeLimiter,
+    validateParam('id'),
+    validateBody(PersonUpdateSchema),
     async (req: AuthRequest, res) => {
       try {
-        const id = parseInt(req.params.id);
-        if (isNaN(id)) {
-          return res.status(400).json({ error: 'ID de persona inválido' });
-        }
+        const id = Number(req.params.id);
 
         const user = {
           email: req.user?.email || 'admin@transporte.pe',
@@ -39,6 +42,9 @@ export function registerPersonRoutes(app: Express): void {
         };
 
         const updated = await updatePerson(id, req.body, user);
+        if (!updated) {
+          return res.status(404).json({ error: 'La persona no existe.' });
+        }
         res.json(updated);
       } catch (error: any) {
         console.error('Error in PUT /api/persons/:id:', error);

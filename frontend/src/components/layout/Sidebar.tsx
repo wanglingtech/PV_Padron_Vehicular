@@ -345,14 +345,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <div className="pt-0.5">
               <button
                 onClick={() => setShowBrandModal(true)}
-                className="w-full flex items-center justify-between rounded-lg bg-slate-50 hover:bg-blue-50 dark:bg-slate-800/60 dark:hover:bg-blue-950/40 px-2.5 py-1.5 text-[11px] font-medium text-slate-600 hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400 border border-slate-200/80 dark:border-slate-700/60 transition-colors"
+                className="w-full flex items-center justify-between rounded-lg bg-slate-50 hover:bg-blue-50 dark:bg-slate-800/60 dark:hover:bg-blue-950/40 px-2.5 py-1.5 text-[11px] font-medium text-slate-600 hover:text-blue-800 dark:text-slate-300 dark:hover:text-blue-400 border border-slate-200/80 dark:border-slate-700/60 transition-colors"
                 title="Personalizar membrete, RUC, dirección e identidad en reportes oficiales"
               >
                 <span className="flex items-center gap-1.5">
                   <Building2 size={12} className="text-blue-500 shrink-0" />
                   <span>Configurar membrete</span>
                 </span>
-                <span className="text-[10px] text-slate-400 font-mono">
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono">
                   {companyBrand.ruc ? `RUC ${companyBrand.ruc}` : 'Editar'}
                 </span>
               </button>
@@ -510,7 +510,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <button
               onClick={() => logout()}
               title="Cerrar sesión"
-              className="flex h-9 w-9 items-center justify-center rounded-xl text-slate-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 hover:text-rose-600 dark:hover:text-rose-400 transition-colors"
+              className="flex h-9 w-9 items-center justify-center rounded-xl text-slate-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 hover:text-rose-800 dark:hover:text-rose-400 transition-colors"
             >
               <LogOut size={16} />
             </button>
@@ -539,7 +539,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     {currentRoleDef.name}
                   </span>
                   {currentUser?.assignedPadron && (
-                    <span className="font-mono text-slate-400 dark:text-slate-500 font-semibold">
+                    <span className="font-mono text-slate-500 dark:text-slate-500 dark:text-slate-400 font-semibold">
                       · {currentUser.assignedPadron}
                     </span>
                   )}
@@ -550,7 +550,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <button
               onClick={() => logout()}
               title="Cerrar sesión"
-              className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 hover:text-rose-600 dark:hover:text-rose-400 transition-colors shrink-0"
+              className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 hover:text-rose-800 dark:hover:text-rose-400 transition-colors shrink-0"
             >
               <LogOut size={16} />
             </button>
@@ -570,14 +570,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
           >
             <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-700">
               <div className="flex items-center gap-2">
-                <Building2 className="text-blue-600 dark:text-blue-400" size={20} />
+                <Building2 className="text-blue-700 dark:text-blue-400" size={20} />
                 <h3 className="text-base font-bold text-slate-900 dark:text-white">
                   Configurar Empresa y Título
                 </h3>
               </div>
               <button
                 onClick={() => setShowBrandModal(false)}
-                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                className="text-slate-500 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
               >
                 <X size={18} />
               </button>
@@ -635,7 +635,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <button
                   type="button"
                   onClick={() => setShowBrandModal(false)}
-                  className="rounded-xl px-4 py-2 text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
+                  className="rounded-xl px-4 py-2 text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
                 >
                   Cancelar
                 </button>

@@ -10,6 +10,9 @@ import {
   getDatabaseBackupStats,
 } from '../utils/backup-service.ts';
 import { requireAuth, requireModule, type AuthRequest } from '../middleware/auth.ts';
+import { validateBody } from '../middleware/validate.ts';
+import { sensitiveWriteLimiter } from '../middleware/rate-limit.ts';
+import { BackupRestoreSchema } from '../utils/validation.ts';
 
 export function registerBackupRoutes(app: Express): void {
   // Exportar respaldo completo (JSON o SQL)
@@ -68,8 +71,12 @@ export function registerBackupRoutes(app: Express): void {
     '/api/backup/restore',
     requireAuth,
     requireModule('backup-migracion', 'write'),
+    sensitiveWriteLimiter,
+    validateBody(BackupRestoreSchema),
     async (req: AuthRequest, res) => {
       try {
+        // El esquema exige `confirm: 'RESTAURAR'`: una restauración puede
+        // vaciar la base de datos, así que no debe poder dispararse por error.
         const { backupData, mode = 'merge' } = req.body;
         if (!backupData || !backupData.data) {
           return res.status(400).json({ error: 'Formato de respaldo no válido o archivo vacío' });

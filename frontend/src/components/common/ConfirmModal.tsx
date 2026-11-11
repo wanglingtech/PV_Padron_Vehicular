@@ -53,7 +53,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
       >
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-100 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-400">
               <AlertTriangle size={22} />
             </div>
             <h3 className="text-lg font-bold text-slate-900 dark:text-white">{title}</h3>
@@ -61,7 +61,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
           <button
             onClick={onCancel}
             disabled={isLoading}
-            className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
+            className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 transition-colors"
           >
             <X size={18} />
           </button>

@@ -11,7 +11,11 @@ import {
 } from '../utils/excel-handler.ts';
 import { diagnoseAndStageExtractedRows } from '../utils/pdf-import-handler.ts';
 import { requireAuth, requireModule, type AuthRequest } from '../middleware/auth.ts';
+import { uploadLimiter } from '../middleware/rate-limit.ts';
+import { validateBody } from '../middleware/validate.ts';
+import { ImportConfirmSchema } from '../utils/validation.ts';
 import { extractVehiclesFromPdf } from '../services/gemini.service.ts';
+import { UploadValidationError, validateUpload } from '../services/upload.service.ts';
 
 export function registerImportExportRoutes(app: Express): void {
   // Previsualizar archivo Excel antes de importar
@@ -19,17 +23,20 @@ export function registerImportExportRoutes(app: Express): void {
     '/api/import/preview',
     requireAuth,
     requireModule('importar-exportar', 'write'),
+    uploadLimiter,
     async (req: AuthRequest, res) => {
       try {
-        const { fileBase64 } = req.body;
-        if (!fileBase64) {
-          return res.status(400).json({ error: 'No se envió el archivo para previsualización' });
-        }
+        const { fileBase64, fileName } = req.body;
 
-        const buffer = Buffer.from(fileBase64.split(',')[1] || fileBase64, 'base64');
-        const previewResult = await parseAndPreviewExcel(buffer);
+        // Se valida tipo, tamaño y firma binaria antes de procesar nada.
+        const upload = validateUpload(fileBase64, fileName ?? 'archivo.xlsx');
+
+        const previewResult = await parseAndPreviewExcel(upload.buffer);
         res.json(previewResult);
       } catch (error: any) {
+        if (error instanceof UploadValidationError) {
+          return res.status(400).json({ error: error.message });
+        }
         console.error('Error in POST /api/import/preview:', error);
         res.status(400).json({ error: error.message || 'Error al procesar archivo Excel' });
       }
@@ -41,14 +48,22 @@ export function registerImportExportRoutes(app: Express): void {
     '/api/import/preview-pdf',
     requireAuth,
     requireModule('importar-exportar', 'write'),
+    uploadLimiter,
     async (req: AuthRequest, res) => {
       try {
-        const { fileBase64 } = req.body;
-        if (!fileBase64) {
-          return res.status(400).json({ error: 'No se envió el archivo PDF para previsualización' });
+        const { fileBase64, fileName } = req.body;
+
+        const upload = validateUpload(fileBase64, fileName ?? 'documento.pdf');
+        if (upload.extension !== '.pdf') {
+          return res.status(400).json({
+            error: 'Este endpoint solo acepta documentos PDF.',
+          });
         }
 
-        const extractedVehicles = await extractVehiclesFromPdf(fileBase64);
+        // El servicio de IA espera el base64 original con su prefijo data URL.
+        const extractedVehicles = await extractVehiclesFromPdf(
+          `data:application/pdf;base64,${upload.buffer.toString('base64')}`
+        );
 
         if (extractedVehicles.length === 0) {
           return res.status(400).json({
@@ -59,6 +74,9 @@ export function registerImportExportRoutes(app: Express): void {
         const stagingResult = await diagnoseAndStageExtractedRows(extractedVehicles);
         res.json(stagingResult);
       } catch (error: any) {
+        if (error instanceof UploadValidationError) {
+          return res.status(400).json({ error: error.message });
+        }
         console.error('Error in POST /api/import/preview-pdf:', error);
         res.status(500).json({ error: error.message || 'Error al procesar documento PDF' });
       }
@@ -70,13 +88,11 @@ export function registerImportExportRoutes(app: Express): void {
     '/api/import/confirm',
     requireAuth,
     requireModule('importar-exportar', 'write'),
+    uploadLimiter,
+    validateBody(ImportConfirmSchema),
     async (req: AuthRequest, res) => {
       try {
         const { rows } = req.body;
-        if (!rows || !Array.isArray(rows) || rows.length === 0) {
-          return res.status(400).json({ error: 'No hay filas válidas para importar' });
-        }
-
         const user = {
           email: req.user?.email || 'admin@transporte.pe',
           name: req.user?.name || 'Administrador',
@@ -106,7 +122,7 @@ export function registerImportExportRoutes(app: Express): void {
         const status = req.query.status as string;
 
         const data = await getVehicles({ search, status, limit: 5000 });
-        const excelBuffer = generateExcelExport(data.vehicles);
+        const excelBuffer = await generateExcelExport(data.vehicles);
 
         res.setHeader(
           'Content-Disposition',

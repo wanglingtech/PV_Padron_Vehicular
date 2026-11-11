@@ -66,7 +66,25 @@ describe('Portal institucional', () => {
         .send({});
 
       expect(response.status).toBe(400);
-      expect(response.body.error).toContain('obligatorios');
+      // El mensaje lo produce la validación Zod: indica el campo concreto.
+      expect(response.body.error).toContain('title');
+      expect(response.body.details.some((d: { campo: string }) => d.campo === 'title')).toBe(true);
+    });
+
+    it('rechaza una clave desconocida en el cuerpo', async () => {
+      const session = await login(app, DEMO.admin);
+
+      const response = await request(app)
+        .post('/api/portal/posts')
+        .set('Authorization', session.authorization)
+        .send({
+          title: 'Publicación con campo inyectado',
+          content: 'Contenido',
+          isAdmin: true,
+        });
+
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBeDefined();
     });
 
     it('el administrador publica y la publicación queda disponible', async () => {

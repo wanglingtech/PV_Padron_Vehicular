@@ -184,7 +184,7 @@ export const StatCardsWithCharts: React.FC<StatCardsWithChartsProps> = ({
                   <h4 className="text-xs font-bold uppercase tracking-tight text-slate-900 dark:text-white">
                     Vehículos Activos en Flota
                   </h4>
-                  <p className="text-[11px] text-slate-400">Operatividad del padrón vehicular</p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">Operatividad del padrón vehicular</p>
                 </div>
               </div>
               <span className="rounded-full bg-emerald-50 dark:bg-emerald-950/80 px-2 py-0.5 text-[11px] font-bold text-emerald-700 dark:text-emerald-400 ring-1 ring-emerald-200 dark:ring-emerald-800 tabular-nums">
@@ -270,7 +270,7 @@ export const StatCardsWithCharts: React.FC<StatCardsWithChartsProps> = ({
                   <h4 className="text-xs font-bold uppercase tracking-tight text-slate-900 dark:text-white">
                     Conductores en Riesgo
                   </h4>
-                  <p className="text-[11px] text-slate-400">Licencias, AFOCAT y curso vial</p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">Licencias, AFOCAT y curso vial</p>
                 </div>
               </div>
               <span className="rounded-full bg-rose-50 dark:bg-rose-950/80 px-2 py-0.5 text-[11px] font-bold text-rose-700 dark:text-rose-400 ring-1 ring-rose-200 dark:ring-rose-800 tabular-nums">
@@ -339,7 +339,7 @@ export const StatCardsWithCharts: React.FC<StatCardsWithChartsProps> = ({
                   <h4 className="text-xs font-bold uppercase tracking-tight text-slate-900 dark:text-white">
                     Mantenimiento Preventivo
                   </h4>
-                  <p className="text-[11px] text-slate-400">Revisión técnica CITV y chequeos</p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">Revisión técnica CITV y chequeos</p>
                 </div>
               </div>
               <span className="rounded-full bg-blue-50 dark:bg-blue-950/80 px-2 py-0.5 text-[11px] font-bold text-blue-700 dark:text-blue-400 ring-1 ring-blue-200 dark:ring-blue-800 tabular-nums">

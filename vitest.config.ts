@@ -24,5 +24,26 @@ export default defineConfig({
     testTimeout: 30_000,
     hookTimeout: 60_000,
     reporters: 'verbose',
+    coverage: {
+      provider: 'v8',
+      // El objetivo de la Fase 1 es 60% de cobertura.
+      thresholds: {
+        lines: 60,
+        functions: 60,
+        branches: 50,
+        statements: 60,
+      },
+      reporter: ['text-summary', 'html', 'lcov'],
+      reportsDirectory: './coverage',
+      exclude: [
+        'backend/__tests__/**',
+        'backend/db/schema.ts',
+        'backend/db/drizzle.config.ts',
+        'node_modules/**',
+        'dist/**',
+        '**/*.d.ts',
+      ],
+      include: ['backend/**/*.ts', 'shared/**/*.ts'],
+    },
   },
 });

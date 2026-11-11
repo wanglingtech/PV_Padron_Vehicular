@@ -53,25 +53,25 @@ Leyenda: `[x]` hecho · `[ ]` pendiente · `[~]` en progreso
 - [x] RBAC validado **siempre** en el servidor (no solo en el cliente).
 - [x] `AUTH_DEV_MODE=false` en producción.
 - [x] Cambio de contraseña (`POST /api/auth/change-password`).
-- [ ] Recuperación de contraseña por correo.
+- [x] Recuperación de contraseña por correo (`POST /api/auth/forgot-password` y `POST /api/auth/reset-password`), con token de un solo uso y SMTP configurable.
 
 ### Endurecimiento
 - [x] `helmet` con CSP compatible con Vite.
 - [x] `express-rate-limit` en login.
-- [ ] `express-rate-limit` en escrituras.
+- [x] `express-rate-limit` en escrituras (`writeLimiter`, `sensitiveWriteLimiter`, `uploadLimiter`, `passwordResetLimiter`).
 - [x] CORS restringido (`CORS_ORIGIN`).
 - [x] Cuentas demo fuera de producción (`SEED_DEMO_DATA`, arranque bloqueado) y alta de administrador real (`npm run admin:create`).
-- [ ] Validación Zod en el 100% de las rutas de escritura.
-- [ ] Sanitización de archivos subidos (tipo, tamaño, nombre).
-- [ ] `npm audit` en CI.
+- [x] Validación Zod en el 100% de las rutas de escritura (`validateBody`, `validateParam`).
+- [x] Sanitización de archivos subidos (tipo, tamaño, nombre y firma binaria).
+- [x] `npm audit` en CI con umbral `--audit-level=high`.
 
 ### Calidad
 - [x] Vitest + Supertest configurados (base de pruebas `padron_vehicular_test`).
-- [x] Supertest para rutas críticas: 48 pruebas en 6 archivos (auth, usuarios, padrón, portal, health, env).
-- [ ] Unitarias para `shared/date-utils.ts`, `backend/utils/validation.ts` y `frontend/src/utils/`.
-- [ ] Playwright para flujos E2E (login, alta, swap, importación).
-- [ ] axe-core para accesibilidad.
-- [ ] Cobertura mínima objetivo: 60%.
+- [x] Supertest para rutas críticas: **277 pruebas en 18 archivos** (auth, usuarios, padrón, portal, health, env, importación, restablecimiento de contraseña, uploads).
+- [x] Unitarias para `shared/date-utils.ts`, `backend/utils/validation.ts`, `backend/utils/excel-handler.ts` y `backend/services/upload.service.ts`.
+- [x] Playwright para flujos E2E (login, alta, swap de padrón, importación Excel) en puerto dedicado 3100.
+- [x] axe-core para accesibilidad (sin violaciones graves en los módulos principales, tema claro y oscuro).
+- [x] Cobertura por encima del objetivo del 60 % (≈68 % líneas / 51 % ramas).
 
 ### Producto
 - [ ] Notificaciones de vencimiento (email/WhatsApp).

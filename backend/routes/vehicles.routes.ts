@@ -29,6 +29,8 @@ import {
   SwapPadronSchema,
   VehicleInputSchema,
 } from "../utils/validation.ts";
+import { validateBody, validateParam } from "../middleware/validate.ts";
+import { sensitiveWriteLimiter, writeLimiter } from "../middleware/rate-limit.ts";
 
 export function registerVehicleRoutes(app: Express): void {
   // Listado paginado y filtrado
@@ -89,17 +91,11 @@ export function registerVehicleRoutes(app: Express): void {
     "/api/vehicles",
     requireAuth,
     requireModule("nuevo", "write"),
+    writeLimiter,
+    validateBody(VehicleInputSchema),
     async (req: AuthRequest, res) => {
       try {
-        const validation = VehicleInputSchema.safeParse(req.body);
-        if (!validation.success) {
-          return res.status(400).json({
-            error:
-              validation.error.issues[0]?.message ||
-              "Datos de vehículo inválidos",
-          });
-        }
-
+        const validation = { success: true as const, data: req.body };
         const user = {
           email: req.user?.email || "admin@transporte.pe",
           name: req.user?.name || "Administrador",
@@ -121,22 +117,13 @@ export function registerVehicleRoutes(app: Express): void {
     "/api/vehicles/:id",
     requireAuth,
     requireModule("padron", "write"),
+    writeLimiter,
+    validateParam("id"),
+    validateBody(VehicleInputSchema),
     async (req: AuthRequest, res) => {
       try {
-        const id = parseInt(req.params.id);
-        if (isNaN(id)) {
-          return res.status(400).json({ error: "ID de vehículo inválido" });
-        }
-
-        const validation = VehicleInputSchema.safeParse(req.body);
-        if (!validation.success) {
-          return res.status(400).json({
-            error:
-              validation.error.issues[0]?.message ||
-              "Datos de vehículo inválidos",
-          });
-        }
-
+        const id = Number(req.params.id);
+        const validation = { success: true as const, data: req.body };
         const user = {
           email: req.user?.email || "admin@transporte.pe",
           name: req.user?.name || "Administrador",
@@ -158,22 +145,13 @@ export function registerVehicleRoutes(app: Express): void {
     "/api/vehicles/:id/retire",
     requireAuth,
     requireAdmin,
+    sensitiveWriteLimiter,
+    validateParam("id"),
+    validateBody(RetireVehicleSchema),
     async (req: AuthRequest, res) => {
       try {
-        const id = parseInt(req.params.id);
-        if (isNaN(id)) {
-          return res.status(400).json({ error: "ID de vehículo inválido" });
-        }
-
-        const validation = RetireVehicleSchema.safeParse(req.body);
-        if (!validation.success) {
-          return res.status(400).json({
-            error:
-              validation.error.issues[0]?.message ||
-              "Motivo de retiro inválido",
-          });
-        }
-
+        const id = Number(req.params.id);
+        const validation = { success: true as const, data: req.body };
         const user = {
           email: req.user?.email || "admin@transporte.pe",
           name: req.user?.name || "Administrador",
@@ -195,12 +173,11 @@ export function registerVehicleRoutes(app: Express): void {
     "/api/vehicles/:id/reactivate",
     requireAuth,
     requireAdmin,
+    sensitiveWriteLimiter,
+    validateParam("id"),
     async (req: AuthRequest, res) => {
       try {
-        const id = parseInt(req.params.id);
-        if (isNaN(id)) {
-          return res.status(400).json({ error: "ID de vehículo inválido" });
-        }
+        const id = Number(req.params.id);
 
         const user = {
           email: req.user?.email || "admin@transporte.pe",
@@ -223,21 +200,13 @@ export function registerVehicleRoutes(app: Express): void {
     "/api/vehicles/:id/padron/change",
     requireAuth,
     requireAdmin,
+    sensitiveWriteLimiter,
+    validateParam("id"),
+    validateBody(ChangePadronSchema),
     async (req: AuthRequest, res) => {
       try {
-        const id = parseInt(req.params.id);
-        if (isNaN(id)) {
-          return res.status(400).json({ error: "ID de vehículo inválido" });
-        }
-
-        const validation = ChangePadronSchema.safeParse(req.body);
-        if (!validation.success) {
-          return res.status(400).json({
-            error:
-              validation.error.issues[0]?.message ||
-              "Datos de reasignación inválidos",
-          });
-        }
+        const id = Number(req.params.id);
+        const validation = { success: true as const, data: req.body };
 
         const user = {
           email: req.user?.email || "admin@transporte.pe",
@@ -270,16 +239,11 @@ export function registerVehicleRoutes(app: Express): void {
     "/api/vehicles/padron/swap",
     requireAuth,
     requireAdmin,
+    sensitiveWriteLimiter,
+    validateBody(SwapPadronSchema),
     async (req: AuthRequest, res) => {
       try {
-        const validation = SwapPadronSchema.safeParse(req.body);
-        if (!validation.success) {
-          return res.status(400).json({
-            error:
-              validation.error.issues[0]?.message ||
-              "Datos de intercambio inválidos",
-          });
-        }
+        const validation = { success: true as const, data: req.body };
 
         const user = {
           email: req.user?.email || "admin@transporte.pe",
@@ -330,15 +294,23 @@ export function registerVehicleRoutes(app: Express): void {
     "/api/vehicles/:id",
     requireAuth,
     requireAdmin,
+    sensitiveWriteLimiter,
+    validateParam("id"),
     async (req: AuthRequest, res) => {
       try {
-        const id = parseInt(req.params.id);
-        if (isNaN(id)) {
-          return res.status(400).json({ error: "ID de vehículo inválido" });
-        }
+        const id = Number(req.params.id);
 
+        // El borrado físico es irreversible: exige confirmación explícita
+        // en el cuerpo o en la query.
         const confirmed =
           req.query.confirmed === "true" || req.body?.confirmed === true;
+
+        if (!confirmed) {
+          return res.status(400).json({
+            error:
+              "Se requiere confirmación explícita (confirmed=true) para eliminar un vehículo.",
+          });
+        }
 
         const user = {
           email: req.user?.email || "admin@transporte.pe",

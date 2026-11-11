@@ -14,7 +14,8 @@ Documento de referencia del flujo de autenticación real implementado en la Fase
 | Sesión API/pruebas | JWT Bearer devuelto en el login |
 | Firma del token | `jsonwebtoken` con `JWT_SECRET` (`backend/services/token.service.ts`) |
 | Autorización | `requireAuth`, `requireAdmin`, `requireModule` (`backend/middleware/auth.ts`) |
-| Rate limit | 10 intentos fallidos cada 15 minutos por IP en el login |
+| Rate limit | 10 intentos fallidos cada 15 minutos por IP en el login; 5 por hora en restablecimiento |
+| Recuperación | Token aleatorio de 32 bytes, solo hash SHA-256, un uso, 60 minutos |
 
 ---
 
@@ -54,6 +55,34 @@ Limpia la cookie de sesión. El token Bearer, si se guardó, debe descartarse en
 ```
 
 Verifica la contraseña actual antes de guardar el nuevo hash.
+
+### `POST /api/auth/forgot-password`
+
+```json
+{ "email": "usuario@transporte.pe" }
+```
+
+Genera un token y envía el enlace por correo. La respuesta **siempre** es la misma
+exista o no la cuenta:
+
+```json
+{ "success": true, "message": "Si el correo está registrado, recibirás un enlace..." }
+```
+
+- Limitado a 5 solicitudes por hora e IP.
+- Invalida cualquier token anterior de la misma cuenta.
+- Sin `SMTP_HOST` configurado entra en **modo simulación**: el enlace se imprime en la
+  consola del servidor y el mensaje lo indica.
+
+### `POST /api/auth/reset-password`
+
+```json
+{ "token": "<token del correo>", "newPassword": "mínimo 8 caracteres" }
+```
+
+- `200` si el token era válido; la contraseña se reemplaza y el token se consume.
+- `400` si el token no existe, ya se usó o expiró (60 minutos).
+- El token solo se guarda como hash SHA-256: quien lea la tabla no puede usarlo.
 
 ---
 
@@ -114,6 +143,12 @@ npm run db:reset-demo-passwords
 | `AUTH_DEV_MODE` | Habilita tokens de desarrollo. Debe ser `false` en producción. |
 | `SEED_DEMO_DATA` | Siembra las cuentas demo y el contenido de ejemplo. En producción debe ser `false`. |
 | `ALLOW_DEMO_ACCOUNTS` | Permite arrancar en producción con cuentas demo activas. Solo para demos públicas. |
+| `SMTP_HOST` | Servidor SMTP. **Si falta, el correo entra en modo simulación** (imprime el enlace en consola). |
+| `SMTP_PORT` | Puerto SMTP (`587` por defecto). |
+| `SMTP_SECURE` | `true` para TLS directo (puerto 465). |
+| `SMTP_USER` / `SMTP_PASSWORD` | Credenciales del buzón remitente. |
+| `SMTP_FROM` / `SMTP_FROM_NAME` | Remitente visible en los correos. |
+| `APP_PUBLIC_URL` | URL pública del frontend para construir los enlaces de los correos. |
 
 Genera un secreto con:
 
@@ -189,6 +224,6 @@ npm run admin:create -- --email tu-correo@ejemplo.com --name "Tu Nombre" --passw
 ## 8. Pendientes
 
 - Revocación inmediata de sesiones (denylist o refresh tokens).
-- Recuperación de contraseña por correo.
-- Rate limit en escrituras y bloqueo por usuario (no solo por IP).
+- Bloqueo por usuario además del límite por IP.
 - Segundo factor (TOTP) para roles privilegiados.
+- Caducidad configurable del token de restablecimiento (hoy fija en 60 minutos).

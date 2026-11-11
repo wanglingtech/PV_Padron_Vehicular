@@ -27,7 +27,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         <button
           onClick={onToggleSidebar}
           aria-label="Alternar menú lateral"
-          className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white lg:hidden transition-colors"
+          className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white lg:hidden transition-colors"
         >
           <Menu size={20} />
         </button>
@@ -55,7 +55,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             title="Generador Global de Reportes PDF Oficiales"
             className="flex h-9 w-9 sm:h-10 sm:w-auto items-center justify-center sm:justify-start gap-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-2 sm:px-3 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:border-blue-300 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-all shadow-2xs shrink-0"
           >
-            <FileText size={15} className="text-blue-600 dark:text-blue-400 shrink-0" />
+            <FileText size={15} className="text-blue-700 dark:text-blue-400 shrink-0" />
             <span className="hidden md:inline">Reportes PDF</span>
           </button>
         )}
@@ -123,7 +123,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </div>
               </div>
 
-              <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+              <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                 Sesión activa
               </div>
 

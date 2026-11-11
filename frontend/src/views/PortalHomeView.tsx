@@ -538,7 +538,7 @@ export const PortalHomeView: React.FC<PortalHomeViewProps> = ({ onNavigateToTab 
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
             <div className="space-y-0.5">
               <div className="flex items-center gap-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-100 dark:bg-blue-950/70 text-blue-600 dark:text-blue-400">
+                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-100 dark:bg-blue-950/70 text-blue-700 dark:text-blue-400">
                   <Megaphone size={16} />
                 </div>
                 <h2 className="text-lg sm:text-xl font-black text-slate-900 dark:text-slate-100 tracking-tight">
@@ -553,7 +553,7 @@ export const PortalHomeView: React.FC<PortalHomeViewProps> = ({ onNavigateToTab 
             {isAdmin && (
               <button
                 onClick={() => onNavigateToTab('gestion-portal')}
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-600 dark:text-amber-400 hover:underline shrink-0"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-700 dark:text-amber-400 hover:underline shrink-0"
               >
                 <SlidersHorizontal size={14} />
                 <span>Administrar Publicaciones</span>
@@ -567,7 +567,7 @@ export const PortalHomeView: React.FC<PortalHomeViewProps> = ({ onNavigateToTab 
               <div className="relative flex-1">
                 <Search
                   size={18}
-                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400"
                 />
                 <input
                   type="text"
@@ -579,7 +579,7 @@ export const PortalHomeView: React.FC<PortalHomeViewProps> = ({ onNavigateToTab 
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery('')}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
                   >
                     <X size={15} />
                   </button>
@@ -623,7 +623,7 @@ export const PortalHomeView: React.FC<PortalHomeViewProps> = ({ onNavigateToTab 
           {/* Listado de Tarjetas de Comunicados: Ancho generoso y responsivo */}
           {filteredPosts.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 p-12 text-center bg-white dark:bg-slate-900">
-              <Megaphone className="mx-auto h-12 w-12 text-slate-400 mb-3" />
+              <Megaphone className="mx-auto h-12 w-12 text-slate-500 dark:text-slate-400 mb-3" />
               <h3 className="text-base font-bold text-slate-800 dark:text-slate-200">
                 No se encontraron publicaciones
               </h3>
@@ -703,7 +703,7 @@ export const PortalHomeView: React.FC<PortalHomeViewProps> = ({ onNavigateToTab 
                         {post.title}
                       </h3>
                       {post.subtitle && (
-                        <p className="text-xs font-medium text-blue-600 dark:text-blue-400 line-clamp-1">
+                        <p className="text-xs font-medium text-blue-700 dark:text-blue-400 line-clamp-1">
                           {post.subtitle}
                         </p>
                       )}
@@ -714,7 +714,7 @@ export const PortalHomeView: React.FC<PortalHomeViewProps> = ({ onNavigateToTab 
 
                     {/* Botones de Acción */}
                     <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2">
-                      <div className="text-[11px] text-slate-400 dark:text-slate-500 truncate">
+                      <div className="text-[11px] text-slate-500 dark:text-slate-500 dark:text-slate-400 truncate">
                         Por: {post.authorName || 'Administración'}
                       </div>
 
@@ -723,7 +723,7 @@ export const PortalHomeView: React.FC<PortalHomeViewProps> = ({ onNavigateToTab 
                           <button
                             onClick={() => setSelectedPdfPost(post)}
                             title="Abrir y leer documento PDF"
-                            className="inline-flex items-center gap-1 text-xs font-bold text-rose-600 dark:text-rose-400 hover:text-rose-700 bg-rose-50 dark:bg-rose-950/50 px-2.5 py-1.5 rounded-lg transition-colors"
+                            className="inline-flex items-center gap-1 text-xs font-bold text-rose-800 dark:text-rose-400 hover:text-rose-700 bg-rose-50 dark:bg-rose-950/50 px-2.5 py-1.5 rounded-lg transition-colors"
                           >
                             <Eye size={13} />
                             <span>Leer PDF</span>
@@ -734,7 +734,7 @@ export const PortalHomeView: React.FC<PortalHomeViewProps> = ({ onNavigateToTab 
                           <button
                             onClick={() => setSelectedVideoPost(post)}
                             title="Ver video informativo"
-                            className="inline-flex items-center gap-1 text-xs font-bold text-purple-600 dark:text-purple-400 hover:text-purple-700 bg-purple-50 dark:bg-purple-950/50 px-2.5 py-1.5 rounded-lg transition-colors"
+                            className="inline-flex items-center gap-1 text-xs font-bold text-purple-800 dark:text-purple-400 hover:text-purple-700 bg-purple-50 dark:bg-purple-950/50 px-2.5 py-1.5 rounded-lg transition-colors"
                           >
                             <Play size={13} fill="currentColor" />
                             <span>Video</span>
@@ -744,7 +744,7 @@ export const PortalHomeView: React.FC<PortalHomeViewProps> = ({ onNavigateToTab 
                         <button
                           onClick={() => setSelectedDetailPost(post)}
                           title="Ver comunicado detallado"
-                          className="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 bg-blue-50 dark:bg-blue-950/50 px-2.5 py-1.5 rounded-lg transition-colors"
+                          className="inline-flex items-center gap-1 text-xs font-semibold text-blue-800 dark:text-blue-400 hover:text-blue-700 bg-blue-50 dark:bg-blue-950/50 px-2.5 py-1.5 rounded-lg transition-colors"
                         >
                           <span>Detalle</span>
                           <ArrowRight size={13} />
@@ -766,7 +766,7 @@ export const PortalHomeView: React.FC<PortalHomeViewProps> = ({ onNavigateToTab 
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
             <div className="space-y-0.5">
               <div className="flex items-center gap-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-indigo-100 dark:bg-indigo-950/70 text-indigo-600 dark:text-indigo-400">
+                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-indigo-100 dark:bg-indigo-950/70 text-indigo-700 dark:text-indigo-400">
                   <Calendar size={16} />
                 </div>
                 <h2 className="text-lg sm:text-xl font-black text-slate-900 dark:text-slate-100 tracking-tight">
@@ -809,7 +809,7 @@ export const PortalHomeView: React.FC<PortalHomeViewProps> = ({ onNavigateToTab 
                     <h4 className="font-extrabold text-sm text-slate-900 dark:text-slate-100">
                       Control Preventivo de Flota
                     </h4>
-                    <p className="text-[11px] text-blue-600 dark:text-blue-400 font-semibold">
+                    <p className="text-[11px] text-blue-700 dark:text-blue-400 font-semibold">
                       Fiscalización y formalización
                     </p>
                   </div>
@@ -833,16 +833,16 @@ export const PortalHomeView: React.FC<PortalHomeViewProps> = ({ onNavigateToTab 
               <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm space-y-4">
                 <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
                   <h4 className="text-xs font-black text-slate-800 dark:text-slate-200 uppercase tracking-wider flex items-center gap-2">
-                    <Calendar size={14} className="text-indigo-600 dark:text-indigo-400" />
+                    <Calendar size={14} className="text-indigo-700 dark:text-indigo-400" />
                     <span>Próximas Convocatorias</span>
                   </h4>
-                  <span className="text-[11px] font-bold text-slate-400">
+                  <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400">
                     {upcomingEvents.length} próximas
                   </span>
                 </div>
 
                 {upcomingEvents.length === 0 ? (
-                  <p className="text-xs text-slate-400 py-3 text-center">
+                  <p className="text-xs text-slate-500 dark:text-slate-400 py-3 text-center">
                     No hay convocatorias próximas registradas.
                   </p>
                 ) : (
@@ -856,7 +856,7 @@ export const PortalHomeView: React.FC<PortalHomeViewProps> = ({ onNavigateToTab 
                           className="p-3 rounded-2xl border border-slate-100 dark:border-slate-800 hover:border-indigo-300 dark:hover:border-indigo-800 bg-slate-50/50 dark:bg-slate-800/40 hover:bg-indigo-50/30 dark:hover:bg-indigo-950/20 transition-all cursor-pointer space-y-1.5"
                         >
                           <div className="flex items-center justify-between gap-2">
-                            <span className="text-[10px] font-black uppercase text-indigo-600 dark:text-indigo-400">
+                            <span className="text-[10px] font-black uppercase text-indigo-700 dark:text-indigo-400">
                               {evt.type}
                             </span>
                             <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md ${countdown.color}`}>
@@ -945,7 +945,7 @@ export const PortalHomeView: React.FC<PortalHomeViewProps> = ({ onNavigateToTab 
                   />
                 </div>
               ) : (
-                <div className="py-16 text-center text-slate-400">
+                <div className="py-16 text-center text-slate-500 dark:text-slate-400">
                   <FileText className="mx-auto h-12 w-12 mb-2 opacity-50" />
                   <p>No se especificó un enlace directo para el archivo PDF.</p>
                 </div>
@@ -972,7 +972,7 @@ export const PortalHomeView: React.FC<PortalHomeViewProps> = ({ onNavigateToTab 
                 </div>
                 <div className="min-w-0">
                   <h3 className="font-bold text-white text-sm sm:text-base truncate">{selectedVideoPost.title}</h3>
-                  <p className="text-[11px] sm:text-xs text-slate-400 truncate">{selectedVideoPost.category}</p>
+                  <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 truncate">{selectedVideoPost.category}</p>
                 </div>
               </div>
               <button
@@ -1048,7 +1048,7 @@ export const PortalHomeView: React.FC<PortalHomeViewProps> = ({ onNavigateToTab 
                   </span>
                 )}
                 {selectedDetailPost.startDate && (
-                  <span className="text-xs text-slate-400">
+                  <span className="text-xs text-slate-500 dark:text-slate-400">
                     Vigencia: {selectedDetailPost.startDate} al {selectedDetailPost.endDate || 'Presente'}
                   </span>
                 )}
@@ -1059,7 +1059,7 @@ export const PortalHomeView: React.FC<PortalHomeViewProps> = ({ onNavigateToTab 
               </h2>
 
               {selectedDetailPost.subtitle && (
-                <p className="text-xs sm:text-sm font-semibold text-blue-600 dark:text-blue-400 break-words">
+                <p className="text-xs sm:text-sm font-semibold text-blue-700 dark:text-blue-400 break-words">
                   {selectedDetailPost.subtitle}
                 </p>
               )}
@@ -1068,7 +1068,7 @@ export const PortalHomeView: React.FC<PortalHomeViewProps> = ({ onNavigateToTab 
                 {selectedDetailPost.content}
               </div>
 
-              <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-400">
+              <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400">
                 <span className="truncate">Emitido por: {selectedDetailPost.authorName || 'Consejo Directivo'}</span>
                 <button
                   onClick={() => setSelectedDetailPost(null)}
@@ -1098,7 +1098,7 @@ export const PortalHomeView: React.FC<PortalHomeViewProps> = ({ onNavigateToTab 
               </span>
               <button
                 onClick={() => setSelectedDetailEvent(null)}
-                className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-800 dark:hover:text-slate-200"
+                className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200"
               >
                 <X size={18} />
               </button>
@@ -1110,7 +1110,7 @@ export const PortalHomeView: React.FC<PortalHomeViewProps> = ({ onNavigateToTab 
               </h3>
               <div className="flex flex-col gap-2 rounded-2xl bg-slate-50 dark:bg-slate-800/50 p-3.5 sm:p-4 text-xs text-slate-700 dark:text-slate-300">
                 <div className="flex items-center gap-2">
-                  <Calendar size={15} className="text-indigo-600 dark:text-indigo-400 shrink-0" />
+                  <Calendar size={15} className="text-indigo-700 dark:text-indigo-400 shrink-0" />
                   <span className="font-semibold">Fecha:</span>
                   <span>{selectedDetailEvent.eventDate}</span>
                   {selectedDetailEvent.eventTime && (
@@ -1119,7 +1119,7 @@ export const PortalHomeView: React.FC<PortalHomeViewProps> = ({ onNavigateToTab 
                 </div>
                 {selectedDetailEvent.location && (
                   <div className="flex items-center gap-2">
-                    <MapPin size={15} className="text-indigo-600 dark:text-indigo-400 shrink-0" />
+                    <MapPin size={15} className="text-indigo-700 dark:text-indigo-400 shrink-0" />
                     <span className="font-semibold">Lugar:</span>
                     <span className="break-words">{selectedDetailEvent.location}</span>
                   </div>

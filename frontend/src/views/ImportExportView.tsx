@@ -29,7 +29,7 @@ import {
   Layers,
   ArrowRight,
 } from 'lucide-react';
-import * as XLSX from 'xlsx';
+import ExcelJS from 'exceljs';
 import { api } from '../api/client.ts';
 import { useToast } from '../components/common/Toast.tsx';
 
@@ -113,7 +113,7 @@ export const ImportExportView: React.FC<ImportExportViewProps> = ({ onImportComp
         const base64 = e.target?.result as string;
         const result = isPdf
           ? await api.previewPdf(base64, targetFile.name)
-          : await api.previewExcel(base64);
+          : await api.previewExcel(base64, targetFile.name);
 
         if (!result.rows || result.rows.length === 0) {
           showToast(
@@ -370,7 +370,7 @@ export const ImportExportView: React.FC<ImportExportViewProps> = ({ onImportComp
   };
 
   // Descargar Plantilla Excel modelo
-  const handleDownloadTemplate = () => {
+  const handleDownloadTemplate = async () => {
     const sampleRows = [
       {
         'N° Padrón': 'PAD-101',
@@ -404,10 +404,29 @@ export const ImportExportView: React.FC<ImportExportViewProps> = ({ onImportComp
       },
     ];
 
-    const worksheet = XLSX.utils.json_to_sheet(sampleRows);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Plantilla Padrón');
-    XLSX.writeFile(workbook, 'plantilla_padron_vehicular.xlsx');
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Plantilla Padrón');
+    const encabezados = Object.keys(sampleRows[0]);
+    worksheet.columns = encabezados.map((nombre) => ({
+      header: nombre,
+      key: nombre,
+      width: Math.min(42, Math.max(14, nombre.length + 4)),
+    }));
+    worksheet.addRows(sampleRows);
+    worksheet.getRow(1).font = { bold: true };
+    worksheet.views = [{ state: 'frozen', ySplit: 1 }];
+
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    const url = URL.createObjectURL(blob);
+    const enlace = document.createElement('a');
+    enlace.href = url;
+    enlace.download = 'plantilla_padron_vehicular.xlsx';
+    enlace.click();
+    URL.revokeObjectURL(url);
+
     showToast('Plantilla Descargada', 'Complete los datos respetando las columnas indicadas.', 'info');
   };
 
@@ -477,10 +496,10 @@ export const ImportExportView: React.FC<ImportExportViewProps> = ({ onImportComp
           className="relative flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-300 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/30 p-6 sm:p-8 text-center transition-colors hover:border-blue-400 hover:bg-blue-50/20 dark:hover:bg-slate-800/60"
         >
           <div className="flex items-center gap-2 mb-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-rose-50 dark:bg-rose-900/40 text-rose-600 dark:text-rose-400 shadow-2xs">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-rose-50 dark:bg-rose-900/40 text-rose-800 dark:text-rose-400 shadow-2xs">
               <FileText size={24} />
             </div>
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-50 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 shadow-2xs">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-50 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-400 shadow-2xs">
               <FileSpreadsheet size={24} />
             </div>
           </div>
@@ -566,7 +585,7 @@ export const ImportExportView: React.FC<ImportExportViewProps> = ({ onImportComp
           >
             
             {/* Cabecera del Modal de Staging */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-850">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-800">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-600 text-white shadow-xs">
                   <FileSpreadsheet size={20} />
@@ -641,7 +660,7 @@ export const ImportExportView: React.FC<ImportExportViewProps> = ({ onImportComp
             <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 px-6 py-3 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
               {/* Buscador General */}
               <div className="relative flex-1 min-w-[200px]">
-                <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400" />
                 <input
                   type="text"
                   value={searchQuery}
@@ -705,7 +724,7 @@ export const ImportExportView: React.FC<ImportExportViewProps> = ({ onImportComp
                       setStatusFilter('ALL');
                       setCurrentPage(1);
                     }}
-                    className="rounded-xl p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
+                    className="rounded-xl p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
                     title="Limpiar filtros"
                   >
                     <RotateCcw size={14} />
@@ -717,7 +736,7 @@ export const ImportExportView: React.FC<ImportExportViewProps> = ({ onImportComp
             {/* TABLA PRINCIPAL DE PREVISUALIZACIÓN */}
             <div className="flex-1 overflow-x-auto overflow-y-auto">
               <table className="w-full text-left text-xs border-collapse">
-                <thead className="sticky top-0 z-10 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/90 text-slate-600 dark:text-slate-300 font-bold uppercase tracking-wider text-[10px] backdrop-blur-xs">
+                <thead className="sticky top-0 z-10 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/90 text-slate-800 dark:text-slate-300 font-bold uppercase tracking-wider text-[10px] backdrop-blur-xs">
                   <tr>
                     <th className="px-3.5 py-3 text-center"># Fila</th>
                     <th className="px-3.5 py-3">Padrón</th>
@@ -734,7 +753,7 @@ export const ImportExportView: React.FC<ImportExportViewProps> = ({ onImportComp
                 <tbody className="divide-y divide-slate-100 dark:divide-slate-800 bg-white dark:bg-slate-900">
                   {paginatedRows.length === 0 ? (
                     <tr>
-                      <td colSpan={10} className="py-16 text-center text-slate-400 dark:text-slate-500">
+                      <td colSpan={10} className="py-16 text-center text-slate-500 dark:text-slate-500 dark:text-slate-400">
                         No se encontraron registros que coincidan con los filtros aplicados.
                       </td>
                     </tr>
@@ -758,7 +777,7 @@ export const ImportExportView: React.FC<ImportExportViewProps> = ({ onImportComp
                               : ''
                           }`}
                         >
-                          <td className="px-3.5 py-2.5 text-center font-mono text-slate-400">
+                          <td className="px-3.5 py-2.5 text-center font-mono text-slate-500 dark:text-slate-400">
                             #{row.rowIndex}
                           </td>
 
@@ -787,7 +806,7 @@ export const ImportExportView: React.FC<ImportExportViewProps> = ({ onImportComp
                           {/* Marca / Año */}
                           <td className="px-3.5 py-2.5">
                             <span className="font-medium text-slate-800 dark:text-slate-200">{row.brand || 'BAJAJ'}</span>
-                            <span className="text-slate-400 text-[11px] ml-1">({row.modelYear || '-'})</span>
+                            <span className="text-slate-500 dark:text-slate-400 text-[11px] ml-1">({row.modelYear || '-'})</span>
                           </td>
 
                           {/* Propietario */}
@@ -821,12 +840,12 @@ export const ImportExportView: React.FC<ImportExportViewProps> = ({ onImportComp
                                 <p className="font-medium text-slate-800 dark:text-slate-200 truncate max-w-[120px]">
                                   {row.insuranceEntity}
                                 </p>
-                                <p className="text-[10px] text-slate-400 truncate max-w-[120px]">
+                                <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate max-w-[120px]">
                                   {row.insuranceExpirationDate ? `Vence: ${row.insuranceExpirationDate}` : 'Vigente'}
                                 </p>
                               </div>
                             ) : (
-                              <span className="text-slate-400">-</span>
+                              <span className="text-slate-500 dark:text-slate-400">-</span>
                             )}
                           </td>
 
@@ -837,12 +856,12 @@ export const ImportExportView: React.FC<ImportExportViewProps> = ({ onImportComp
                                 <p className="font-medium text-slate-800 dark:text-slate-200 truncate max-w-[110px]">
                                   {row.inspectionCertificate}
                                 </p>
-                                <p className="text-[10px] text-slate-400 truncate max-w-[110px]">
+                                <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate max-w-[110px]">
                                   {row.inspectionExpirationDate || 'Sin fecha'}
                                 </p>
                               </div>
                             ) : (
-                              <span className="text-slate-400">-</span>
+                              <span className="text-slate-500 dark:text-slate-400">-</span>
                             )}
                           </td>
 
@@ -883,7 +902,7 @@ export const ImportExportView: React.FC<ImportExportViewProps> = ({ onImportComp
                               <button
                                 type="button"
                                 onClick={() => handleOpenDetailModal(row)}
-                                className="flex h-7 w-7 items-center justify-center rounded-lg text-slate-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-800 transition-colors"
+                                className="flex h-7 w-7 items-center justify-center rounded-lg text-slate-500 dark:text-slate-400 hover:text-blue-800 hover:bg-blue-50 dark:hover:bg-slate-800 transition-colors"
                                 title="Ver todos los datos a detalle con pestañas"
                               >
                                 <Eye size={14} />
@@ -893,7 +912,7 @@ export const ImportExportView: React.FC<ImportExportViewProps> = ({ onImportComp
                               <button
                                 type="button"
                                 onClick={() => handleOpenEditRow(row)}
-                                className="flex h-7 w-7 items-center justify-center rounded-lg text-slate-500 hover:text-amber-600 hover:bg-amber-50 dark:hover:bg-slate-800 transition-colors"
+                                className="flex h-7 w-7 items-center justify-center rounded-lg text-slate-500 dark:text-slate-400 hover:text-amber-800 hover:bg-amber-50 dark:hover:bg-slate-800 transition-colors"
                                 title="Editar datos de esta fila antes de importar"
                               >
                                 <Edit2 size={13} />
@@ -903,7 +922,7 @@ export const ImportExportView: React.FC<ImportExportViewProps> = ({ onImportComp
                               <button
                                 type="button"
                                 onClick={() => handleDeleteRow(row._stagedId, row.rowIndex)}
-                                className="flex h-7 w-7 items-center justify-center rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-slate-800 transition-colors"
+                                className="flex h-7 w-7 items-center justify-center rounded-lg text-slate-400 hover:text-rose-800 hover:bg-rose-50 dark:hover:bg-slate-800 transition-colors"
                                 title="Eliminar fila del lote (repetida o no deseada)"
                               >
                                 <Trash2 size={13} />
@@ -978,7 +997,7 @@ export const ImportExportView: React.FC<ImportExportViewProps> = ({ onImportComp
             <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-6 py-4 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
               <div className="text-xs text-slate-500 dark:text-slate-400">
                 Se incorporarán{' '}
-                <strong className="text-emerald-600 dark:text-emerald-400 font-bold">
+                <strong className="text-emerald-700 dark:text-emerald-400 font-bold">
                   {stagingStats.importable} registros aptos
                 </strong>{' '}
                 a los módulos de Padrón, Propietarios, Conductores y Pólizas.
@@ -1052,14 +1071,14 @@ export const ImportExportView: React.FC<ImportExportViewProps> = ({ onImportComp
               <button
                 type="button"
                 onClick={() => setSelectedRowForDetail(null)}
-                className="rounded-lg p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                className="rounded-lg p-1 text-slate-500 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
               >
                 <X size={18} />
               </button>
             </div>
 
             {/* Pestañas (Tabs) */}
-            <div className="flex border-b border-slate-200 dark:border-slate-800 bg-slate-100/50 dark:bg-slate-850 px-5 text-xs font-semibold overflow-x-auto">
+            <div className="flex border-b border-slate-200 dark:border-slate-800 bg-slate-100/50 dark:bg-slate-800 px-5 text-xs font-semibold overflow-x-auto">
               <button
                 onClick={() => setDetailActiveTab('vehiculo')}
                 className={`flex items-center gap-1.5 py-3 px-3 border-b-2 transition-colors whitespace-nowrap ${
@@ -1121,31 +1140,31 @@ export const ImportExportView: React.FC<ImportExportViewProps> = ({ onImportComp
               {detailActiveTab === 'vehiculo' && (
                 <div className="grid grid-cols-2 gap-4">
                   <div className="rounded-xl bg-slate-50 dark:bg-slate-800/60 p-3 border border-slate-200 dark:border-slate-700">
-                    <span className="text-[11px] text-slate-400">N° de Padrón Asignado</span>
+                    <span className="text-[11px] text-slate-500 dark:text-slate-400">N° de Padrón Asignado</span>
                     <p className="text-sm font-bold text-blue-700 dark:text-blue-400 font-mono mt-0.5">
                       {selectedRowForDetail.padronNumber || 'No especificado'}
                     </p>
                   </div>
                   <div className="rounded-xl bg-slate-50 dark:bg-slate-800/60 p-3 border border-slate-200 dark:border-slate-700">
-                    <span className="text-[11px] text-slate-400">Número de Placa</span>
+                    <span className="text-[11px] text-slate-500 dark:text-slate-400">Número de Placa</span>
                     <p className="text-sm font-bold text-slate-900 dark:text-white font-mono mt-0.5">
                       {selectedRowForDetail.plate || 'No especificada'}
                     </p>
                   </div>
                   <div className="rounded-xl bg-slate-50 dark:bg-slate-800/60 p-3 border border-slate-200 dark:border-slate-700">
-                    <span className="text-[11px] text-slate-400">Marca Comercial</span>
+                    <span className="text-[11px] text-slate-500 dark:text-slate-400">Marca Comercial</span>
                     <p className="text-sm font-semibold text-slate-900 dark:text-white mt-0.5">
                       {selectedRowForDetail.brand || 'BAJAJ'}
                     </p>
                   </div>
                   <div className="rounded-xl bg-slate-50 dark:bg-slate-800/60 p-3 border border-slate-200 dark:border-slate-700">
-                    <span className="text-[11px] text-slate-400">Año del Modelo</span>
+                    <span className="text-[11px] text-slate-500 dark:text-slate-400">Año del Modelo</span>
                     <p className="text-sm font-semibold text-slate-900 dark:text-white mt-0.5">
                       {selectedRowForDetail.modelYear || '-'}
                     </p>
                   </div>
                   <div className="col-span-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 p-3 border border-slate-200 dark:border-slate-700">
-                    <span className="text-[11px] text-slate-400">Número de Serie / Motor</span>
+                    <span className="text-[11px] text-slate-500 dark:text-slate-400">Número de Serie / Motor</span>
                     <p className="text-sm font-mono text-slate-900 dark:text-white mt-0.5">
                       {selectedRowForDetail.engineNumber || 'Sin registrar en archivo'}
                     </p>
@@ -1162,20 +1181,20 @@ export const ImportExportView: React.FC<ImportExportViewProps> = ({ onImportComp
                     </p>
                     <div className="grid grid-cols-2 gap-3 pt-2">
                       <div>
-                        <span className="text-[11px] text-slate-400">Documento DNI</span>
+                        <span className="text-[11px] text-slate-500 dark:text-slate-400">Documento DNI</span>
                         <p className="font-mono font-bold text-slate-800 dark:text-slate-200">
                           {selectedRowForDetail.ownerDni || '-'}
                         </p>
                       </div>
                       <div>
-                        <span className="text-[11px] text-slate-400">Teléfono / Celular</span>
+                        <span className="text-[11px] text-slate-500 dark:text-slate-400">Teléfono / Celular</span>
                         <p className="font-semibold text-slate-800 dark:text-slate-200">
                           {selectedRowForDetail.ownerPhone || 'Sin teléfono'}
                         </p>
                       </div>
                     </div>
                     <div className="pt-1">
-                      <span className="text-[11px] text-slate-400">Domicilio</span>
+                      <span className="text-[11px] text-slate-500 dark:text-slate-400">Domicilio</span>
                       <p className="text-slate-700 dark:text-slate-300">
                         {selectedRowForDetail.ownerAddress || 'No registrado en archivo'}
                       </p>
@@ -1188,7 +1207,7 @@ export const ImportExportView: React.FC<ImportExportViewProps> = ({ onImportComp
                       <p className="text-sm font-semibold text-slate-900 dark:text-white">
                         {selectedRowForDetail.owner2FullName}
                       </p>
-                      <p className="font-mono text-slate-500">DNI: {selectedRowForDetail.owner2Dni || '-'}</p>
+                      <p className="font-mono text-slate-500 dark:text-slate-400">DNI: {selectedRowForDetail.owner2Dni || '-'}</p>
                     </div>
                   )}
                 </div>
@@ -1202,13 +1221,13 @@ export const ImportExportView: React.FC<ImportExportViewProps> = ({ onImportComp
                   </p>
                   <div className="grid grid-cols-2 gap-3 pt-2">
                     <div>
-                      <span className="text-[11px] text-slate-400">DNI Conductor</span>
+                      <span className="text-[11px] text-slate-500 dark:text-slate-400">DNI Conductor</span>
                       <p className="font-mono font-bold text-slate-800 dark:text-slate-200">
                         {selectedRowForDetail.driverDni || selectedRowForDetail.ownerDni || '-'}
                       </p>
                     </div>
                     <div>
-                      <span className="text-[11px] text-slate-400">Celular</span>
+                      <span className="text-[11px] text-slate-500 dark:text-slate-400">Celular</span>
                       <p className="font-semibold text-slate-800 dark:text-slate-200">
                         {selectedRowForDetail.driverPhone || 'Sin teléfono'}
                       </p>
@@ -1217,13 +1236,13 @@ export const ImportExportView: React.FC<ImportExportViewProps> = ({ onImportComp
 
                   <div className="grid grid-cols-2 gap-3 pt-2 border-t border-slate-200 dark:border-slate-700">
                     <div>
-                      <span className="text-[11px] text-slate-400">N° Licencia de Conducir</span>
+                      <span className="text-[11px] text-slate-500 dark:text-slate-400">N° Licencia de Conducir</span>
                       <p className="font-mono font-bold text-slate-800 dark:text-slate-200">
                         {selectedRowForDetail.licenseNumber || 'Sin licencia registrada'}
                       </p>
                     </div>
                     <div>
-                      <span className="text-[11px] text-slate-400">Vencimiento Licencia</span>
+                      <span className="text-[11px] text-slate-500 dark:text-slate-400">Vencimiento Licencia</span>
                       <p className="font-semibold text-slate-800 dark:text-slate-200">
                         {selectedRowForDetail.licenseExpirationDate || 'Sin fecha'}
                       </p>
@@ -1239,19 +1258,19 @@ export const ImportExportView: React.FC<ImportExportViewProps> = ({ onImportComp
                     <span className="font-bold text-slate-900 dark:text-white">Póliza AFOCAT / SOAT:</span>
                     <div className="grid grid-cols-2 gap-2 pt-1">
                       <div>
-                        <span className="text-[10px] text-slate-400">Entidad</span>
+                        <span className="text-[10px] text-slate-500 dark:text-slate-400">Entidad</span>
                         <p className="font-semibold text-slate-800 dark:text-slate-200">
                           {selectedRowForDetail.insuranceEntity || 'No especificada'}
                         </p>
                       </div>
                       <div>
-                        <span className="text-[10px] text-slate-400">N° Póliza</span>
+                        <span className="text-[10px] text-slate-500 dark:text-slate-400">N° Póliza</span>
                         <p className="font-mono font-semibold text-slate-800 dark:text-slate-200">
                           {selectedRowForDetail.insurancePolicy || '-'}
                         </p>
                       </div>
                       <div>
-                        <span className="text-[10px] text-slate-400">Vencimiento Póliza</span>
+                        <span className="text-[10px] text-slate-500 dark:text-slate-400">Vencimiento Póliza</span>
                         <p className="font-semibold text-slate-800 dark:text-slate-200">
                           {selectedRowForDetail.insuranceExpirationDate || 'Sin fecha'}
                         </p>
@@ -1264,19 +1283,19 @@ export const ImportExportView: React.FC<ImportExportViewProps> = ({ onImportComp
                     <span className="font-bold text-slate-900 dark:text-white">Revisión Técnica Vehicular (CITV):</span>
                     <div className="grid grid-cols-2 gap-2 pt-1">
                       <div>
-                        <span className="text-[10px] text-slate-400">Centro de Inspección</span>
+                        <span className="text-[10px] text-slate-500 dark:text-slate-400">Centro de Inspección</span>
                         <p className="font-semibold text-slate-800 dark:text-slate-200">
                           {selectedRowForDetail.inspectionCenter || 'No especificado'}
                         </p>
                       </div>
                       <div>
-                        <span className="text-[10px] text-slate-400">N° Certificado</span>
+                        <span className="text-[10px] text-slate-500 dark:text-slate-400">N° Certificado</span>
                         <p className="font-mono font-semibold text-slate-800 dark:text-slate-200">
                           {selectedRowForDetail.inspectionCertificate || '-'}
                         </p>
                       </div>
                       <div>
-                        <span className="text-[10px] text-slate-400">Vencimiento CITV</span>
+                        <span className="text-[10px] text-slate-500 dark:text-slate-400">Vencimiento CITV</span>
                         <p className="font-semibold text-slate-800 dark:text-slate-200">
                           {selectedRowForDetail.inspectionExpirationDate || 'Sin fecha'}
                         </p>
@@ -1289,13 +1308,13 @@ export const ImportExportView: React.FC<ImportExportViewProps> = ({ onImportComp
                     <span className="font-bold text-slate-900 dark:text-white">Curso de Educación Vial:</span>
                     <div className="grid grid-cols-2 gap-2 pt-1">
                       <div>
-                        <span className="text-[10px] text-slate-400">Certificado</span>
+                        <span className="text-[10px] text-slate-500 dark:text-slate-400">Certificado</span>
                         <p className="font-semibold text-slate-800 dark:text-slate-200">
                           {selectedRowForDetail.courseCertificate || 'No registrado'}
                         </p>
                       </div>
                       <div>
-                        <span className="text-[10px] text-slate-400">Vigencia</span>
+                        <span className="text-[10px] text-slate-500 dark:text-slate-400">Vigencia</span>
                         <p className="font-semibold text-slate-800 dark:text-slate-200">
                           {selectedRowForDetail.courseExpirationDate || 'Sin fecha'}
                         </p>
@@ -1309,7 +1328,7 @@ export const ImportExportView: React.FC<ImportExportViewProps> = ({ onImportComp
                 <div className="space-y-3">
                   <div className="rounded-xl bg-slate-50 dark:bg-slate-800/60 p-3.5 border border-slate-200 dark:border-slate-700">
                     <span className="font-bold text-slate-900 dark:text-white">Clasificación Asignada:</span>
-                    <p className="mt-1 text-sm font-bold text-blue-600 dark:text-blue-400">
+                    <p className="mt-1 text-sm font-bold text-blue-700 dark:text-blue-400">
                       {selectedRowForDetail.classification}
                     </p>
                   </div>
@@ -1381,7 +1400,7 @@ export const ImportExportView: React.FC<ImportExportViewProps> = ({ onImportComp
               <button
                 type="button"
                 onClick={() => setSelectedRowForEdit(null)}
-                className="rounded-lg p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                className="rounded-lg p-1 text-slate-500 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
               >
                 <X size={18} />
               </button>
@@ -1645,7 +1664,7 @@ export const ImportExportView: React.FC<ImportExportViewProps> = ({ onImportComp
                 <button
                   type="button"
                   onClick={() => setSelectedRowForEdit(null)}
-                  className="rounded-xl px-4 py-2 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  className="rounded-xl px-4 py-2 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
                 >
                   Cancelar
                 </button>

@@ -215,7 +215,7 @@ const PersonPhotoModal: React.FC<{
       >
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 rounded-lg p-1 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-slate-600 dark:hover:text-slate-200"
+          className="absolute top-3 right-3 rounded-lg p-1 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-slate-700 dark:hover:text-slate-200"
         >
           <X size={18} />
         </button>
@@ -231,7 +231,7 @@ const PersonPhotoModal: React.FC<{
           </h3>
 
           {dni && (
-            <p className="mt-1 font-mono text-xs font-semibold text-blue-600 dark:text-blue-400">
+            <p className="mt-1 font-mono text-xs font-semibold text-blue-700 dark:text-blue-400">
               DNI: {dni}
             </p>
           )}

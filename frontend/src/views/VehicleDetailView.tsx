@@ -247,20 +247,20 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                     className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 dark:border-blue-800 bg-blue-50/90 dark:bg-blue-950/70 px-3 py-1 text-xs font-bold text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900 transition-colors shadow-2xs cursor-pointer"
                     title="Ver trazado de ruta y paraderos autorizados en mapa interactivo"
                   >
-                    <MapPin size={12} className="text-blue-600 dark:text-blue-400" />
+                    <MapPin size={12} className="text-blue-700 dark:text-blue-400" />
                     <span>{assignedRoute.code}: {assignedRoute.shortName}</span>
                     <span className="text-[10px] text-blue-500 font-semibold underline ml-0.5">Ver Mapa →</span>
                   </button>
                 )}
               </div>
-              <p className="mt-1 text-xs text-slate-500 sm:text-sm">
+              <p className="mt-1 text-xs text-slate-500 dark:text-slate-400 sm:text-sm">
                 {vehicle.brand} • Año: {vehicle.modelYear} • N.° Motor: {vehicle.engineNumber || 'No registrado'} • ID Interno Permanente #{vehicle.id}
               </p>
             </div>
           </div>
 
           <div className="shrink-0 flex flex-col items-start sm:items-end gap-1.5">
-            <span className="text-xs font-medium text-slate-400">Estado Documentario:</span>
+            <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Estado Documentario:</span>
             <StatusBadge
               status={vehicle.overallStatus.status}
               label={vehicle.overallStatus.label}
@@ -383,7 +383,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
           {/* Propietario Principal y Copropietarios */}
           <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
             <div className="flex items-center gap-2.5 pb-3 border-b border-slate-100">
-              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-50 text-blue-800">
                 <Users size={18} />
               </div>
               <h3 className="text-sm font-bold text-slate-900">Propietario(s) Actual(es)</h3>
@@ -400,21 +400,21 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 />
                 <dl className="flex-1 space-y-2.5 text-xs w-full">
                   <div>
-                    <dt className="text-slate-400 font-medium">Nombre Completo</dt>
+                    <dt className="text-slate-500 dark:text-slate-400 font-medium">Nombre Completo</dt>
                     <dd className="mt-0.5 text-sm font-bold text-slate-900">{primaryOwner.fullName}</dd>
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <dt className="text-slate-400 font-medium">DNI</dt>
+                      <dt className="text-slate-500 dark:text-slate-400 font-medium">DNI</dt>
                       <dd className="mt-0.5 font-mono font-semibold text-slate-800">{primaryOwner.dni}</dd>
                     </div>
                     <div>
-                      <dt className="text-slate-400 font-medium">Celular</dt>
+                      <dt className="text-slate-500 dark:text-slate-400 font-medium">Celular</dt>
                       <dd className="mt-0.5 text-slate-800">{primaryOwner.phone || 'No registrado'}</dd>
                     </div>
                   </div>
                   <div>
-                    <dt className="text-slate-400 font-medium">Domicilio</dt>
+                    <dt className="text-slate-500 dark:text-slate-400 font-medium">Domicilio</dt>
                     <dd className="mt-0.5 text-slate-800">{primaryOwner.address || 'No registrado'}</dd>
                   </div>
 
@@ -430,7 +430,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                               <PersonAvatar name={co.fullName} dni={co.dni} size="xs" clickable={true} />
                               <span className="font-semibold text-slate-800">{co.fullName}</span>
                             </div>
-                            <span className="font-mono text-slate-500">DNI: {co.dni}</span>
+                            <span className="font-mono text-slate-500 dark:text-slate-400">DNI: {co.dni}</span>
                           </div>
                         ))}
                     </div>
@@ -438,14 +438,14 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 </dl>
               </div>
             ) : (
-              <p className="mt-4 text-xs text-slate-400">Sin propietario registrado.</p>
+              <p className="mt-4 text-xs text-slate-500 dark:text-slate-400">Sin propietario registrado.</p>
             )}
           </div>
 
           {/* Conductor Asignado */}
           <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
             <div className="flex items-center gap-2.5 pb-3 border-b border-slate-100">
-              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600">
+              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-indigo-50 text-indigo-800">
                 <UserCheck size={18} />
               </div>
               <h3 className="text-sm font-bold text-slate-900">Conductor Activo Asignado</h3>
@@ -462,27 +462,27 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 />
                 <dl className="flex-1 space-y-2.5 text-xs w-full">
                   <div>
-                    <dt className="text-slate-400 font-medium">Nombre Completo</dt>
+                    <dt className="text-slate-500 dark:text-slate-400 font-medium">Nombre Completo</dt>
                     <dd className="mt-0.5 text-sm font-bold text-slate-900">{vehicle.driver.fullName}</dd>
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <dt className="text-slate-400 font-medium">DNI</dt>
+                      <dt className="text-slate-500 dark:text-slate-400 font-medium">DNI</dt>
                       <dd className="mt-0.5 font-mono font-semibold text-slate-800">{vehicle.driver.dni}</dd>
                     </div>
                     <div>
-                      <dt className="text-slate-400 font-medium">Celular</dt>
+                      <dt className="text-slate-500 dark:text-slate-400 font-medium">Celular</dt>
                       <dd className="mt-0.5 text-slate-800">{vehicle.driver.phone || 'No registrado'}</dd>
                     </div>
                   </div>
                   <div>
-                    <dt className="text-slate-400 font-medium">Domicilio</dt>
+                    <dt className="text-slate-500 dark:text-slate-400 font-medium">Domicilio</dt>
                     <dd className="mt-0.5 text-slate-800">{vehicle.driver.address || 'No registrado'}</dd>
                   </div>
                 </dl>
               </div>
             ) : (
-              <p className="mt-4 text-xs text-slate-400">Sin conductor asignado actualmente.</p>
+              <p className="mt-4 text-xs text-slate-500 dark:text-slate-400">Sin conductor asignado actualmente.</p>
             )}
           </div>
 
@@ -490,7 +490,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
           <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2.5">
-                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-50 text-blue-800">
                   <Shield size={18} />
                 </div>
                 <h3 className="text-sm font-bold text-slate-900">Seguro AFOCAT / SOAT</h3>
@@ -504,19 +504,19 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
 
             <dl className="mt-4 grid grid-cols-2 gap-3 text-xs">
               <div className="col-span-2">
-                <dt className="text-slate-400 font-medium">Entidad Aseguradora</dt>
+                <dt className="text-slate-500 dark:text-slate-400 font-medium">Entidad Aseguradora</dt>
                 <dd className="mt-0.5 font-semibold text-slate-800">{vehicle.insurance?.entityName || 'No registrada'}</dd>
               </div>
               <div className="col-span-2">
-                <dt className="text-slate-400 font-medium">N.° Póliza / Certificado</dt>
+                <dt className="text-slate-500 dark:text-slate-400 font-medium">N.° Póliza / Certificado</dt>
                 <dd className="mt-0.5 font-mono text-slate-800">{vehicle.insurance?.policyNumber || 'S/N'}</dd>
               </div>
               <div>
-                <dt className="text-slate-400 font-medium">Fecha Emisión</dt>
+                <dt className="text-slate-500 dark:text-slate-400 font-medium">Fecha Emisión</dt>
                 <dd className="mt-0.5 text-slate-700">{vehicle.insurance?.issueDate || 'S/F'}</dd>
               </div>
               <div>
-                <dt className="text-slate-400 font-medium">Fecha Vencimiento</dt>
+                <dt className="text-slate-500 dark:text-slate-400 font-medium">Fecha Vencimiento</dt>
                 <dd className="mt-0.5 font-bold text-slate-900">{vehicle.insurance?.expirationDate || 'S/F'}</dd>
               </div>
             </dl>
@@ -526,7 +526,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
           <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2.5">
-                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
+                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-50 text-emerald-800">
                   <FileCheck size={18} />
                 </div>
                 <h3 className="text-sm font-bold text-slate-900">Revisión Técnica (CITV)</h3>
@@ -540,19 +540,19 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
 
             <dl className="mt-4 grid grid-cols-2 gap-3 text-xs">
               <div className="col-span-2">
-                <dt className="text-slate-400 font-medium">Centro CITV</dt>
+                <dt className="text-slate-500 dark:text-slate-400 font-medium">Centro CITV</dt>
                 <dd className="mt-0.5 font-semibold text-slate-800">{vehicle.technicalInspection?.centerName || 'CITV Autorizado'}</dd>
               </div>
               <div className="col-span-2">
-                <dt className="text-slate-400 font-medium">N.° Certificado CITV</dt>
+                <dt className="text-slate-500 dark:text-slate-400 font-medium">N.° Certificado CITV</dt>
                 <dd className="mt-0.5 font-mono text-slate-800">{vehicle.technicalInspection?.certificateNumber || 'S/N'}</dd>
               </div>
               <div>
-                <dt className="text-slate-400 font-medium">Fecha Emisión</dt>
+                <dt className="text-slate-500 dark:text-slate-400 font-medium">Fecha Emisión</dt>
                 <dd className="mt-0.5 text-slate-700">{vehicle.technicalInspection?.issueDate || 'S/F'}</dd>
               </div>
               <div>
-                <dt className="text-slate-400 font-medium">Fecha Vencimiento</dt>
+                <dt className="text-slate-500 dark:text-slate-400 font-medium">Fecha Vencimiento</dt>
                 <dd className="mt-0.5 font-bold text-slate-900">{vehicle.technicalInspection?.expirationDate || 'S/F'}</dd>
               </div>
             </dl>
@@ -562,7 +562,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
           <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2.5">
-                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-purple-50 text-purple-600">
+                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-purple-50 text-purple-800">
                   <GraduationCap size={18} />
                 </div>
                 <h3 className="text-sm font-bold text-slate-900">Curso de Educación Vial</h3>
@@ -576,15 +576,15 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
 
             <dl className="mt-4 grid grid-cols-2 gap-3 text-xs">
               <div className="col-span-2">
-                <dt className="text-slate-400 font-medium">N.° Certificado</dt>
+                <dt className="text-slate-500 dark:text-slate-400 font-medium">N.° Certificado</dt>
                 <dd className="mt-0.5 font-mono text-slate-800">{vehicle.roadSafetyCourse?.certificateNumber || 'S/N'}</dd>
               </div>
               <div>
-                <dt className="text-slate-400 font-medium">Fecha Emisión</dt>
+                <dt className="text-slate-500 dark:text-slate-400 font-medium">Fecha Emisión</dt>
                 <dd className="mt-0.5 text-slate-700">{vehicle.roadSafetyCourse?.issueDate || 'S/F'}</dd>
               </div>
               <div>
-                <dt className="text-slate-400 font-medium">Fecha Vencimiento</dt>
+                <dt className="text-slate-500 dark:text-slate-400 font-medium">Fecha Vencimiento</dt>
                 <dd className="mt-0.5 font-bold text-slate-900">{vehicle.roadSafetyCourse?.expirationDate || 'S/F'}</dd>
               </div>
             </dl>
@@ -594,7 +594,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
           <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2.5">
-                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-teal-50 text-teal-600">
+                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-teal-50 text-teal-800">
                   <CreditCard size={18} />
                 </div>
                 <h3 className="text-sm font-bold text-slate-900">Licencia B-II-C</h3>
@@ -608,19 +608,19 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
 
             <dl className="mt-4 grid grid-cols-2 gap-3 text-xs">
               <div>
-                <dt className="text-slate-400 font-medium">Municipalidad / Origen</dt>
+                <dt className="text-slate-500 dark:text-slate-400 font-medium">Municipalidad / Origen</dt>
                 <dd className="mt-0.5 font-semibold text-slate-800">{vehicle.driverLicense?.originAuthority || 'No especificada'}</dd>
               </div>
               <div>
-                <dt className="text-slate-400 font-medium">N.° Licencia</dt>
+                <dt className="text-slate-500 dark:text-slate-400 font-medium">N.° Licencia</dt>
                 <dd className="mt-0.5 font-mono text-slate-800">{vehicle.driverLicense?.licenseNumber || 'S/N'}</dd>
               </div>
               <div>
-                <dt className="text-slate-400 font-medium">Fecha Emisión</dt>
+                <dt className="text-slate-500 dark:text-slate-400 font-medium">Fecha Emisión</dt>
                 <dd className="mt-0.5 text-slate-700">{vehicle.driverLicense?.issueDate || 'S/F'}</dd>
               </div>
               <div>
-                <dt className="text-slate-400 font-medium">Fecha Vencimiento</dt>
+                <dt className="text-slate-500 dark:text-slate-400 font-medium">Fecha Vencimiento</dt>
                 <dd className="mt-0.5 font-bold text-slate-900">{vehicle.driverLicense?.expirationDate || 'S/F'}</dd>
               </div>
             </dl>
@@ -634,7 +634,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
           <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
             <div>
               <h3 className="text-sm font-bold text-slate-900">Historial de Reasignaciones e Intercambios</h3>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-slate-500 dark:text-slate-400">
                 Padrón actual: <strong className="text-slate-800">{vehicle.padronNumber}</strong>. Cada movimiento
                 conserva la resolución de respaldo y el usuario responsable.
               </p>
@@ -651,7 +651,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
           </div>
 
           {padronHistory.length === 0 ? (
-            <div className="py-12 text-center text-xs text-slate-400">
+            <div className="py-12 text-center text-xs text-slate-500 dark:text-slate-400">
               <ArrowLeftRight className="mx-auto h-8 w-8 text-slate-300 mb-2" />
               <p>Esta unidad conserva su padrón original desde su registro inicial.</p>
             </div>
@@ -659,7 +659,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
                 <thead>
-                  <tr className="border-b border-slate-200 bg-slate-50 text-slate-500 font-semibold">
+                  <tr className="border-b border-slate-200 bg-slate-50 text-slate-500 dark:text-slate-400 font-semibold">
                     <th className="py-2.5 px-3">Fecha Efectiva</th>
                     <th className="py-2.5 px-3">Padrón Anterior</th>
                     <th className="py-2.5 px-3">Nuevo Padrón</th>
@@ -704,7 +704,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
           <div className="pb-4 border-b border-slate-100 mb-4">
             <h3 className="text-sm font-bold text-slate-900">Historial Cronológico de Propietarios</h3>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
               Muestra los periodos de titularidad sobre este vehículo. Las personas se mantienen en la base de datos
               independientemente de que ya no sean titulares actuales.
             </p>
@@ -713,7 +713,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-slate-200 bg-slate-50 text-slate-500 font-semibold">
+                <tr className="border-b border-slate-200 bg-slate-50 text-slate-500 dark:text-slate-400 font-semibold">
                   <th className="py-2.5 px-3">Propietario</th>
                   <th className="py-2.5 px-3">DNI</th>
                   <th className="py-2.5 px-3">Contacto</th>
@@ -733,7 +733,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                         {oh.isPrimary ? (
                           <span className="font-semibold text-blue-700">Principal</span>
                         ) : (
-                          <span className="text-slate-500">Copropietario</span>
+                          <span className="text-slate-500 dark:text-slate-400">Copropietario</span>
                         )}
                       </td>
                       <td className="py-3 px-3 font-mono text-slate-600">
@@ -745,7 +745,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                             Titular Actual
                           </span>
                         ) : (
-                          <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-semibold text-slate-600">
+                          <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-semibold text-slate-700">
                             Histórico
                           </span>
                         )}
@@ -762,7 +762,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                         {o.isPrimary ? (
                           <span className="font-semibold text-blue-700">Principal</span>
                         ) : (
-                          <span className="text-slate-500">Copropietario</span>
+                          <span className="text-slate-500 dark:text-slate-400">Copropietario</span>
                         )}
                       </td>
                       <td className="py-3 px-3 font-mono text-slate-600">Registro inicial → Vigente</td>
@@ -785,7 +785,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
           <div className="pb-4 border-b border-slate-100 mb-4">
             <h3 className="text-sm font-bold text-slate-900">Historial de Conductores Asignados</h3>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
               Registra los conductores que han operado este vehículo a lo largo del tiempo.
             </p>
           </div>
@@ -793,7 +793,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-slate-200 bg-slate-50 text-slate-500 font-semibold">
+                <tr className="border-b border-slate-200 bg-slate-50 text-slate-500 dark:text-slate-400 font-semibold">
                   <th className="py-2.5 px-3">Conductor</th>
                   <th className="py-2.5 px-3">DNI</th>
                   <th className="py-2.5 px-3">Contacto</th>
@@ -817,7 +817,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                             Activo
                           </span>
                         ) : (
-                          <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-semibold text-slate-600">
+                          <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-semibold text-slate-700">
                             Conductor Anterior
                           </span>
                         )}
@@ -838,7 +838,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                   </tr>
                 ) : (
                   <tr>
-                    <td colSpan={5} className="py-6 text-center text-slate-400">
+                    <td colSpan={5} className="py-6 text-center text-slate-500 dark:text-slate-400">
                       Sin conductores registrados históricamente.
                     </td>
                   </tr>
@@ -854,39 +854,39 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
           <div className="pb-4 border-b border-slate-100 mb-4">
             <h3 className="text-sm font-bold text-slate-900">Bitácora Integral de Auditoría</h3>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
               Registro inmutable de cada creación, edición, cambio de padrón o retiro sobre esta unidad.
             </p>
           </div>
 
           <div className="space-y-3">
             {auditLogs.length === 0 ? (
-              <p className="py-8 text-center text-xs text-slate-400">Sin eventos registrados.</p>
+              <p className="py-8 text-center text-xs text-slate-500 dark:text-slate-400">Sin eventos registrados.</p>
             ) : (
               auditLogs.map((log) => (
                 <div
                   key={log.id}
-                  className="rounded-xl border border-slate-100 bg-slate-50/70 p-3.5 text-xs text-slate-600"
+                  className="rounded-xl border border-slate-100 bg-slate-50/70 p-3.5 text-xs text-slate-800"
                 >
                   <div className="flex flex-wrap items-center justify-between gap-2 font-medium">
                     <span className="font-bold text-blue-800">
                       {log.action} {log.fieldName ? `[${log.fieldName}]` : ''}
                     </span>
-                    <span className="font-mono text-[11px] text-slate-400">
+                    <span className="font-mono text-[11px] text-slate-500 dark:text-slate-400">
                       {new Date(log.createdAt).toLocaleString()}
                     </span>
                   </div>
 
                   {log.oldValue && log.newValue && (
                     <p className="mt-1.5 text-slate-700">
-                      Valor anterior: <span className="line-through text-slate-400">{log.oldValue}</span>{' '}
+                      Valor anterior: <span className="line-through text-slate-500 dark:text-slate-400">{log.oldValue}</span>{' '}
                       ➔ <span className="font-bold text-emerald-700">{log.newValue}</span>
                     </p>
                   )}
 
-                  {log.reason && <p className="mt-1 text-slate-500 italic">{log.reason}</p>}
+                  {log.reason && <p className="mt-1 text-slate-500 dark:text-slate-400 italic">{log.reason}</p>}
 
-                  <p className="mt-1 text-[11px] text-slate-400">
+                  <p className="mt-1 text-[11px] text-slate-500 dark:text-slate-400">
                     Realizado por: <span className="font-medium text-slate-600">{log.userEmail}</span> ({log.userName || 'Sistema'})
                   </p>
                 </div>

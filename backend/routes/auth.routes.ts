@@ -2,12 +2,18 @@ import type { CookieOptions, Express } from 'express';
 import rateLimit from 'express-rate-limit';
 import { z } from 'zod';
 import { requireAuth, type AuthRequest } from '../middleware/auth.ts';
+import { validateBody } from '../middleware/validate.ts';
+import { passwordResetLimiter } from '../middleware/rate-limit.ts';
 import {
   authenticateUser,
   changeUserPasswordByUid,
   findUserByUid,
   toPublicUser,
 } from '../services/auth.service.ts';
+import {
+  restablecerConToken,
+  solicitarRestablecimiento,
+} from '../services/password-reset.service.ts';
 import { signSessionToken } from '../services/token.service.ts';
 import {
   getAuthCookieName,
@@ -27,6 +33,20 @@ const ChangePasswordSchema = z.object({
     .string()
     .min(8, 'La nueva contraseña debe tener al menos 8 caracteres.')
     .max(128, 'La nueva contraseña es demasiado larga.'),
+});
+
+/** Solicitud de restablecimiento de contraseña. */
+const ForgotPasswordSchema = z.object({
+  email: z.string().email('El correo electrónico no es válido.'),
+});
+
+/** Restablecimiento de contraseña con el token recibido por correo. */
+const ResetPasswordSchema = z.object({
+  token: z.string().min(20, 'El enlace de restablecimiento no es válido.'),
+  newPassword: z
+    .string()
+    .min(8, 'La nueva contraseña debe tener al menos 8 caracteres.')
+    .max(128, 'La contraseña es demasiado larga.'),
 });
 
 /** Limita los intentos de inicio de sesión por IP. */
@@ -141,4 +161,51 @@ export function registerAuthRoutes(app: Express): void {
       return res.status(500).json({ error: 'No se pudo cambiar la contraseña.' });
     }
   });
+
+  // 5. Recuperación de contraseña: envío del enlace por correo
+  app.post(
+    '/api/auth/forgot-password',
+    passwordResetLimiter,
+    validateBody(ForgotPasswordSchema),
+    async (req, res) => {
+      try {
+        const resultado = await solicitarRestablecimiento(req.body.email);
+        // La respuesta es la misma exista o no la cuenta: no se revela qué
+        // correos están registrados.
+        return res.json({ success: true, message: resultado.mensaje });
+      } catch (error: any) {
+        console.error('Error en POST /api/auth/forgot-password:', error);
+        return res.status(500).json({
+          error: 'No se pudo procesar la solicitud de restablecimiento.',
+        });
+      }
+    }
+  );
+
+  // 6. Recuperación de contraseña: cambio con el token recibido
+  app.post(
+    '/api/auth/reset-password',
+    passwordResetLimiter,
+    validateBody(ResetPasswordSchema),
+    async (req, res) => {
+      try {
+        const resultado = await restablecerConToken(
+          req.body.token,
+          req.body.newPassword
+        );
+
+        if (!resultado.ok) {
+          return res.status(400).json({ error: resultado.error });
+        }
+
+        return res.json({
+          success: true,
+          message: 'Tu contraseña se restableció correctamente. Ya puedes iniciar sesión.',
+        });
+      } catch (error: any) {
+        console.error('Error en POST /api/auth/reset-password:', error);
+        return res.status(500).json({ error: 'No se pudo restablecer la contraseña.' });
+      }
+    }
+  );
 }

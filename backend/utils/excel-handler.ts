@@ -1,4 +1,4 @@
-import * as XLSX from 'xlsx';
+import ExcelJS from 'exceljs';
 import { and, eq, or } from 'drizzle-orm';
 import { db } from '../db/index.ts';
 import { persons, vehicleDrivers, vehicleOwners, vehicles, auditLogs } from '../db/schema.ts';
@@ -156,14 +156,69 @@ function buildHeaderMapping(sheetHeaders: string[]): Record<string, string> {
   return mapping;
 }
 
+/**
+ * Convierte el valor de una celda de ExcelJS a un primitivo manejable.
+ *
+ * ExcelJS devuelve objetos para texto enriquecido, hipervínculos, fórmulas y
+ * errores; aquí se extrae el valor textual o numérico subyacente. Las fechas
+ * se normalizan a ISO (AAAA-MM-DD) para que el resto del importador las lea
+ * igual que las celdas de texto.
+ */
+function celdaAPrimitivo(value: unknown): unknown {
+  if (value === null || value === undefined) return '';
+  if (value instanceof Date) return value.toISOString().slice(0, 10);
+
+  if (typeof value === 'object') {
+    const obj = value as Record<string, any>;
+    if (Array.isArray(obj.richText)) {
+      return obj.richText.map((part: any) => part?.text ?? '').join('');
+    }
+    if (typeof obj.text === 'string') return obj.text;
+    if ('result' in obj) return celdaAPrimitivo(obj.result);
+    if (typeof obj.hyperlink === 'string') return obj.text ?? obj.hyperlink;
+    if ('error' in obj) return '';
+  }
+
+  return value;
+}
+
+/** Convierte la primera hoja del libro en una matriz de filas y columnas. */
+function hojaAMatriz(worksheet: ExcelJS.Worksheet): any[][] {
+  const filas: any[][] = [];
+  const total = worksheet.actualRowCount;
+
+  for (let numeroFila = 1; numeroFila <= total; numeroFila++) {
+    const row = worksheet.getRow(numeroFila);
+    // `row.values` es un array con índice base 1; el índice 0 siempre está vacío.
+    const valores = Array.isArray(row.values) ? row.values.slice(1) : [];
+    filas.push(valores.map(celdaAPrimitivo));
+  }
+
+  return filas;
+}
+
 // 1. Análisis y Previsualización Robusta de Excel
 export async function parseAndPreviewExcel(fileBuffer: Buffer): Promise<ImportPreviewResult> {
-  const workbook = XLSX.read(fileBuffer, { type: 'buffer', cellDates: false });
-  const firstSheetName = workbook.SheetNames[0];
-  const worksheet = workbook.Sheets[firstSheetName];
+  const workbook = new ExcelJS.Workbook();
+  await workbook.xlsx.load(fileBuffer as unknown as ArrayBuffer);
+  const worksheet = workbook.worksheets[0];
+
+  if (!worksheet) {
+    return {
+      totalRows: 0,
+      validCount: 0,
+      requiresReviewCount: 0,
+      duplicateCount: 0,
+      conflictCount: 0,
+      formatErrorCount: 0,
+      toCreateCount: 0,
+      toUpdateCount: 0,
+      rows: [],
+    };
+  }
 
   // Convertir a matriz de filas crudas para detectar cabeceras compuestas si existen
-  const sheetArray: any[][] = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' });
+  const sheetArray: any[][] = hojaAMatriz(worksheet);
   if (sheetArray.length === 0) {
     return {
       totalRows: 0,
@@ -179,11 +234,22 @@ export async function parseAndPreviewExcel(fileBuffer: Buffer): Promise<ImportPr
   }
 
   // Detectar fila de cabecera (usualmente fila 0 o fila 1 si hay título institucional)
+  //
+  // No basta con que la fila contenga la palabra "padrón" o "placa": un título
+  // institucional del tipo "ACTEP - SISTEMA DE PADRÓN VEHICULAR" también la
+  // contiene y se confundía con la cabecera, de modo que la fila real de
+  // encabezados se tratarse como datos. La fila debe mapear al menos dos
+  // columnas canónicas para considerarse una cabecera.
   let headerRowIndex = 0;
   for (let r = 0; r < Math.min(sheetArray.length, 5); r++) {
     const row = sheetArray[r];
     const joined = row.map((cell) => cleanHeader(String(cell))).join(' ');
-    if (joined.includes('padron') || joined.includes('placa') || joined.includes('propietario')) {
+    if (!joined.includes('padron') && !joined.includes('placa') && !joined.includes('propietario')) {
+      continue;
+    }
+    // Solo se acepta si la fila parece una cabecera real.
+    const mapeo = buildHeaderMapping(row.map((c) => String(c).trim()));
+    if (Object.keys(mapeo).length >= 2) {
       headerRowIndex = r;
       break;
     }
@@ -673,7 +739,7 @@ export async function executeImportBatch(
 }
 
 // 3. Exportación a Excel con todas las columnas canónicas del padrón
-export function generateExcelExport(vehiclesList: any[]): Buffer {
+export async function generateExcelExport(vehiclesList: any[]): Promise<Buffer> {
   const flatData = vehiclesList.map((v) => ({
     'N° Padrón': v.padronNumber,
     'Placa': v.plate,
@@ -730,8 +796,22 @@ export function generateExcelExport(vehiclesList: any[]): Buffer {
     'Estado Licencia': v.driverLicenseEvaluation?.label || '',
   }));
 
-  const worksheet = XLSX.utils.json_to_sheet(flatData);
-  const workbook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(workbook, worksheet, 'Padrón Vehicular');
-  return XLSX.write(workbook, { type: 'buffer', bookType: 'xlsx' });
+  const workbook = new ExcelJS.Workbook();
+  const worksheet = workbook.addWorksheet('Padrón Vehicular');
+
+  if (flatData.length > 0) {
+    const encabezados = Object.keys(flatData[0]);
+    worksheet.columns = encabezados.map((nombre) => ({
+      header: nombre,
+      key: nombre,
+      // Ancho legible sin llegar a ocupar toda la pantalla.
+      width: Math.min(42, Math.max(14, nombre.length + 4)),
+    }));
+    worksheet.addRows(flatData);
+    worksheet.getRow(1).font = { bold: true };
+    worksheet.views = [{ state: 'frozen', ySplit: 1 }];
+  }
+
+  const buffer = await workbook.xlsx.writeBuffer();
+  return Buffer.from(buffer);
 }

@@ -489,7 +489,7 @@ export const VehicleRouteMap: React.FC<VehicleRouteMapProps> = ({ vehicle }) => 
             <p className="mt-1 text-xs text-slate-600 dark:text-slate-400">
               {selectedRoute.name}
             </p>
-            <p className="mt-0.5 text-[11px] font-mono text-slate-500 dark:text-slate-500">
+            <p className="mt-0.5 text-[11px] font-mono text-slate-500 dark:text-slate-400">
               {selectedRoute.sector} • {selectedRoute.resolution}
             </p>
           </div>
@@ -531,7 +531,7 @@ export const VehicleRouteMap: React.FC<VehicleRouteMapProps> = ({ vehicle }) => 
       {/* 2. Contenedor Principal: Mapa Leaflet + Barra de Controles */}
       <div className="relative rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm overflow-hidden">
         {/* Barra superior de herramientas sobre el mapa */}
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-850 px-4 py-2.5">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-800 px-4 py-2.5">
           <div className="flex items-center gap-2 text-xs">
             {/* Botón Simulación de Recorrido */}
             <button
@@ -548,7 +548,7 @@ export const VehicleRouteMap: React.FC<VehicleRouteMapProps> = ({ vehicle }) => 
 
             {/* Velocidad simulada */}
             {isSimulating && (
-              <div className="flex items-center gap-1 text-[11px] font-mono text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-2.5 py-1 rounded-lg">
+              <div className="flex items-center gap-1 text-[11px] font-mono text-blue-800 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-2.5 py-1 rounded-lg">
                 <Gauge size={13} />
                 <span>{simSpeed} km/h</span>
               </div>
@@ -712,7 +712,7 @@ export const VehicleRouteMap: React.FC<VehicleRouteMapProps> = ({ vehicle }) => 
 
             <div className="flex justify-between items-center py-1.5">
               <span className="text-slate-500 dark:text-slate-400">Paraderos Oficiales:</span>
-              <span className="font-bold text-blue-600 dark:text-blue-400 font-mono">{selectedRoute.stops.length} puntos</span>
+              <span className="font-bold text-blue-700 dark:text-blue-400 font-mono">{selectedRoute.stops.length} puntos</span>
             </div>
           </div>
 
@@ -747,7 +747,7 @@ export const VehicleRouteMap: React.FC<VehicleRouteMapProps> = ({ vehicle }) => 
               </div>
             </div>
 
-            <span className="rounded-full bg-slate-100 dark:bg-slate-800 px-2.5 py-1 text-[11px] font-mono text-slate-600 dark:text-slate-400">
+            <span className="rounded-full bg-slate-100 dark:bg-slate-800 px-2.5 py-1 text-[11px] font-mono text-slate-700 dark:text-slate-400">
               Sector Oficial
             </span>
           </div>
@@ -802,17 +802,17 @@ export const VehicleRouteMap: React.FC<VehicleRouteMapProps> = ({ vehicle }) => 
                       <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate mt-0.5">
                         {stop.address}
                       </p>
-                      <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">
+                      <p className="text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400 mt-0.5">
                         {stop.description}
                       </p>
                     </div>
                   </div>
 
                   <div className="shrink-0 flex items-center gap-1.5 pl-3">
-                    <span className="text-[10px] font-mono text-slate-400">
+                    <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400">
                       {stop.coordinates[0].toFixed(3)}, {stop.coordinates[1].toFixed(3)}
                     </span>
-                    <ChevronRight size={14} className="text-slate-400" />
+                    <ChevronRight size={14} className="text-slate-500 dark:text-slate-400" />
                   </div>
                 </div>
               );

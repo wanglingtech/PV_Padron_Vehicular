@@ -4,6 +4,10 @@ Base URL local: `http://localhost:3000`
 
 - Todas las respuestas son JSON.
 - Los errores usan `{ "error": "mensaje" }`.
+- Los errores de validación añaden el detalle campo a campo:
+  ```json
+  { "error": "Datos inválidos.", "details": [{ "campo": "plate", "mensaje": "La placa es obligatoria." }] }
+  ```
 - Las rutas marcadas con 🔒 requieren `Authorization: Bearer <token>` o la cookie `padron_session`.
 - Las rutas marcadas con 👑 requieren además un rol privilegiado (`admin`, `developer`, `gerente`).
 
@@ -29,6 +33,8 @@ Base URL local: `http://localhost:3000`
 | POST | `/api/auth/logout` | — | Limpia la cookie de sesión. |
 | GET | `/api/auth/me` | 🔒 | Devuelve el usuario de la sesión actual. |
 | POST | `/api/auth/change-password` | 🔒 | Cambia la contraseña del usuario autenticado. |
+| POST | `/api/auth/forgot-password` | — | Envía por correo un enlace de restablecimiento. Respuesta idéntica exista o no la cuenta. Límite: 5/hora. |
+| POST | `/api/auth/reset-password` | — | Cambia la contraseña con el token del correo (un solo uso, 60 min). |
 
 > Ver [`AUTENTICACION.md`](AUTENTICACION.md) para el detalle del flujo y las variables de sesión.
 
@@ -117,10 +123,10 @@ curl -X POST http://localhost:3000/api/vehicles \
 
 | Método | Ruta | Auth | Descripción |
 | :--- | :--- | :---: | :--- |
-| POST | `/api/import/preview` | 🔒 | Previsualiza un Excel. |
+| POST | `/api/import/preview` | 🔒 | Previsualiza un Excel (validación de tipo, tamaño y firma binaria). |
 | POST | `/api/import/preview-pdf` | 🔒 | Previsualiza un PDF. |
-| POST | `/api/import/confirm` | 🔒 | Confirma e importa. |
-| GET | `/api/export` | — | Exporta datos (query de filtros). |
+| POST | `/api/import/confirm` | 🔒 | Confirma e importa filas ya validadas con Zod (máximo 5000). |
+| GET | `/api/export` | — | Exporta datos a Excel (ExcelJS) según filtros. |
 
 ---
 
@@ -130,7 +136,7 @@ curl -X POST http://localhost:3000/api/vehicles \
 | :--- | :--- | :---: | :--- |
 | GET | `/api/backup/export` | 🔒 👑 | Exporta backup JSON o SQL. |
 | GET | `/api/backup/stats` | 🔒 | Estadísticas de la base. |
-| POST | `/api/backup/restore` | 🔒 👑 | Restaura un backup. |
+| POST | `/api/backup/restore` | 🔒 👑 | Restaura un backup. Exige `confirm: "RESTAURAR"` en el cuerpo. |
 
 ---
 
@@ -176,6 +182,7 @@ curl -X POST http://localhost:3000/api/vehicles \
 | 403 | Sin permisos |
 | 404 | No encontrado |
 | 409 | Conflicto (duplicado) |
+| 429 | Demasiadas peticiones (rate limit) |
 | 500 | Error interno |
 
 ---

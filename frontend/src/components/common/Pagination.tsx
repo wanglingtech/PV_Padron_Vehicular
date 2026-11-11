@@ -119,7 +119,7 @@ export const Pagination: React.FC<PaginationProps> = ({
           {getVisiblePages().map((page, idx) => {
             if (page === '...') {
               return (
-                <span key={`dots-${idx}`} className="px-1 text-slate-500 font-bold select-none">
+                <span key={`dots-${idx}`} className="px-1 text-slate-500 dark:text-slate-400 font-bold select-none">
                   …
                 </span>
               );
