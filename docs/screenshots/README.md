@@ -31,23 +31,37 @@ Esta carpeta almacera las capturas usadas en el README y en la documentación.
 
 ## Cómo regenerarlas
 
-1. Arranca la app con datos de demostración:
+### Opción A: duplicar los prototipos (recomendado para portafolio)
+
+Las capturas finales ya existen en `docs/prototipos/<modulo>/captura.webp` con
+datos simulados realistas. Solo cópialas a esta carpeta con el nombre indicado,
+sin modificar ni borrar los archivos de origen:
+
+```powershell
+# Ejemplo: duplicar el prototipo del padrón
+Copy-Item docs/prototipos/padron/captura.webp docs/screenshots/04-padron.webp
+```
+
+Haz lo mismo para los 15 módulos usando los nombres de la tabla de arriba. Los
+prototipos se conservan intactos.
+
+### Opción B: regenerar con Playwright
+
+1. Arranca la app apuntando a la base de prototipos (puerto 3200):
 
    ```bash
-   npm run dev
+   NODE_ENV=development SQL_DB_NAME=padron_vehicular_proto PORT=3200 \
+     SEED_DEMO_DATA=true AUTH_DEV_MODE=true DISABLE_HMR=true npm run dev
    ```
 
-2. Abre <http://localhost:3000> en un navegador a 1440 px de ancho.
-3. Captura cada módulo desde el menú lateral.
-4. Guarda con el nombre indicado en esta carpeta.
-5. Convierte a WebP:
+2. Ejecuta la captura automatizada:
 
    ```bash
-   npx tsx scripts/convert-images-webp.mts
+   npm run imagenes:capturar
    ```
 
-   El script usa el codificador nativo de Chrome (sin dependencias nuevas) y
-   elimina el PNG original al terminar.
+   Esto genera PNGs temporales en `docs/screenshots/`, los convierte a WebP
+   con `scripts/convert-images-webp.mts` y elimina los PNG.
 
 > Las capturas de los prototipos de UI viven junto a cada módulo en
 > `docs/prototipos/<modulo>/captura.webp` y se regeneran con
